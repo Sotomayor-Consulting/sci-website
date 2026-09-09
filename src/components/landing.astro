@@ -243,10 +243,11 @@ const faqs = [
       >
         <div id="form-step-1" class="flex flex-col gap-3">
           <CardHeader>
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between mb-3">
               <Badge
+                class="bg-[#f9fafb] text-black w-full text-center flex justify-center items-center mx-5"
                 tone="primary-accent"
-                appearance="outline"
+                appearance="frosted"
                 eyebrow
                 size="sm">Asesoría gratuita</Badge
               >
@@ -254,6 +255,7 @@ const faqs = [
                 tone="neutral"
                 appearance="text"
                 size="sm"
+                class="mx-5"
                 class="text-white/50">Paso 1 de 3</Badge
               >
             </div>
@@ -353,8 +355,9 @@ const faqs = [
           <CardHeader>
             <div class="flex items-center justify-between">
               <Badge
+                class="bg-[#f9fafb] text-black w-full text-center flex justify-center items-center mx-5"
                 tone="primary-accent"
-                appearance="outline"
+                appearance="frosted"
                 eyebrow
                 size="sm">Asesoría gratuita</Badge
               >
@@ -1030,7 +1033,7 @@ const faqs = [
       setSubmitting(false);
     }
 
-    const url = new URL("https://zcal.co/t/agendar-asesoria-llc/60min");
+    const url = new URL("https://zcal.co/t/agendar-asesoria-llc/60-USA");
     url.searchParams.set("name", name);
     url.searchParams.set("email", String(data2.get("email") || ""));
     url.searchParams.set("smsPhone", phone);
