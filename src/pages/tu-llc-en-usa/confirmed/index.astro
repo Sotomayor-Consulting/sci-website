@@ -1,5 +1,14 @@
 ---
-import Landing from "@/components/landing.astro";
+import { Icon } from "astro-icon/components";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
 import "@/styles/starwind.css";
 ---
 
@@ -10,22 +19,26 @@ import "@/styles/starwind.css";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Asesoría estratégica gratuita para crear tu LLC en Estados Unidos con una estructura legal, fiscal y bancaria adecuada."
+      content="Tu asesoría para crear una LLC en Estados Unidos ha sido agendada correctamente."
     />
+    <meta name="robots" content="noindex, nofollow" />
     <meta name="theme-color" content="#0b2334" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/png" href="/images/logos/isotipo-favicon.png?v=1" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/images/logos/isotipo-favicon.png?v=1"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
-    <title>
-      Asesoría para tu LLC en Estados Unidos | Sotomayor Consulting International
-    </title>
+    <title>Cita confirmada | Sotomayor Consulting International</title>
+
     <!-- Google Tag Manager -->
-    <script is:inline>
+    <script>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -39,17 +52,236 @@ import "@/styles/starwind.css";
     </script>
     <!-- End Google Tag Manager -->
   </head>
-  <body>
+  <body class="!pb-0">
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-TNRQGDM"
         height="0"
         width="0"
-        style="display:none;visibility:hidden"
-      ></iframe></noscript
+        style="display:none;visibility:hidden"></iframe></noscript
     >
-    <!-- End Google Tag Manager (noscript) -->
-    <Landing />
+    <!-- End Google Tag Manager -->
+
+    <main
+      class="bg-foreground relative isolate flex min-h-screen flex-col overflow-hidden px-5 py-8 sm:px-8 sm:py-12"
+    >
+      <div
+        class="pointer-events-none absolute inset-0 -z-20 [background-image:radial-gradient(#d9a84e_1px,transparent_1px)] [background-size:30px_30px] opacity-20"
+      >
+      </div>
+      <div
+        class="bg-primary/15 pointer-events-none absolute -top-48 -right-48 -z-10 size-[34rem] rounded-full blur-3xl"
+      >
+      </div>
+      <div
+        class="pointer-events-none absolute -bottom-60 -left-48 -z-10 size-[38rem] rounded-full bg-sky-300/10 blur-3xl"
+      >
+      </div>
+
+      <header class="mx-auto flex w-full max-w-5xl items-center justify-center">
+        <a
+          href="/"
+          aria-label="Ir al inicio de Sotomayor Consulting"
+          class="rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+        >
+          <Icon
+            name="logo-sotomayor-consulting-white"
+            class="h-auto w-52 brightness-0 invert sm:w-60"
+          />
+        </a>
+      </header>
+
+      <section class="mx-auto my-auto w-full max-w-2xl py-10 sm:py-14">
+        <Card
+          class="overflow-hidden rounded-[1.75rem] border-white/10 bg-white shadow-2xl shadow-black/25"
+        >
+          <div class="bg-primary h-1.5 w-full"></div>
+          <CardHeader
+            class="items-center px-6 pt-9 text-center sm:px-12 sm:pt-12"
+          >
+            <div
+              class="mb-5 grid size-20 place-items-center rounded-full bg-emerald-50 text-emerald-700 ring-8 ring-emerald-50/60"
+              aria-hidden="true"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.25"
+                class="size-10"
+              >
+                <path
+                  d="m5 12 4 4L19 6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <Badge tone="success" appearance="soft" eyebrow size="sm">
+              Cita confirmada
+            </Badge>
+            <h1
+              class="font-display text-foreground mt-4 max-w-lg text-3xl leading-tight font-bold tracking-[-.035em] sm:text-4xl"
+            >
+              Tu asesoría está agendada
+            </h1>
+            <p class="text-muted-foreground mt-3 max-w-lg text-base leading-7">
+              Recibimos tu reserva correctamente. Nuestro equipo te acompañará
+              para evaluar la estructura adecuada para tu LLC en Estados Unidos.
+            </p>
+          </CardHeader>
+
+          <CardContent class="px-6 sm:px-12">
+            <Separator class="my-2" />
+            <div class="grid gap-3 py-6 sm:grid-cols-3">
+              <div class="rounded-2xl bg-slate-50 p-4">
+                <span
+                  class="bg-primary/15 text-primary-accent mb-3 grid size-9 place-items-center rounded-xl"
+                  aria-hidden="true"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="size-5"
+                  >
+                    <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                    <path d="M16 3v4M8 3v4M3 10h18"></path>
+                  </svg>
+                </span>
+                <h2 class="font-display text-sm font-bold text-slate-900">
+                  Guarda la fecha
+                </h2>
+                <p class="mt-1 text-xs leading-5 text-slate-500">
+                  Añade la cita a tu calendario para tenerla a mano.
+                </p>
+              </div>
+              <div class="rounded-2xl bg-slate-50 p-4">
+                <span
+                  class="bg-primary/15 text-primary-accent mb-3 grid size-9 place-items-center rounded-xl"
+                  aria-hidden="true"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="size-5"
+                  >
+                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                    <path d="m3 7 9 6 9-6"></path>
+                  </svg>
+                </span>
+                <h2 class="font-display text-sm font-bold text-slate-900">
+                  Revisa tu correo
+                </h2>
+                <p class="mt-1 text-xs leading-5 text-slate-500">
+                  Allí encontrarás el enlace y todos los detalles.
+                </p>
+              </div>
+              <div class="rounded-2xl bg-slate-50 p-4">
+                <span
+                  class="bg-primary/15 text-primary-accent mb-3 grid size-9 place-items-center rounded-xl"
+                  aria-hidden="true"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="size-5"
+                  >
+                    <path d="M9 11h6M9 15h4"></path>
+                    <path
+                      d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
+                    ></path>
+                  </svg>
+                </span>
+                <h2 class="font-display text-sm font-bold text-slate-900">
+                  Prepara tus dudas
+                </h2>
+                <p class="mt-1 text-xs leading-5 text-slate-500">
+                  Anota tus preguntas para aprovechar la asesoría.
+                </p>
+              </div>
+            </div>
+            <p id="tracking-status" class="sr-only" aria-live="polite"></p>
+          </CardContent>
+
+          <CardFooter class="justify-center px-6 pb-9 sm:px-12 sm:pb-12">
+            <Button
+              href="/"
+              variant="primary"
+              size="lg"
+              class="w-full rounded-xl font-bold sm:w-auto"
+            >
+              Volver al sitio web
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path
+                  d="m9 18 6-6-6-6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </Button>
+          </CardFooter>
+        </Card>
+      </section>
+
+      <footer class="text-center text-xs text-white/45">
+        Sotomayor Consulting International
+      </footer>
+    </main>
+
+    <script>
+      const storageKey = "llcLeadSubmissionId";
+      const trackingStatus =
+        document.querySelector<HTMLElement>("#tracking-status");
+      const querySubmissionId = new URLSearchParams(window.location.search).get(
+        "submissionId",
+      );
+
+      let storedSubmissionId: string | null = null;
+      try {
+        storedSubmissionId = localStorage.getItem(storageKey);
+      } catch {
+        // Storage can be unavailable in privacy-restricted embedded browsers.
+      }
+
+      const submissionId = querySubmissionId || storedSubmissionId;
+      const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+      if (submissionId && uuidPattern.test(submissionId)) {
+        fetch("/api/calendar-confirmation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ submissionId }),
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error("Confirmation update failed");
+            try {
+              localStorage.removeItem(storageKey);
+            } catch {
+              // The database was updated even if local storage cannot be cleared.
+            }
+            if (trackingStatus) {
+              trackingStatus.textContent = "Confirmación registrada.";
+            }
+          })
+          .catch(() => {
+            if (trackingStatus) {
+              trackingStatus.textContent =
+                "La cita está confirmada, pero no se pudo vincular el registro.";
+            }
+          });
+      }
+    </script>
   </body>
 </html>

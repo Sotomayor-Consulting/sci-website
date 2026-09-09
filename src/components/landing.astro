@@ -1024,6 +1024,11 @@ const faqs = [
       trackingWindow.dataLayer.push({
         event: "lead_datos_completados",
       });
+      try {
+        localStorage.setItem("llcLeadSubmissionId", submissionId);
+      } catch {
+        // The lead flow must continue when browser storage is unavailable.
+      }
     } catch {
       setForm2Error(
         "No pudimos conectar con el servidor. Revisa tu conexión e inténtalo nuevamente.",
