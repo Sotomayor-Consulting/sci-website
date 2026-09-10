@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnóstico LLC | Sotomayor Consulting</title>
+    <title>¿Tu LLC está en regla? · Diagnóstico | Sotomayor Consulting</title>
     <meta name="description"
-        content="En 3 minutos: si te conviene una LLC en EE. UU., en qué estado abrirla y cuál es tu siguiente paso.">
+        content="En 3 minutos: qué tiene mal tu LLC hoy, qué puede convertirse en multa (5472, 1120, BOI), y qué corregir primero.">
     <meta name="robots" content="noindex,nofollow">
     <link rel="icon" type="image/png"
         href="https://sotomayorconsulting.com/wp-content/uploads/2024/12/isotipo-redondo.png">
@@ -19,10 +19,20 @@
 
     <!--
       ==========================================================================
-      DIAGNÓSTICO LLC — /diagnostico-llc/
-      Router de embudo para tráfico frío (TikTok/Meta). Quiz de 5 pasos → segmenta
-      la etapa del proyecto → captura el lead → siguiente paso (asesoría / guía).
-      Doc de sistema del par de landings directas: src/pages/leads-landing/_campanas-llc.md
+      DIAGNÓSTICO LLC — VARIANTE B — /diagnostico-llc-b/
+      Público: lead que YA TIENE una LLC con problemas (incorporación mal armada,
+      reportes/impuestos atrasados, estado equivocado, banca en riesgo, mantenimiento).
+      Par frío-directo: leads-landing/corregir-llc-existente/ (Landing B).
+      Variante A (lead sin LLC / primera vez): ../diagnostico-llc/.
+
+      MOTOR COMPARTIDO con ../diagnostico-llc/index.html: tracking, gate, Zcal, pipeline
+      de render, selector de país y funciones de flujo son IDÉNTICOS byte a byte — un
+      cambio de motor se sincroniza con un diff. Lo ESPECÍFICO de B (y lo único que
+      diverge): título/meta, SCI_TRACKING_CONFIG.page_name, hero, P1, generalQuestions,
+      step1Insights, stages, ROUTE_STEP, HERO_HOOKS, recommendedPathFor/altPathFor,
+      computeStage (severidad, no madurez), chooseRoute, gate/adelanto y los rótulos
+      del informe. `landing_variant:"b"` + `persona:"llc_existente"` van en el payload.
+      Doc de medición: src/pages/diagnostico-llc/_medicion.md (sección Variante B).
 
       FASE 1 (captura) + FASE 2 (tracking) — portado de Landing A (abrir-llc-primera-vez):
        · Form de 3 campos (nombre, WhatsApp E.164 + selector de país, correo) en el paso 6,
@@ -199,8 +209,10 @@
     <script>
       /* ---- Config de tracking — misma estructura que las landings A/B ---- */
       window.SCI_TRACKING_CONFIG = {
-        page_name: "landing_diagnostico_llc",
+        page_name: "landing_diagnostico_llc_b",
         page_category: "llc_advisory_diagnostic_lead_landing",
+        persona: "llc_existente",
+        landing_variant: "b",
         tiktok_pixel_id: "D5KFDEBC77U6BL6T7LDG",
         gtm_id: "GTM-TNRQGDM",
         meta_pixel_id: "__META_PIXEL_ID__", /* poner el Pixel ID real de Meta para activar Meta */
@@ -211,8 +223,8 @@
           schedule: "Schedule"
         },
         service_content: {
-          content_name: "Diagnóstico de madurez — LLC en EE. UU.",
-          description: "Evaluación de 5 preguntas: determina la etapa del proyecto y el siguiente paso (asesoría, autoservicio o guía)."
+          content_name: "Diagnóstico de LLC existente — riesgos y correcciones",
+          description: "Evaluación de 6 preguntas para una LLC ya abierta: nivel de riesgo (5472/1120/BOI, estado, banca) y qué corregir primero."
         },
         debug: false
       };
@@ -1167,9 +1179,9 @@
         </div>
 
         <div class="hero-content">
-            <h1 id="hero-h1">¿Necesitas una <span class="accent">LLC</span> en EE. UU.? Averígualo en 3 minutos.</h1>
-            <p class="hero-subtitle" id="hero-sub">Respondes 6 preguntas y te decimos tres cosas claras: si te conviene una
-                LLC, en qué estado abrirla, y cuál es tu siguiente paso. Gratis, sin compromiso.</p>
+            <h1 id="hero-h1">¿Tu <span class="accent">LLC</span> está en regla? Descúbrelo en 3 minutos.</h1>
+            <p class="hero-subtitle" id="hero-sub">Respondes 6 preguntas y te decimos tres cosas claras: qué tiene mal tu
+                LLC hoy, qué puede convertirse en multa, y qué corregir primero. Gratis, sin compromiso.</p>
 
             <div class="hero-badges">
                 <span>3 minutos</span>
@@ -1177,8 +1189,8 @@
                 <span>Sin costo</span>
             </div>
 
-            <button class="btn-start" id="btnStart">Empezar el diagnóstico →</button>
-            <p class="hero-agenda-note" style="margin-top:12px; font-size:13px; color:var(--text-muted); line-height:1.5;">Al terminar agendas tu reunión de asesoría, sin costo — tu asesor la recibe con tu caso ya sobre la mesa.</p>
+            <button class="btn-start" id="btnStart">Revisar mi LLC →</button>
+            <p class="hero-agenda-note" style="margin-top:12px; font-size:13px; color:var(--text-muted); line-height:1.5;">Al terminar agendas tu revisión con un especialista, sin costo — llega con tu caso ya sobre la mesa.</p>
 
             <p class="hero-trust">
                 <b>+5.000 empresas</b> incorporadas · <b>10 años</b> · <b>Partner de Mercury &amp; Relay</b><br>
@@ -1202,15 +1214,16 @@
         </div>
         <p class="progress-label" id="progress-label" aria-hidden="true"></p>
 
-        <!-- Pregunta 1 (Filtro / Tipo de Negocio) -->
+        <!-- Pregunta 1 (Filtro / Qué le preocupa de su LLC) -->
         <div class="step" data-step="1">
-            <h2>¿A qué se dedica tu negocio?</h2>
-            <p class="subtitle">Cada tipo de negocio juega con reglas distintas en EE. UU.</p>
+            <h2>¿Qué te preocupa de tu LLC ahora mismo?</h2>
+            <p class="subtitle">Marca lo que más te pesa. Si son varias cosas, elige la que más te quita el sueño.</p>
             <div class="options">
-                <label><input type="radio" name="filter" value="Servicios"> 💻 Servicios, consultoría o freelance</label>
-                <label><input type="radio" name="filter" value="Inversiones"> 🏠 Bienes raíces, trading o inversiones</label>
-                <label><input type="radio" name="filter" value="Ecom"> 📦 E-commerce, dropshipping o Amazon</label>
-                <label><input type="radio" name="filter" value="Otro"> 🤔 Otra cosa, o todavía no lo tengo claro</label>
+                <label><input type="radio" name="filter" value="Cumplimiento"> 📄 Reportes o impuestos atrasados (5472, 1120, BOI)</label>
+                <label><input type="radio" name="filter" value="Retiros"> 💸 Sacar dinero de mi LLC para uso personal sin problemas fiscales</label>
+                <label><input type="radio" name="filter" value="Estado"> 🗺️ Estar en el estado equivocado (franchise tax, costos de más)</label>
+                <label><input type="radio" name="filter" value="Banca"> 🏦 Problemas con el banco o las pasarelas de pago</label>
+                <label><input type="radio" name="filter" value="Revision"> 🔍 No estoy seguro — quiero que la revisen completa</label>
             </div>
             <div class="insight" id="insight-filtro"></div>
             <div class="navigation">
@@ -1241,8 +1254,8 @@
         <!-- Paso 8: adelanto + gate (apellido + WhatsApp + correo) -->
         <div class="step" data-step="8">
             <div id="lead-gate">
-                <h2 id="gate-title" tabindex="-1">Listo. Tu diagnóstico está hecho.</h2>
-                <p class="subtitle" id="gate-adelanto">Dinos a dónde te lo enviamos, con tu hoja de ruta completa.</p>
+                <h2 id="gate-title" tabindex="-1">Listo. Ya revisamos tu LLC.</h2>
+                <p class="subtitle" id="gate-adelanto">Dinos a dónde te enviamos el informe completo y qué corregir primero.</p>
                 <p class="mini-trust gate-trust"><span class="stars">★ 4,3/5</span> Trustpilot · +5.000 empresas incorporadas · 10 años · Partner de Mercury &amp; Relay</p>
                 <form id="lead-form" novalidate>
                     <input type="text" name="contact_channel" id="f-hp" class="hp" tabindex="-1" autocomplete="off"
@@ -1319,7 +1332,7 @@
 
     <!-- CTA flotante del informe (aparece al hacer scroll, tras 1,5 s) -->
     <div class="sticky-cta" id="sticky-cta" hidden>
-        <button type="button" id="sticky-cta-btn">Agendar mi sesión →</button>
+        <button type="button" id="sticky-cta-btn">Agendar mi revisión →</button>
     </div>
 
     <script>
@@ -1331,94 +1344,95 @@
         // Etapas: 1=Exploración, 2=Estructuración, 3=Formalización, 4=Optimización
         // ============================================================
         const step1Insights = {
-            "Servicios": "Tus clientes de fuera prefieren pagarle a una empresa, no a una persona. Una LLC te da <strong>contratos que se sostienen</strong>, acceso a plataformas que exigen empresa registrada, y una imagen seria desde el primer correo.",
-            "Inversiones": "Comprar o invertir a nombre tuyo mezcla tu patrimonio con el riesgo del negocio. Una LLC <strong>separa las dos cosas</strong>: si una inversión sale mal, no arrastra el resto. Y te abre bancos y brokers de EE. UU. que no trabajan con extranjeros a título personal.",
-            "Ecom": "Stripe, PayPal Business y los bancos de EE. UU. <strong>no aprueban cuentas a nombre de una persona extranjera</strong>. Piden empresa registrada. Una LLC es lo que destraba esas cuentas y hace que cobrar en dólares deje de ser un problema.",
-            "Otro": "No pasa nada por no tenerlo claro. Para eso son las siguientes preguntas: al final sabrás <strong>si necesitas una LLC ya, si te conviene esperar, o si tu caso pide algo distinto</strong>."
+            "Cumplimiento": "El Formulario 5472 no presentado son <strong>USD 25.000 de multa por año</strong>, y el 1120 pro-forma lo acompaña. La buena noticia: se pueden regularizar años atrás, y cuanto antes lo hagas, menor es la exposición.",
+            "Retiros": "El dinero de tu LLC <strong>no siempre se retira de la misma forma</strong>. Según cómo esté estructurada fiscalmente y quiénes sean los socios, hay retiros, distribuciones o sueldo — y cada uno declara y documenta distinto. Sacarlo mal puede costarte en impuestos o dejarte sin respaldo si te revisan.",
+            "Estado": "Miles de LLC están en Delaware pagando <i>franchise tax</i> sin necesitarla. Si tu operación no tiene nexo real ahí, <strong>mover de estado te quita ese costo</strong> todos los años —y a veces también te da privacidad.",
+            "Banca": "Mercury, Relay y Stripe revisan que tu estructura esté al día. Si tu LLC tiene reportes pendientes o el agente registrado caído, <strong>el banco lo ve y puede cerrarte la cuenta</strong>. Ordenar el cumplimiento es lo que blinda tu banca.",
+            "Revision": "Buena decisión. La mayoría de los problemas de una LLC <strong>no se ven hasta que llega la carta</strong>: una revisión ordenada saca a la luz lo que está pendiente antes de que se vuelva multa."
         };
 
         const generalQuestions = [
             {
                 id: "q2",
-                text: "¿En qué punto está tu negocio hoy?",
-                subtitle: "De esto depende si necesitas la estructura ya o si puedes esperar.",
+                text: "¿Cómo armaste tu LLC?",
+                subtitle: "Esto suele decir mucho de qué tan bien quedó puesta.",
                 options: [
-                    { val: "4", text: "Ya tengo una empresa en EE. UU. y quiero revisarla o mejorarla", insight: "Una estructura que ya existe casi siempre tiene algo que ajustar: la figura fiscal, el estado, o reportes pendientes." },
-                    { val: "3", text: "Opero formal en mi país y quiero expandirme a EE. UU.", insight: "Para operar en EE. UU. necesitas una empresa allá; la de tu país no basta. Ese es el puente que falta." },
-                    { val: "2", text: "Ya tengo clientes y ventas, pero facturo a nombre propio", insight: "Este es el momento: tienes ingresos que justifican la empresa y todavía no cargas el riesgo de operar sin ella." },
-                    { val: "1", text: "Todavía estoy validando la idea", insight: "Entonces aún no. Primero confirma que el mercado paga; la empresa se abre rápido cuando llegue el momento." }
+                    { val: "4", text: "Con un servicio online exprés, sin asesoría", insight: "Esos servicios registran la empresa y poco más: la figura fiscal, el estado y los reportes suelen quedar por defecto, no por tu caso." },
+                    { val: "3", text: "Con un contador o gestor que no era especialista en EE. UU.", insight: "El cumplimiento de una LLC extranjera (5472, 1120, BOI) tiene reglas propias. Un gestor general muchas veces no las cubre." },
+                    { val: "2", text: "Con una firma, pero ya no me da soporte", insight: "Quedó bien armada, pero sin alguien que la mantenga los reportes y las fechas se acumulan sin que te enteres." },
+                    { val: "1", text: "Con una firma que todavía me da mantenimiento", insight: "Buena base. Aun así conviene una segunda mirada: el estado, la figura fiscal o la banca cambian con tu volumen." }
                 ]
             },
             {
                 id: "q3",
                 text: "¿Qué es lo que más te apura resolver?",
-                subtitle: "Marca lo que te tiene detenido hoy.",
+                subtitle: "Marca lo que te tiene con la duda hoy.",
                 options: [
-                    { val: "cobros", text: "Poder cobrar en dólares sin trabas", insight: "Sin una empresa en EE. UU., las pasarelas y los bancos de calidad quedan fuera de tu alcance." },
-                    { val: "orden", text: "Corregir mi empresa antes de que un error me pase factura", insight: "Arreglar a tiempo cuesta una fracción de lo que cuesta un bloqueo o una multa con intereses." },
-                    { val: "impuestos", text: "Pagar menos impuestos, de forma legal", insight: "La estructura correcta, bien elegida, se paga sola con lo que dejas de pagar de más." },
-                    { val: "explorando", text: "Nada urgente — estoy viendo opciones", insight: "Perfecto. Primero claridad; la estructura viene cuando de verdad la necesites." }
+                    { val: "multa", text: "Tengo reportes o impuestos atrasados y no sé mi exposición", insight: "El 5472 fuera de plazo son USD 25.000 por año. Saber cuántos años debes y regularizarlo baja el riesgo de golpe." },
+                    { val: "banca", text: "El banco o Stripe me pidieron algo y no sé qué responder", insight: "Casi siempre piden prueba de estructura al día. Si hay reportes pendientes, hay que resolverlos antes de contestarles." },
+                    { val: "estado", text: "Pago costos del estado que creo que no me tocan", insight: "Si no tienes nexo real en ese estado, mover la LLC te quita la franchise tax y las tasas cada año." },
+                    { val: "revision", text: "Nada urgente — quiero que la revisen y me digan", insight: "Bien. Una revisión ordenada te dice qué está al día y qué no, antes de que algo se vuelva problema." }
                 ]
             },
             {
                 id: "q4",
-                text: "¿Cuánto factura (o va a facturar) tu negocio al año?",
-                subtitle: "Un rango aproximado basta. Define qué tan afinada tiene que estar tu parte fiscal.",
+                text: "¿Cuánto factura tu LLC al año?",
+                subtitle: "Un rango aproximado basta. Define el tamaño de la exposición fiscal.",
                 options: [
-                    { val: "4", text: "Más de USD 250.000", insight: "A este nivel, una estructura genérica te cuesta miles al año en impuestos que podrías evitar." },
-                    { val: "3", text: "Entre USD 50.000 y 250.000", insight: "Aquí proteger tu patrimonio y pagar lo justo de impuestos deja de ser opcional." },
-                    { val: "2", text: "Entre USD 10.000 y 50.000", insight: "En este rango, la estructura se paga sola con lo que ahorras y con las cuentas que destrabas." },
-                    { val: "1", text: "Menos de USD 10.000", insight: "El costo de mantener la empresa tiene que ser bajo. Hay caminos livianos para empezar." }
+                    { val: "4", text: "Más de USD 250.000", insight: "A este volumen, una figura fiscal por defecto te cuesta miles al año, y un error en los reportes pesa mucho más." },
+                    { val: "3", text: "Entre USD 50.000 y 250.000", insight: "Aquí la elección fiscal y el estado ya mueven la aguja. Vale la pena revisarlos con tus números." },
+                    { val: "2", text: "Entre USD 10.000 y 50.000", insight: "El foco es no pagar de más por mantener la empresa y tener los reportes en orden." },
+                    { val: "1", text: "Poco o nada — casi no la uso", insight: "Entonces la pregunta es si conviene mantenerla, migrarla o cerrarla bien para que no siga generando obligaciones." }
                 ]
             },
             {
                 id: "q5",
-                text: "¿Para dónde quieres llevar esto en 3 años?",
-                subtitle: "La estructura de hoy tiene que aguantar el negocio de mañana.",
+                text: "¿Qué quieres hacer con tu LLC?",
+                subtitle: "La corrección de hoy depende de a dónde la lleves.",
                 options: [
-                    { val: "4", text: "Construir una empresa grande, o venderla", insight: "Entonces tiene que estar impecable desde el día uno: un comprador o un inversionista revisa cada detalle." },
-                    { val: "4", text: "Proteger tu patrimonio y diversificar", insight: "Aquí la empresa funciona como un escudo: separa lo que arriesgas de lo que quieres conservar." },
-                    { val: "2", text: "Vivir de esto sin depender de nadie", insight: "Necesitas una base que separe tu dinero personal del de la empresa, sin complicarte." },
-                    { val: "1", text: "Un ingreso extra, sin que te robe tiempo", insight: "Perfecto. Algo simple y barato de mantener, que funcione solo." }
+                    { val: "4", text: "Ordenarla del todo y dejarla lista para crecer o vender", insight: "Un comprador o un inversionista revisa cada detalle. Tiene que quedar impecable: reportes, estado, figura fiscal, banca." },
+                    { val: "4", text: "Protegerla: que no me la disuelvan ni me bloqueen la banca", insight: "Eso es cumplimiento al día y agente registrado activo. Es lo primero que revisa un banco y lo primero que mira el estado." },
+                    { val: "2", text: "Mantenerla al día sin complicarme", insight: "Necesitas un calendario claro de reportes y alguien que los presente por ti. Nada más." },
+                    { val: "1", text: "Cerrarla o migrarla — ya casi no la uso", insight: "Cerrar mal deja obligaciones abiertas. Se hace en orden: reportes al día, disolución formal y baja del EIN." }
                 ]
             },
             {
                 // P6 — dónde le pesa la operación al lead. Lenguaje de RESULTADO, no de marcas (inbound).
-                // NO entra en el promedio de etapa. Alimenta: bonus al value, recomendación en el informe, cross_sell.
+                // NO entra en el promedio de severidad. Alimenta: bonus al value, recomendación en el informe, cross_sell.
                 id: "q6",
                 text: "Última pregunta: ¿qué parte de tu operación te consume más tiempo?",
-                subtitle: "La estructura resuelve lo legal. Dinos qué más te frena y te decimos si podemos quitártelo de encima.",
+                subtitle: "La revisión resuelve lo legal. Dinos qué más te frena y te decimos si podemos quitártelo de encima.",
                 options: [
                     { val: "pagos", text: "Cobrar y cuadrar los pagos a mano", insight: "Cuando cada cobro se registra solo, dejas de perder tardes con la calculadora y sabes al instante cuánto entró." },
                     { val: "automatizacion", text: "Dar seguimiento, mandar recordatorios, armar reportes", insight: "Todo lo que repites cada semana puede quedar funcionando solo. Ese tiempo vuelve a vender." },
                     { val: "sistema", text: "Saltar entre correos, hojas de cálculo y apps sueltas", insight: "Con todo en un solo lugar, dejas de buscar el dato por todos lados y tu equipo trabaja sobre lo mismo." },
-                    { val: "ninguno", text: "Nada — solo quiero la estructura lista", insight: "Perfecto. Primero la estructura impecable. Lo demás, cuando lo necesites." }
+                    { val: "ninguno", text: "Nada — solo quiero la LLC en orden", insight: "Perfecto. Primero la estructura impecable. Lo demás, cuando lo necesites." }
                 ]
             }
         ];
 
-        // FASE 10 — informe por etapa. `label` corto para el veredicto y el track de 4 segmentos.
-        // `headline` espejea la situación; `cost` = el costo de esperar (una frase, con consecuencia concreta).
+        // Informe por NIVEL DE RIESGO (no madurez). `label` corto para el veredicto y el track de 4 segmentos.
+        // `headline` espejea la situación de la LLC; `cost` = qué pasa si no se corrige (una frase, consecuencia concreta).
         const stages = {
             1: {
-                label: "Exploración",
-                headline: "Todavía no tienes ventas constantes. Abrir una empresa ahora es <strong>pagar cuotas todos los años por algo que aún no factura</strong>. Primero valida que el mercado paga. La empresa se abre en semanas cuando llegue el momento.",
-                cost: "acabas pagando agente registrado, mantenimiento anual y el reporte 5472 por una empresa vacía. Ese dinero lo necesitas para probar tu idea."
+                label: "Al día",
+                headline: "Por lo que nos cuentas, tu LLC parece estar en orden. <strong>Una revisión preventiva confirma que no hay nada oculto</strong> —reportes, estado, agente registrado, banca— antes de que algo se convierta en un problema.",
+                cost: "un detalle que hoy no ves —un reporte estatal, el agente registrado vencido, la figura fiscal— se vuelve una multa o un bloqueo el día que llega la carta."
             },
             2: {
-                label: "Estructuración",
-                headline: "Ya vendes, pero facturas a nombre tuyo. <strong>Cada cobro y cada contrato caen sobre tu bolsillo personal.</strong> Es el momento exacto de abrir tu LLC: tienes ingresos que la justifican y todavía no cargas el riesgo de operar sin ella.",
-                cost: "si un cliente reclama, responde tu patrimonio; Stripe y los bancos serios te rechazan; y facturarle a una empresa grande a nombre propio te resta credibilidad."
+                label: "Ajustes menores",
+                headline: "Tu LLC funciona, pero hay piezas por afinar: la elección fiscal, el Operating Agreement o el estado. <strong>Ajustarlo ahora es barato; después de un problema, no.</strong>",
+                cost: "una figura fiscal por defecto te cuesta de más en impuestos cada año, y un Operating Agreement sin cláusulas de socios te deja expuesto si hay una disputa."
             },
             3: {
-                label: "Formalización",
-                headline: "Tu negocio ya funciona y crece, pero no tienes una empresa en EE. UU. a la altura —o no tienes ninguna—. <strong>Cada mes que pasa así, el problema se hace más grande y más caro de arreglar.</strong>",
-                cost: "operar informal o con una empresa mal armada te lleva a lo mismo: cuentas bloqueadas, contratos que no puedes hacer valer, y ajustes de impuestos hacia atrás que cuestan mucho más que hacerlo bien hoy."
+                label: "Correcciones pendientes",
+                headline: "Tu LLC tiene correcciones que no pueden esperar —reportes atrasados, estado equivocado o banca en riesgo—. <strong>Cada mes que pasa, la exposición crece.</strong>",
+                cost: "un 5472 fuera de plazo son USD 25.000 por año; un reporte estatal caído puede disolver tu LLC administrativamente; y con ella se va tu banca."
             },
             4: {
-                label: "Optimización",
-                headline: "Tu volumen y tu meta —crecer, levantar inversión o vender— piden una estructura afinada. <strong>La que tienes hoy no lo está, y a tu nivel eso se mide en dinero.</strong>",
-                cost: "una estructura genérica a tu escala significa impuestos de más cada año, tu patrimonio expuesto, y huecos que un comprador o un inversionista van a encontrar."
+                label: "Riesgo alto",
+                headline: "Por lo que describes, tu LLC está expuesta a multas fuertes o al cierre de cuentas. <strong>Esto no se arregla solo y cada semana cuenta.</strong>",
+                cost: "5472 y 1120 sin presentar, BOI vencido o el estado en disolución: cualquiera de estos, sin actuar, termina en multa con intereses o en perder la empresa y la banca."
             }
         };
 
@@ -1429,58 +1443,60 @@
         const INCLUYE = "EIN · Agente registrado · Operating Agreement · Dirección comercial · Cuenta bancaria de empresa · Pasarela de pagos internacional";
 
         const ROUTE_STEP = {
+            // Camino primario de la variante B: revisión de la LLC ya abierta.
             advisor: {
-                line: "Tu caso tiene decisiones que no salen de una plantilla: qué estado, qué figura fiscal, en qué orden. Eso se define contigo, mirando tus números.",
+                line: "Ya tienes tu LLC. Por lo que describes, algo no está bien puesto. Revisarlo ahora cuesta mucho menos que un bloqueo bancario o una multa con intereses.",
                 heading: "En 30 minutos, sin costo, sales con:",
                 outcomes: [
-                    "El estado que te conviene, y por qué (no siempre es Delaware)",
-                    "Tu estructura y tu plan, con el precio real por delante",
-                    "Qué haces primero, quién lo hace y en cuánto tiempo"
+                    "Qué está mal en tu LLC hoy, y qué urge corregir primero",
+                    "Cómo estás con tus reportes (5472 · 1120 · BOI) y cómo ponerte al día",
+                    "Si te conviene cambiar de estado, y con qué costo"
                 ],
-                incluye: INCLUYE,
-                noReq: NO_REQ,
-                cta: "Agendar mi sesión →",
-                note: "Con un especialista de la firma. Una persona, no un formulario."
-            },
-            // Variante para quien YA tiene LLC (P2 = "4") — landing B.
-            advisor_correct: {
-                line: "Ya tienes tu LLC. Por lo que describes, algo no está bien puesto. Arreglarlo ahora cuesta mucho menos que un bloqueo o una multa con intereses.",
-                heading: "En 30 minutos, sin costo, sales con:",
-                outcomes: [
-                    "Qué está mal en tu empresa hoy, y qué urge más",
-                    "Si te conviene cambiar de estado, y cuánto cuesta",
-                    "Cómo estás con tus reportes (5472 / 1120) y cómo ponerte al día"
-                ],
-                incluye: "Revisión de la estructura · Figura fiscal · Reportes · Cambio de estado · Banca y pagos",
+                incluye: "Revisión de estructura · Figura fiscal · Reportes y BOI · Cambio de estado · Banca y pagos",
                 noReq: "",
                 cta: "Agendar mi revisión →",
                 note: "Con un especialista de la firma. Una persona, no un formulario."
             },
-            // Camino AUXILIAR (estilo Firstbase): para quien ya sabe qué quiere abrir.
+            // Alias (renderResult puede pedirlo): mismo contenido que advisor en la variante B.
+            advisor_correct: {
+                line: "Ya tienes tu LLC. Por lo que describes, algo no está bien puesto. Revisarlo ahora cuesta mucho menos que un bloqueo bancario o una multa con intereses.",
+                heading: "En 30 minutos, sin costo, sales con:",
+                outcomes: [
+                    "Qué está mal en tu LLC hoy, y qué urge corregir primero",
+                    "Cómo estás con tus reportes (5472 · 1120 · BOI) y cómo ponerte al día",
+                    "Si te conviene cambiar de estado, y con qué costo"
+                ],
+                incluye: "Revisión de estructura · Figura fiscal · Reportes y BOI · Cambio de estado · Banca y pagos",
+                noReq: "",
+                cta: "Agendar mi revisión →",
+                note: "Con un especialista de la firma. Una persona, no un formulario."
+            },
+            // Camino AUXILIAR: para quien quiere sumar una segunda entidad (holding, otra figura).
             platform: {
-                line: "¿Ya sabes exactamente qué quieres abrir? No necesitas una llamada. Nuestra plataforma arma tu empresa por ti, sin trámites ni idas y vueltas.",
+                line: "¿Ya sabes que necesitas otra entidad —un holding, una Corp— además de tu LLC? Puedes iniciarla tú mismo en nuestra plataforma de incorporación.",
                 heading: "En la plataforma, en minutos:",
                 outcomes: [
                     "Eliges figura (LLC o Corp) y estado",
-                    "Propones el nombre de tu empresa",
+                    "Propones el nombre de la nueva entidad",
                     "Un experto de la firma revisa todo antes de registrar"
                 ],
                 incluye: INCLUYE,
                 noReq: NO_REQ,
-                cta: "Abrir mi empresa →",
-                note: "Más rápido y más exacto que hacerlo a mano. Para quien ya tiene claro qué necesita."
+                cta: "Abrir otra entidad →",
+                note: "Para quien ya tiene claro qué estructura adicional necesita."
             },
+            // Camino de bajo compromiso: LLC al día, sin urgencia → checklist de mantenimiento.
             guide: {
-                line: "Todavía no necesitas una empresa. Lo inteligente es validar primero y estructurarte cuando el negocio lo pida.",
-                heading: "En la guía tienes:",
+                line: "Tu LLC parece estar al día. Te mandamos la checklist de mantenimiento anual para que ninguna fecha se te pase.",
+                heading: "En la checklist tienes:",
                 outcomes: [
-                    "Cómo validar tu mercado sin gastar en trámites",
-                    "La señal clara de que ya es momento de abrir la LLC",
-                    "Los 3 errores de quienes se apuran a estructurarse"
+                    "Las fechas de 5472, 1120, BOI y reporte estatal, mes a mes",
+                    "Qué te pide el estado para mantener el agente registrado",
+                    "Las 3 señales de que tu LLC necesita una revisión a fondo"
                 ],
                 incluye: "",
                 noReq: "",
-                cta: "Enviarme la guía →",
+                cta: "Enviarme la checklist →",
                 note: "Te llega al correo. Y te escribimos por WhatsApp para acompañarte."
             }
         };
@@ -1794,44 +1810,65 @@
         // Fase 8 — message-match del H1 según ?hook= / ?utm_content=
         // Un hook por guión de video (ver _medicion.md). El H1 continúa la frase de apertura del anuncio;
         // `hintFilter` / `hintQ2` preseleccionan P1 / P2 con lo que el anuncio ya estableció (el usuario puede cambiarlo).
-        // Variante A: solo personas SIN LLC / primera vez. Las personas con LLC (Carlos, Sebastián,
-        // "atrasadas/estado/ordenar/utilidades") viven en /diagnostico-llc-b/ con sus propios hooks.
+        // Variante B: todos los hooks asumen una LLC YA ABIERTA con algo que corregir.
+        // hintFilter mapea a P1 (Cumplimiento · Estado · Banca · Revision).
         const HERO_HOOKS = {
-            // DIEGO — planificar antes de incorporar (guión aprobado)
-            diego: {
-                h1: 'Antes de preguntar cuánto cuesta abrir una <span class="accent">LLC</span>: ¿funcionaría para tu modelo de negocio?',
-                sub: 'No todos los negocios se estructuran igual. Respondes 6 preguntas y te decimos la estructura y el estado correctos para tu caso, antes de incorporar. Gratis.'
+            // CARLOS — declaraciones / reportes atrasados (5472 · 1120 · BOI)
+            atrasadas: {
+                h1: '¿Declaraciones atrasadas en tu <span class="accent">LLC</span>? Mira qué tan grave es en 3 minutos.',
+                sub: 'El Formulario 5472 / 1120 sin presentar son USD 25.000 por año. Respondes 6 preguntas y te decimos tu exposición real y cómo ponerte al día. Gratis.',
+                hintFilter: 'Cumplimiento'
             },
-            planificar: { alias: 'diego' },
-            // VALERIA — cobros internacionales (guión aprobado)
-            cobros: {
-                h1: 'Tu negocio ya vende internacionalmente. ¿Tu estructura está preparada para <span class="accent">cobrar a nivel global</span>?',
-                sub: 'Stripe, PayPal y la banca de empresa verifican tu empresa, sus responsables y tu documentación — no solo que tengas una LLC. Te decimos qué preparar para que te aprueben. Gratis.'
+            cumplimiento: { alias: 'atrasadas' },
+            '5472': { alias: 'atrasadas' },
+            boi: {
+                h1: 'Nunca presentaste el reporte <span class="accent">BOI</span>. ¿Cuánto riesgo tienes? 3 minutos.',
+                sub: 'El BOI ante FinCEN tiene plazo y sanción. Diagnostica tu situación y el camino para regularizarlo antes de que se vuelva multa. Gratis.',
+                hintFilter: 'Cumplimiento'
             },
-            dolares: { alias: 'cobros' },
-            internacional: { alias: 'cobros' },
-            // CLIENTE CORPORATIVO — estructura multinivel / expansión (guión aprobado)
-            corporativo: {
-                h1: 'Una empresa internacional necesita <span class="accent">mucho más que ser incorporada</span>.',
-                sub: 'Estructuras de varios niveles —operativas, holdings, trusts, varias jurisdicciones— conectadas con contabilidad, planificación fiscal y banca. Diagnostica qué necesita tu caso. Gratis.',
-                hintQ2: '3'
+            // Estado equivocado / franchise tax
+            estado: {
+                h1: '¿Elegiste el <span class="accent">estado equivocado</span> para tu LLC? Compruébalo en 3 minutos.',
+                sub: 'Delaware no siempre conviene, y la franchise tax se acumula todos los años. Revisamos tu caso y si vale la pena cambiar de estado. Gratis.',
+                hintFilter: 'Estado'
             },
-            holding: { alias: 'corporativo' },
-            expansion: { alias: 'corporativo' },
-            // ALEJANDRO Y MARINA — inversión inmobiliaria (guión aprobado)
-            inmobiliaria: {
-                h1: '¿Vas a invertir en <span class="accent">bienes raíces</span> en EE. UU.? La forma de comprarla importa tanto como la propiedad.',
-                sub: 'A título personal, con una LLC o con socios: cada opción cambia las consecuencias jurídicas y fiscales. También evaluamos tu precalificación de financiamiento. Diagnostica tu caso. Gratis.',
-                hintFilter: 'Inversiones'
+            franchise: { alias: 'estado' },
+            delaware: { alias: 'estado' },
+            // Banca / pasarelas en riesgo
+            banca: {
+                h1: '¿El banco o <span class="accent">Stripe</span> te están pidiendo papeles de tu LLC? Resuélvelo en 3 minutos.',
+                sub: 'Mercury, Relay y Stripe revisan que tu estructura esté al día. Te decimos qué corregir antes de responderles, para no arriesgar la cuenta. Gratis.',
+                hintFilter: 'Banca'
             },
-            realestate: { alias: 'inmobiliaria' },
-            bienes: { alias: 'inmobiliaria' },
-            // Genérico patrimonio / holding personal
-            patrimonio: {
-                h1: 'Protege tu patrimonio con la <span class="accent">estructura correcta</span> en EE. UU.',
-                sub: 'Te decimos qué estructura necesita tu caso —LLC o algo mayor—, en qué estado, y el siguiente paso. Gratis y sin compromiso.',
-                hintFilter: 'Inversiones'
-            }
+            mercury: { alias: 'banca' },
+            stripe: { alias: 'banca' },
+            pagos: { alias: 'banca' },
+            // SEBASTIÁN — sacar dinero de la LLC para uso personal (guión "Dinero de la utilidad")
+            utilidades: {
+                h1: 'Tienes una <span class="accent">LLC</span>, ¿pero no sabes cómo usar sus ganancias para ti? Compruébalo en 3 minutos.',
+                sub: 'El dinero de tu LLC no siempre se retira igual: retiros, distribuciones o sueldo, cada uno declara distinto según tu estructura y tus socios. Diagnostica tu caso antes de mover el dinero. Gratis.',
+                hintFilter: 'Retiros'
+            },
+            ganancias: { alias: 'utilidades' },
+            retiros: { alias: 'utilidades' },
+            dividendos: { alias: 'utilidades' },
+            sueldo: { alias: 'utilidades' },
+            // Genérico "ordenar / revisar"
+            ordenar: {
+                h1: '¿Ya tienes una <span class="accent">LLC</span>? Ordénala antes de que un error te cueste caro.',
+                sub: 'Revisamos tu estructura actual —reportes, estado, figura fiscal, banca— y te decimos qué corregir primero. Gratis y sin compromiso.',
+                hintFilter: 'Revision'
+            },
+            revision: { alias: 'ordenar' },
+            mantenimiento: { alias: 'ordenar' },
+            estructura: { alias: 'ordenar' },
+            // LLC inactiva → cerrar o migrar
+            disolucion: {
+                h1: '¿Tu <span class="accent">LLC</span> quedó inactiva? Ciérrala o migrála sin dejar cabos sueltos. 3 minutos.',
+                sub: 'Una LLC abandonada sigue generando obligaciones y multas. Te decimos cómo cerrarla en orden o migrarla. Gratis.',
+                hintFilter: 'Revision'
+            },
+            cerrar: { alias: 'disolucion' }
         };
         let hookHints = { filter: "", q2: "" };
         function applyHook() {
@@ -1939,7 +1976,7 @@
             // Subtítulo personalizado en P2 (agradecer el nombre) y P3 (re-enganche a mitad).
             let sub = qData.subtitle;
             if (qData.id === "q2" && nm) sub = "Gracias, " + nm + ". " + sub;
-            if (qData.id === "q3") sub = (nm ? "Vas por la mitad, " + nm + ". " : "") + "Marca lo que te tiene detenido hoy.";
+            if (qData.id === "q3") sub = (nm ? "Vas por la mitad, " + nm + ". " : "") + "Marca lo que te tiene con la duda hoy.";
 
             if (!stepEl.dataset.rendered) {
                 stepEl.innerHTML = `
@@ -2041,11 +2078,11 @@
             const nm = userResponses.first_name || "";
             const fact = (userResponses.q4_text || "").replace(/\s*\([^)]*\)/, "").trim();
             const vis = (userResponses.q5_text || "").trim();
-            document.getElementById('gate-title').textContent = (nm ? nm + ", tu diagnóstico está hecho." : "Listo. Tu diagnóstico está hecho.");
+            document.getElementById('gate-title').textContent = (nm ? nm + ", ya revisamos tu LLC." : "Listo. Ya revisamos tu LLC.");
             let mirror = "";
-            if (fact && vis) mirror = "Por lo que nos contaste —facturas " + fact.charAt(0).toLowerCase() + fact.slice(1) + " y quieres " + vis.charAt(0).toLowerCase() + vis.slice(1) + "— tu negocio está en la <strong>Etapa " + st + " de 4: " + stages[st].label + "</strong>. ";
-            else mirror = "Tu negocio está en la <strong>Etapa " + st + " de 4: " + stages[st].label + "</strong>. ";
-            document.getElementById('gate-adelanto').innerHTML = mirror + "Dinos a dónde te enviamos la hoja de ruta completa y tu siguiente paso.";
+            if (fact && vis) mirror = "Por lo que nos contaste —facturas " + fact.charAt(0).toLowerCase() + fact.slice(1) + " y quieres " + vis.charAt(0).toLowerCase() + vis.slice(1) + "— tu LLC está en <strong>nivel de riesgo " + st + " de 4: " + stages[st].label + "</strong>. ";
+            else mirror = "Tu LLC está en <strong>nivel de riesgo " + st + " de 4: " + stages[st].label + "</strong>. ";
+            document.getElementById('gate-adelanto').innerHTML = mirror + "Dinos a dónde te enviamos el informe completo y qué corregir primero.";
         }
 
         function goToPrevStep() {
@@ -2068,8 +2105,8 @@
         // CÁLCULO DE ETAPA + goal derivado
         // ============================================================
         function computeStage() {
-            // Madurez = etapa (q2) + facturación (q4) + visión (q5). q3 (bloqueo/temor) NO promedia:
-            // mide fricción emocional, no madurez; se usa solo para `goal` y el copy del insight.
+            // Variante B: NIVEL DE RIESGO, no madurez. Promedia armado (q2: 4=servicio exprés=peor) +
+            // facturación (q4: más volumen = más exposición) + objetivo (q5). q6 no promedia.
             const values = ["q2", "q4", "q5"]
                 .map(k => userResponses[k])
                 .filter(v => v != null && v !== "" && !isNaN(v))
@@ -2077,6 +2114,10 @@
             const sum = values.reduce((a, b) => a + b, 0);
             const avg = values.length ? sum / values.length : 1;
             let stageId = Math.round(avg);
+            // Señal dura de corrección pendiente: reportes/impuestos atrasados, banca en riesgo o
+            // querer sacar dinero sin estructura clara -> mínimo 3 (necesita asesor, no checklist).
+            const r = userResponses;
+            if (r.filter === "Cumplimiento" || r.filter === "Retiros" || r.q3 === "multa" || r.q3 === "banca") stageId = Math.max(stageId, 3);
             if (stageId < 1) stageId = 1;
             if (stageId > 4) stageId = 4;
             return { stageId: stageId, avg: avg };
@@ -2085,11 +2126,13 @@
         // ponytail: mapa mínimo quiz -> taxonomía `goal` de Odoo (ver _campanas-llc.md).
         // Solo modelo (filter) + etapa (q2). q3 no decide el goal (un servicio con problema de cobro
         // sigue necesitando "llc_nueva", no "banca_pagos").
+        // Variante B: todos ya tienen LLC. goal mapea a la taxonomía de Landing B (corregir-llc-existente).
         function deriveGoal(r) {
-            if (r.q2 === "4") return "ordenar_llc";                       // ya tiene estructura, optimizar
-            if (r.filter === "Inversiones") return "inversion_patrimonio";
-            if (r.filter === "Ecom") return "banca_pagos";                // e-commerce = cobros / pasarelas
-            return "llc_nueva";
+            if (r.filter === "Cumplimiento" || r.q3 === "multa") return "cumplimiento";   // 5472 / 1120 / BOI atrasados
+            if (r.filter === "Retiros") return "retiros_utilidades";                       // sacar dinero de la LLC (Sebastián)
+            if (r.filter === "Estado" || r.q3 === "estado") return "cambio_estado";
+            if (r.filter === "Banca" || r.q3 === "banca") return "banca_pagos";
+            return "ordenar_llc";                                                          // revisión general
         }
 
         // ============================================================
@@ -2100,19 +2143,18 @@
         //  - q2 = "4"  (ya tiene una estructura en EE. UU. -> corregir/optimizar)
         //  - q4 = "4"  (> $250k -> estrategia fiscal avanzada)
         // La ambición de la visión (q5) y la facturación media (q4="3") NO son complejidad estructural.
+        // Variante B: casi todo el tráfico necesita revisión con asesor. "alta" = urge o hay volumen.
         function deriveComplexity(r) {
-            if (r.filter === "Inversiones" || r.q2 === "4" || r.q4 === "4") return "alta";
+            if (r.q4 === "4" || r.filter === "Cumplimiento" || r.filter === "Retiros" || r.q3 === "multa" || r.q3 === "banca") return "alta";
             return "baja";
         }
 
-        // route: "guide" (nurture) | "selfserve" (app /start) | "zcal" (asesoría)
-        // Plataforma es el DEFAULT para perfil simple; asesor solo si hay complejidad estructural.
+        // route: "guide" (checklist de mantenimiento) | "zcal" (revisión con asesor).
+        // Variante B NO usa la plataforma como camino primario. Casi todo -> revisión (zcal).
         function chooseRoute(stageId, r) {
-            if (stageId === 1) return "guide";
-            // "sin prisa" en etapa temprana -> nurture con la guía, no empujar a agendar todavía.
-            if (r.q3 === "explorando" && stageId <= 2) return "guide";
-            if (deriveComplexity(r) === "alta") return "zcal";
-            return "selfserve";
+            // LLC al día, sin urgencia y de bajo volumen -> checklist de mantenimiento (nurture).
+            if (stageId === 1 && r.q3 === "revision" && (r.q4 === "1" || r.q4 === "2")) return "guide";
+            return "zcal";
         }
 
         // ponytail: heurística mínima de estado sugerido para /start; el wizard/asesor lo puede cambiar.
@@ -2154,7 +2196,7 @@
         }
 
         function buildDiagnosticSummary(stageId) {
-            const shortLabels = { filter: "Modelo", q2: "Etapa", q3: "Urgencia", q4: "Facturación", q5: "Visión", q6: "Tecnología" };
+            const shortLabels = { filter: "Preocupación", q2: "Cómo la armó", q3: "Urgencia", q4: "Facturación", q5: "Objetivo", q6: "Operación" };
             const parts = [];
             for (const key of Object.keys(shortLabels)) {
                 const value = userResponses[key];
@@ -2163,15 +2205,15 @@
             }
             const s = stages[stageId];
             const cleanHeadline = s.headline.replace(/<\/?[^>]+(>|$)/g, "");
-            parts.push(`RESULTADO: [Etapa ${stageId}/4 — ${s.label}] ${cleanHeadline}`);
+            parts.push(`RESULTADO: [Riesgo ${stageId}/4 — ${s.label}] ${cleanHeadline}`);
             return parts.join(' | ');
         }
 
         // Temperatura del lead a partir de la urgencia (P3). Para priorización en n8n.
         function leadTemp(r) {
-            if (r.q3 === "explorando") return "frio";
-            if (r.q3 === "impuestos" || r.q3 === "orden") return "caliente";
-            return "tibio";
+            if (r.q3 === "revision") return "frio";
+            if (r.q3 === "multa" || r.q3 === "banca") return "caliente";
+            return "tibio";   // q3 === "estado"
         }
 
         // Ensambla el payload del lead al enviar el gate (paso 8). El camino aún no se ha elegido
@@ -2224,8 +2266,10 @@
                 page_url: location.href,
                 page_name: PAGE_NAME,
                 id_diagnostico: uniqueId,
+                persona: "llc_existente",
+                landing_variant: "b",
                 diag_stage_id: stageId,
-                diag_stage_title: "Etapa " + stageId + "/4 — " + stages[stageId].label,
+                diag_stage_title: "Riesgo " + stageId + "/4 — " + stages[stageId].label,
                 lead_temp: leadTemp(userResponses),
                 diag_industria: userResponses.filter || "",
                 diag_etapa: userResponses.q2_text || (userResponses.q2 ? answerText("q2", userResponses.q2) : ""),
@@ -2337,19 +2381,19 @@
         function recommendedPathFor(route) {
             return route === 'guide' ? 'guide' : 'advisor';
         }
-        // Una sola alternativa por resultado (menos fricción de decisión en el punto de conversión):
-        //  - si se recomienda agendar  -> alternativa = "ya sé qué quiero, ir a la plataforma"
-        //  - si se recomienda la guía  -> alternativa = "prefiero hablar con un especialista"
+        // Variante B — una sola alternativa por resultado:
+        //  - si se recomienda la revisión -> alternativa = "mi LLC está al día, mándame la checklist"
+        //  - si se recomienda la checklist -> alternativa = "prefiero hablar con un especialista"
         function altPathFor(recommended) {
-            return recommended === 'guide' ? 'advisor' : 'platform';
+            return recommended === 'guide' ? 'advisor' : 'guide';
         }
 
         const ALT_LABEL = {   // texto del enlace según el camino AL QUE LLEVA
-            platform: "Ya sé qué quiero abrir — ir a la plataforma",
+            platform: "Necesito abrir otra entidad — ir a la plataforma",
             advisor: "Prefiero hablar con un especialista",
-            guide: "Todavía no — solo mándame la guía"
+            guide: "Mi LLC está al día — mándame la checklist"
         };
-        const STAGE_SHORT = ["Explora", "Estructura", "Formaliza", "Optimiza"];
+        const STAGE_SHORT = ["Al día", "Ajustes", "Correcciones", "Riesgo alto"];
 
         function esc(s) { return String(s == null ? "" : s).replace(/[<>&]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c])); }
 
@@ -2359,23 +2403,20 @@
             const route = currentRoute || chooseRoute(stageId, userResponses);
             const complejidad = deriveComplexity(userResponses);
             const recommended = recommendedPathFor(route);
-            const hasLLC = userResponses.q2 === "4";
+            const hasLLC = true;   // variante B: todo el tráfico ya tiene una LLC
             let step = ROUTE_STEP[recommended];
-            if (recommended === 'advisor' && hasLLC) step = ROUTE_STEP.advisor_correct;   // persona B
-            // "listo por madurez pero sin prisa" (q3=explorando en etapa >=2): guía, sin decir "no la necesitas".
-            if (recommended === 'guide' && stageId >= 2) {
-                step = {
-                    line: "Por tus números ya podrías estructurarte, pero dijiste que no hay prisa. Empieza por la guía y agenda cuando quieras avanzar.",
-                    heading: "En la guía tienes:",
+            if (recommended === 'advisor') step = ROUTE_STEP.advisor_correct;   // copy de revisión/corrección
+            // Sebastián — "sacar dinero de la LLC": el informe habla de retiros, no de reportes atrasados.
+            if (recommended === 'advisor' && userResponses.filter === "Retiros") {
+                step = Object.assign({}, ROUTE_STEP.advisor_correct, {
+                    line: "Tu LLC genera dinero y quieres usarlo. Cómo lo saques —retiro, distribución o sueldo— depende de tu estructura fiscal y de tus socios, y cada forma declara distinto.",
                     outcomes: [
-                        "Qué estructura le sirve a un caso como el tuyo",
-                        "En qué estado registrarla, y por qué",
-                        "Cuánto cuesta mantenerla al año, sin letra chica"
+                        "Cómo retirar utilidades según cómo está estructurada tu LLC",
+                        "Qué documentar en cada movimiento de la empresa a tu cuenta personal",
+                        "Si te conviene cambiar de figura fiscal para pagar menos por esos retiros"
                     ],
-                    incluye: "", noReq: "",
-                    cta: "Enviarme la guía →",
-                    note: "Te llega al correo. Cuando quieras, agendas una llamada sin costo."
-                };
+                    cta: "Agendar mi revisión →"
+                });
             }
             const nm = userResponses.first_name || "";
             const tech = userResponses.q6 || "";
@@ -2388,9 +2429,9 @@
                 `<span class="${i + 1 === stageId ? 'on' : ''}">${l}</span>`).join('');
 
             // Tu situación — filas compactas
-            const MODELO = { Servicios: "Servicios digitales", Inversiones: "Real Estate / Inversiones", Ecom: "E-commerce", Otro: "Por definir" };
+            const MODELO = { Cumplimiento: "Reportes / impuestos atrasados", Retiros: "Sacar dinero de la LLC sin problemas", Estado: "Estado equivocado", Banca: "Banca o pagos en riesgo", Revision: "Revisión general" };
             const situRows = [
-                ["Modelo", MODELO[userResponses.filter] || userResponses.filter || ""],
+                ["Tu preocupación", MODELO[userResponses.filter] || userResponses.filter || ""],
                 ["Facturación", (userResponses.q4_text || "").replace(/\s*\([^)]*\)/, "")],
                 ["Objetivo", userResponses.q5_text || ""],
                 ["Lo que urge", userResponses.q3_text || ""]
@@ -2412,8 +2453,8 @@
             // ARRIBA DEL FOLD: veredicto + una frase + la CTA. Nada más compite con la decisión.
             // EL DETALLE (situación, costo de esperar, qué te llevas) va bajo el separador.
             document.getElementById('diagnostico-container').innerHTML = `
-                <p class="rp-eyebrow">${nm ? esc(nm) + ', este es tu diagnóstico' : 'Tu diagnóstico'}</p>
-                <p class="rp-verdict">Estás en la <span class="accent">Etapa ${stageId} de 4</span><br>${esc(st.label)}${hasLLC ? ' · ya con LLC' : ''}</p>
+                <p class="rp-eyebrow">${nm ? esc(nm) + ', esto encontramos en tu LLC' : 'Diagnóstico de tu LLC'}</p>
+                <p class="rp-verdict">Nivel de riesgo: <span class="accent">${stageId} de 4</span><br>${esc(st.label)}</p>
 
                 <div class="stage-track">${segs}</div>
                 <div class="stage-labels">${segLabels}</div>
@@ -2426,12 +2467,12 @@
                 <p class="mini-trust"><span class="stars">★ 4,3/5</span> Trustpilot · +5.000 empresas incorporadas · 10 años · Partner de Mercury &amp; Relay</p>
 
                 <hr class="rp-sep">
-                <p class="rp-section-label" style="color:var(--text-dark); font-size:12px; margin-top:2px;">Tu hoja de ruta en detalle</p>
+                <p class="rp-section-label" style="color:var(--text-dark); font-size:12px; margin-top:2px;">El detalle de tu revisión</p>
 
                 <p class="rp-section-label">Lo que nos contaste</p>
                 <dl class="situ">${situRows}</dl>
 
-                <p class="rp-cost"><strong>Si lo dejas para después:</strong> ${esc(st.cost)}</p>
+                <p class="rp-cost"><strong>Si no lo corriges:</strong> ${esc(st.cost)}</p>
 
                 <p class="rp-section-label">Qué hacer ahora</p>
                 <div class="rp-next">
@@ -2473,7 +2514,7 @@
             var btn = document.getElementById('sticky-cta-btn');
             if (!bar || !btn) return;
             hideStickyCta();
-            btn.textContent = ctaLabel || 'Agendar mi sesión →';
+            btn.textContent = ctaLabel || 'Agendar mi revisión →';
             stickyCta.go = function () {
                 return recommended === 'platform' ? goPlatform(recommended)
                     : recommended === 'advisor' ? goAdvisor(recommended)
@@ -2487,7 +2528,6 @@
                 var rw = document.getElementById('result-wrap');
                 var primary = document.getElementById('path-primary');
                 if (!rw || rw.hidden || !primary) { bar.classList.remove('show'); return; }
-                // aparece cuando la CTA principal ya pasó por encima del borde superior
                 bar.classList.toggle('show', primary.getBoundingClientRect().bottom < 4);
             }
             stickyCta.onScroll = check;
@@ -2620,12 +2660,12 @@
             cw.hidden = false;
             cw.innerHTML = `
                 <div class="cw-check"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                <h2 tabindex="-1">Listo. Revísalo en tu correo.</h2>
-                <p>Te enviamos tu diagnóstico y la guía completa a <strong>${leadData ? leadData.email : "tu correo"}</strong>.</p>
-                <p>Te escribimos por WhatsApp para acompañarte cuando quieras dar el siguiente paso.</p>
+                <h2 tabindex="-1">Listo. Revísala en tu correo.</h2>
+                <p>Te enviamos tu informe y la checklist de mantenimiento anual a <strong>${leadData ? leadData.email : "tu correo"}</strong>.</p>
+                <p>Te escribimos por WhatsApp para acompañarte cuando quieras una revisión a fondo.</p>
                 <div class="cw-nudge">
-                    <p style="font-weight:600; color:var(--text-dark);">¿Prefieres resolverlo hablando?</p>
-                    <button type="button" id="cw-book" class="cta-primary" style="margin-top:12px; width:100%;">Agendar una llamada, sin costo</button>
+                    <p style="font-weight:600; color:var(--text-dark);">¿Prefieres que un especialista la revise contigo?</p>
+                    <button type="button" id="cw-book" class="cta-primary" style="margin-top:12px; width:100%;">Agendar mi revisión, sin costo</button>
                 </div>`;
             const h = cw.querySelector('h2');
             if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
