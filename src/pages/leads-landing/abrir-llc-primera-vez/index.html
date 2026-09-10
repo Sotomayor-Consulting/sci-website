@@ -1027,12 +1027,12 @@
               <div class="phone-row">
                 <div class="ccx" id="f-cc">
                   <button type="button" class="ccx-btn" id="f-cc-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="f-cc-list" aria-label="País del WhatsApp">
-                    <img class="ccx-flag" id="f-cc-flag" src="https://flagcdn.com/w40/ec.png" srcset="https://flagcdn.com/w80/ec.png 2x" alt="" width="22" height="16" />
-                    <span class="ccx-code" id="f-cc-code">+593</span>
+                    <img class="ccx-flag" id="f-cc-flag" src="https://flagcdn.com/w40/us.png" srcset="https://flagcdn.com/w80/us.png 2x" alt="" width="22" height="16" />
+                    <span class="ccx-code" id="f-cc-code">+1</span>
                     <svg class="ccx-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   </button>
                   <ul class="ccx-list" id="f-cc-list" role="listbox" tabindex="-1" aria-label="Elige el país" hidden></ul>
-                  <input type="hidden" name="country_code" id="f-cc-value" value="+593" data-iso="EC" />
+                  <input type="hidden" name="country_code" id="f-cc-value" value="+1" data-iso="US" />
                 </div>
                 <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="099 123 4567" required aria-describedby="e-phone" />
               </div>
@@ -1480,7 +1480,7 @@
     ];
     var byIso = {};
     COUNTRIES.forEach(function (c) { byIso[c.iso] = c; });
-    var current = "EC", activeIdx = 0, open = false;
+    var current = "US", activeIdx = 0, open = false;
 
     list.innerHTML = COUNTRIES.map(function (c, i) {
       return '<li role="option" data-iso="' + c.iso + '" data-i="' + i + '" aria-selected="false">' +
@@ -1490,7 +1490,7 @@
     var items = [].slice.call(list.querySelectorAll("li"));
 
     function applyCountry(iso) {
-      var c = byIso[iso] || byIso.EC;
+      var c = byIso[iso] || byIso.US;
       current = c.iso;
       valueEl.value = c.code;
       valueEl.setAttribute("data-iso", c.iso);
@@ -1563,29 +1563,33 @@
       li.addEventListener("mousemove", function () { setActive(parseInt(li.getAttribute("data-i"), 10)); });
     });
 
+    // País por defecto: primero la zona horaria del dispositivo (señal fiable de ubicación),
+    // luego la región del idioma del navegador (es-ES, en-US…), luego EE. UU. por defecto.
     function detectIso() {
-      var langs = navigator.languages || [navigator.language || ""];
-      for (var i = 0; i < langs.length; i++) {
-        var m = /[-_]([A-Za-z]{2})$/.exec(langs[i] || "");
-        if (m) { var iso = m[1].toUpperCase(); if (byIso[iso]) return iso; }
-      }
       try {
         var tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || "");
         var TZ = {
-          "America/Guayaquil": "EC", "America/Bogota": "CO", "America/Lima": "PE", "America/Santiago": "CL",
-          "America/Punta_Arenas": "CL", "America/La_Paz": "BO", "America/Caracas": "VE", "America/Montevideo": "UY",
-          "America/Asuncion": "PY", "America/Guatemala": "GT", "America/Costa_Rica": "CR", "America/Panama": "PA",
-          "America/El_Salvador": "SV", "America/Tegucigalpa": "HN", "America/Managua": "NI", "America/Santo_Domingo": "DO",
+          "America/Guayaquil": "EC", "America/Bogota": "CO", "America/Lima": "PE",
+          "America/Santiago": "CL", "America/Punta_Arenas": "CL", "Pacific/Easter": "CL",
+          "America/La_Paz": "BO", "America/Caracas": "VE", "America/Montevideo": "UY",
+          "America/Asuncion": "PY", "America/Guatemala": "GT", "America/Costa_Rica": "CR",
+          "America/Panama": "PA", "America/El_Salvador": "SV", "America/Tegucigalpa": "HN",
+          "America/Managua": "NI", "America/Santo_Domingo": "DO",
           "Europe/Madrid": "ES", "Atlantic/Canary": "ES"
         };
         if (TZ[tz] && byIso[TZ[tz]]) return TZ[tz];
-        if (/^America\/Argentina\//.test(tz)) return "AR";
-        if (/^America\/(Mexico_City|Monterrey|Merida|Cancun|Tijuana|Chihuahua|Hermosillo|Matamoros|Mazatlan|Bahia_Banderas|Ojinaga)$/.test(tz)) return "MX";
-        if (/^America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Detroit|Boise|Anchorage|Indiana\/|Kentucky\/)/.test(tz)) return "US";
+        if (/^America\/Argentina\//.test(tz) && byIso.AR) return "AR";
+        if (/^America\/(Mexico_City|Monterrey|Merida|Cancun|Tijuana|Chihuahua|Hermosillo|Matamoros|Mazatlan|Bahia_Banderas|Ojinaga)$/.test(tz) && byIso.MX) return "MX";
+        if (/^America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Detroit|Boise|Anchorage|Adak|Indiana\/|Kentucky\/|North_Dakota\/)/.test(tz) && byIso.US) return "US";
       } catch (e) {}
+      var langs = navigator.languages || [navigator.language || ""];
+      for (var i = 0; i < langs.length; i++) {
+        var m = /[-_]([A-Za-z]{2})(?:[-_]|$)/.exec(langs[i] || "");
+        if (m) { var iso = m[1].toUpperCase(); if (byIso[iso]) return iso; }
+      }
       return null;
     }
-    applyCountry(detectIso() || "EC");
+    applyCountry(detectIso() || "US");
   })();
 
   /* ---------- lead form ---------- */
