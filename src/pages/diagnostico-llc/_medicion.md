@@ -133,6 +133,9 @@ enlace "abrir en pestaña nueva". En el dominio de producción el embed carga co
 
 ## 1. Diccionario de eventos — proceso de marcado
 
+> **Ruta cronológica paso a paso (guión de procesos) + checklist de verificación local:**
+> `_eventos-tiktok.md`. Esta sección es la referencia; ese archivo es el recorrido.
+
 **Dos funciones, una regla:** en el código, `track()` empuja SOLO a `dataLayer` (GTM decide);
 `trackAdsEvent()` empuja a `dataLayer` + TikTok Pixel + Meta Pixel + CAPI n8n con el mismo
 `event_id`. `trackAdsEvent()` tiene una **lista blanca** — solo dispara
