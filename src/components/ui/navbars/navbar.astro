@@ -1,0 +1,41 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Image } from "astro:assets";
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl"
+>
+  <div
+    class="mx-auto flex min-h-18 max-w-7xl items-center justify-between px-5 lg:px-8"
+  >
+    <a
+      href="#inicio"
+      class="flex items-center gap-3"
+      aria-label="Nexo International, inicio"
+    >
+      <Image
+        src="https://www.sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-4.png"
+        alt="Nexo International"
+        class="h-auto w-35"
+        width={62}
+        height={32}
+      />
+    </a>
+    <nav
+      class="hidden items-center gap-7 text-sm font-semibold text-slate-600 md:flex"
+      aria-label="Navegación principal"
+    >
+      <a href="#proceso" class="hover:text-primary-accent">Proceso</a><a
+        href="#planes"
+        class="hover:text-primary-accent">Planes</a
+      ><a href="#preguntas" class="hover:text-primary-accent">Preguntas</a>
+    </nav>
+    <Button
+      href="#agendar"
+      variant="primary"
+      size="sm"
+      class="rounded-full px-5 font-bold">Agendar gratis</Button
+    >
+  </div>
+</header>

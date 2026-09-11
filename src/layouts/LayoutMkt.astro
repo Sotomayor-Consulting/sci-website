@@ -1,0 +1,56 @@
+---
+import Navbar from "@components/ui/navbars/navbar.astro";
+import Footer from "@components/ui/footer/Footer.astro";
+import GoogleTagManager from "@components/ui/blocks/GoogleTagManager.astro"
+import "@/styles/starwind.css";
+
+interface Props {
+    title: string
+}
+
+const { title } = Astro.props
+
+const gtm = "GTM-TNRQGDM"
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Asesoría estratégica gratuita para crear tu LLC en Estados Unidos con una estructura legal, fiscal y bancaria adecuada."
+    />
+    <meta name="theme-color" content="#0b2334" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/png" href="/images/logos/isotipo-favicon.png?v=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>
+      {title}
+    </title>
+    <!-- Google Tag Manager -->
+     <GoogleTagManager gtmId={gtm} />
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${gtm}`}
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe></noscript
+    >
+    <!-- End Google Tag Manager (noscript) -->
+    <Navbar />
+    <slot />
+    <Footer />
+  </body>
+</html>
