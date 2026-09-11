@@ -293,12 +293,12 @@
             --bg-cream: #F8F9FA;
             --bg-light: #F1F3F5;
 
-            /* Text */
+            /* Text — grises con tinte navy (no gris genérico de UI kit) */
             --text-white: #FFFFFF;
             --text-light: #E8E8EC;
-            --text-muted: #9CA3AF;
-            --text-dark: #1F2937;
-            --text-secondary: #4B5563;
+            --text-muted: #8B97A3;
+            --text-dark: #17232E;
+            --text-secondary: #4A5B6B;
 
             /* Status */
             --success: #34a853;
@@ -346,7 +346,8 @@
         /* HERO SCREEN */
         .hero {
             position: relative;
-            min-height: 100vh;
+            min-height: 100vh;   /* fallback para navegadores sin soporte de dvh */
+            min-height: 100dvh;  /* descuenta la barra de direcciones móvil — evita el salto al hacer scroll */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -375,6 +376,8 @@
         }
 
         .hero-content {
+            position: relative;
+            z-index: 1;
             max-width: 640px;
             text-align: center;
             display: flex;
@@ -383,8 +386,40 @@
             align-items: center;
         }
 
+        /* Foto de fondo real del hero (no una caja aparte) + velo navy para legibilidad,
+           igual de oscuro abajo (donde vive el texto) que el navy sólido que reemplaza. */
+        .hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+        .hero-bg img {
+            width: 100%; height: 100%; object-fit: cover; object-position: center 38%; display: block;
+            animation: heroPhotoZoom 20s ease-out forwards;
+        }
+        .hero-bg::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(14,38,55,.5) 0%, rgba(14,38,55,.8) 40%, rgba(14,38,55,.97) 75%);
+        }
+        @keyframes heroPhotoZoom { from { transform: scale(1); } to { transform: scale(1.06); } }
+
+        /* Entrada del hero: un solo momento orquestado (jerarquía — guía el ojo
+           eyebrow -> titular -> subtítulo -> badges -> CTA), no loops perpetuos.
+           El CTA anima solo opacity (no transform): el transform de la entrada
+           quedaría "sosteniendo" el valor final (fill:both) y taparía el
+           scale(0.97) de :active — mismo motivo por el que no se anima su posición. */
+        @keyframes heroReveal { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes heroFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .hero-eyebrow, #hero-h1, .hero-subtitle, .hero-badges {
+            animation: heroReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .btn-start { animation: heroFadeIn 0.6s ease both 280ms; }
+        #hero-h1 { animation-delay: 70ms; }
+        .hero-subtitle { animation-delay: 140ms; }
+        .hero-badges { animation-delay: 210ms; }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-bg img { animation: none; }
+            .hero-eyebrow, #hero-h1, .hero-subtitle, .hero-badges, .btn-start { animation: none; opacity: 1; transform: none; }
+        }
+
         .hero-content h1 {
-            font-size: clamp(28px, 5vw, 48px);
+            font-size: clamp(27px, 7vw, 48px);
             font-weight: 800;
             color: var(--text-white);
             line-height: 1.1;
@@ -459,7 +494,7 @@
             background: var(--gold-light);
             box-shadow: 0 16px 40px -10px rgba(192, 135, 46, 0.6);
         }
-        .btn-start:active { transform: translateY(0); }
+        .btn-start:active { transform: scale(0.97); }
 
         .disclaimer {
             font-size: 12px;
@@ -469,6 +504,81 @@
             line-height: 1.5;
             margin-top: 20px;
         }
+
+        .hero-eyebrow {
+            font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600;
+            letter-spacing: 0.01em; color: var(--gold-light); margin: 0;
+        }
+
+        /* EXPLICADOR — qué evalúa el diagnóstico, cómo funciona, qué sigue. Antes del quiz,
+           para que se sienta una evaluación real y no un formulario (modelo ScoreApp), en
+           bandas segmentadas (blanco/crema/navy) como una landing real, no un bloque continuo. */
+        .trust-strip {
+            background: var(--bg-cream); padding: 14px 20px; text-align: center;
+            border-bottom: 1px solid var(--line);
+        }
+        .trust-strip-note { font-size: 12.5px; color: var(--text-secondary); margin: 0 0 6px; line-height: 1.5; }
+        .trust-strip-stats { font-size: 12.5px; color: var(--text-secondary); margin: 0; }
+        .segment { padding: 48px 20px; }
+        .segment-inner { max-width: 560px; margin: 0 auto; }
+        .segment--white { background: var(--bg-white); }
+        .segment--cream { background: var(--bg-cream); }
+        .segment--navy { background: var(--bg-dark-deep); }
+        .segment--cta { background: var(--bg-cream); text-align: center; padding-bottom: 60px; }
+        .segment--cta .cta-final-note { margin-top: 14px; font-size: 13px; color: var(--text-muted); }
+        /* Especificidad encadenada a propósito: gana sí o sí sobre .rp-section-label /
+           .mini-reviews blockquote/cite / .social-proof-stats, definidas más abajo en el
+           archivo (el informe de resultado usa esas mismas clases sobre fondo claro). */
+        .rp-section-label.rp-section-label--on-navy { color: var(--gold-light); }
+        .mini-reviews.mini-reviews--on-navy blockquote { color: var(--text-light); border-top-color: rgba(255, 255, 255, 0.14); }
+        .mini-reviews.mini-reviews--on-navy cite { color: rgba(255, 255, 255, 0.55); }
+        .social-proof-stats.social-proof-stats--on-navy { color: rgba(255, 255, 255, 0.75); }
+        .explainer-list { margin-bottom: 34px !important; }
+        .explainer-list li { font-size: 15px !important; color: var(--text-dark) !important; }
+
+        .how-steps { list-style: none; padding: 0; margin: 0 0 30px; display: grid; gap: 20px; }
+        .how-steps li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; align-items: start; }
+        .how-n {
+            display: flex; align-items: center; justify-content: center;
+            width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+            background: var(--bg-dark-deep); color: var(--gold-light);
+            font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 14px;
+        }
+        .how-steps h3 { font-size: 15.5px; font-weight: 600; color: var(--text-dark); margin-bottom: 3px; }
+        .how-steps p { font-size: 13.5px; color: var(--text-secondary); margin: 0; }
+
+        .explainer-reassure {
+            font-size: 14px; line-height: 1.6; color: var(--text-secondary);
+            border-top: 1px solid var(--line); padding-top: 20px; margin-bottom: 20px;
+        }
+        .explainer-bridge {
+            background: var(--bg-cream); border-left: 3px solid var(--gold-primary);
+            border-radius: 8px; padding: 14px 16px; margin-bottom: 28px;
+        }
+        .explainer-bridge p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin: 0; }
+
+        .mini-plans { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 14px; }
+        .mini-plan { border-left: 3px solid var(--line-strong); padding: 2px 0 2px 14px; }
+        .mini-plan--fav { border-left-color: var(--gold-primary); }
+        .mini-plan h4 {
+            font-size: 14.5px; font-weight: 600; color: var(--text-dark);
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0;
+        }
+        .mini-plan .price { font-size: 13px; color: var(--gold-dark); font-weight: 600; }
+        .mini-plan .fav {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.04em; color: var(--gold-dark);
+            background: var(--gold-muted); padding: 2px 7px; border-radius: 999px;
+        }
+        .mini-plan p { font-size: 13px; color: var(--text-secondary); margin: 2px 0 0; }
+        .mini-plans-note { font-size: 12.5px; color: var(--text-muted); margin: 0 0 30px; }
+
+        .mini-reviews { display: grid; gap: 14px; margin-bottom: 10px; }
+        .mini-reviews blockquote {
+            margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--text-dark);
+            border-top: 1px solid var(--line); padding-top: 12px;
+        }
+        .mini-reviews cite { display: block; margin-top: 6px; font-size: 12px; color: var(--text-muted); font-style: normal; }
+        .social-proof-stats { font-size: 13px; color: var(--text-secondary); margin: 0 0 28px; }
 
         /* QUIZ CONTAINER */
         .quiz-container {
@@ -481,25 +591,27 @@
             display: none;
             position: relative;
             z-index: 1;
+            /* Altura del .logo-bar fijo (~80px) + aire — evita que quede tapado al hacer scroll a cada paso */
+            scroll-margin-top: 88px;
         }
 
-        .quiz-header {
-            background: var(--bg-dark-deep);
-            padding: 20px 28px;
-            text-align: center;
-            border-bottom: 1px solid rgba(186, 141, 52, 0.2);
-        }
-
-        .quiz-logo {
-            height: 40px;
+        /* Progreso + etiqueta visibles en TODOS los pasos (antes desaparecían en "nombre" y en el
+           gate, justo donde más hace falta el refuerzo de "ya casi"). Sin logo propio: el logo fijo
+           de la página ya sostiene la marca durante todo el quiz — uno solo, no dos.
+           ponytail: no es sticky de verdad — .quiz-container necesita overflow:hidden para el
+           calendario de punta a punta (P0) y eso anula position:sticky de un hijo. Si algún día hace
+           falta que quede fijo al hacer scroll dentro de un paso, hay que separar ese overflow a un
+           wrapper propio solo alrededor de los .step. */
+        .progress-wrap {
+            background: var(--bg-white);
+            padding: 22px 28px 14px;
         }
 
         .progress-bar {
             height: 4px;
-            background: rgba(255, 255, 255, 0.12);
+            background: var(--bg-light);
             border-radius: 999px;
             overflow: hidden;
-            margin: 0 28px 22px;
         }
 
         .progress-fill {
@@ -523,46 +635,53 @@
             transform: none;
         }
 
+        /* Preguntas al estilo "evaluación" (no formulario): una afirmación centrada,
+           opciones en lista abierta sin caja/borde por opción — sin tocar lógica ni markup JS. */
         .step h2 {
-            font-size: 26px;
+            font-size: clamp(22px, 6vw, 28px);
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 12px;
-            line-height: 1.3;
+            line-height: 1.32;
+            text-align: center;
         }
 
         .step .subtitle {
-            font-size: 16px;
+            font-size: 15.5px;
             color: var(--text-secondary);
-            margin-bottom: 32px;
+            margin-bottom: 36px;
+            text-align: center;
         }
 
         .options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 0;
         }
 
         .options label {
             display: flex;
             align-items: flex-start;
             gap: 14px;
-            padding: 17px 18px;
-            background: var(--bg-white);
-            border: 1px solid var(--line);
-            border-radius: 12px;
+            padding: 18px 4px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--line);
+            border-radius: 0;
             cursor: pointer;
-            transition: border-color 0.18s ease, background-color 0.18s ease;
+            transition: background-color 0.18s ease, color 0.18s ease;
             font-weight: 500;
-            font-size: 15px;
+            font-size: 15.5px;
             color: var(--text-dark);
         }
 
-        .options label:hover { border-color: var(--line-strong); }
+        .options label:last-child { border-bottom: none; }
+
+        .options label:hover { background: var(--bg-cream); }
 
         .options label.selected {
-            border-color: var(--bg-dark-deep);
-            background: rgba(14, 38, 55, 0.03);
+            color: var(--bg-dark-deep);
+            font-weight: 600;
         }
 
         input[type="radio"] {
@@ -573,50 +692,31 @@
             accent-color: var(--gold-primary);
         }
 
-        .insight {
-            background: var(--bg-cream);
-            border-left: 3px solid var(--gold-primary);
-            border-radius: 8px;
-            padding: 14px 16px;
-            margin: 22px 0;
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.65;
-            opacity: 0;
-            transform: translateY(-6px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            display: none;
-        }
-
-        .insight.visible {
-            display: block;
-            opacity: 1;
-            transform: none;
-        }
-
-        .insight strong { color: var(--text-dark); }
-
         .navigation {
             display: flex;
-            gap: 12px;
+            align-items: stretch;
+            gap: 10px;
             margin-top: 32px;
         }
 
+        /* Atrás: ícono compacto, no texto — libera la fila y no compite con el CTA */
         .btn-back {
             background: transparent;
             color: var(--text-secondary);
             border: 1px solid var(--line);
-            padding: 15px 24px;
+            width: 52px;
+            flex: none;
             border-radius: var(--radius);
-            font-family: 'Poppins', 'Open Sans', sans-serif;
-            font-weight: 500;
-            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            flex: 1;
-            transition: border-color 0.18s ease, color 0.18s ease;
+            transition: border-color 0.18s ease, color 0.18s ease, transform 0.12s ease-out;
         }
 
         .btn-back:hover { border-color: var(--bg-dark-deep); color: var(--bg-dark-deep); }
+        .btn-back:active { transform: scale(0.94); }
+        .btn-back svg { width: 18px; height: 18px; pointer-events: none; }
 
         .btn-next {
             background: var(--bg-dark-deep);
@@ -629,7 +729,7 @@
             font-size: 15px;
             letter-spacing: 0.01em;
             cursor: pointer;
-            flex: 2;
+            flex: 1;
             box-shadow: 0 10px 26px -12px rgba(14, 38, 55, 0.5);
             transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
         }
@@ -639,7 +739,7 @@
             transform: translateY(-1px);
             box-shadow: 0 14px 32px -12px rgba(14, 38, 55, 0.55);
         }
-        .btn-next:active:not(:disabled) { transform: translateY(0); }
+        .btn-next:active:not(:disabled) { transform: scale(0.97); }
 
         .btn-next:disabled {
             background: var(--bg-light);
@@ -650,6 +750,12 @@
 
         /* ===== LEAD GATE (Fase 1) ===== */
         #lead-gate .subtitle { margin-bottom: 24px; }
+        .gate-badge {
+            display: inline-block; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600;
+            color: var(--gold-dark); background: var(--gold-muted); padding: 5px 12px;
+            border-radius: 999px; margin-bottom: 12px;
+        }
+        .gate-badge:empty { display: none; }
         .field { margin-bottom: 14px; text-align: left; }
         .field label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
         .field input {
@@ -795,6 +901,7 @@
             background: #1b3d59;
             box-shadow: 0 16px 38px -12px rgba(14, 38, 55, 0.55);
         }
+        .cta-primary:active { transform: scale(0.97); }
 
         .zcal-inline-widget {
             background: var(--bg-dark-elevated);
@@ -827,10 +934,6 @@
                 padding: 90px 16px 30px;
             }
 
-            .hero-content h1 {
-                font-size: 26px;
-            }
-
             .hero-subtitle {
                 font-size: 16px;
             }
@@ -845,25 +948,11 @@
                 /* Reduced side padding (was 20px) */
             }
 
-            .step h2 {
-                font-size: 22px;
-            }
-
             .options label {
                 padding: 16px 14px;
                 /* Reduced side padding (was 18px) */
                 font-size: 14px;
                 gap: 12px;
-            }
-
-            .navigation {
-                flex-direction: column-reverse;
-                gap: 12px;
-            }
-
-            .btn-back,
-            .btn-next {
-                width: 100%;
             }
 
             .quiz-container {
@@ -872,27 +961,21 @@
                 border-radius: var(--radius);
             }
 
-            .insight {
-                padding: 16px;
-                margin: 20px 0;
+            /* Calendario Zcal de punta a punta en mobile (ids reales: #agenda-wrap > .cal-frame) */
+            .cal-frame {
+                margin-left: -16px;
+                margin-right: -16px;
+                width: calc(100% + 32px);
             }
 
-            /* Edge-to-edge agenda on mobile */
-            #agenda-container {
-                margin-left: -20px;
-                /* Counteract .diag-shell padding */
-                margin-right: -20px;
-                width: calc(100% + 40px);
-            }
-
-            #agenda-container .zcal-inline-widget {
+            .cal-frame iframe {
                 border-radius: 0;
-                /* Remove corners for flush look */
+                /* Sin esquinas redondeadas para el look de punta a punta */
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .step, .insight, .progress-fill, .btn-start, .btn-next, .cta-primary { transition: none !important; }
+            .step, .progress-fill, .btn-start, .btn-next, .cta-primary { transition: none !important; }
         }
 
         /* Foco programático (a11y) — sin anillo visible en elementos no interactivos */
@@ -973,16 +1056,7 @@
             .path-card { transition: none !important; }
         }
 
-        /* ===== HERO — badges de objeción + confianza (Fase 8) ===== */
-        .hero-trust {
-            margin-top: 6px;
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.7;
-            max-width: 520px;
-        }
-        .hero-trust b { color: var(--text-light); font-weight: 600; }
-        .hero-trust .stars { color: var(--gold-primary); letter-spacing: 1px; }
+        /* ===== HERO — badges de objeción (Fase 8) ===== */
 
         /* ===== PASO NOMBRE (Fase 8) ===== */
         .name-step .subtitle { margin-bottom: 20px; }
@@ -1005,8 +1079,8 @@
         #diagnostico-container { max-width: 560px; margin: 0 auto; }
         .rp-eyebrow {
             font-family: 'Poppins', sans-serif;
-            font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
-            text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+            font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
+            color: var(--gold-dark); margin-bottom: 6px;
         }
         .rp-verdict {
             font-family: 'Poppins', sans-serif;
@@ -1015,13 +1089,18 @@
         }
         .rp-verdict .accent { color: var(--gold-dark); }
 
-        /* Indicador de etapa: 4 segmentos */
-        .stage-track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 4px 0 6px; }
-        .stage-seg { height: 6px; border-radius: 999px; background: var(--bg-light); }
-        .stage-seg.done { background: linear-gradient(90deg, var(--gold-primary), var(--gold-light)); }
-        .stage-seg.here { background: var(--gold-dark); box-shadow: 0 0 0 3px rgba(192,135,46,.18); }
-        .stage-labels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 22px; }
-        .stage-labels span { font-size: 10px; letter-spacing: .02em; color: var(--text-muted); text-transform: uppercase; text-align: center; }
+        /* Indicador de etapa: el momento distintivo del informe — "estás aquí" en una escala real de 4. */
+        .stage-track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0 6px; position: relative; }
+        .stage-seg { height: 8px; border-radius: 999px; background: var(--bg-light); position: relative; }
+        .stage-seg.done { background: var(--gold-light); }
+        .stage-seg.here { background: var(--gold-primary); }
+        .stage-seg.here::after {
+            content: ''; position: absolute; top: -7px; left: 50%; transform: translateX(-50%);
+            width: 9px; height: 9px; border-radius: 50%; background: var(--bg-dark-deep);
+            box-shadow: 0 0 0 3px var(--gold-primary);
+        }
+        .stage-labels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 22px; }
+        .stage-labels span { font-size: 11px; letter-spacing: .01em; color: var(--text-muted); text-align: center; }
         .stage-labels span.on { color: var(--gold-dark); font-weight: 700; }
 
         .rp-headline { font-size: 15.5px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 22px; }
@@ -1029,7 +1108,7 @@
 
         .rp-section-label {
             font-family: 'Poppins', sans-serif;
-            font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+            font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
             color: var(--text-muted); margin: 22px 0 10px;
         }
 
@@ -1120,7 +1199,7 @@
             background: #1b3d59;
             box-shadow: 0 18px 42px -12px rgba(14, 38, 55, 0.6);
         }
-        .path-primary:active { transform: translateY(0); }
+        .path-primary:active { transform: scale(0.97); }
         .cta-reassure { text-align: center; font-size: 12px; color: var(--gold-dark); font-weight: 600; margin-top: 10px; letter-spacing: 0.01em; }
         .path-primary-note { text-align: center; font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
         .path-alts { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
@@ -1166,12 +1245,18 @@
 
     <!-- HERO SCREEN -->
     <section class="hero" id="welcomeScreen">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80"
+                alt="" aria-hidden="true" loading="eager">
+        </div>
+
         <div class="logo-bar">
             <img src="https://www.sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-7.png"
                 alt="Sotomayor Consulting" class="logo-top">
         </div>
 
         <div class="hero-content">
+            <p class="hero-eyebrow">Firma legal, fiscal y tecnológica · 10 años</p>
             <h1 id="hero-h1">¿Necesitas una <span class="accent">LLC</span> en EE. UU.? Averígualo en 3 minutos.</h1>
             <p class="hero-subtitle" id="hero-sub">Respondes 6 preguntas y te decimos tres cosas claras: si te conviene una
                 LLC, en qué estado abrirla, y cuál es tu siguiente paso. Gratis, sin compromiso.</p>
@@ -1183,29 +1268,99 @@
             </div>
 
             <button class="btn-start" id="btnStart">Empezar el diagnóstico →</button>
-            <p class="hero-agenda-note" style="margin-top:12px; font-size:13px; color:var(--text-muted); line-height:1.5;">Al terminar agendas tu reunión de asesoría, sin costo — tu asesor la recibe con tu caso ya sobre la mesa.</p>
-
-            <p class="hero-trust">
-                <b>+5.000 empresas</b> incorporadas · <b>10 años</b> · <b>Partner de Mercury &amp; Relay</b><br>
-                <span class="stars" aria-hidden="true">★★★★☆</span> 4,3/5 en Trustpilot
-            </p>
 
             <p class="disclaimer">Esta herramienta ofrece orientación consultiva preliminar; no constituye asesoramiento
                 legal vinculante hasta revisar el caso en detalle.</p>
         </div>
     </section>
 
+    <!-- EXPLICADOR: qué evalúa, cómo funciona, qué sigue — antes de empezar.
+         Bandas segmentadas (blanco/crema/navy), no un bloque continuo de texto.
+         Nota de agenda + prueba social viven ACÁ (no duplicadas dentro del hero,
+         que ya tenía demasiados elementos de texto apilados — audit taste-skill). -->
+    <div id="explainerScreen">
+        <div class="trust-strip">
+            <p class="trust-strip-note">Al terminar agendas tu reunión de asesoría, sin costo — tu asesor la recibe con tu caso ya sobre la mesa.</p>
+            <p class="trust-strip-stats"><b>★★★★☆ 4,3/5</b> en Trustpilot · <b>+5.000</b> empresas incorporadas · <b>10 años</b> · Partner de Mercury &amp; Relay</p>
+        </div>
+
+        <section class="segment segment--white">
+            <div class="segment-inner">
+                <p class="rp-section-label">Qué vamos a revisar</p>
+                <ul class="rp-out explainer-list">
+                    <li>Tu modelo de negocio y hacia dónde va tu proyecto</li>
+                    <li>Si una LLC es la estructura correcta para ti — y en qué estado</li>
+                    <li>Los errores que más cuestan: forma fiscal equivocada, franchise tax de más, cuentas bancarias rechazadas</li>
+                    <li>Tu siguiente paso concreto, con el costo real por delante</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="segment segment--cream">
+            <div class="segment-inner">
+                <p class="rp-section-label">Cómo funciona</p>
+                <ol class="how-steps">
+                    <li><span class="how-n">1</span><div><h3>Respondes 6 preguntas sobre tu negocio</h3><p>3 minutos, desde el celular.</p></div></li>
+                    <li><span class="how-n">2</span><div><h3>Recibes tu etapa y tu hoja de ruta</h3><p>Al instante, personalizada con tus respuestas.</p></div></li>
+                    <li><span class="how-n">3</span><div><h3>Si quieres, lo revisas con un asesor</h3><p>Sin costo, sin compromiso de compra.</p></div></li>
+                </ol>
+                <p class="explainer-reassure">No hace falta que sepas de leyes ni de impuestos de EE. UU. — para eso está el diagnóstico. Contesta con lo que sabes de tu negocio hoy.</p>
+                <div class="explainer-bridge">
+                    <p>Si tu diagnóstico muestra que ya es momento de estructurarte, el paso 3 es una llamada de 30 minutos, gratis, con un asesor de la firma.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="segment segment--white">
+            <div class="segment-inner">
+                <p class="rp-section-label">Planes con renovación anual</p>
+                <div class="mini-plans">
+                    <div class="mini-plan">
+                        <h4>Básico <span class="price">USD 350/año</span></h4>
+                        <p>Constitución ante el estado, EIN y agente residente.</p>
+                    </div>
+                    <div class="mini-plan">
+                        <h4>Estándar <span class="price">USD 600/año</span></h4>
+                        <p>Suma Operating Agreement y consultas ilimitadas.</p>
+                    </div>
+                    <div class="mini-plan mini-plan--fav">
+                        <h4><span class="fav">Favorito</span> Business <span class="price">USD 950/año</span></h4>
+                        <p>Planificación legal-tributaria y acompañamiento bancario.</p>
+                    </div>
+                </div>
+                <p class="mini-plans-note">El plan exacto se define en tu asesoría, según tu caso — sin costo ahora.</p>
+            </div>
+        </section>
+
+        <section class="segment segment--navy">
+            <div class="segment-inner">
+                <p class="rp-section-label rp-section-label--on-navy">Lo que dicen quienes ya pasaron por esto</p>
+                <div class="mini-reviews mini-reviews--on-navy">
+                    <blockquote>A pesar de la distancia, me evaluaron como si estuvieran en la oficina de al lado.<cite>🇧🇴 Trustpilot · Bolivia</cite></blockquote>
+                    <blockquote>El equipo fue muy profesional, aclaró las dudas y recomendó lo mejor para la empresa.<cite>🇪🇨 Trustpilot · Ecuador</cite></blockquote>
+                    <blockquote>Servicio recomendado para crear una LLC en Estados Unidos; destacaron la calidad del equipo.<cite>🇨🇴 Trustpilot · Colombia</cite></blockquote>
+                </div>
+                <p class="social-proof-stats social-proof-stats--on-navy"><b>★★★★☆ 4,3/5</b> en Trustpilot · <b>+5.000</b> empresas incorporadas · <b>10 años</b> · Partner de Mercury &amp; Relay</p>
+            </div>
+        </section>
+
+        <section class="segment segment--cta">
+            <div class="segment-inner">
+                <button type="button" class="cta-primary" id="btnStart2" style="width:100%; text-align:center;">Empezar el diagnóstico →</button>
+                <p class="cta-final-note">Sin costo · 3 minutos · Resultado al instante</p>
+            </div>
+        </section>
+    </div>
+
     <!-- QUIZ -->
     <div class="quiz-container" id="quizContainer" aria-hidden="true">
-        <div class="quiz-header">
-            <img src="https://www.sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-7.png"
-                alt="Sotomayor Consulting" class="quiz-logo">
+        <div class="progress-wrap">
+            <div class="progress-bar" role="progressbar" id="progress-bar" aria-label="Progreso del diagnóstico"
+                aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-fill" id="progress" style="width:0%"></div>
+            </div>
+            <p class="progress-label" id="progress-label" aria-hidden="true"></p>
         </div>
-        <div class="progress-bar" role="progressbar" id="progress-bar" aria-label="Progreso del diagnóstico"
-            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-            <div class="progress-fill" id="progress" style="width:0%"></div>
-        </div>
-        <p class="progress-label" id="progress-label" aria-hidden="true"></p>
 
         <!-- Pregunta 1 (Filtro / Tipo de Negocio) -->
         <div class="step" data-step="1">
@@ -1217,9 +1372,8 @@
                 <label><input type="radio" name="filter" value="Ecom"> 📦 E-commerce, dropshipping o Amazon</label>
                 <label><input type="radio" name="filter" value="Otro"> 🤔 Otra cosa, o todavía no lo tengo claro</label>
             </div>
-            <div class="insight" id="insight-filtro"></div>
             <div class="navigation">
-                <button type="button" class="btn-next" disabled>Continuar →</button>
+                <button type="button" class="btn-next" disabled>Continuar</button>
             </div>
         </div>
 
@@ -1231,8 +1385,8 @@
                 aria-describedby="e-firstname" maxlength="40">
             <p class="err" id="e-firstname" role="status" aria-live="polite">Escribe tu nombre.</p>
             <div class="navigation">
-                <button type="button" class="btn-back">← Atrás</button>
-                <button type="button" class="btn-next" id="btnName" disabled>Continuar →</button>
+                <button type="button" class="btn-back" aria-label="Atrás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                <button type="button" class="btn-next" id="btnName" disabled>Continuar</button>
             </div>
         </div>
 
@@ -1246,6 +1400,7 @@
         <!-- Paso 8: adelanto + gate (apellido + WhatsApp + correo) -->
         <div class="step" data-step="8">
             <div id="lead-gate">
+                <span class="gate-badge" id="gate-badge"></span>
                 <h2 id="gate-title" tabindex="-1">Listo. Tu diagnóstico está hecho.</h2>
                 <p class="subtitle" id="gate-adelanto">Dinos a dónde te lo enviamos, con tu hoja de ruta completa.</p>
                 <p class="mini-trust gate-trust"><span class="stars">★ 4,3/5</span> Trustpilot · +5.000 empresas incorporadas · 10 años · Partner de Mercury &amp; Relay</p>
@@ -1288,8 +1443,8 @@
                         <p class="err" id="e-email" role="status" aria-live="polite">Escribe un correo válido.</p>
                     </div>
                     <div class="navigation">
-                        <button type="button" class="btn-back" id="gate-back">← Atrás</button>
-                        <button type="submit" class="btn-next" id="lead-submit">Ver mi diagnóstico y siguiente paso →</button>
+                        <button type="button" class="btn-back" id="gate-back" aria-label="Atrás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                        <button type="submit" class="btn-next" id="lead-submit">Ver mi diagnóstico →</button>
                     </div>
                     <p class="fineprint">Al enviar aceptas nuestra <a
                             href="https://www.sotomayorconsulting.com/politicas" target="_blank"
@@ -1792,6 +1947,7 @@
         // ============================================================
         let currentStep = 1;
         let userResponses = {};
+        let autoAdvanceTimer = null;   // avance automático tras seleccionar una opción (P0.1)
         let quizStartTracked = false;
         let leadFormStartTracked = false;
         let quizCompleteTracked = false;
@@ -1864,14 +2020,20 @@
                 conversion_path: "diagnostico_view"
             });
 
-            document.getElementById('btnStart').addEventListener('click', () => {
+            // Dos botones (hero + fin del explicador) arrancan el mismo quiz.
+            function startQuiz() {
                 if (!quizStartTracked) { quizStartTracked = true; track("quiz_start"); }
                 const qc = document.getElementById('quizContainer');
                 document.getElementById('welcomeScreen').style.display = 'none';
+                const ex = document.getElementById('explainerScreen');
+                if (ex) ex.style.display = 'none';
                 qc.style.display = 'block';
                 qc.setAttribute('aria-hidden', 'false');
                 setActiveStep(1);
-            });
+            }
+            document.getElementById('btnStart').addEventListener('click', startQuiz);
+            const btnStart2 = document.getElementById('btnStart2');
+            if (btnStart2) btnStart2.addEventListener('click', startQuiz);
 
             document.addEventListener('click', (e) => {
                 if (e.target.classList.contains('btn-next') && e.target.type !== 'submit' && !e.target.disabled) {
@@ -1920,12 +2082,17 @@
         function qDataForStep(step) { return generalQuestions[step - 3]; }
 
         function setActiveStep(step) {
+            clearTimeout(autoAdvanceTimer);   // cambiar de paso (manual, atrás, o el propio auto-avance) cancela cualquier avance pendiente
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
             const el = document.querySelector(`.step[data-step="${step}"]`);
             if (el) {
                 el.classList.add('active');
                 if (step >= 3 && step <= 7) renderDynamicQuestion(step);
-                // el paso 9 gestiona su propio foco en renderResult (.rp-verdict)
+                // el paso 9 gestiona su propio foco+scroll en renderResult (.rp-verdict) — no duplicar aquí.
+                if (step !== 9) {
+                    const qc = document.getElementById('quizContainer');
+                    if (qc) qc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
                 const h = step === 9 ? null : el.querySelector('h2');
                 if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) {} }
             }
@@ -1961,10 +2128,9 @@
                             </label>
                         `).join('')}
                     </div>
-                    <div class="insight"></div>
                     <div class="navigation">
-                        <button type="button" class="btn-back">← Atrás</button>
-                        <button type="button" class="btn-next" disabled>Continuar →</button>
+                        <button type="button" class="btn-back" aria-label="Atrás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                        <button type="button" class="btn-next" disabled>Continuar</button>
                     </div>
                 `;
                 stepEl.dataset.rendered = "1";
@@ -1990,34 +2156,31 @@
                     const lbl = input.closest('label');
                     if (lbl) lbl.classList.add('selected');
                     stepEl.querySelector('.btn-next').disabled = false;
-                    const ins = stepEl.querySelector('.insight');
-                    if (ins) { ins.textContent = input.getAttribute('data-insight') || ""; ins.classList.add('visible'); }
                 }
             }
         }
 
         function handleSelection(e, step) {
             const stepEl = document.querySelector(`.step[data-step="${step}"]`);
-            const insightEl = stepEl.querySelector('.insight');
             const nextBtn = stepEl.querySelector('.btn-next');
             const label = e.target.closest('label');
 
             stepEl.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
             label.classList.add('selected');
 
-            if (step === 1) {
-                insightEl.innerHTML = step1Insights[e.target.value] || "";
-            } else {
-                insightEl.textContent = e.target.getAttribute('data-insight');
-            }
-
-            insightEl.classList.add('visible');
             nextBtn.disabled = false;
 
             userResponses[e.target.name] = e.target.value;
             userResponses[e.target.name + "_text"] = (label ? label.textContent : "").replace(/\s+/g, " ").trim();
 
-            setTimeout(() => { insightEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+            // Avance automático (P0.1): solo ante un tap real del usuario (e.isTrusted). Al
+            // restaurar una respuesta previa ("Atrás") o al preseleccionar por ?hook= el 'change'
+            // es sintético (isTrusted:false) -> no avanza solo, deja al usuario revisar/cambiar.
+            // "Continuar" sigue funcionando igual, para quien no quiera esperar o navegue con teclado.
+            if (e.isTrusted) {
+                clearTimeout(autoAdvanceTimer);
+                autoAdvanceTimer = setTimeout(() => { if (!nextBtn.disabled) goToNextStep(); }, 650);
+            }
         }
 
         function goToNextStep() {
@@ -2050,10 +2213,14 @@
             const fact = (userResponses.q4_text || "").replace(/\s*\([^)]*\)/, "").trim();
             const vis = (userResponses.q5_text || "").trim();
             document.getElementById('gate-title').textContent = (nm ? nm + ", tu diagnóstico está hecho." : "Listo. Tu diagnóstico está hecho.");
-            let mirror = "";
-            if (fact && vis) mirror = "Por lo que nos contaste —facturas " + fact.charAt(0).toLowerCase() + fact.slice(1) + " y quieres " + vis.charAt(0).toLowerCase() + vis.slice(1) + "— tu negocio está en la <strong>Etapa " + st + " de 4: " + stages[st].label + "</strong>. ";
-            else mirror = "Tu negocio está en la <strong>Etapa " + st + " de 4: " + stages[st].label + "</strong>. ";
-            document.getElementById('gate-adelanto').innerHTML = mirror + "Dinos a dónde te enviamos la hoja de ruta completa y tu siguiente paso.";
+            const badge = document.getElementById('gate-badge');
+            if (badge) badge.textContent = "Etapa " + st + " de 4 · " + stages[st].label;
+            // Espejo corto (prueba de que el diagnóstico es real) + una sola frase de qué sigue.
+            // La etapa ya no va en la oración: vive en el badge de arriba.
+            const mirror = (fact && vis)
+                ? "Nos contaste que facturas " + fact.charAt(0).toLowerCase() + fact.slice(1) + " y que quieres " + vis.charAt(0).toLowerCase() + vis.slice(1) + ". "
+                : "";
+            document.getElementById('gate-adelanto').textContent = mirror + "Dinos a dónde te enviamos tu hoja de ruta.";
         }
 
         function goToPrevStep() {
@@ -2069,7 +2236,13 @@
             const pb = document.getElementById('progress-bar');
             if (pb) pb.setAttribute('aria-valuenow', Math.round(pct));
             const lbl = document.getElementById('progress-label');
-            if (lbl) lbl.textContent = QUESTION_NO[currentStep] ? 'Pregunta ' + QUESTION_NO[currentStep] + ' de 6' : '';
+            if (lbl) {
+                // Nunca vacío: nombre y gate son los pasos de más fricción, es donde más ayuda el refuerzo.
+                lbl.textContent = QUESTION_NO[currentStep] ? 'Pregunta ' + QUESTION_NO[currentStep] + ' de 6'
+                    : currentStep === 2 ? 'Un dato más'
+                    : currentStep === 8 ? 'Último paso'
+                    : '';
+            }
         }
 
         // ============================================================
@@ -2591,7 +2764,14 @@
             }
             const h = aw.querySelector('h2');
             if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
-            aw.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // ponytail: el logo + nombre del anfitrión + inicio del título son del PROPIO
+            // Zcal, dentro de un iframe cross-origin — no podemos medir su alto real ni
+            // recortarlo de forma robusta. En vez de aterrizar en el tope de "Elige tu
+            // horario" (deja esa cabecera de Zcal tapando el calendario), se salta un
+            // estimado fijo hacia abajo para que el calendario quede a la vista de una.
+            // Si Zcal cambia su maquetado y el salto queda corto/largo, ajustar este número.
+            const targetY = aw.getBoundingClientRect().top + window.scrollY + 280;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
         }
 
         // Ruta advisor -> "que me escriban por WhatsApp primero" (menor compromiso que reservar).
