@@ -208,10 +208,15 @@ export function normalizeLead(input: LeadInput): NormalizeResult {
   const last_name = first(input.last_name, input.familyName);
   const full_name = first(input.full_name, `${first_name} ${last_name}`.trim());
 
-  const phone_raw = first(input.phone_raw, input.phone_e164, input.whatsapp_phone, input.phone);
+  // OJO: preferir los campos YA formateados (phone_e164/whatsapp_phone, con código de país)
+  // sobre phone_raw (dígitos sueltos, sin código — la landing lo manda aparte del cc).
+  // Al revés, whatsappReady() no tiene con qué inferir el país y arma un E.164 roto
+  // (bug real visto en producción: "984485408" -> "+984485408" en vez de "+593984485408").
+  const phone_source = first(input.phone_e164, input.whatsapp_phone, input.phone_raw, input.phone);
+  const phone_raw = first(input.phone_raw, input.phone);
   const country_hint = first(input.country_iso, input.country, input.pais).toUpperCase();
-  const phone_e164 = whatsappReady(phone_raw, country_hint);
-  if (phone_raw && !/^\+[1-9]\d{7,14}$/.test(phone_e164)) {
+  const phone_e164 = whatsappReady(phone_source, country_hint);
+  if (phone_source && !/^\+[1-9]\d{7,14}$/.test(phone_e164)) {
     warnings.push(`phone_e164 no valida E.164: "${phone_e164}"`);
   }
   const country_iso = inferCountry(phone_e164, country_hint);
