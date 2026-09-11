@@ -346,7 +346,8 @@
         /* HERO SCREEN */
         .hero {
             position: relative;
-            min-height: 100vh;
+            min-height: 100vh;   /* fallback para navegadores sin soporte de dvh */
+            min-height: 100dvh;  /* descuenta la barra de direcciones móvil — evita el salto al hacer scroll */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -481,6 +482,8 @@
             display: none;
             position: relative;
             z-index: 1;
+            /* Altura del .logo-bar fijo (~80px) + aire — evita que quede tapado al hacer scroll a cada paso */
+            scroll-margin-top: 88px;
         }
 
         .quiz-header {
@@ -872,17 +875,16 @@
                 margin: 20px 0;
             }
 
-            /* Edge-to-edge agenda on mobile */
-            #agenda-container {
-                margin-left: -20px;
-                /* Counteract .diag-shell padding */
-                margin-right: -20px;
-                width: calc(100% + 40px);
+            /* Calendario Zcal de punta a punta en mobile (ids reales: #agenda-wrap > .cal-frame) */
+            .cal-frame {
+                margin-left: -16px;
+                margin-right: -16px;
+                width: calc(100% + 32px);
             }
 
-            #agenda-container .zcal-inline-widget {
+            .cal-frame iframe {
                 border-radius: 0;
-                /* Remove corners for flush look */
+                /* Sin esquinas redondeadas para el look de punta a punta */
             }
         }
 
@@ -1787,6 +1789,7 @@
         // ============================================================
         let currentStep = 1;
         let userResponses = {};
+        let autoAdvanceTimer = null;   // avance automático tras seleccionar una opción (P0.1)
         let quizStartTracked = false;
         let leadFormStartTracked = false;
         let quizCompleteTracked = false;
@@ -1915,12 +1918,17 @@
         function qDataForStep(step) { return generalQuestions[step - 3]; }
 
         function setActiveStep(step) {
+            clearTimeout(autoAdvanceTimer);   // cambiar de paso (manual, atrás, o el propio auto-avance) cancela cualquier avance pendiente
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
             const el = document.querySelector(`.step[data-step="${step}"]`);
             if (el) {
                 el.classList.add('active');
                 if (step >= 3 && step <= 7) renderDynamicQuestion(step);
-                // el paso 9 gestiona su propio foco en renderResult (.rp-verdict)
+                // el paso 9 gestiona su propio foco+scroll en renderResult (.rp-verdict) — no duplicar aquí.
+                if (step !== 9) {
+                    const qc = document.getElementById('quizContainer');
+                    if (qc) qc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
                 const h = step === 9 ? null : el.querySelector('h2');
                 if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) {} }
             }
@@ -2013,6 +2021,15 @@
             userResponses[e.target.name + "_text"] = (label ? label.textContent : "").replace(/\s+/g, " ").trim();
 
             setTimeout(() => { insightEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+
+            // Avance automático (P0.1): solo ante un tap real del usuario (e.isTrusted). Al
+            // restaurar una respuesta previa ("Atrás") o al preseleccionar por ?hook= el 'change'
+            // es sintético (isTrusted:false) -> no avanza solo, deja al usuario revisar/cambiar.
+            // "Continuar" sigue funcionando igual, para quien no quiera esperar o navegue con teclado.
+            if (e.isTrusted) {
+                clearTimeout(autoAdvanceTimer);
+                autoAdvanceTimer = setTimeout(() => { if (!nextBtn.disabled) goToNextStep(); }, 650);
+            }
         }
 
         function goToNextStep() {
