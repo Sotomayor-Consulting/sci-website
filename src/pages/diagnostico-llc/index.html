@@ -667,7 +667,12 @@
         .field input[aria-invalid="true"] { border-color: var(--err); background: #fff5f4; }
         .field .err { display: none; color: var(--err); font-size: 12px; margin-top: 5px; }
         .field .err.show { display: block; }
-        .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+        /* ponytail: display:none (no posición fuera de pantalla) — Chrome SÍ autorrellena
+           campos ocultos por posición/opacidad (los detecta "visibles"), pero respeta
+           display:none. El bug real: el autofill de Chrome llenaba este honeypot con el
+           teléfono guardado del perfil -> hp.value quedaba truthy -> el submit se abortaba
+           en silencio, botón "sin respuesta". */
+        .hp { display: none; }
         #lead-gate .fineprint { font-size: 12px; color: var(--text-muted); margin-top: 14px; text-align: center; }
         #lead-gate .fineprint a { color: var(--gold-dark); }
 
