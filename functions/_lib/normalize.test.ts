@@ -106,6 +106,22 @@ test("diag jsonb junta los campos del quiz", () => {
   assert.equal(lead.diag.tech_interest, "pagos");
 });
 
+test("regresión prod: phone_e164 ya formateado (sin country_iso) no se corrompe", () => {
+  // Bug real visto en leads-xb: la landing manda phone_raw="984485408" (sin cc) Y
+  // phone_e164="+593984485408" (correcto), sin country_iso. normalizeLead priorizaba
+  // phone_raw -> whatsappReady no podía inferir el país -> "+984485408" (roto).
+  const { lead, warnings } = normalizeLead({
+    ...base,
+    phone_raw: "984485408",
+    phone_e164: "+593984485408",
+    whatsapp_phone: "+593984485408",
+    country_iso: undefined,
+  });
+  assert.equal(lead.phone_e164, "+593984485408");
+  assert.equal(lead.country_iso, "EC");
+  assert.equal(warnings.length, 0);
+});
+
 test("test:true se propaga", () => {
   assert.equal(normalizeLead({ ...base, test: true }).lead.test, true);
   assert.equal(normalizeLead({ ...base, test: "true" }).lead.test, true);
