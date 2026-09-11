@@ -1284,7 +1284,7 @@
                     </div>
                     <div class="navigation">
                         <button type="button" class="btn-back" id="gate-back">← Atrás</button>
-                        <button type="submit" class="btn-next" id="lead-submit">Ver mi hoja de ruta →</button>
+                        <button type="submit" class="btn-next" id="lead-submit">Ver mi diagnóstico y siguiente paso →</button>
                     </div>
                     <p class="fineprint">Al enviar aceptas nuestra <a
                             href="https://www.sotomayorconsulting.com/politicas" target="_blank"
@@ -1505,7 +1505,10 @@
         // FASE 2 — CONFIG, ATRIBUCIÓN Y TRACKING (port de Landing A)
         // ============================================================
         var CONFIG = {
-            webhookUrl: "https://n8n.sotomayorconsulting.com/webhook/leads-directos-tiktok-landing",
+            // Fase 2a: same-origin Cloudflare Function. Valida + normaliza + persiste en
+            // Supabase (leads-xb) + reenvía verbatim al webhook n8n de siempre. Mata el
+            // problema de CORS del webhook directo. Ver functions/api/diagnostico-lead.ts.
+            webhookUrl: "/api/diagnostico-lead",
             tiktokCapiWebhookUrl: "https://n8n.sotomayorconsulting.com/webhook/pixel-api-conversiones",
             tiktokPixelId: "D5KFDEBC77U6BL6T7LDG",
             // ponytail: mismo evento Zcal que las landings A/B/C ("Sesión Estratégica", dura 30 min, slug /60min).
@@ -2296,7 +2299,9 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Un momento…";
 
-                sendLeadToWebhook(payload).then(function () {
+                // La respuesta de n8n nunca debe bloquear el diagnóstico. El envío continúa
+                // en segundo plano; así un timeout o CORS no deja al visitante atrapado aquí.
+                sendLeadToWebhook(payload);
                     // Evento de optimización de fase 1, universal (todos pasan el gate).
                     // etapa 1 = Subscribe (lead soft); etapa 2-4 = CompleteRegistration con value por etapa + bonus tech.
                     var regEvent = stageId === 1 ? "Subscribe" : "CompleteRegistration";
@@ -2314,7 +2319,6 @@
                     });
                     setActiveStep(9);
                     renderResult();
-                });
             });
 
             const gback = document.getElementById('gate-back');
@@ -2666,16 +2670,21 @@
             frame.appendChild(iframe);
             const openLink = document.getElementById('cal-open');
             if (openLink) openLink.href = url;
-            // Si Zcal no carga (bloqueo de iframe por origen, red), el enlace de respaldo pasa a primer plano.
-            let loaded = false;
-            iframe.addEventListener('load', function () { loaded = true; });
+            // ponytail: `load` del iframe dispara igual aunque Zcal devuelva su propia
+            // página de error (documento cruzado, no podemos leer su contenido) — no sirve
+            // como señal de éxito. Única señal real: que Zcal, ya vivo, nos mande CUALQUIER
+            // postMessage. Si no llega ninguno en 4s, asumimos que no cargó y mostramos el
+            // link de respaldo en modo urgente. Arreglo definitivo: agregar este dominio a
+            // la lista de dominios permitidos del evento en el dashboard de Zcal.
+            let zcalAlive = false;
             setTimeout(function () {
-                if (!loaded) { const fb = document.getElementById('cal-fallback'); if (fb) fb.classList.add('cal-fallback--urgent'); }
-            }, 6000);
+                if (!zcalAlive) { const fb = document.getElementById('cal-fallback'); if (fb) fb.classList.add('cal-fallback--urgent'); }
+            }, 4000);
 
             window.addEventListener("message", function onMsg(e) {
                 const host = (e.origin || "").replace(/^https?:\/\//, "").split("/")[0];
                 if (!/(^|\.)zcal\.co$/.test(host)) return;
+                zcalAlive = true;
                 const d = e.data;
                 const s = typeof d === "string" ? d : (d && typeof d === "object" ? JSON.stringify(d) : "");
                 if (/booking[_-]?(completed|confirmed|success)|schedule[_-]?confirmed|event[_-]?created|"?booked"?\s*[:=]\s*true/i.test(s)) {
