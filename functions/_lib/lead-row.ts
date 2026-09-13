@@ -55,7 +55,10 @@ export function toLeadRow(lead: NormalizedLead, rawPayload: unknown): Record<str
     crm_event_id: lead.crm_event_id || null,
     event_time: lead.event_time,
 
-    status: "pending",
+    // "pending" no es un valor válido de leads_xb_status_chk (lead|syncing|lead_validado|error):
+    // el insert truena en Supabase y sbInsert() lo traga en silencio (best-effort). "lead" es el
+    // estado inicial correcto; Paso 1b lo mueve a syncing/lead_validado/error al sincronizar Odoo.
+    status: "lead",
     test: lead.test,
     raw_payload: rawPayload,
   };
