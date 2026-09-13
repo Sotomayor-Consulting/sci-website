@@ -64,6 +64,10 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
   const ctx = (b.context && typeof b.context === "object" ? b.context : {}) as Record<string, unknown>;
   const question_key = str(b.question_key, 20);
 
+  // Cada escritura corre en su propio try/catch: un rechazo en una (p.ej. una constraint
+  // que no contemplaba un valor nuevo) no debe tumbar las demás — descubrimos justo este
+  // caso: question_index fuera de rango tiraba el insert de "answers" Y silenciosamente
+  // se llevaba con él el de "events", porque compartían un solo try/catch secuencial.
   try {
     await sbRpc(env, "diag_upsert_session", {
       p_session_id: session_id,
@@ -74,8 +78,12 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
       p_step_id: step_id || null,
       p_ctx: ctx,
     });
+  } catch (err) {
+    console.error("diagnostico-event diag_upsert_session failed", { session_id, step_index, err });
+  }
 
-    if (event_type === "answer" && question_key) {
+  if (event_type === "answer" && question_key) {
+    try {
       await sbInsert(
         env,
         "diagnostico_answers",
@@ -91,8 +99,12 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
         }],
         { onConflict: "session_id,question_key" },
       );
+    } catch (err) {
+      console.error("diagnostico-event diagnostico_answers insert failed", { session_id, question_key, err });
     }
+  }
 
+  try {
     await sbInsert(env, "diagnostico_events", [{
       session_id,
       landing_variant: variant,
@@ -105,7 +117,7 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
       dwell_ms: intOrNull(b.dwell_ms),
     }]);
   } catch (err) {
-    console.error("diagnostico-event write failed", err);
+    console.error("diagnostico-event diagnostico_events insert failed", { session_id, event_type, err });
   }
 
   return noContent(origin);
