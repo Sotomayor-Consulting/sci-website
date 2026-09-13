@@ -1739,6 +1739,40 @@
         }
         function readStoredLead() { return { lead_id: lsGet("sci_lead_id_v1") }; }
 
+        // ============================================================
+        // TELEMETRÍA DE EMBUDO — sendBeacon a /api/diagnostico-event
+        // Aparte del tracking de conversión (trackAdsEvent / CAPI): esto no toca pixels
+        // ni CAPI, solo registra el recorrido del quiz para medir en qué paso se abandona.
+        // ============================================================
+        var LANDING_VARIANT = (window.SCI_TRACKING_CONFIG || {}).landing_variant || "a";
+        var FUNNEL_PERSONA = (window.SCI_TRACKING_CONFIG || {}).persona || "";
+        var funnelSeq = 0;
+        var stepStartedAt = Date.now();
+        function stepIdFor(step) {
+            if (step === 1) return "filter";
+            if (step === 2) return "name";
+            if (step >= 3 && step <= 7) return (qDataForStep(step) || {}).id || ("q" + step);
+            if (step === 8) return "gate";
+            if (step === 9) return "result";
+            return String(step);
+        }
+        function sendFunnelEvent(eventType, extra) {
+            try {
+                if (!navigator.sendBeacon) return;
+                var body = Object.assign({
+                    session_id: getOrCreateSessionId(),
+                    landing_variant: LANDING_VARIANT,
+                    persona: FUNNEL_PERSONA,
+                    page_name: PAGE_NAME,
+                    step_index: currentStep,
+                    step_id: stepIdFor(currentStep),
+                    event_type: eventType,
+                    seq: ++funnelSeq
+                }, extra || {});
+                navigator.sendBeacon("/api/diagnostico-event", new Blob([JSON.stringify(body)], { type: "text/plain" }));
+            } catch (e) {}
+        }
+
         function getClickTrackingData() {
             var keys = ["ttclid", "fbclid", "gclid", "gbraid", "wbraid", "msclkid"];
             var current = {};
@@ -2097,6 +2131,8 @@
             }
             currentStep = step;
             updateProgress();
+            stepStartedAt = Date.now();
+            sendFunnelEvent(step === 8 ? "gate_view" : step === 9 ? "result_view" : "view", { step_index: step, step_id: stepIdFor(step) });
 
             if (step === 8 && !quizCompleteTracked) {
                 quizCompleteTracked = true;
@@ -2172,6 +2208,14 @@
             userResponses[e.target.name] = e.target.value;
             userResponses[e.target.name + "_text"] = (label ? label.textContent : "").replace(/\s+/g, " ").trim();
 
+            sendFunnelEvent("answer", {
+                step_index: step, step_id: stepIdFor(step),
+                question_key: e.target.name,
+                question_index: step,
+                answer_value: e.target.value,
+                answer_label: userResponses[e.target.name + "_text"]
+            });
+
             // Avance automático (P0.1): solo ante un tap real del usuario (e.isTrusted). Al
             // restaurar una respuesta previa ("Atrás") o al preseleccionar por ?hook= el 'change'
             // es sintético (isTrusted:false) -> no avanza solo, deja al usuario revisar/cambiar.
@@ -2223,7 +2267,10 @@
         }
 
         function goToPrevStep() {
-            if (currentStep > 1) setActiveStep(currentStep - 1);
+            if (currentStep > 1) {
+                sendFunnelEvent("back", { step_index: currentStep, step_id: stepIdFor(currentStep) });
+                setActiveStep(currentStep - 1);
+            }
         }
 
         // Mapa paso -> número de pregunta visible (P1 + P2..P6 = 6). Nombre (2) y gate (8) no cuentan.
@@ -2483,6 +2530,8 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Un momento…";
 
+                sendFunnelEvent("gate_submit", { step_index: 8, step_id: "gate" });
+
                 // La respuesta de n8n nunca debe bloquear el diagnóstico. El envío continúa
                 // en segundo plano; así un timeout o CORS no deja al visitante atrapado aquí.
                 sendLeadToWebhook(payload);
@@ -2696,6 +2745,7 @@
                 leadData.conversion_path = "diagnostico_" + path;
             }
             track("path_chosen", { path: path, recommended: path === recommended, stage_id: computeStage().stageId });
+            sendFunnelEvent("cta_click", { step_index: 9, step_id: "result", question_key: "path_chosen", answer_value: path });
         }
 
         // --- Camino PLATAFORMA (auxiliar): pantalla puente con los ganchos de la plataforma, luego /start ---
@@ -3039,6 +3089,15 @@
         }
 
         init();
+
+        // Abandono: un solo beacon en el paso donde se quedó. pagehide cubre cierre de
+        // pestaña, navegación fuera del sitio y bfcache; no dispara si ya llegó al resultado.
+        var abandonSent = false;
+        window.addEventListener('pagehide', function () {
+            if (abandonSent || currentStep >= 9) return;
+            abandonSent = true;
+            sendFunnelEvent('abandon_beacon', { step_index: currentStep, step_id: stepIdFor(currentStep), dwell_ms: Date.now() - stepStartedAt });
+        });
     })();
     </script>
 </body>
