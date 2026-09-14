@@ -2477,7 +2477,15 @@
                 let ok = true;
                 showErr('lastname', false); showErr('phone', false); showErr('email', false);
                 if (lastName.length < 2) { showErr('lastname', true); ok = false; }
-                if (phoneRaw && phoneRaw.length < 7) { showErr('phone', true); ok = false; }   // opcional: solo valida si lo llenó
+                if (phoneRaw) {   // opcional: solo valida por país si lo llenó
+                    const ccIso = document.getElementById('f-cc-value').getAttribute('data-iso') || 'US';
+                    const range = phoneRange(ccIso);
+                    if (phoneRaw.length < range[0] || phoneRaw.length > range[1]) {
+                        showErr('phone', true); ok = false;
+                        const eEl = document.getElementById('e-phone');
+                        if (eEl) eEl.textContent = phoneErrorMsg(ccIso);
+                    }
+                }
                 if (!validEmail(email)) { showErr('email', true); ok = false; }
                 if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
 
@@ -2526,6 +2534,44 @@
             if (input) input.setAttribute('aria-invalid', show ? 'true' : 'false');
         }
         function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+
+        // Validación de WhatsApp por país: dígitos EXACTOS del número local
+        // (sin el 0 inicial, sin el código de país). "len" = exacto, o [min,max].
+        // ponytail: tabla fija con los 19 países del selector; un país nuevo en
+        // COUNTRIES que no esté acá cae al fallback genérico (8 dígitos).
+        var PHONE_RULES = {
+            EC: { len: 9,  eg: "991234567" },
+            MX: { len: 10, eg: "5512345678" },
+            CO: { len: 10, eg: "3001234567" },
+            PE: { len: 9,  eg: "987654321" },
+            CL: { len: 9,  eg: "961234567" },
+            AR: { len: [10, 11], eg: "1123456789" },
+            GT: { len: 8,  eg: "51234567" },
+            CR: { len: 8,  eg: "83123456" },
+            PA: { len: 8,  eg: "61234567" },
+            SV: { len: 8,  eg: "71234567" },
+            HN: { len: 8,  eg: "91234567" },
+            NI: { len: 8,  eg: "81234567" },
+            BO: { len: 8,  eg: "71234567" },
+            VE: { len: 10, eg: "4121234567" },
+            UY: { len: 8,  eg: "94123456" },
+            PY: { len: 9,  eg: "961234567" },
+            DO: { len: 10, eg: "8091234567" },
+            US: { len: 10, eg: "3051234567" },
+            ES: { len: 9,  eg: "612345678" }
+        };
+        function phoneRange(iso) {
+            var r = (PHONE_RULES[iso] || {}).len || 8;
+            return Array.isArray(r) ? r : [r, r];
+        }
+        // Dígitos sueltos, sin ceros a la izquierda (ej. Ecuador: "0" + 9 dígitos).
+        function cleanPhoneDigits(raw) { return String(raw || "").replace(/[^\d]/g, "").replace(/^0+/, ""); }
+        function phoneErrorMsg(iso) {
+            var rule = PHONE_RULES[iso];
+            if (!rule) return "Escribe un número válido.";
+            var n = Array.isArray(rule.len) ? (rule.len[0] + "-" + rule.len[1]) : rule.len;
+            return "Verifica tu WhatsApp: " + n + " dígitos, ej. " + rule.eg + ".";
+        }
 
         // ============================================================
         // RESULTADO (paso 9) — diagnóstico + 1 CTA recomendada + 1 alternativa
@@ -3026,6 +3072,17 @@
             items.forEach(function (li) {
                 li.addEventListener("click", function () { applyCountry(li.getAttribute("data-iso")); closeList(); btn.focus(); });
                 li.addEventListener("mousemove", function () { setActive(parseInt(li.getAttribute("data-i"), 10)); });
+            });
+
+            // Limpieza en vivo: saca todo lo que no sea dígito y los ceros a la
+            // izquierda (ej. Ecuador "0991234567" -> "991234567") mientras tipea,
+            // y no deja escribir más dígitos de los que ese país puede tener.
+            phone.addEventListener("input", function () {
+                var cleaned = cleanPhoneDigits(phone.value);
+                var max = phoneRange(current)[1];
+                if (cleaned.length > max) cleaned = cleaned.slice(0, max);
+                if (phone.value !== cleaned) phone.value = cleaned;
+                if (phone.getAttribute("aria-invalid") === "true") showErr("phone", false);
             });
 
             // País por defecto: primero la zona horaria del dispositivo (señal fiable de ubicación),
