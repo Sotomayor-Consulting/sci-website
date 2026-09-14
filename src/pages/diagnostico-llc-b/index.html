@@ -2216,7 +2216,7 @@
             sendFunnelEvent("answer", {
                 step_index: step, step_id: stepIdFor(step),
                 question_key: e.target.name,
-                question_index: step,
+                question_index: QUESTION_NO[step] || step,
                 answer_value: e.target.value,
                 answer_label: userResponses[e.target.name + "_text"]
             });
