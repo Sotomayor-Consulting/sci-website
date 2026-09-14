@@ -1726,6 +1726,7 @@
         }
         function lsGet(k) { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } }
         function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+        function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
 
         function getOrCreateSessionId() {
             var v = lsGet("sci_session_id_v1");
@@ -2058,6 +2059,25 @@
                 conversion_path: "diagnostico_view"
             });
 
+            // Retomar progreso guardado (F5, se cae el WiFi, la pestaña se descarga) en vez
+            // de reiniciar desde cero. Salta directo al paso donde quedó, sin pantalla de
+            // bienvenida ni explicador.
+            var resumed = loadQuizProgress();
+            if (resumed) {
+                userResponses = resumed.responses || {};
+                var resumeStep = Math.max(1, Math.min(8, resumed.step || 1));
+                document.getElementById('welcomeScreen').style.display = 'none';
+                var exResume = document.getElementById('explainerScreen');
+                if (exResume) exResume.style.display = 'none';
+                var qcResume = document.getElementById('quizContainer');
+                qcResume.style.display = 'block';
+                qcResume.setAttribute('aria-hidden', 'false');
+                restoreStaticInputs();
+                if (resumeStep >= 8) currentRoute = chooseRoute(computeStage().stageId, userResponses);
+                setActiveStep(resumeStep);
+                if (resumeStep === 8) fillAdelanto();
+            }
+
             // Dos botones (hero + fin del explicador) arrancan el mismo quiz.
             function startQuiz() {
                 if (!quizStartTracked) { quizStartTracked = true; track("quiz_start"); }
@@ -2119,6 +2139,51 @@
         // Pasos: 1=P1 · 2=nombre · 3-7=P2..P6 (dinámicos) · 8=gate · 9=resultado
         function qDataForStep(step) { return generalQuestions[step - 3]; }
 
+        // Progreso del quiz en localStorage: si la página se recarga a mitad de camino
+        // (F5, se cae el WiFi, el celular descarga la pestaña), se retoma en el mismo paso
+        // en vez de reiniciar desde cero. Se borra solo al llegar al resultado (paso 9) —
+        // ya es un lead, no tiene sentido "reanudar" un quiz completado.
+        var QUIZ_PROGRESS_KEY = "sci_quiz_progress_v1";
+        var QUIZ_PROGRESS_TTL_MS = 48 * 60 * 60 * 1000; // 48h: no resucitar una sesión vieja/abandonada
+        function saveQuizProgress() {
+            if (currentStep < 1 || currentStep > 8) return;
+            lsSet(QUIZ_PROGRESS_KEY, JSON.stringify({ step: currentStep, responses: userResponses, savedAt: Date.now() }));
+        }
+        function loadQuizProgress() {
+            try {
+                var raw = lsGet(QUIZ_PROGRESS_KEY);
+                if (!raw) return null;
+                var saved = JSON.parse(raw);
+                if (!saved || !saved.responses || !saved.step) return null;
+                if (Date.now() - (saved.savedAt || 0) > QUIZ_PROGRESS_TTL_MS) { lsDel(QUIZ_PROGRESS_KEY); return null; }
+                return saved;
+            } catch (e) { return null; }
+        }
+        function clearQuizProgress() { lsDel(QUIZ_PROGRESS_KEY); }
+
+        // Pasos 3-7 se preseleccionan solos al renderizar (leen de userResponses, ver
+        // renderDynamicQuestion). Los pasos 1 (industria) y 2 (nombre) son markup fijo,
+        // no pasan por ahí — hay que restaurarlos a mano.
+        function restoreStaticInputs() {
+            if (userResponses.filter) {
+                var stepEl = document.querySelector('.step[data-step="1"]');
+                var input = stepEl && stepEl.querySelector('input[value="' + CSS.escape(userResponses.filter) + '"]');
+                if (input) {
+                    input.checked = true;
+                    var lbl = input.closest('label');
+                    if (lbl) lbl.classList.add('selected');
+                    var nextBtn = stepEl.querySelector('.btn-next');
+                    if (nextBtn) nextBtn.disabled = false;
+                }
+            }
+            if (userResponses.first_name) {
+                var fnInput = document.getElementById('f-firstname');
+                if (fnInput) fnInput.value = userResponses.first_name;
+                var btnName = document.getElementById('btnName');
+                if (btnName) btnName.disabled = userResponses.first_name.trim().length < 2;
+            }
+        }
+
         function setActiveStep(step) {
             clearTimeout(autoAdvanceTimer);   // cambiar de paso (manual, atrás, o el propio auto-avance) cancela cualquier avance pendiente
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
@@ -2135,6 +2200,7 @@
                 if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) {} }
             }
             currentStep = step;
+            if (step === 9) clearQuizProgress(); else saveQuizProgress();
             updateProgress();
             stepStartedAt = Date.now();
             sendFunnelEvent(step === 8 ? "gate_view" : step === 9 ? "result_view" : "view", { step_index: step, step_id: stepIdFor(step) });
@@ -2212,6 +2278,7 @@
 
             userResponses[e.target.name] = e.target.value;
             userResponses[e.target.name + "_text"] = (label ? label.textContent : "").replace(/\s+/g, " ").trim();
+            saveQuizProgress();
 
             sendFunnelEvent("answer", {
                 step_index: step, step_id: stepIdFor(step),
@@ -2510,19 +2577,19 @@
                 const lastName = document.getElementById('f-lastname').value.trim();
                 const email = document.getElementById('f-email').value.trim();
                 const cc = document.getElementById('f-cc-value').value;
+                const ccIso = document.getElementById('f-cc-value').getAttribute('data-iso') || 'US';
                 let phoneRaw = document.getElementById('f-phone').value.replace(/[^\d]/g, "");
                 const ccDigits = cc.replace(/[^\d]/g, "");
                 if (ccDigits && phoneRaw.indexOf(ccDigits) === 0 && phoneRaw.length > ccDigits.length + 6) {
                     phoneRaw = phoneRaw.slice(ccDigits.length);
                 }
                 phoneRaw = phoneRaw.replace(/^0+/, "");
-                const phoneE164 = phoneRaw ? cc + phoneRaw : "";
+                const phoneE164 = phoneRaw ? toWhatsappE164(cc, ccIso, phoneRaw) : "";
 
                 let ok = true;
                 showErr('lastname', false); showErr('phone', false); showErr('email', false);
                 if (lastName.length < 2) { showErr('lastname', true); ok = false; }
                 if (phoneRaw) {   // opcional: solo valida por país si lo llenó
-                    const ccIso = document.getElementById('f-cc-value').getAttribute('data-iso') || 'US';
                     const range = phoneRange(ccIso);
                     if (phoneRaw.length < range[0] || phoneRaw.length > range[1]) {
                         showErr('phone', true); ok = false;
@@ -2615,6 +2682,16 @@
             if (!rule) return "Escribe un número válido.";
             var n = Array.isArray(rule.len) ? (rule.len[0] + "-" + rule.len[1]) : rule.len;
             return "Verifica tu WhatsApp: " + n + " dígitos, ej. " + rule.eg + ".";
+        }
+        // WhatsApp exige un dígito extra después del código de país en México (el "1") y
+        // Argentina (el "9") que NINGÚN cliente escribe ni debería ver — se agrega solo acá.
+        // AR con 11 dígitos = todavía trae el "15" viejo pegado: eso es ambiguo del lado
+        // cliente (depende del código de área), se manda tal cual y el backend ya lo
+        // resuelve con la lógica fina de siempre (ver functions/_lib/normalize.ts).
+        function toWhatsappE164(cc, iso, digits) {
+            if (iso === "MX" && digits.length === 10) return cc + "1" + digits;
+            if (iso === "AR" && digits.length === 10) return cc + "9" + digits;
+            return cc + digits;
         }
 
         // ============================================================
