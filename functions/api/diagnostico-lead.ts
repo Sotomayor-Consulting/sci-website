@@ -82,10 +82,20 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
   }
 
   try {
-    await sbInsert(env, "leads-xb", [toLeadRow(lead, payload)], { onConflict: "lead_id" });
+    // diag_link_lead ANTES del insert a leads-xb, no despues: el trigger AFTER INSERT dispara
+    // el push a Odoo casi instantaneo (pg_net async), y ese push lee las respuestas via
+    // v_diagnostico_lead_respuestas, que las filtra por lead_id en diagnostico_answers. Si el
+    // link corre despues del insert, el trigger ya disparo con el diagnostico vacio — se
+    // confirmo en produccion (diagnostico:undefined en el payload real que le llego a n8n,
+    // pese a que las respuestas ya estaban guardadas en diagnostico_answers por session_id).
     if (lead.session_id) {
-      await sbRpc(env, "diag_link_lead", { p_session_id: lead.session_id, p_lead_id: lead.lead_id });
+      try {
+        await sbRpc(env, "diag_link_lead", { p_session_id: lead.session_id, p_lead_id: lead.lead_id });
+      } catch (err) {
+        console.error("diagnostico-lead diag_link_lead failed (no bloquea el insert)", err);
+      }
     }
+    await sbInsert(env, "leads-xb", [toLeadRow(lead, payload)], { onConflict: "lead_id" });
     // Insert exitoso -> el trigger diag_leads_xb_sync ya disparó (o disparará) el
     // push a Odoo vía pg_net. No reenviar también al webhook viejo.
     return json({ ok: true, duplicate: false, status: "leads_xb_insert_ok" }, 200, origin);
