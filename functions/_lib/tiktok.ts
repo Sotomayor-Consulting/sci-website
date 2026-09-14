@@ -19,6 +19,7 @@ export const TIKTOK_ALLOWED_EVENTS = new Set([
   "Purchase",
   "Subscribe",
   "InitiateCheckout",
+  "Lead", // diagnóstico A/B manda esto en vez de CompleteRegistration — ver trackAdsEvent
 ]);
 
 export interface TikTokEventInput {
