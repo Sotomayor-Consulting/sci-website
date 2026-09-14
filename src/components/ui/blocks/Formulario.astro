@@ -180,9 +180,9 @@ const { activities, adviceOptions } = Astro.props as Props;
       >
     </CardHeader>
     <Form id="lead-form-2" novalidate class="grid gap-5">
-      <CardContent class="flex flex-col gap-6 h-full">
+      <CardContent class="flex h-full flex-col gap-6">
         <Field name="name" class="gap-1.5">
-          <FieldLabel for="name" class="text-white/75 text-sm"
+          <FieldLabel for="name" class="text-sm text-white/75"
             >Nombre completo</FieldLabel
           >
           <FieldControl
@@ -204,7 +204,7 @@ const { activities, adviceOptions } = Astro.props as Props;
           >
         </Field>
         <Field name="email" class="gap-1.5">
-          <FieldLabel for="email" class="text-white/75 text-sm"
+          <FieldLabel for="email" class="text-sm text-white/75"
             >Correo electrónico</FieldLabel
           >
           <FieldControl
@@ -223,7 +223,9 @@ const { activities, adviceOptions } = Astro.props as Props;
         </Field>
         <div class="grid grid-cols-[7.5rem_1fr] gap-2">
           <Field class="gap-1.5">
-            <FieldLabel for="country" class="text-white/75 text-sm">País</FieldLabel>
+            <FieldLabel for="country" class="text-sm text-white/75"
+              >País</FieldLabel
+            >
             <NativeSelect
               id="country"
               size="sm"
@@ -240,7 +242,7 @@ const { activities, adviceOptions } = Astro.props as Props;
             </NativeSelect>
           </Field>
           <Field name="phone" class="gap-1.5">
-            <FieldLabel for="phone" class="text-white/75 text-sm"
+            <FieldLabel for="phone" class="text-sm text-white/75"
               >Teléfono / WhatsApp</FieldLabel
             >
             <FieldControl
