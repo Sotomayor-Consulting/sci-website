@@ -35,6 +35,7 @@ export interface TikTokEventInput {
   page_url?: unknown;
   referrer?: unknown;
   content_type?: unknown;
+  content_id?: unknown;
   content_name?: unknown;
   content_category?: unknown;
   currency?: unknown;
@@ -120,12 +121,23 @@ export async function buildTikTokEvent(
     referrer: str(input.referrer, 500),
   });
 
+  // TikTok valida content_type contra un enum cerrado ("product" | "product_group") —
+  // "service" (el default que teníamos) lo rechaza con "El tipo de contenido no es válido".
+  // No vendemos productos individuales; "product_group" es lo que TikTok recomienda para
+  // negocios de servicios/leads sin catálogo. content_id también es obligatorio (no puede
+  // ir vacío) aunque no tengamos SKUs reales — usamos un identificador estable de la landing.
+  //
+  // "value" ya NO tiene default en 0: mandar 0 en eventos sin valor real (ViewContent) dispara
+  // "El valor de compra no es válido" en TikTok. Se omite si el caller no manda uno de verdad —
+  // en gate_submit/Schedule la landing sí manda un valor dinámico real (ver trackAdsEvent).
+  const rawValue = Number(input.value);
   const properties = compact({
-    content_type: str(input.content_type) || "service",
+    content_type: str(input.content_type) || "product_group",
+    content_id: str(input.content_id) || str(input.content_name) || "diagnostico-llc",
     content_name: str(input.content_name) || "Diagnostico LLC",
     content_category: str(input.content_category) || "LLC USA",
     currency: str(input.currency) || "USD",
-    value: Number.isFinite(Number(input.value)) ? Number(input.value) : 0,
+    value: Number.isFinite(rawValue) && rawValue > 0 ? rawValue : undefined,
   });
 
   const body: Record<string, unknown> = {
