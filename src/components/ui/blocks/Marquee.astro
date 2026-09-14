@@ -17,5 +17,5 @@ const { logos } = Astro.props
 >
   <Badge tone="neutral" appearance="text" eyebrow size="sm"
     >Acompañamiento para</Badge
-  >{logos.map((logo) => <Icon name={logo.name} class={logo.size} />)}
+  >{logos.map((logo) => <Icon name={logo.name} class={`${logo.size} delay-150 hover:scale-120 transition-all`} />)}
 </div>

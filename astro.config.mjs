@@ -5,6 +5,8 @@ import compressor from "astro-compressor";
 import starlight from "@astrojs/starlight";
 import pagefind from "astro-pagefind";
 import mdx from "@astrojs/mdx";
+import partytown from '@astrojs/partytown';
+
 
 import icon from "astro-icon";
 
@@ -21,6 +23,11 @@ export default defineConfig({
   },
   prefetch: true,
   integrations: [
+    partytown({
+      config: {
+        forward: ['dataLayer.push'],
+      },
+    }),
     pagefind(),
     sitemap({
       i18n: {

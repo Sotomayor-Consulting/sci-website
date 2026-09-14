@@ -45,7 +45,7 @@ const { insights, label, title, description, labelBtn, href } = Astro.props;
   </div><div class="grid gap-4 sm:grid-cols-3">
     {
       insights.map((insights) => (
-        <Card class="flex justify-center rounded-2xl border-white/10 bg-white/5 text-white shadow-none backdrop-blur">
+        <Card class="flex justify-center rounded-2xl border-white/10 bg-white/5 text-white shadow-none backdrop-blur transition-all delay-120 hover:-translate-y-3">
           <CardHeader>
             <>
               <CardTitle class="font-display text-primary text-2xl">

@@ -80,8 +80,8 @@ const {
       plans.map((plan) => (
         <Card
           class:list={[
-            "relative flex flex-col",
-            { "border-primary-accent bg-muted": plan.highlighted },
+            "relative flex flex-col hover:shadow-2xl hover:-translate-y-3 transition-all ",
+            { "border-primary-accent border bg-muted": plan.highlighted },
           ]}
         >
           {plan.badge && (
