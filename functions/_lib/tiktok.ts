@@ -1,6 +1,12 @@
 // TikTok Events API (CAPI) — construcción del payload y hash de identificadores.
 // Puerto del nodo n8n "Normalize & Build TikTok Event" (workflow "Pixel API TikTok v2"),
 // para correr same-origin en Cloudflare en vez de una llamada cross-origin a n8n.
+//
+// El whitelist original se copió tal cual del workflow viejo, que sirve a las otras 13
+// landings (SubmitForm/SubmitApplication/Purchase). Nunca se cruzó contra los eventos que
+// el propio diagnóstico A/B dispara (ver NATIVE en trackAdsEvent, landing HTML): faltaban
+// "Subscribe" (gate en Etapa 1) e "InitiateCheckout" (camino plataforma) — esos dos
+// llegaban con 422 "evento no autorizado" y nunca salían hacia TikTok.
 
 export const TIKTOK_ALLOWED_EVENTS = new Set([
   "PageView",
@@ -11,6 +17,8 @@ export const TIKTOK_ALLOWED_EVENTS = new Set([
   "Schedule",
   "SubmitApplication",
   "Purchase",
+  "Subscribe",
+  "InitiateCheckout",
 ]);
 
 export interface TikTokEventInput {
