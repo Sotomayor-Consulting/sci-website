@@ -1852,13 +1852,18 @@
             var NATIVE = ["ViewContent", "Contact", "CompleteRegistration", "Schedule", "Subscribe", "InitiateCheckout"];
             if (NATIVE.indexOf(eventName) === -1) { if (DEBUG) console.warn("Evento no nativo bloqueado:", eventName); return; }
             var evId = payload.event_id || buildEventId(eventName, payload);
+            // TikTok tiene "Lead" como evento propio para captura de datos de contacto —
+            // más preciso que "CompleteRegistration" (pensado para alta de cuenta/trial) y
+            // el que TikTok reconoce para optimizar campañas de generación de leads. Meta ya
+            // hacía este mismo mapeo (meta_event_name); ahora se aplica igual para TikTok.
+            var tiktokEventName = (eventName === "CompleteRegistration") ? "Lead" : eventName;
             var eventPayload = Object.assign({
                 event: eventName,
                 event_id: evId,
                 event_time: payload.event_time || Math.floor(Date.now() / 1000),
                 event_source: "web",
                 event_source_id: CONFIG.tiktokPixelId,
-                tiktok_event_name: eventName,
+                tiktok_event_name: tiktokEventName,
                 meta_event_name: (eventName === "CompleteRegistration" ? "Lead" : eventName)
             }, getBaseTrackingPayload(), payload);
 
@@ -1868,13 +1873,13 @@
             if (!QA_NO_PIXELS) {
                 var clean = sanitizeAdsPayload(eventPayload);
                 if (window.ttq && typeof window.ttq.track === "function") {
-                    try { window.ttq.track(eventName, clean, { event_id: evId }); }
-                    catch (e) { try { window.ttq.track(eventName, clean); } catch (e2) {} }
+                    try { window.ttq.track(tiktokEventName, clean, { event_id: evId }); }
+                    catch (e) { try { window.ttq.track(tiktokEventName, clean); } catch (e2) {} }
                 }
                 if (window.fbq && typeof window.fbq === "function") {
                     try { window.fbq("track", eventPayload.meta_event_name, clean, { eventID: evId }); } catch (e) {}
                 }
-                sendTikTokConversionsApiEvent(eventName, eventPayload);
+                sendTikTokConversionsApiEvent(tiktokEventName, eventPayload);
             }
             if (DEBUG) console.info("Ads tracking event:", eventPayload);
         }
