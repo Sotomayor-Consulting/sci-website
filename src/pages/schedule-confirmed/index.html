@@ -839,6 +839,11 @@
             </button>
           </div>
 
+          <div id="sci-booking-actions" class="sci-actions" hidden>
+            <a id="sci-reschedule" class="sci-button sci-button-primary" href="#">Reprogramar mi reuniÃ³n</a>
+            <a id="sci-cancel-booking" class="sci-button sci-button-whatsapp" href="#">Cancelar reserva</a>
+          </div>
+
           <p id="sci-request-reference" class="sci-reference" hidden></p>
         </section>
 
@@ -962,8 +967,8 @@
       root.dataset.initialized = "true";
 
       var CONFIG = Object.freeze({
-        version: "7.0",
-        endpoint: "https://n8n.sotomayorconsulting.com/webhook/schedule-confirmed-validate",
+        version: "8.0",
+        endpoint: "/api/schedule-validation",
         tiktokCapiEndpoint: "/api/tiktok-capi",
         tiktokPixelId: "D5KFDEBC77U6BL6T7LDG",
         whatsappNumber: "17542252904",
@@ -986,6 +991,9 @@
         supportActions: document.getElementById("sci-support-actions"),
         whatsapp: document.getElementById("sci-whatsapp"),
         retry: document.getElementById("sci-retry"),
+        bookingActions: document.getElementById("sci-booking-actions"),
+        reschedule: document.getElementById("sci-reschedule"),
+        cancelBooking: document.getElementById("sci-cancel-booking"),
         reference: document.getElementById("sci-request-reference"),
         existingAgenda: document.getElementById("sci-existing-agenda"),
         existingDate: document.getElementById("sci-existing-date"),
@@ -1006,7 +1014,7 @@
         timezone: readParam("timezone"),
         duration: readParam("duration"),
         start_date: readParam("startDate"),
-        preparation_answer: readParam("a[1]") || readParam("detail")
+        preparation_answer: readParam("a[2]") || readParam("detail") || readParam("a[1]")
       });
 
       var requestRunning = false;
@@ -1030,14 +1038,16 @@
         startWaitMessages();
 
         try {
-          var response = await fetch(buildValidationUrl(zcalBooking), {
-            method: "GET",
-            mode: "cors",
+          var response = await fetch(CONFIG.endpoint, {
+            method: "POST",
+            mode: "same-origin",
             cache: "no-store",
-            credentials: "omit",
+            credentials: "same-origin",
             headers: {
-              Accept: "application/json, text/plain, */*"
-            }
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(buildValidationPayload(zcalBooking))
           });
 
           var rawBody = await response.text();
@@ -1104,6 +1114,13 @@
             configureWhatsapp(requestId, reason);
             setState("rejected", requestId, reason);
             pushRejectedEvent(requestId, reason);
+            return;
+          }
+
+          if (status === "needs_context") {
+            configureBookingActions(result && result.actions);
+            configureWhatsapp(requestId, reason);
+            setState("needs_context", requestId, reason);
             return;
           }
 
@@ -1190,19 +1207,24 @@
         return null;
       }
 
-      function buildValidationUrl(agenda) {
-        var url = new URL(CONFIG.endpoint);
-
-        setUrlParam(url, "fullName", agenda.full_name);
-        setUrlParam(url, "email", agenda.email);
-        setUrlParam(url, "timezone", agenda.timezone);
-        setUrlParam(url, "a[0]", agenda.phone);
-        setUrlParam(url, "a[1]", agenda.preparation_answer);
-        setUrlParam(url, "duration", agenda.duration);
-        setUrlParam(url, "startDate", agenda.start_date);
-        url.searchParams.set("_validation_ts", String(Date.now()));
-
-        return url.toString();
+      function buildValidationPayload(agenda) {
+        return {
+          full_name: agenda.full_name,
+          email: agenda.email,
+          phone: agenda.phone,
+          timezone: agenda.timezone,
+          duration: agenda.duration,
+          start_date: agenda.start_date,
+          meeting_topic: agenda.preparation_answer,
+          booking_id: readParam("zcal_booking_id") || readParam("booking_id"),
+          utm: {
+            source: readParam("utm_source"),
+            medium: readParam("utm_medium"),
+            campaign: readParam("utm_campaign"),
+            content: readParam("utm_content"),
+            term: readParam("utm_term")
+          }
+        };
       }
 
       function setUrlParam(url, key, value) {
@@ -1388,8 +1410,10 @@
         elements.supportActions.hidden = !(
           state === "rejected" ||
           state === "error" ||
-          state === "missing"
+          state === "missing" ||
+          state === "needs_context"
         );
+        elements.bookingActions.hidden = state !== "needs_context" || elements.bookingActions.dataset.ready !== "true";
         elements.retry.hidden = state !== "error";
 
         if (elements.reference) {
@@ -1467,6 +1491,16 @@
             "No podemos mantener esta nueva reunión",
             "La solicitud no cumplió las reglas de agendamiento aplicables a este registro. Nuestro equipo puede brindarte mayor información por WhatsApp.",
             "Usa el botón de WhatsApp para solicitar atención del equipo."
+          );
+          return;
+        }
+
+        if (state === "needs_context") {
+          setCopy(
+            "Necesitamos mÃ¡s contexto",
+            "Antes de la reuniÃ³n necesitamos conocer mejor tu caso",
+            "La respuesta ingresada no ofrece suficiente contexto para preparar una asesorÃ­a Ãºtil. Puedes reprogramar la reuniÃ³n para completar la informaciÃ³n o cancelar la reserva.",
+            "Las opciones disponibles corresponden Ãºnicamente a tu reserva actual."
           );
           return;
         }
@@ -1612,6 +1646,14 @@
 
         sendTikTokScheduleCapi(eventId, agenda);
         setFlag(storageKey);
+      }
+
+      function configureBookingActions(actions) {
+        var reschedule = normalizeText(actions && actions.reschedule_token);
+        var cancel = normalizeText(actions && actions.cancel_token);
+        elements.bookingActions.dataset.ready = reschedule && cancel ? "true" : "false";
+        if (reschedule) elements.reschedule.href = "/api/zcal-booking-action?token=" + encodeURIComponent(reschedule);
+        if (cancel) elements.cancelBooking.href = "/api/zcal-booking-action?token=" + encodeURIComponent(cancel);
       }
 
       // El Worker same-origin toma IP/User-Agent de la petición y hashea email,
