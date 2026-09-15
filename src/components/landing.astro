@@ -11,7 +11,6 @@ import Faqs from "@components/ui/blocks/Faq.astro";
 import Marquee from "@components/ui/blocks/Marquee.astro";
 import Pricing, { type PricingPlan } from "@components/ui/blocks/Pricing.astro";
 
-
 const benefits = [
   "Sin visa ni residencia",
   "Sin SSN ni ITIN",
@@ -71,7 +70,7 @@ const steps = [
   },
 
   {
-    titulo: "Habla con un asesor",
+    titulo: "Habla con un experto.",
     descripcion:
       "Revisamos actividad, socios, residencia y planes de crecimiento.",
   },
@@ -92,9 +91,9 @@ const faqs = [
       "Sí. Una persona no residente puede constituir una LLC. La estructura y obligaciones adecuadas dependen de su actividad y país de residencia.",
   },
   {
-    question: "¿Cuánto tarda el proceso?",
+    question: "¿Cuánto tarda el proceso de incorporación de LLC?",
     answer:
-      "El registro estatal suele tomar entre 5 y 10 días hábiles. El EIN puede tardar varias semanas, según el IRS.",
+      "El proceso de incorporación dura aproximadamente: hasta 15 días",
   },
   {
     question: "¿Qué documentos necesito?",
@@ -131,7 +130,7 @@ const planes: PricingPlan[] = [
     features: [
       { text: "Incorporación de la LLC frente al Estado.", included: true },
       {
-        text: "Obtención del EIN (Número de Identificación Tributaria).",
+        text: "Acompañamiento para la obtención del Número de Identificación Tributaria (EIN). Tiempo aproximado 8 a 9 semanas.",
         included: true,
       },
       { text: "Agente Residente por un año.", included: true },
@@ -142,16 +141,21 @@ const planes: PricingPlan[] = [
   {
     name: "Business",
     description:
-      "Estrategia fiscal y legal completa para tu LLC. Ideal para hacer las cosas bien desde el inicio.",
+      "Estrategia fiscal y legal para la incorporación de tú LLC. Ideal para escalar y tener bien estructurado desde el inicio.",
     price: "$950",
     period: "Una vez",
     features: [
+      {
+        text: "Incluye todo del Plan Básico + Estándar",
+        included: true,
+      },
       { text: "Planificación y diseño legal - tributario.", included: true },
       {
         text: "Acompañamiento bancario (Mercury o Relay + Stripe).",
         included: true,
       },
-      { text: "EIN acelerado", included: true },
+
+      { text: "Acompañamiento para la obtención del Número de Identificación Tributaria en hasta 1 semana.", included: true },
     ],
     buttonText: "Agenda un cita",
     buttonHref: "/tu-llc-en-usa/#agendar",
@@ -164,9 +168,13 @@ const planes: PricingPlan[] = [
     price: "$600",
     period: "Una vez",
     features: [
+      {
+        text: "Incluye todo del Plan Básico",
+        included: true,
+      },
       { text: "Elaboración del Acuerdo de Operación.", included: true },
       { text: "Consultas ilimitadas por un año.", included: true },
-      { text: "Solicitud de Exención BE-13", included: true },
+      { text: "Acompañamiento para la solicitud de exención BE-13", included: true },
     ],
     buttonText: "Agenda un cita",
     buttonHref: "/tu-llc-en-usa/#agendar",
@@ -258,9 +266,8 @@ const experience = [
 
   <section id="planes" class="scroll-mt-24 py-20 sm:py-24">
     <Pricing
-      heading="Acompañamiento para cada etapa."
-      description="Valores anuales sin tasa estatal. El plan correcto se define en la
-          asesoría."
+      heading="Valores anuales sin considerar pagos gubernamentales."
+      description="El plan ideal según tu caso lo definimos en la primera asesoría."
       plans={planes}
     />
   </section>
