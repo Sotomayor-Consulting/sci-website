@@ -964,6 +964,8 @@
       var CONFIG = Object.freeze({
         version: "7.0",
         endpoint: "https://n8n.sotomayorconsulting.com/webhook/schedule-confirmed-validate",
+        tiktokCapiEndpoint: "/api/tiktok-capi",
+        tiktokPixelId: "D5KFDEBC77U6BL6T7LDG",
         whatsappNumber: "17542252904",
         defaultTimezone: "America/Guayaquil"
       });
@@ -1588,12 +1590,13 @@
       function pushApprovedEvent(requestId, agenda) {
         var storageKey = "sci_schedule_approved_" + requestId;
         if (hasFlag(storageKey)) return;
+        var eventId = "sci_schedule_" + requestId;
 
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           event: "schedule_confirmed",
           event_source: "sci_schedule_confirmed_page",
-          event_id: "sci_schedule_" + requestId,
+          event_id: eventId,
           validation_request_id: requestId,
           content_type: "service",
           content_name: "Asesoría Sotomayor Consulting",
@@ -1607,7 +1610,45 @@
           page_location_clean: window.location.origin + window.location.pathname
         });
 
+        sendTikTokScheduleCapi(eventId, agenda);
         setFlag(storageKey);
+      }
+
+      // El Worker same-origin toma IP/User-Agent de la petición y hashea email,
+      // teléfono y external_id antes de enviar el evento a TikTok Events API.
+      // Solo se envía tras una respuesta aprobada de la validación de agenda.
+      function sendTikTokScheduleCapi(eventId, agenda) {
+        if (!/(^|\.)sotomayorconsulting\.com$/i.test(window.location.hostname)) return;
+
+        var ttpMatch = document.cookie.match(/(?:^|;\s*)_ttp=([^;]+)/);
+        var payload = {
+          event_name: "Schedule",
+          event_id: eventId,
+          event_time: Math.floor(Date.now() / 1000),
+          pixel_id: CONFIG.tiktokPixelId,
+          ttclid: readParam("ttclid"),
+          ttp: ttpMatch ? decodeURIComponent(ttpMatch[1]) : "",
+          email: zcalBooking.email,
+          phone: formatPhone(zcalBooking.phone),
+          external_id: requestIdFromEventId(eventId),
+          page_url: window.location.href,
+          referrer: document.referrer || "",
+          content_type: "product_group",
+          content_id: "asesoria-llc-schedule",
+          content_name: "Asesoría Sotomayor Consulting",
+          content_category: "schedule_confirmed"
+        };
+
+        fetch(CONFIG.tiktokCapiEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          keepalive: true
+        }).catch(function () {});
+      }
+
+      function requestIdFromEventId(eventId) {
+        return String(eventId || "").replace(/^sci_schedule_/, "").slice(0, 200);
       }
 
       function pushRejectedEvent(requestId, reason) {
