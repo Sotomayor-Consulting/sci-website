@@ -2380,6 +2380,10 @@
             let stageId = Math.round(avg);
             if (stageId < 1) stageId = 1;
             if (stageId > 4) stageId = 4;
+            // q2=1 ("todavia estoy validando la idea") = sin negocio operando todavia.
+            // q4/q5 en ese caso son facturacion proyectada y vision aspiracional, no
+            // traccion real -- no deberian empujar a "alto valor" por si solas.
+            if (userResponses.q2 === "1" && stageId > 2) stageId = 2;
             return { stageId: stageId, avg: avg };
         }
 
