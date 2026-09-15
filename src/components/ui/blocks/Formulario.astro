@@ -42,7 +42,7 @@ const { activities, adviceOptions } = Astro.props as Props;
   id="agendar"
   class="border-primary-accent/40 bg-foreground text-background grid min-h-150 scroll-mt-24 rounded-[1.75rem] px-5 shadow-2xl shadow-slate-900/20"
 >
-  <div id="form-step-1" class="flex flex-col gap-3">
+  <div id="form-step-1" class="form-step flex flex-col gap-3">
     <CardHeader>
       <div class="mb-3 flex items-center justify-between">
         <Badge
@@ -83,6 +83,7 @@ const { activities, adviceOptions } = Astro.props as Props;
               size="sm"
               class="w-full border-white/15 bg-white/7 text-white data-placeholder:text-white/40"
               placeholder="Selecciona una actividad"
+              aria-label="selector"
             >
               <SelectValue placeholder="Selecciona una actividad" />
             </SelectTrigger>
@@ -107,6 +108,7 @@ const { activities, adviceOptions } = Astro.props as Props;
               size="sm"
               class="w-full border-white/15 bg-white/7 text-white data-placeholder:text-white/40"
               placeholder="Selecciona una opción"
+              aria-label="selector"
             >
               <SelectValue placeholder="Selecciona una opción" />
             </SelectTrigger>
@@ -152,7 +154,10 @@ const { activities, adviceOptions } = Astro.props as Props;
       </CardFooter>
     </Form>
   </div>
-  <div id="form-step-2" class="hidden h-full min-h-full flex-col gap-3">
+  <div
+    id="form-step-2"
+    class="form-step hidden h-full min-h-full flex-col gap-3"
+  >
     <CardHeader>
       <div class="flex items-center justify-between">
         <Badge
@@ -318,7 +323,7 @@ const { activities, adviceOptions } = Astro.props as Props;
       </CardFooter>
     </Form>
   </div>
-  <div id="calendar-step" class="hidden gap-5">
+  <div id="calendar-step" class="form-step hidden gap-5">
     <CardHeader
       ><Badge
         tone="primary-accent"
@@ -352,3 +357,33 @@ const { activities, adviceOptions } = Astro.props as Props;
     >
   </div>
 </Card>
+
+<style>
+  .form-step:not(.hidden) {
+    animation: form-step-enter 240ms ease-out both;
+  }
+
+  #agendar[data-step-direction="backward"] .form-step:not(.hidden) {
+    animation-name: form-step-enter-backward;
+  }
+
+  @keyframes form-step-enter {
+    from {
+      opacity: 0;
+      transform: translateX(0.75rem);
+    }
+  }
+
+  @keyframes form-step-enter-backward {
+    from {
+      opacity: 0;
+      transform: translateX(-0.75rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .form-step:not(.hidden) {
+      animation: none;
+    }
+  }
+</style>

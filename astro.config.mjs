@@ -19,7 +19,7 @@ export default defineConfig({
     domains: ["images.unsplash.com"],
   },
   devToolbar: {
-    enabled: false
+    enabled: true
   },
   prefetch: true,
   integrations: [

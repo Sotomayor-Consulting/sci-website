@@ -302,6 +302,7 @@ const experience = [
   const formStep1 = document.querySelector<HTMLElement>("#form-step-1");
   const formStep2 = document.querySelector<HTMLElement>("#form-step-2");
   const calendarStep = document.querySelector<HTMLElement>("#calendar-step");
+  const formCard = document.querySelector<HTMLElement>("#agendar");
   const contactTitle = document.querySelector<HTMLElement>("#contact-title");
   const backBtn = document.querySelector<HTMLButtonElement>("#back-btn");
   const frame = document.querySelector<HTMLIFrameElement>("#calendar-frame");
@@ -333,7 +334,11 @@ const experience = [
     else submitButton.removeAttribute("aria-busy");
   }
 
-  function showStep(step: HTMLElement | null | undefined) {
+  function showStep(
+    step: HTMLElement | null | undefined,
+    direction: "forward" | "backward" = "forward",
+  ) {
+    if (formCard) formCard.dataset.stepDirection = direction;
     [formStep1, formStep2, calendarStep].forEach((s) =>
       s?.classList.add("hidden"),
     );
@@ -356,7 +361,7 @@ const experience = [
   });
 
   backBtn?.addEventListener("click", () => {
-    showStep(formStep1);
+    showStep(formStep1, "backward");
     document
       .querySelector("#agendar")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
