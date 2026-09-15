@@ -31,8 +31,8 @@ import { Alert, AlertDescription } from "@/components/starwind/alert";
 import { Button } from "@/components/starwind/button";
 
 interface Props {
-    activities: string[];
-    adviceOptions: string[]
+  activities: string[];
+  adviceOptions: string[];
 }
 
 const { activities, adviceOptions } = Astro.props as Props;
@@ -40,7 +40,7 @@ const { activities, adviceOptions } = Astro.props as Props;
 
 <Card
   id="agendar"
-  class="border-primary-accent/40 bg-foreground text-background scroll-mt-24 rounded-[1.75rem] px-5 shadow-2xl shadow-slate-900/20"
+  class="border-primary-accent/40 bg-foreground text-background grid min-h-150 scroll-mt-24 rounded-[1.75rem] px-5 shadow-2xl shadow-slate-900/20"
 >
   <div id="form-step-1" class="flex flex-col gap-3">
     <CardHeader>
@@ -152,7 +152,7 @@ const { activities, adviceOptions } = Astro.props as Props;
       </CardFooter>
     </Form>
   </div>
-  <div id="form-step-2" class="hidden flex-col gap-3">
+  <div id="form-step-2" class="hidden h-full min-h-full flex-col gap-3">
     <CardHeader>
       <div class="flex items-center justify-between">
         <Badge
@@ -179,10 +179,10 @@ const { activities, adviceOptions } = Astro.props as Props;
         >Completa tus datos para reservar tu asesoría.</CardDescription
       >
     </CardHeader>
-    <Form id="lead-form-2" novalidate class="flex flex-col gap-5">
-      <CardContent class="flex flex-col gap-4">
+    <Form id="lead-form-2" novalidate class="grid gap-5">
+      <CardContent class="flex h-full flex-col gap-6">
         <Field name="name" class="gap-1.5">
-          <FieldLabel for="name" class="text-white/75"
+          <FieldLabel for="name" class="text-sm text-white/75"
             >Nombre completo</FieldLabel
           >
           <FieldControl
@@ -204,7 +204,7 @@ const { activities, adviceOptions } = Astro.props as Props;
           >
         </Field>
         <Field name="email" class="gap-1.5">
-          <FieldLabel for="email" class="text-white/75"
+          <FieldLabel for="email" class="text-sm text-white/75"
             >Correo electrónico</FieldLabel
           >
           <FieldControl
@@ -223,7 +223,9 @@ const { activities, adviceOptions } = Astro.props as Props;
         </Field>
         <div class="grid grid-cols-[7.5rem_1fr] gap-2">
           <Field class="gap-1.5">
-            <FieldLabel for="country" class="text-white/75">País</FieldLabel>
+            <FieldLabel for="country" class="text-sm text-white/75"
+              >País</FieldLabel
+            >
             <NativeSelect
               id="country"
               size="sm"
@@ -236,13 +238,11 @@ const { activities, adviceOptions } = Astro.props as Props;
               ><NativeSelectOption value="+51">PE +51</NativeSelectOption
               ><NativeSelectOption value="+1">US +1</NativeSelectOption
               ><NativeSelectOption value="+34">ES +34</NativeSelectOption>
-              <NativeSelectOption value="+54">AR +54</NativeSelectOption
-              >
-              
+              <NativeSelectOption value="+54">AR +54</NativeSelectOption>
             </NativeSelect>
           </Field>
           <Field name="phone" class="gap-1.5">
-            <FieldLabel for="phone" class="text-white/75"
+            <FieldLabel for="phone" class="text-sm text-white/75"
               >Teléfono / WhatsApp</FieldLabel
             >
             <FieldControl
@@ -289,14 +289,18 @@ const { activities, adviceOptions } = Astro.props as Props;
           ></Alert
         >
       </CardContent>
-      <CardFooter class="flex-col gap-4 border-white/10 bg-transparent">
-        <div class="grid w-full grid-cols-2 gap-2">
+      <CardFooter
+        class="flex-col justify-end gap-4 border-white/10 bg-transparent"
+      >
+        <div
+          class="grid h-full w-full min-w-0 grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-2"
+        >
           <Button
             id="back-btn"
             type="button"
             variant="outline"
             size="lg"
-            class="bg-background text-foreground rounded-xl font-bold"
+            class="bg-background text-foreground w-full min-w-0 rounded-xl px-2 text-sm font-bold sm:px-8 sm:text-lg"
             >Volver</Button
           >
           <Button
@@ -304,7 +308,8 @@ const { activities, adviceOptions } = Astro.props as Props;
             type="submit"
             variant="primary"
             size="lg"
-            class="rounded-xl font-bold">Elegir horario</Button
+            class="w-full min-w-0 rounded-xl px-2 text-sm font-bold sm:px-8 sm:text-lg"
+            >Elegir horario</Button
           >
         </div>
         <p class="text-center text-[.7rem] leading-5 text-white/45">

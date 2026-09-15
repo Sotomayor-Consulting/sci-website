@@ -2073,6 +2073,10 @@
             const fn = document.getElementById('f-firstname');
             const btnName = document.getElementById('btnName');
             fn.addEventListener('input', () => {
+                // Solo exige "hay algo escrito" en vivo — el chequeo real (validName) corre
+                // al hacer clic/Enter y SÍ muestra el error si no pasa. Deshabilitar acá con
+                // la heurística completa dejaba el botón mudo: nunca se podía hacer clic para
+                // disparar el mensaje, así que un nombre real atípico quedaba sin explicación.
                 btnName.disabled = fn.value.trim().length < 2;
                 showErr('firstname', false);
             });
@@ -2611,11 +2615,15 @@
 
         // Nombre plausible: solo letras/espacios/guion/apóstrofo, al menos una vocal,
         // sin el mismo caracter repetido 3+ veces ni 4+ consonantes seguidas — filtra
-        // manchas de teclado ("sdfsfre", "qwrtyp") sin rechazar nombres reales.
+        // manchas de teclado ("sdfsfre", "qwrtyp") sin rechazar nombres reales. Suma una
+        // lista chica de valores genéricos exactos (test, ninguno, no se...) que sí tienen
+        // vocales y pasarían las reglas estructurales solas.
+        var NAME_JUNK = /^(test|prueba|asdf|qwerty|nombre|apellido|name|lastname|firstname|noexiste|ningun[oa]?|no\s*se|no\s*tengo|no\s*aplica|sin\s*nombre|none|na|n\/a|xxx+|aaa+|foo|bar|sample|ejemplo|demo|usuario|cliente|desconocido|anonimo)$/i;
         function validName(v) {
             var s = (v || '').trim();
-            if (s.length < 2) return false;
+            if (s.length < 2 || s.length > 60) return false;
             if (!/^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/.test(s)) return false;
+            if (NAME_JUNK.test(s.toLowerCase())) return false;
             if (!/[AaEeIiOoUuÁáÉéÍíÓóÚúÜü]/.test(s)) return false;
             if (/(.)\1{2,}/.test(s)) return false;
             if (/[B-DF-HJ-NP-TV-Zb-df-hj-np-tv-z]{4,}/.test(s)) return false;
