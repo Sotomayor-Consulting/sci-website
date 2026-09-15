@@ -490,8 +490,10 @@
 
         /* ===== SISTEMA DE BOTONES — minimal, elegante ===== */
         .btn-start {
-            background: var(--gold-primary);
-            color: var(--bg-dark-deep);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 55%, var(--gold-light) 100%);
+            color: var(--text-white);
             font-family: 'Poppins', 'Open Sans', sans-serif;
             font-size: 16px;
             font-weight: 600;
@@ -500,15 +502,32 @@
             border: none;
             border-radius: var(--radius);
             cursor: pointer;
-            box-shadow: 0 12px 30px -10px rgba(192, 135, 46, 0.55);
+            box-shadow: 0 12px 30px -10px rgba(169, 116, 31, 0.55);
             transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
             min-width: 260px;
         }
 
+        /* Brillo que cruza el botón de lado a lado: banda angosta, pasa y se queda
+           fuera de vista la mayor parte del ciclo (no es un loop constante). */
+        .btn-start::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -75%;
+            width: 35%; height: 100%;
+            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+            transform: skewX(-20deg);
+            animation: btnShine 4.5s ease-in-out infinite;
+        }
+        @keyframes btnShine {
+            0% { left: -75%; }
+            18% { left: 125%; }
+            100% { left: 125%; }
+        }
+
         .btn-start:hover {
             transform: translateY(-1px);
-            background: var(--gold-light);
-            box-shadow: 0 16px 40px -10px rgba(192, 135, 46, 0.6);
+            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 60%, var(--gold-light) 100%);
+            box-shadow: 0 16px 40px -10px rgba(169, 116, 31, 0.6);
         }
         .btn-start:active { transform: scale(0.97); }
 
@@ -533,8 +552,7 @@
             background: var(--bg-cream); padding: 14px 20px; text-align: center;
             border-bottom: 1px solid var(--line);
         }
-        .trust-strip-note { font-size: 12.5px; color: var(--text-secondary); margin: 0 0 6px; line-height: 1.5; }
-        .trust-strip-stats { font-size: 12.5px; color: var(--text-secondary); margin: 0; }
+        .trust-strip-note { font-size: 12.5px; color: var(--text-secondary); margin: 0; line-height: 1.5; }
         .segment { padding: 48px 20px; }
         .segment-inner { max-width: 560px; margin: 0 auto; }
         .segment--white { background: var(--bg-white); }
@@ -551,6 +569,7 @@
         .social-proof-stats.social-proof-stats--on-navy { color: rgba(255, 255, 255, 0.75); }
         .explainer-list { margin-bottom: 34px !important; }
         .explainer-list li { font-size: 15px !important; color: var(--text-dark) !important; }
+        .rp-out-detail { display: block; font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
 
         .how-steps { list-style: none; padding: 0; margin: 0 0 30px; display: grid; gap: 20px; }
         .how-steps li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; align-items: start; }
@@ -992,6 +1011,7 @@
 
         @media (prefers-reduced-motion: reduce) {
             .step, .progress-fill, .btn-start, .btn-next, .cta-primary { transition: none !important; }
+            .btn-start::after, .path-card.recommended .path-cta::after { animation: none; display: none; }
         }
 
         /* Foco programático (a11y) — sin anillo visible en elementos no interactivos */
@@ -1052,8 +1072,20 @@
             transition: background 0.2s ease, color 0.2s ease;
         }
         .path-card.recommended .path-cta {
-            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 100%);
-            border-color: var(--bg-dark-deep);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 55%, var(--gold-light) 100%);
+            border-color: var(--gold-dark);
+            color: var(--text-white);
+        }
+        .path-card.recommended .path-cta::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -75%;
+            width: 35%; height: 100%;
+            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+            transform: skewX(-20deg);
+            animation: btnShine 4.5s ease-in-out infinite;
         }
         .path-card .path-cta:hover { background: var(--bg-dark-deep); color: var(--text-white); }
         .path-card.recommended .path-cta:hover { background: var(--gold-dark); color: var(--text-white); }
@@ -1275,7 +1307,7 @@
             <p class="hero-eyebrow">Firma legal, fiscal y tecnológica · 10 años</p>
             <h1 id="hero-h1">¿Tu <span class="accent">LLC</span> está en regla? Descúbrelo en 3 minutos.</h1>
             <p class="hero-subtitle" id="hero-sub">Respondes 6 preguntas y te decimos tres cosas claras: qué tiene mal tu
-                LLC hoy, qué puede convertirse en multa, y qué corregir primero. Gratis, sin compromiso.</p>
+                LLC hoy, qué puede convertirse en multa, y qué corregir primero.</p>
 
             <div class="hero-badges">
                 <span>3 minutos</span>
@@ -1297,7 +1329,6 @@
     <div id="explainerScreen">
         <div class="trust-strip">
             <p class="trust-strip-note">Al terminar agendas tu revisión con un especialista, sin costo — llega con tu caso ya sobre la mesa.</p>
-            <p class="trust-strip-stats"><b>★★★★☆ 4,3/5</b> en Trustpilot · <b>+5.000</b> empresas incorporadas · <b>10 años</b> · Partner de Mercury &amp; Relay</p>
         </div>
 
         <section class="segment segment--white">
@@ -1306,7 +1337,7 @@
                 <ul class="rp-out explainer-list">
                     <li>Tu LLC actual y si el estado donde la abriste sigue siendo el correcto</li>
                     <li>Tu elección fiscal (disregarded, C-corp o S-corp) y si te está costando de más</li>
-                    <li>Tus obligaciones pendientes: 5472, 1120, BOI, reporte anual, agente residente</li>
+                    <li><span>Reportes o impuestos pendientes <span class="rp-out-detail">(formularios 5472, 1120, BOI, reporte anual, agente residente)</span></span></li>
                     <li>Tu banca y tu Operating Agreement — y qué corregir primero</li>
                 </ul>
             </div>
@@ -1318,11 +1349,11 @@
                 <ol class="how-steps">
                     <li><span class="how-n">1</span><div><h3>Respondes 6 preguntas sobre tu LLC actual</h3><p>3 minutos, desde el celular.</p></div></li>
                     <li><span class="how-n">2</span><div><h3>Recibes tu nivel de riesgo y qué corregir primero</h3><p>Al instante, personalizado con tus respuestas.</p></div></li>
-                    <li><span class="how-n">3</span><div><h3>Si quieres, lo revisas con un asesor</h3><p>Sin costo, sin compromiso de compra.</p></div></li>
+                    <li><span class="how-n">3</span><div><h3>Si quieres, lo revisas con un asesor</h3><p>Con un especialista de la firma, no un formulario.</p></div></li>
                 </ol>
                 <p class="explainer-reassure">No hace falta que sepas de leyes ni de impuestos de EE. UU. — para eso está el diagnóstico. Contesta con lo que sabes de tu LLC hoy.</p>
                 <div class="explainer-bridge">
-                    <p>Si tu diagnóstico muestra algo urgente que corregir, el paso 3 es una llamada de 30 minutos, gratis, con un asesor de la firma.</p>
+                    <p>Si tu diagnóstico muestra algo urgente que corregir, el paso 3 es una sesión de 30 minutos, uno a uno, con un asesor de la firma.</p>
                 </div>
             </div>
         </section>
@@ -1363,7 +1394,7 @@
         <section class="segment segment--cta">
             <div class="segment-inner">
                 <button type="button" class="cta-primary" id="btnStart2" style="width:100%; text-align:center;">Revisar mi LLC →</button>
-                <p class="cta-final-note">Sin costo · 3 minutos · Resultado al instante</p>
+                <p class="cta-final-note">3 minutos · Resultado al instante · Hecho a tu medida</p>
             </div>
         </section>
     </div>
@@ -1610,7 +1641,7 @@
             // Camino primario de la variante B: revisión de la LLC ya abierta.
             advisor: {
                 line: "Ya tienes tu LLC. Por lo que describes, algo no está bien puesto. Revisarlo ahora cuesta mucho menos que un bloqueo bancario o una multa con intereses.",
-                heading: "En 30 minutos, sin costo, sales con:",
+                heading: "En 30 minutos con un especialista, sales con:",
                 outcomes: [
                     "Qué está mal en tu LLC hoy, y qué urge corregir primero",
                     "Cómo estás con tus reportes (5472 · 1120 · BOI) y cómo ponerte al día",
@@ -1624,7 +1655,7 @@
             // Alias (renderResult puede pedirlo): mismo contenido que advisor en la variante B.
             advisor_correct: {
                 line: "Ya tienes tu LLC. Por lo que describes, algo no está bien puesto. Revisarlo ahora cuesta mucho menos que un bloqueo bancario o una multa con intereses.",
-                heading: "En 30 minutos, sin costo, sales con:",
+                heading: "En 30 minutos con un especialista, sales con:",
                 outcomes: [
                     "Qué está mal en tu LLC hoy, y qué urge corregir primero",
                     "Cómo estás con tus reportes (5472 · 1120 · BOI) y cómo ponerte al día",
@@ -1986,20 +2017,20 @@
             // CARLOS — declaraciones / reportes atrasados (5472 · 1120 · BOI)
             atrasadas: {
                 h1: '¿Declaraciones atrasadas en tu <span class="accent">LLC</span>? Mira qué tan grave es en 3 minutos.',
-                sub: 'El Formulario 5472 / 1120 sin presentar son USD 25.000 por año. Respondes 6 preguntas y te decimos tu exposición real y cómo ponerte al día. Gratis.',
+                sub: 'El Formulario 5472 / 1120 sin presentar son USD 25.000 por año. Respondes 6 preguntas y te decimos tu exposición real y cómo ponerte al día.',
                 hintFilter: 'Cumplimiento'
             },
             cumplimiento: { alias: 'atrasadas' },
             '5472': { alias: 'atrasadas' },
             boi: {
                 h1: 'Nunca presentaste el reporte <span class="accent">BOI</span>. ¿Cuánto riesgo tienes? 3 minutos.',
-                sub: 'El BOI ante FinCEN tiene plazo y sanción. Diagnostica tu situación y el camino para regularizarlo antes de que se vuelva multa. Gratis.',
+                sub: 'El BOI ante FinCEN tiene plazo y sanción. Diagnostica tu situación y el camino para regularizarlo antes de que se vuelva multa.',
                 hintFilter: 'Cumplimiento'
             },
             // Estado equivocado / franchise tax
             estado: {
                 h1: '¿Elegiste el <span class="accent">estado equivocado</span> para tu LLC? Compruébalo en 3 minutos.',
-                sub: 'Delaware no siempre conviene, y la franchise tax se acumula todos los años. Revisamos tu caso y si vale la pena cambiar de estado. Gratis.',
+                sub: 'Delaware no siempre conviene, y la franchise tax se acumula todos los años. Revisamos tu caso y si vale la pena cambiar de estado.',
                 hintFilter: 'Estado'
             },
             franchise: { alias: 'estado' },
@@ -2007,7 +2038,7 @@
             // Banca / pasarelas en riesgo
             banca: {
                 h1: '¿El banco o <span class="accent">Stripe</span> te están pidiendo papeles de tu LLC? Resuélvelo en 3 minutos.',
-                sub: 'Mercury, Relay y Stripe revisan que tu estructura esté al día. Te decimos qué corregir antes de responderles, para no arriesgar la cuenta. Gratis.',
+                sub: 'Mercury, Relay y Stripe revisan que tu estructura esté al día. Te decimos qué corregir antes de responderles, para no arriesgar la cuenta.',
                 hintFilter: 'Banca'
             },
             mercury: { alias: 'banca' },
@@ -2016,7 +2047,7 @@
             // SEBASTIÁN — sacar dinero de la LLC para uso personal (guión "Dinero de la utilidad")
             utilidades: {
                 h1: 'Tienes una <span class="accent">LLC</span>, ¿pero no sabes cómo usar sus ganancias para ti? Compruébalo en 3 minutos.',
-                sub: 'El dinero de tu LLC no siempre se retira igual: retiros, distribuciones o sueldo, cada uno declara distinto según tu estructura y tus socios. Diagnostica tu caso antes de mover el dinero. Gratis.',
+                sub: 'El dinero de tu LLC no siempre se retira igual: retiros, distribuciones o sueldo, cada uno declara distinto según tu estructura y tus socios. Diagnostica tu caso antes de mover el dinero.',
                 hintFilter: 'Retiros'
             },
             ganancias: { alias: 'utilidades' },
@@ -2026,7 +2057,7 @@
             // Genérico "ordenar / revisar"
             ordenar: {
                 h1: '¿Ya tienes una <span class="accent">LLC</span>? Ordénala antes de que un error te cueste caro.',
-                sub: 'Revisamos tu estructura actual —reportes, estado, figura fiscal, banca— y te decimos qué corregir primero. Gratis y sin compromiso.',
+                sub: 'Revisamos tu estructura actual —reportes, estado, figura fiscal, banca— y te decimos qué corregir primero.',
                 hintFilter: 'Revision'
             },
             revision: { alias: 'ordenar' },
@@ -2035,7 +2066,7 @@
             // LLC inactiva → cerrar o migrar
             disolucion: {
                 h1: '¿Tu <span class="accent">LLC</span> quedó inactiva? Ciérrala o migrála sin dejar cabos sueltos. 3 minutos.',
-                sub: 'Una LLC abandonada sigue generando obligaciones y multas. Te decimos cómo cerrarla en orden o migrarla. Gratis.',
+                sub: 'Una LLC abandonada sigue generando obligaciones y multas. Te decimos cómo cerrarla en orden o migrarla.',
                 hintFilter: 'Revision'
             },
             cerrar: { alias: 'disolucion' }
@@ -2065,8 +2096,9 @@
 
             // Retomar progreso guardado (F5, se cae el WiFi, la pestaña se descarga) en vez
             // de reiniciar desde cero. Salta directo al paso donde quedó, sin pantalla de
-            // bienvenida ni explicador.
-            var resumed = loadQuizProgress();
+            // bienvenida ni explicador. Desactivado en QA_MODE (?qa=1): al testear se
+            // necesita ver el hero en cada refresh, no reanudar donde quedó la vez anterior.
+            var resumed = QA_MODE ? null : loadQuizProgress();
             if (resumed) {
                 userResponses = resumed.responses || {};
                 var resumeStep = Math.max(1, Math.min(8, resumed.step || 1));
@@ -3000,7 +3032,7 @@
                 <p>Un especialista te contacta ${phone ? 'al <strong>' + esc(phone) + '</strong>' : 'a tu WhatsApp'} para resolver tus dudas y, si quieres, agendar la sesión.</p>
                 <div class="cw-nudge">
                     <p style="font-weight:600; color:var(--text-dark);">¿Prefieres agendar tú mismo ahora?</p>
-                    <button type="button" id="cw-book2" class="cta-primary" style="margin-top:12px; width:100%;">Elegir horario, sin costo</button>
+                    <button type="button" id="cw-book2" class="cta-primary" style="margin-top:12px; width:100%;">Elegir mi horario</button>
                 </div>`;
             const h = cw.querySelector('h2');
             if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
@@ -3026,7 +3058,7 @@
                 <p>Te escribimos por WhatsApp para acompañarte cuando quieras una revisión a fondo.</p>
                 <div class="cw-nudge">
                     <p style="font-weight:600; color:var(--text-dark);">¿Prefieres que un especialista la revise contigo?</p>
-                    <button type="button" id="cw-book" class="cta-primary" style="margin-top:12px; width:100%;">Agendar mi revisión, sin costo</button>
+                    <button type="button" id="cw-book" class="cta-primary" style="margin-top:12px; width:100%;">Agendar mi revisión</button>
                 </div>`;
             const h = cw.querySelector('h2');
             if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }

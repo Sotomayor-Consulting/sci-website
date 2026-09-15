@@ -796,7 +796,9 @@
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const SOTO_TIKTOK_PIXEL_ID = 'D5KFDEBC77U6BL6T7LDG';
-    const SOTO_TIKTOK_EVENTS_API_WEBHOOK = 'https://n8n.sotomayorconsulting.com/webhook/pixel-api-conversiones';
+    // Cloudflare Function same-origin: valida y hashea los identificadores antes de
+    // enviar el evento a TikTok Events API. El token queda solo en Cloudflare.
+    const SOTO_TIKTOK_EVENTS_API_WEBHOOK = '/api/tiktok-capi';
     const SOTO_DEFAULT_ZCAL_URL = 'https://zcal.co/t/agendar-asesoria-llc/60min'; // evento "Sesión Estratégica"; el slug es /60min
     const SOTO_ZCAL_PHONE_ANSWER_INDEX = 0; // pregunta "Teléfono (WhatsApp)" = a0
     const SOTO_META_PIXEL_ID = '__META_PIXEL_ID__'; // poner el Pixel ID real de Meta para activar Meta
@@ -946,58 +948,31 @@
       const cleanProperties = sotoCleanEventPayload({ ...SOTO_EVENT_BASE, ...eventPayload });
 
       return {
-        destination: 'tiktok_events_api',
-        pixel_code: SOTO_TIKTOK_PIXEL_ID,
-        event: eventName,
         event_name: eventName,
         event_id: eventId,
         event_time: Math.floor(Date.now() / 1000),
-        timestamp_iso: new Date().toISOString(),
-        source: 'web',
-        event_source: 'thank_you_page_after_native_form',
-        action_source: 'website',
-        test_event_code: '',
-        user: {
-          ttclid: ttclid,
-          ttp: ttp,
-          user_agent: navigator.userAgent || '',
-          language: navigator.language || '',
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
-          soto_session_id: sotoGetOrCreateSessionId()
-        },
-        page: {
-          url: window.location.href,
-          path: window.location.pathname,
-          referrer: document.referrer || '',
-          title: document.title || ''
-        },
-        properties: cleanProperties,
-        attribution: {
-          ttclid_present: Boolean(ttclid),
-          ttp_present: Boolean(ttp),
-          utm: sotoCollectUtmParams()
-        },
-        server_notes: {
-          ip_capture: 'Capturar IP en n8n desde headers: cf-connecting-ip, x-forwarded-for o x-real-ip',
-          deduplication: 'Usar pixel_code + event + event_id para deduplicar Pixel y Events API'
-        }
+        pixel_id: SOTO_TIKTOK_PIXEL_ID,
+        ttclid: ttclid,
+        ttp: ttp,
+        // El Worker obtiene IP y User-Agent de la solicitud; nunca se confía en
+        // valores que podría enviar el navegador para esos campos.
+        page_url: window.location.href,
+        referrer: document.referrer || '',
+        external_id: String(eventPayload.lead_id || sotoGetOrCreateSessionId()),
+        content_id: cleanProperties.content_id || SOTO_EVENT_BASE.content_id,
+        content_name: cleanProperties.content_name || SOTO_EVENT_BASE.content_name,
+        content_category: cleanProperties.content_category || SOTO_EVENT_BASE.content_category
       };
     }
 
     function sotoSendToTikTokEventsApiWebhook(payload) {
-      if (!HOST_ALLOWS_LIVE) return; // guard: n8n CAPI solo en produccion
+      if (!HOST_ALLOWS_LIVE) return; // CAPI solo en produccion
       const body = JSON.stringify(payload);
-      const blob = new Blob([body], { type:'text/plain;charset=UTF-8' });
-      if (navigator.sendBeacon) {
-        const queued = navigator.sendBeacon(SOTO_TIKTOK_EVENTS_API_WEBHOOK, blob);
-        if (queued) return;
-      }
       fetch(SOTO_TIKTOK_EVENTS_API_WEBHOOK, {
         method:'POST',
         body:body,
-        headers:{'Content-Type':'text/plain;charset=UTF-8'},
-        keepalive:true,
-        mode:'no-cors'
+        headers:{'Content-Type':'application/json'},
+        keepalive:true
       }).catch(function(){});
     }
 

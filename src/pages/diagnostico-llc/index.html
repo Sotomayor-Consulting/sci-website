@@ -478,8 +478,10 @@
 
         /* ===== SISTEMA DE BOTONES — minimal, elegante ===== */
         .btn-start {
-            background: var(--gold-primary);
-            color: var(--bg-dark-deep);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 55%, var(--gold-light) 100%);
+            color: var(--text-white);
             font-family: 'Poppins', 'Open Sans', sans-serif;
             font-size: 16px;
             font-weight: 600;
@@ -488,15 +490,32 @@
             border: none;
             border-radius: var(--radius);
             cursor: pointer;
-            box-shadow: 0 12px 30px -10px rgba(192, 135, 46, 0.55);
+            box-shadow: 0 12px 30px -10px rgba(169, 116, 31, 0.55);
             transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
             min-width: 260px;
         }
 
+        /* Brillo que cruza el botón de lado a lado: banda angosta, pasa y se queda
+           fuera de vista la mayor parte del ciclo (no es un loop constante). */
+        .btn-start::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -75%;
+            width: 35%; height: 100%;
+            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+            transform: skewX(-20deg);
+            animation: btnShine 4.5s ease-in-out infinite;
+        }
+        @keyframes btnShine {
+            0% { left: -75%; }
+            18% { left: 125%; }
+            100% { left: 125%; }
+        }
+
         .btn-start:hover {
             transform: translateY(-1px);
-            background: var(--gold-light);
-            box-shadow: 0 16px 40px -10px rgba(192, 135, 46, 0.6);
+            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 60%, var(--gold-light) 100%);
+            box-shadow: 0 16px 40px -10px rgba(169, 116, 31, 0.6);
         }
         .btn-start:active { transform: scale(0.97); }
 
@@ -521,8 +540,7 @@
             background: var(--bg-cream); padding: 14px 20px; text-align: center;
             border-bottom: 1px solid var(--line);
         }
-        .trust-strip-note { font-size: 12.5px; color: var(--text-secondary); margin: 0 0 6px; line-height: 1.5; }
-        .trust-strip-stats { font-size: 12.5px; color: var(--text-secondary); margin: 0; }
+        .trust-strip-note { font-size: 12.5px; color: var(--text-secondary); margin: 0; line-height: 1.5; }
         .segment { padding: 48px 20px; }
         .segment-inner { max-width: 560px; margin: 0 auto; }
         .segment--white { background: var(--bg-white); }
@@ -980,6 +998,7 @@
 
         @media (prefers-reduced-motion: reduce) {
             .step, .progress-fill, .btn-start, .btn-next, .cta-primary { transition: none !important; }
+            .btn-start::after, .path-card.recommended .path-cta::after { animation: none; display: none; }
         }
 
         /* Foco programático (a11y) — sin anillo visible en elementos no interactivos */
@@ -1040,8 +1059,20 @@
             transition: background 0.2s ease, color 0.2s ease;
         }
         .path-card.recommended .path-cta {
-            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 100%);
-            border-color: var(--bg-dark-deep);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 55%, var(--gold-light) 100%);
+            border-color: var(--gold-dark);
+            color: var(--text-white);
+        }
+        .path-card.recommended .path-cta::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -75%;
+            width: 35%; height: 100%;
+            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+            transform: skewX(-20deg);
+            animation: btnShine 4.5s ease-in-out infinite;
         }
         .path-card .path-cta:hover { background: var(--bg-dark-deep); color: var(--text-white); }
         .path-card.recommended .path-cta:hover { background: var(--gold-dark); color: var(--text-white); }
@@ -1263,7 +1294,7 @@
             <p class="hero-eyebrow">Firma legal, fiscal y tecnológica · 10 años</p>
             <h1 id="hero-h1">¿Necesitas una <span class="accent">LLC</span> en EE. UU.? Averígualo en 3 minutos.</h1>
             <p class="hero-subtitle" id="hero-sub">Respondes 6 preguntas y te decimos tres cosas claras: si te conviene una
-                LLC, en qué estado abrirla, y cuál es tu siguiente paso. Gratis, sin compromiso.</p>
+                LLC, en qué estado abrirla, y cuál es tu siguiente paso.</p>
 
             <div class="hero-badges">
                 <span>3 minutos</span>
@@ -1285,7 +1316,6 @@
     <div id="explainerScreen">
         <div class="trust-strip">
             <p class="trust-strip-note">Al terminar agendas tu reunión de asesoría, sin costo — tu asesor la recibe con tu caso ya sobre la mesa.</p>
-            <p class="trust-strip-stats"><b>★★★★☆ 4,3/5</b> en Trustpilot · <b>+5.000</b> empresas incorporadas · <b>10 años</b> · Partner de Mercury &amp; Relay</p>
         </div>
 
         <section class="segment segment--white">
@@ -1306,11 +1336,11 @@
                 <ol class="how-steps">
                     <li><span class="how-n">1</span><div><h3>Respondes 6 preguntas sobre tu negocio</h3><p>3 minutos, desde el celular.</p></div></li>
                     <li><span class="how-n">2</span><div><h3>Recibes tu etapa y tu hoja de ruta</h3><p>Al instante, personalizada con tus respuestas.</p></div></li>
-                    <li><span class="how-n">3</span><div><h3>Si quieres, lo revisas con un asesor</h3><p>Sin costo, sin compromiso de compra.</p></div></li>
+                    <li><span class="how-n">3</span><div><h3>Si quieres, lo revisas con un asesor</h3><p>Con un especialista de la firma, no un formulario.</p></div></li>
                 </ol>
                 <p class="explainer-reassure">No hace falta que sepas de leyes ni de impuestos de EE. UU. — para eso está el diagnóstico. Contesta con lo que sabes de tu negocio hoy.</p>
                 <div class="explainer-bridge">
-                    <p>Si tu diagnóstico muestra que ya es momento de estructurarte, el paso 3 es una llamada de 30 minutos, gratis, con un asesor de la firma.</p>
+                    <p>Si tu diagnóstico muestra que ya es momento de estructurarte, el paso 3 es una sesión de 30 minutos, uno a uno, con un asesor de la firma.</p>
                 </div>
             </div>
         </section>
@@ -1332,7 +1362,7 @@
                         <p>Planificación legal-tributaria y acompañamiento bancario.</p>
                     </div>
                 </div>
-                <p class="mini-plans-note">El plan exacto se define en tu asesoría, según tu caso — sin costo ahora.</p>
+                <p class="mini-plans-note">El plan exacto se define en tu asesoría, a la medida de tu caso.</p>
             </div>
         </section>
 
@@ -1351,7 +1381,7 @@
         <section class="segment segment--cta">
             <div class="segment-inner">
                 <button type="button" class="cta-primary" id="btnStart2" style="width:100%; text-align:center;">Empezar el diagnóstico →</button>
-                <p class="cta-final-note">Sin costo · 3 minutos · Resultado al instante</p>
+                <p class="cta-final-note">3 minutos · Resultado al instante · Hecho a tu medida</p>
             </div>
         </section>
     </div>
@@ -1595,7 +1625,7 @@
         const ROUTE_STEP = {
             advisor: {
                 line: "Tu caso tiene decisiones que no salen de una plantilla: qué estado, qué figura fiscal, en qué orden. Eso se define contigo, mirando tus números.",
-                heading: "En 30 minutos, sin costo, sales con:",
+                heading: "En 30 minutos con un especialista, sales con:",
                 outcomes: [
                     "El estado que te conviene, y por qué (no siempre es Delaware)",
                     "Tu estructura y tu plan, con el precio real por delante",
@@ -1609,7 +1639,7 @@
             // Variante para quien YA tiene LLC (P2 = "4") — landing B.
             advisor_correct: {
                 line: "Ya tienes tu LLC. Por lo que describes, algo no está bien puesto. Arreglarlo ahora cuesta mucho menos que un bloqueo o una multa con intereses.",
-                heading: "En 30 minutos, sin costo, sales con:",
+                heading: "En 30 minutos con un especialista, sales con:",
                 outcomes: [
                     "Qué está mal en tu empresa hoy, y qué urge más",
                     "Si te conviene cambiar de estado, y cuánto cuesta",
@@ -1970,20 +2000,20 @@
             // DIEGO — planificar antes de incorporar (guión aprobado)
             diego: {
                 h1: 'Antes de preguntar cuánto cuesta abrir una <span class="accent">LLC</span>: ¿funcionaría para tu modelo de negocio?',
-                sub: 'No todos los negocios se estructuran igual. Respondes 6 preguntas y te decimos la estructura y el estado correctos para tu caso, antes de incorporar. Gratis.'
+                sub: 'No todos los negocios se estructuran igual. Respondes 6 preguntas y te decimos la estructura y el estado correctos para tu caso, antes de incorporar.'
             },
             planificar: { alias: 'diego' },
             // VALERIA — cobros internacionales (guión aprobado)
             cobros: {
                 h1: 'Tu negocio ya vende internacionalmente. ¿Tu estructura está preparada para <span class="accent">cobrar a nivel global</span>?',
-                sub: 'Stripe, PayPal y la banca de empresa verifican tu empresa, sus responsables y tu documentación — no solo que tengas una LLC. Te decimos qué preparar para que te aprueben. Gratis.'
+                sub: 'Stripe, PayPal y la banca de empresa verifican tu empresa, sus responsables y tu documentación — no solo que tengas una LLC. Te decimos qué preparar para que te aprueben.'
             },
             dolares: { alias: 'cobros' },
             internacional: { alias: 'cobros' },
             // CLIENTE CORPORATIVO — estructura multinivel / expansión (guión aprobado)
             corporativo: {
                 h1: 'Una empresa internacional necesita <span class="accent">mucho más que ser incorporada</span>.',
-                sub: 'Estructuras de varios niveles —operativas, holdings, trusts, varias jurisdicciones— conectadas con contabilidad, planificación fiscal y banca. Diagnostica qué necesita tu caso. Gratis.',
+                sub: 'Estructuras de varios niveles —operativas, holdings, trusts, varias jurisdicciones— conectadas con contabilidad, planificación fiscal y banca. Diagnostica qué necesita tu caso.',
                 hintQ2: '3'
             },
             holding: { alias: 'corporativo' },
@@ -1991,7 +2021,7 @@
             // ALEJANDRO Y MARINA — inversión inmobiliaria (guión aprobado)
             inmobiliaria: {
                 h1: '¿Vas a invertir en <span class="accent">bienes raíces</span> en EE. UU.? La forma de comprarla importa tanto como la propiedad.',
-                sub: 'A título personal, con una LLC o con socios: cada opción cambia las consecuencias jurídicas y fiscales. También evaluamos tu precalificación de financiamiento. Diagnostica tu caso. Gratis.',
+                sub: 'A título personal, con una LLC o con socios: cada opción cambia las consecuencias jurídicas y fiscales. También evaluamos tu precalificación de financiamiento.',
                 hintFilter: 'Inversiones'
             },
             realestate: { alias: 'inmobiliaria' },
@@ -1999,7 +2029,7 @@
             // Genérico patrimonio / holding personal
             patrimonio: {
                 h1: 'Protege tu patrimonio con la <span class="accent">estructura correcta</span> en EE. UU.',
-                sub: 'Te decimos qué estructura necesita tu caso —LLC o algo mayor—, en qué estado, y el siguiente paso. Gratis y sin compromiso.',
+                sub: 'Te decimos qué estructura necesita tu caso —LLC o algo mayor—, en qué estado, y el siguiente paso.',
                 hintFilter: 'Inversiones'
             }
         };
@@ -2028,8 +2058,9 @@
 
             // Retomar progreso guardado (F5, se cae el WiFi, la pestaña se descarga) en vez
             // de reiniciar desde cero. Salta directo al paso donde quedó, sin pantalla de
-            // bienvenida ni explicador.
-            var resumed = loadQuizProgress();
+            // bienvenida ni explicador. Desactivado en QA_MODE (?qa=1): al testear se
+            // necesita ver el hero en cada refresh, no reanudar donde quedó la vez anterior.
+            var resumed = QA_MODE ? null : loadQuizProgress();
             if (resumed) {
                 userResponses = resumed.responses || {};
                 var resumeStep = Math.max(1, Math.min(8, resumed.step || 1));
@@ -2727,7 +2758,7 @@
                     ],
                     incluye: "", noReq: "",
                     cta: "Enviarme la guía →",
-                    note: "Te llega al correo. Cuando quieras, agendas una llamada sin costo."
+                    note: "Te llega al correo. Cuando quieras, agendas tu sesión con un asesor."
                 };
             }
             const nm = userResponses.first_name || "";
@@ -2960,7 +2991,7 @@
                 <p>Un especialista te contacta ${phone ? 'al <strong>' + esc(phone) + '</strong>' : 'a tu WhatsApp'} para resolver tus dudas y, si quieres, agendar la sesión.</p>
                 <div class="cw-nudge">
                     <p style="font-weight:600; color:var(--text-dark);">¿Prefieres agendar tú mismo ahora?</p>
-                    <button type="button" id="cw-book2" class="cta-primary" style="margin-top:12px; width:100%;">Elegir horario, sin costo</button>
+                    <button type="button" id="cw-book2" class="cta-primary" style="margin-top:12px; width:100%;">Elegir mi horario</button>
                 </div>`;
             const h = cw.querySelector('h2');
             if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
@@ -2986,7 +3017,7 @@
                 <p>Te escribimos por WhatsApp para acompañarte cuando quieras dar el siguiente paso.</p>
                 <div class="cw-nudge">
                     <p style="font-weight:600; color:var(--text-dark);">¿Prefieres resolverlo hablando?</p>
-                    <button type="button" id="cw-book" class="cta-primary" style="margin-top:12px; width:100%;">Agendar una llamada, sin costo</button>
+                    <button type="button" id="cw-book" class="cta-primary" style="margin-top:12px; width:100%;">Agendar mi sesión</button>
                 </div>`;
             const h = cw.querySelector('h2');
             if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }

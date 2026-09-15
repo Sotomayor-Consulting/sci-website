@@ -74,3 +74,19 @@ export async function sbRpc(env: SupabaseEnv, fn: string, args: Record<string, u
   });
   await orThrow(res, `rpc ${fn}`);
 }
+
+/** Lee filas puntuales desde PostgREST. El caller debe construir filtros con valores normalizados. */
+export async function sbSelect<T>(
+  env: SupabaseEnv,
+  table: string,
+  query: Record<string, string>,
+): Promise<T[]> {
+  const url = new URL(`${rest(env)}/${table}`);
+  for (const [key, value] of Object.entries(query)) url.searchParams.set(key, value);
+  const res = await fetch(url, { headers: headers(env) });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`supabase select ${table} ${res.status}: ${text.slice(0, 300)}`);
+  }
+  return (await res.json()) as T[];
+}
