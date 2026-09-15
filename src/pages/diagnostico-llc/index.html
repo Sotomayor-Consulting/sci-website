@@ -2073,7 +2073,7 @@
             const fn = document.getElementById('f-firstname');
             const btnName = document.getElementById('btnName');
             fn.addEventListener('input', () => {
-                btnName.disabled = fn.value.trim().length < 2;
+                btnName.disabled = !looksLikeRealName(fn.value);
                 showErr('firstname', false);
             });
             fn.addEventListener('keydown', (e) => {
@@ -2265,7 +2265,7 @@
             // Paso 2 — captura del nombre
             if (currentStep === 2) {
                 const fn = document.getElementById('f-firstname').value.trim();
-                if (fn.length < 2) { showErr('firstname', true); return; }
+                if (!looksLikeRealName(fn)) { showErr('firstname', true); return; }
                 userResponses.first_name = fn;
                 track("quiz_name");
                 setActiveStep(3);
@@ -2544,7 +2544,7 @@
 
                 let ok = true;
                 showErr('lastname', false); showErr('phone', false); showErr('email', false);
-                if (lastName.length < 2) { showErr('lastname', true); ok = false; }
+                if (!looksLikeRealName(lastName)) { showErr('lastname', true); ok = false; }
                 if (phoneRaw) {   // opcional: solo valida por país si lo llenó
                     const range = phoneRange(ccIso);
                     if (phoneRaw.length < range[0] || phoneRaw.length > range[1]) {
@@ -2601,6 +2601,25 @@
             if (input) input.setAttribute('aria-invalid', show ? 'true' : 'false');
         }
         function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+
+        // Rechaza nombre/apellido genéricos o que no forman un patrón de nombre real. No existe
+        // una librería JS confiable para esto (se investigó: las de validación de formularios
+        // solo hacen reglas estructurales; el único servicio que sí detecta nombres falsos es de
+        // pago y entrenado en nombres de EE. UU. — no aplica a esta audiencia). Mismo criterio
+        // que diag_contact_quality_ok del lado servidor, aplicado al patrón del nombre en sí.
+        var NAME_JUNK = /^(test|prueba|asdf|qwerty|nombre|apellido|name|lastname|firstname|noexiste|ningun[oa]?|no\s*se|no\s*tengo|no\s*aplica|sin\s*nombre|none|na|n\/a|xxx+|aaa+|foo|bar|sample|ejemplo|demo|usuario|cliente|desconocido|anonimo)$/i;
+        function looksLikeRealName(v) {
+            var s = (v || "").trim();
+            if (s.length < 3 || s.length > 60) return false;
+            // Solo letras (con acentos/ñ/ü), espacios, guiones y apóstrofes — nada de dígitos ni símbolos.
+            if (!/^[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ'’\-\s]*$/.test(s)) return false;
+            if (NAME_JUNK.test(s.toLowerCase())) return false;
+            // Mismo carácter repetido 3+ veces seguidas ("Aaaaaa", "jjjjj") -> no es un nombre real.
+            if (/(.)\1{2,}/i.test(s.replace(/\s/g, ""))) return false;
+            // Un nombre real siempre trae al menos una vocal.
+            if (!/[aeiouáéíóúü]/i.test(s)) return false;
+            return true;
+        }
 
         // Validación de WhatsApp por país: dígitos EXACTOS del número local
         // (sin el 0 inicial, sin el código de país). "len" = exacto, o [min,max].
