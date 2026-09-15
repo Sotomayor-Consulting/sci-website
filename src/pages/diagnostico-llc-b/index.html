@@ -2654,7 +2654,7 @@
         var NAME_JUNK = /^(test|prueba|asdf|qwerty|nombre|apellido|name|lastname|firstname|noexiste|ningun[oa]?|no\s*se|no\s*tengo|no\s*aplica|sin\s*nombre|none|na|n\/a|xxx+|aaa+|foo|bar|sample|ejemplo|demo|usuario|cliente|desconocido|anonimo)$/i;
         function looksLikeRealName(v) {
             var s = (v || "").trim();
-            if (s.length < 2 || s.length > 60) return false;
+            if (s.length < 3 || s.length > 60) return false;
             // Solo letras (con acentos/ñ/ü), espacios, guiones y apóstrofes — nada de dígitos ni símbolos.
             if (!/^[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ'’\-\s]*$/.test(s)) return false;
             if (NAME_JUNK.test(s.toLowerCase())) return false;
