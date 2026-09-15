@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import Logo from "@images/Logo-mkt.avif"
 ---
 
 <footer class="border-t border-slate-200 bg-white py-10">
@@ -8,11 +9,10 @@ import { Image } from "astro:assets";
   >
     <div class="font-display text-foreground font-bold tracking-[.14em]">
       <Image
-        src="https://www.sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-4.png"
-        alt="Nexo International"
+        src={Logo}
+        format="avif"
+        alt="Sotomayor Consulting Internacional"
         class="h-auto w-35"
-        width={62}
-        height={32}
       />
     </div><p class="max-w-xl text-xs leading-5">
       Consultoría legal, fiscal y tecnológica. No somos una entidad bancaria ni
