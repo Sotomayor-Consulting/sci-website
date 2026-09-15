@@ -55,8 +55,16 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
   if (!lead.lead_id) {
     return json({ ok: false, status: "validation_failed", error: "lead_id_required" }, 422, origin);
   }
-  if (!lead.email && !lead.phone_e164) {
-    return json({ ok: false, status: "validation_failed", error: "email_or_phone_required" }, 422, origin);
+  // WhatsApp pasó a ser obligatorio en el gate (antes alcanzaba con email O teléfono) — el
+  // formulario ya lo exige, esto es el respaldo server-side para quien mande directo a la API.
+  // No aplica a leads de QA (test:true): siguen sin bloquear, igual que el resto de sus reglas.
+  if (!lead.test) {
+    if (!lead.email) {
+      return json({ ok: false, status: "validation_failed", error: "email_required" }, 422, origin);
+    }
+    if (!lead.phone_e164) {
+      return json({ ok: false, status: "validation_failed", error: "phone_required" }, 422, origin);
+    }
   }
   if (warnings.length) {
     console.warn("diagnostico-lead normalize warnings", { lead_id: lead.lead_id, warnings });
