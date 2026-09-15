@@ -1411,7 +1411,7 @@
                         <label for="f-lastname">Apellido</label>
                         <input id="f-lastname" name="lastname" type="text" autocomplete="family-name"
                             placeholder="Tu apellido" required aria-describedby="e-lastname" maxlength="60">
-                        <p class="err" id="e-lastname" role="status" aria-live="polite">Escribe tu apellido.</p>
+                        <p class="err" id="e-lastname" role="status" aria-live="polite">Escribe un apellido válido.</p>
                     </div>
                     <div class="field" id="field-phone">
                         <label for="f-phone">WhatsApp <span class="opt">— dudas resueltas al instante y tips concretos para tu caso</span></label>
@@ -2534,7 +2534,8 @@
                 const email = document.getElementById('f-email').value.trim();
                 const cc = document.getElementById('f-cc-value').value;
                 const ccIso = document.getElementById('f-cc-value').getAttribute('data-iso') || 'US';
-                let phoneRaw = document.getElementById('f-phone').value.replace(/[^\d]/g, "");
+                const phoneTyped = document.getElementById('f-phone').value.trim();
+                let phoneRaw = phoneTyped.replace(/[^\d]/g, "");
                 const ccDigits = cc.replace(/[^\d]/g, "");
                 if (ccDigits && phoneRaw.indexOf(ccDigits) === 0 && phoneRaw.length > ccDigits.length + 6) {
                     phoneRaw = phoneRaw.slice(ccDigits.length);
@@ -2544,8 +2545,14 @@
 
                 let ok = true;
                 showErr('lastname', false); showErr('phone', false); showErr('email', false);
-                if (lastName.length < 2) { showErr('lastname', true); ok = false; }
-                if (phoneRaw) {   // opcional: solo valida por país si lo llenó
+                if (!validName(lastName)) { showErr('lastname', true); ok = false; }
+                if (phoneTyped && !phoneRaw) {
+                    // Escribió algo en WhatsApp pero no quedó ningún dígito (solo letras/símbolos):
+                    // sin esto se guardaba en silencio como "no dio teléfono".
+                    showErr('phone', true); ok = false;
+                    const eEl = document.getElementById('e-phone');
+                    if (eEl) eEl.textContent = phoneErrorMsg(ccIso);
+                } else if (phoneRaw) {   // opcional: solo valida por país si lo llenó
                     const range = phoneRange(ccIso);
                     if (phoneRaw.length < range[0] || phoneRaw.length > range[1]) {
                         showErr('phone', true); ok = false;
