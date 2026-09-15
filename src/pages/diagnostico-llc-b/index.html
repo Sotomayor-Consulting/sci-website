@@ -171,11 +171,15 @@
          y recién ahí hace location.href = buildStartUrl().
 
       FASE 16 (fricción — respuesta al diagnóstico ejecutivo de neuromarketing):
-       · P1.1 — WhatsApp AHORA OPCIONAL en el gate (era required). Sin la palabra "opcional" en la UI;
-         el helper motiva a dejarlo ("dudas resueltas al instante y tips concretos para tu caso")
-         — sin contexto de flujo. Se valida SOLO si se llenó. El campo más pesado ya no lo paga
-         el 100% del tráfico; si falta y la ruta es advisor, Zcal lo pide. form_type pasa a
-         "gate_lastname_email_optwhatsapp".
+       · P1.1 — WhatsApp opcional en el gate (era required originalmente). [REVERTIDO — ver más
+         abajo, WhatsApp volvió a ser obligatorio.] Motivo original: el campo más pesado ya no
+         lo pagaba el 100% del tráfico; si faltaba y la ruta era advisor, Zcal lo pedía ahí.
+       · WhatsApp OBLIGATORIO de nuevo — se encontraron leads con datos de contacto poco
+         confiables entrando sin teléfono; se prioriza calidad de lead sobre esa fricción. La
+         etiqueta conserva el mismo copy motivador ("dudas resueltas al instante..."), ahora
+         además requerido con `required` en el input. `form_type` sigue diciendo
+         "gate_lastname_email_optwhatsapp" por compatibilidad con lo que ya lee Odoo/n8n — no
+         se renombró para no romper esa integración.
        · P1.2 — Resultado CONDENSADO al primer viewport: arriba del fold = eyebrow + veredicto +
          stage-track + 1 headline + CTA primaria + reassure + nota + mini-trust. Todo el detalle
          (Lo que nos contaste / Si lo dejas para después / Qué hacer ahora + outcomes/incluye/tech)
@@ -1445,7 +1449,7 @@
                                 <input type="hidden" name="country_code" id="f-cc-value" value="+1" data-iso="US">
                             </div>
                             <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national"
-                                placeholder="099 123 4567" aria-describedby="e-phone">
+                                placeholder="099 123 4567" required aria-describedby="e-phone">
                         </div>
                         <p class="err" id="e-phone" role="status" aria-live="polite">Escribe un número válido.</p>
                     </div>
@@ -2589,7 +2593,11 @@
                 let ok = true;
                 showErr('lastname', false); showErr('phone', false); showErr('email', false);
                 if (lastName.length < 2) { showErr('lastname', true); ok = false; }
-                if (phoneRaw) {   // opcional: solo valida por país si lo llenó
+                if (!phoneRaw) {   // WhatsApp ahora obligatorio (antes opcional, ver FASE 16 / P1.1 arriba)
+                    showErr('phone', true); ok = false;
+                    const eEmptyEl = document.getElementById('e-phone');
+                    if (eEmptyEl) eEmptyEl.textContent = "Escribe tu WhatsApp.";
+                } else {
                     const range = phoneRange(ccIso);
                     if (phoneRaw.length < range[0] || phoneRaw.length > range[1]) {
                         showErr('phone', true); ok = false;
