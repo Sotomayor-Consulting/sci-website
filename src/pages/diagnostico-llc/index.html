@@ -2028,8 +2028,9 @@
 
             // Retomar progreso guardado (F5, se cae el WiFi, la pestaña se descarga) en vez
             // de reiniciar desde cero. Salta directo al paso donde quedó, sin pantalla de
-            // bienvenida ni explicador.
-            var resumed = loadQuizProgress();
+            // bienvenida ni explicador. Desactivado en QA_MODE (?qa=1): al testear se
+            // necesita ver el hero en cada refresh, no reanudar donde quedó la vez anterior.
+            var resumed = QA_MODE ? null : loadQuizProgress();
             if (resumed) {
                 userResponses = resumed.responses || {};
                 var resumeStep = Math.max(1, Math.min(8, resumed.step || 1));
