@@ -2,6 +2,7 @@
 import { Button } from "@/components/starwind/button";
 import { Image } from "astro:assets";
 import Logo from "@images/Logo-mkt.avif"
+import { Icon } from 'astro-icon/components'
 ---
 
 <header
@@ -15,12 +16,8 @@ import Logo from "@images/Logo-mkt.avif"
       class="flex items-center gap-3"
       aria-label="Nexo International, inicio"
     >
-      <Image
-        src={Logo}
-        format="avif"
-        alt="Sotomayor Consulting Internacional"
-        class="h-auto w-35"
-      />
+      <Icon name="logo-sotomayor-consulting-white" class="h-auto w-35" />
+      
     </a>
     <nav
       class="hidden items-center gap-7 text-sm font-semibold text-slate-600 md:flex"
