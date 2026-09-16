@@ -9,7 +9,6 @@ interface FunctionContext {
 }
 
 const MAX_BODY_SIZE = 16_384;
-const EVENT_REGISTER = "lead_datos_completados";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const COUNTRY_CODE_PATTERN = /^\+[1-9]\d{0,3}$/;
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -39,7 +38,10 @@ function getSupabaseLeadsUrl(value: string): string {
 
 export async function onRequestPost({ request, env }: FunctionContext): Promise<Response> {
   if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
-    console.error("Missing required Cloudflare environment variables");
+    console.error("Missing required Cloudflare environment variables", {
+      hasSupabaseUrl: Boolean(env.SUPABASE_URL),
+      hasServiceRoleKey: Boolean(env.SUPABASE_SERVICE_ROLE_KEY),
+    });
     return json({ error: "server_configuration_error" }, 500);
   }
 
@@ -126,8 +128,7 @@ export async function onRequestPost({ request, env }: FunctionContext): Promise<
         advice,
         question: question || null,
         status: "new",
-        source,
-        event_register: EVENT_REGISTER,
+        platform: source,
         created_at: new Date().toISOString(),
       }),
     });

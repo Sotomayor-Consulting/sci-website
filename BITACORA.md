@@ -3,7 +3,7 @@
 **Lectura obligatoria para cualquier agente (Claude u otro) que trabaje en este repo.**
 Antes de tocar código del embudo `diagnostico-llc` (landings, `functions/api/diagnostico-*`, Supabase, Odoo o n8n), leer completo este documento. Ignorarlo lleva a repetir bugs ya corregidos o a romper piezas que viven fuera de git (Supabase, Odoo, n8n) y que este documento es la única fuente que las describe.
 
-Última actualización: 2026-09-15.
+Última actualización: 2026-09-16.
 
 ---
 
@@ -151,6 +151,11 @@ Todo lo siguiente se hizo directamente contra Supabase/Odoo/n8n vía API, **no e
 3. Diagnóstico y arreglo del correo de diagnóstico vacío (`mailing.mailing` id 51): tenía 8 expresiones QWeb que parseaban texto libre con etiquetas hardcodeadas solo para la variante B. Se reemplazaron por 4 campos Studio nuevos en `crm.lead`, poblados dinámicamente desde n8n.
 4. Conexión del pipeline de diagnóstico a automatizaciones de WhatsApp (`needs_info`/`not_ready`) que ya existían en Odoo para otro flujo, pero nunca recibían la marca necesaria para dispararse desde diagnóstico.
 5. Activación de la campaña de marketing `ready_for_meeting` (id 9) y de las automatizaciones anteriores.
+
+6. **2026-09-16 — `functions/api/leads.ts` (landing legacy):** la inspección directa
+   del proyecto Supabase `vzrrjkdhqqkxjedeukml` mostró que `public.leads` está en el
+   esquema sincronizado con `platform`/`source_detail`; no expone `source` ni
+   `event_register`. La Function usa `platform` para coincidir con el esquema remoto.
 
 ### 3.4 Decisiones de producto y reversiones (para no repetirlas al revés)
 
