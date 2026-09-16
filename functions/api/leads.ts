@@ -9,6 +9,7 @@ interface FunctionContext {
 }
 
 const MAX_BODY_SIZE = 16_384;
+const EVENT_REGISTER = "lead_datos_completados";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const COUNTRY_CODE_PATTERN = /^\+[1-9]\d{0,3}$/;
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -128,7 +129,8 @@ export async function onRequestPost({ request, env }: FunctionContext): Promise<
         advice,
         question: question || null,
         status: "new",
-        platform: source,
+        source,
+        event_register: EVENT_REGISTER,
         created_at: new Date().toISOString(),
       }),
     });
