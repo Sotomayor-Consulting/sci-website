@@ -2588,10 +2588,22 @@
         }
 
         // Re-envía el lead al webhook tras elegir camino / capturar WhatsApp. n8n hace upsert por lead_id.
+        // Debounced: si el usuario cambia de camino varias veces seguidas (guide -> advisor en
+        // segundos), cada click antes disparaba su propio pipeline completo (Supabase -> n8n ->
+        // Odoo) en paralelo para el mismo lead_id, y competian por escribir el mismo registro
+        // (confirmado en Odoo lead 4076: 3 syncs simultaneos, tag de valoracion nunca se aplico).
+        // Con debounce solo se envia el ultimo estado tras una pausa breve.
+        var pushLeadUpdateTimer = null;
+        var pushLeadUpdateSeq = 0;
         function pushLeadUpdate(stage) {
             if (!leadData) return;
             leadData.event_name = "diagnostico_" + (stage || "update");
-            sendLeadToWebhook(leadData);
+            var seq = ++pushLeadUpdateSeq;
+            if (pushLeadUpdateTimer) clearTimeout(pushLeadUpdateTimer);
+            pushLeadUpdateTimer = setTimeout(function () {
+                if (seq !== pushLeadUpdateSeq) return; // superado por un cambio de camino mas reciente
+                sendLeadToWebhook(leadData);
+            }, 1500);
         }
 
         // ============================================================
