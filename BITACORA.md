@@ -3,7 +3,7 @@
 **Lectura obligatoria para cualquier agente (Claude u otro) que trabaje en este repo.**
 Antes de tocar código del embudo `diagnostico-llc` (landings, `functions/api/diagnostico-*`, Supabase, Odoo o n8n), leer completo este documento. Ignorarlo lleva a repetir bugs ya corregidos o a romper piezas que viven fuera de git (Supabase, Odoo, n8n) y que este documento es la única fuente que las describe.
 
-Última actualización: 2026-09-15.
+Última actualización: 2026-09-16.
 
 ---
 
@@ -227,6 +227,10 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ## 5. Pendientes conocidos al cierre de esta bitácora (2026-09-16)
 
+- **Zcal/Cloudflare — regla WAF y orden de evaluación (2026-09-16):** la regla `Allow Zcal webhook` debe estar antes de cualquier regla general de desafío administrado. Una regla `Omitir` colocada después de `Verificar todos los visitantes` no evita que el desafío se ejecute primero y puede reproducir `403 error 1010` para clientes servidor. La expresión aprobada queda limitada a `http.host = www.sotomayorconsulting.com`, método `POST` y ruta `/api/zcal-webhook`; omitir únicamente `Comprobación de integridad del navegador`. Verificar siempre el orden efectivo después de guardar.
+- **Zcal/Supabase — migración de tokens (2026-09-16):** `public.zcal_action_tokens` fue verificada en producción con las seis columnas requeridas (`token_hash`, `booking_id`, `action`, `expires_at`, `consumed_at`, `created_at`). La tabla vacía es normal hasta que `schedule-validation` emita un token. No volver a ejecutar migraciones históricas modificadas; usar una migración nueva con fecha/versionado posterior.
+- **Lección operativa — validación de despliegue:** un build exitoso de Pages no prueba el acceso de clientes servidor ni la configuración WAF. La secuencia mínima es: revisar variables por nombre (sin exponer valores), confirmar excepción WAF y orden, probar firma inválida esperando `401`, y finalmente usar una sola prueba firmada de Zcal esperando `202`.
+
 - **Race condition en sync a Odoo confirmada con datos reales (lead 4076, 2026-09-15)**: cada cambio de camino en el resultado (`goGuide`/`goAdvisor`/`goPlatform`/`switchToWhatsappFirst`) llamaba `pushLeadUpdate()` de inmediato, disparando su propio pipeline completo (Cloudflare -> Supabase `leads-xb` -> trigger `diag_leads_xb_sync` -> n8n Paso 1b -> Paso 2 -> Odoo) en paralelo para el mismo `lead_id`. Un usuario cambiando de camino 2 veces en 8s generó 3 ejecuciones simultáneas de Paso 2 (n8n exec ids 142021/142022/142024, todas a las 23:30:2x) compitiendo por escribir el mismo lead Odoo 4076. Al menos una corrida resolvió `resolved_lead_id="4076"` correctamente (confirmado leyendo el runData de la ejecución 142024), pero el estado final en Odoo quedó sin `tag_ids`, sin `x_studio_diag_riesgo/resultado`, sin `x_nurture_*_source` — la corrida que terminó de escribir último ganó, y fue la que cayó en la rama de error (`sync_error: "sin resolved_lead_id: revisar subworkflow Odoo"` en `leads-xb`, pese a que el dato en Supabase es correcto). Bug secundario hallado de paso: `inferIntention()` en Paso 2 (nodo "Normalize Lead Identity") no reconoce el valor crudo `intension` que manda esta landing cuando no matchea ninguna de las 3 frases canónicas, cayendo al default `needs_info` aunque `wants_zoom_meeting` sea `"si"`.
   - **Fix aplicado (cliente, PR #68)**: `pushLeadUpdate()` en A y B ahora debounce de 1.5s con número de secuencia — si el usuario cambia de camino de nuevo antes de que venza el timer, se cancela el envío anterior. Reduce la frecuencia de la carrera, no la elimina del todo (el cliente no controla el orden de llegada al servidor).
   - **Fix pendiente (n8n, manual)**: `Odoo | Tag valor` y `Odoo | Nota diagnostico` en Paso 1b (`5P9PAd7mknoJAZAf`) tienen `onError: continueRegularOutput` — si el write a Odoo falla, la ejecución sigue como si nada, invisible. Cambiar "On Error" a "Stop Workflow" (default) en ambos nodos desde la UI de n8n — bloqueado para hacerlo por API en esta sesión (permiso de producción), pendiente de que el usuario lo aplique manualmente.
@@ -241,6 +245,7 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ## 6. Convenciones para quien edite esta bitácora
 
+- Cada instancia o agente que investigue o cambie este stack debe actualizar esta bitácora en el mismo ciclo de trabajo: registrar hechos comprobados, riesgos, cambios fuera de git y la validación realizada. Antes de editar, debe leer la versión más reciente para no repetir acciones ni revertir decisiones de otra instancia.
 - Agregar entradas nuevas **arriba** de la sección de pendientes correspondiente, no al final del archivo.
 - Cuando un PR se fusiona, mover su fila de "Abierto" a "Fusionado" en la tabla (o regenerarla con el comando de la sección 2).
 - Cualquier cambio hecho directo en Supabase/Odoo/n8n (fuera de un PR) **debe** documentarse aquí en la sección 4, con la fecha, porque es la única fuente de verdad fuera de esos mismos sistemas.
