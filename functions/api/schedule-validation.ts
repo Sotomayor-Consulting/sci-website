@@ -1,7 +1,7 @@
 // POST /api/schedule-validation. La landing nunca decide ni recibe enlaces Zcal reales.
-import { evaluateTopic, normalizeEmail, normalizePhone, signActionToken } from "../_lib/zcal.ts";
+import { evaluateTopic, normalizeEmail, normalizePhone, sha256Hex, signActionToken } from "../_lib/zcal.ts";
 import { odooEligibility, upsertScheduledLead, type OdooEnv } from "../_lib/odoo.ts";
-import { hasSupabase, sbPatch, sbSelect, type SupabaseEnv } from "../_lib/supabase.ts";
+import { hasSupabase, sbInsert, sbPatch, sbSelect, type SupabaseEnv } from "../_lib/supabase.ts";
 import { json, noContent } from "../_lib/http.ts";
 
 interface Env extends SupabaseEnv, OdooEnv { ZCAL_ACTION_TOKEN_SECRET?: string; SCHEDULE_MODE?: string; SCHEDULE_CANARY_BOOKING_IDS?: string; N8N_SCHEDULE_NOTIFICATION_URL?: string; }
@@ -27,10 +27,15 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
   } catch (error) { console.error("schedule-validation booking lookup failed", String(error)); return json({ status: "manual_review", reason: "booking_lookup_unavailable" }, 503, origin); }
   if (matches.length !== 1) return json({ status: "manual_review", reason: matches.length ? "ambiguous_booking" : "booking_not_found" }, 200, origin);
   const booking = matches[0]; const topic = String(input.meeting_topic || input.preparation_answer || booking.meeting_topic || "");
+  if (bookingId && (normalizeEmail(booking.email_normalized) !== email || normalizePhone(booking.phone_normalized) !== phone || (booking.start_at && Date.parse(booking.start_at) !== Date.parse(start_at)))) return json({ status: "manual_review", reason: "booking_identity_mismatch" }, 200, origin);
   const topicResult = evaluateTopic(topic);
   if (topicResult.decision === "needs_context") {
     const exp = Date.now() + 10 * 60_000;
-    const makeAction = (action: "reschedule" | "cancel") => signActionToken({ booking_id: booking.booking_id, action, exp }, env.ZCAL_ACTION_TOKEN_SECRET!);
+    const makeAction = async (action: "reschedule" | "cancel") => {
+      const token = await signActionToken({ booking_id: booking.booking_id, action, exp }, env.ZCAL_ACTION_TOKEN_SECRET!);
+      await sbInsert(env, "zcal_action_tokens", [{ token_hash: await sha256Hex(token), booking_id: booking.booking_id, action, expires_at: new Date(exp).toISOString() }]);
+      return token;
+    };
     const [reschedule_token, cancel_token] = await Promise.all([makeAction("reschedule"), makeAction("cancel")]);
     await recordDecision(env, booking.booking_id, "needs_context", topicResult.reason);
     return json({ status: "needs_context", reason: topicResult.reason, request_id: booking.booking_id, actions: { reschedule_token, cancel_token } }, 200, origin);

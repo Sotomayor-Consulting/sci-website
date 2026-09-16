@@ -8,11 +8,12 @@ const MAX_BODY = 65_536;
 const reply = (body: unknown, status = 200) => Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
 
 export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
-  if (!env.ZCAL_WEBHOOK_SECRET || !env.ZCAL_LINK_ENCRYPTION_KEY || !hasSupabase(env)) return reply({ ok: false, error: "server_configuration_error" }, 500);
   const raw = await request.text();
   if (!raw || raw.length > MAX_BODY) return reply({ ok: false, error: "invalid_payload" }, 400);
   try {
+    if (!env.ZCAL_WEBHOOK_SECRET) return reply({ ok: false, error: "server_configuration_error" }, 500);
     if (!await verifyZcalSignature(raw, request.headers.get("x-zcal-webhook-signature"), env.ZCAL_WEBHOOK_SECRET)) return reply({ ok: false, error: "invalid_signature" }, 401);
+    if (!env.ZCAL_LINK_ENCRYPTION_KEY || !hasSupabase(env)) return reply({ ok: false, error: "server_configuration_error" }, 500);
     const booking = normalizeZcalWebhook(JSON.parse(raw));
     if (!booking) return reply({ ok: false, error: "unsupported_event" }, 422);
     const [reschedule_url_encrypted, cancel_url_encrypted] = await Promise.all([

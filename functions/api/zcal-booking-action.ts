@@ -1,6 +1,6 @@
 // GET /api/zcal-booking-action?token=...: canjea un token corto por una URL Zcal permitida.
-import { decryptSecret, verifyActionToken } from "../_lib/zcal.ts";
-import { hasSupabase, sbSelect, type SupabaseEnv } from "../_lib/supabase.ts";
+import { decryptSecret, sha256Hex, verifyActionToken } from "../_lib/zcal.ts";
+import { hasSupabase, sbPatchReturning, sbSelect, type SupabaseEnv } from "../_lib/supabase.ts";
 
 interface Env extends SupabaseEnv { ZCAL_ACTION_TOKEN_SECRET?: string; ZCAL_LINK_ENCRYPTION_KEY?: string; ZCAL_ALLOWED_HOSTS?: string; }
 interface Ctx { request: Request; env: Env; }
@@ -13,6 +13,8 @@ export async function onRequestGet({ request, env }: Ctx): Promise<Response> {
   const booking_id = typeof claims?.booking_id === "string" ? claims.booking_id : "";
   const action = claims?.action === "reschedule" || claims?.action === "cancel" ? claims.action : "";
   if (!booking_id || !action) return Response.json({ error: "invalid_or_expired_action" }, { status: 400 });
+  const consumed = await sbPatchReturning<{ token_hash: string }>(env, "zcal_action_tokens", `token_hash=eq.${encodeURIComponent(await sha256Hex(token))}&consumed_at=is.null&expires_at=gt.${encodeURIComponent(new Date().toISOString())}`, { consumed_at: new Date().toISOString() });
+  if (consumed.length !== 1) return Response.json({ error: "invalid_or_expired_action" }, { status: 400 });
   const rows = await sbSelect<BookingRow>(env, "zcal_bookings", { select: "reschedule_url_encrypted,cancel_url_encrypted", booking_id: `eq.${booking_id}`, limit: "1" });
   const cipher = action === "reschedule" ? rows[0]?.reschedule_url_encrypted : rows[0]?.cancel_url_encrypted;
   if (!cipher) return Response.json({ error: "action_not_available" }, { status: 404 });

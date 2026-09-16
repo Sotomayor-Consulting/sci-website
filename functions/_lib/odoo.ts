@@ -27,7 +27,7 @@ export async function odooEligibility(env: OdooEnv, email: string, phone: string
 
 export async function upsertScheduledLead(env: OdooEnv, booking: { lead_id: number | null; full_name: string; email: string; phone: string; start_at: string; timezone: string; event_name: string }): Promise<number> {
   const uid = await rpc(env, "common", "authenticate", [env.ODOO_DB, env.ODOO_USERNAME, env.ODOO_PASSWORD, {}]); if (!Number(uid)) throw new Error("odoo authentication failed");
-  const values = { contact_name: booking.full_name, email_from: booking.email, phone: booking.phone, x_studio_asesoria: booking.event_name, x_studio_fecha_agenda_dt: booking.start_at, x_studio_timezone: booking.timezone, team_id: 1, stage_id: 1 };
+  const values = { name: booking.full_name || booking.email, contact_name: booking.full_name, email_from: booking.email, phone: booking.phone, x_studio_asesoria: booking.event_name, x_studio_fecha_agenda_dt: booking.start_at, x_studio_timezone: booking.timezone, team_id: 1, stage_id: 1 };
   if (booking.lead_id) { await execute<boolean>(env, Number(uid), "crm.lead", "write", [[booking.lead_id], values]); return booking.lead_id; }
   return Number(await execute<number>(env, Number(uid), "crm.lead", "create", [values]));
 }

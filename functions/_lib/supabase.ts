@@ -65,6 +65,22 @@ export async function sbPatch(
   await orThrow(res, `patch ${table}`);
 }
 
+/** PATCH que devuelve las filas afectadas; útil para reclamar operaciones una sola vez. */
+export async function sbPatchReturning<T>(
+  env: SupabaseEnv,
+  table: string,
+  filter: string,
+  patch: Record<string, unknown>,
+): Promise<T[]> {
+  const res = await fetch(`${rest(env)}/${table}?${filter}`, {
+    method: "PATCH",
+    headers: headers(env, { Prefer: "return=representation" }),
+    body: JSON.stringify(patch),
+  });
+  await orThrow(res, `patch ${table}`);
+  return (await res.json()) as T[];
+}
+
 /** Llama una función Postgres: POST /rest/v1/rpc/<fn>. */
 export async function sbRpc(env: SupabaseEnv, fn: string, args: Record<string, unknown>): Promise<void> {
   const res = await fetch(`${rest(env)}/rpc/${fn}`, {
