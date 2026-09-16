@@ -37,8 +37,12 @@ function attendee(data: UnknownRecord): UnknownRecord {
 }
 function answerFor(attendeeData: UnknownRecord, index: number): string {
   const answers = Array.isArray(attendeeData.customQuestionAnswers) ? attendeeData.customQuestionAnswers : [];
-  const answer = record(answers[index]);
-  return text(answer.answer);
+  const topic = answers.find((item) => {
+    const question = fold(record(item).question);
+    return /tema principal|conversar.*reunion|principal.*reunion/.test(question);
+  });
+  const answer = record(topic || answers[index]);
+  return Array.isArray(answer.answer) ? answer.answer.map(text).join(", ") : text(answer.answer);
 }
 
 /** Normaliza el contrato publicado por Zcal sin depender de nombres internos de n8n. */
@@ -94,8 +98,10 @@ export async function verifyZcalSignature(raw: string, signature: string | null,
   const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
   const bytes = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(raw)));
   const hex = [...bytes].map((byte) => byte.toString(16).padStart(2, "0")).join("");
-  const normalized = signature.replace(/^sha256=/i, "").trim().toLowerCase();
-  return constantTimeEqual(normalized, hex);
+  const normalized = signature.replace(/^sha256=/i, "").trim();
+  if (constantTimeEqual(normalized.toLowerCase(), hex)) return true;
+  const base64 = btoa(String.fromCharCode(...bytes));
+  return constantTimeEqual(normalized, base64);
 }
 
 export async function signActionToken(payload: Record<string, unknown>, secret: string): Promise<string> {
@@ -106,8 +112,15 @@ export async function signActionToken(payload: Record<string, unknown>, secret: 
 }
 export async function verifyActionToken(token: string, secret: string): Promise<Record<string, unknown> | null> {
   const [encoded, received] = token.split("."); if (!encoded || !received || !secret) return null;
-  const expected = await signActionToken(JSON.parse(decodeURIComponent(escape(atob(encoded)))) as Record<string, unknown>, secret);
+  let value: Record<string, unknown>;
+  try { value = JSON.parse(decodeURIComponent(escape(atob(encoded)))) as Record<string, unknown>; } catch { return null; }
+  const expected = await signActionToken(value, secret);
   const signature = expected.split(".")[1];
   if (!signature || !constantTimeEqual(signature, received)) return null;
-  try { const value = JSON.parse(decodeURIComponent(escape(atob(encoded)))) as Record<string, unknown>; return Number(value.exp || 0) > Date.now() ? value : null; } catch { return null; }
+  return Number(value.exp || 0) > Date.now() ? value : null;
+}
+
+export async function sha256Hex(value: string): Promise<string> {
+  const bytes = new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value)));
+  return [...bytes].map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }
