@@ -1773,7 +1773,6 @@
             // Supabase (leads-xb) + reenvía verbatim al webhook n8n de siempre. Mata el
             // problema de CORS del webhook directo. Ver functions/api/diagnostico-lead.ts.
             webhookUrl: "/api/diagnostico-lead",
-            tiktokCapiWebhookUrl: "/api/tiktok-capi",
             tiktokPixelId: "D5KFDEBC77U6BL6T7LDG",
             // Mismo evento Zcal que las landings A/B/C ("Sesión Estratégica", slug /60min).
             // Antes el diagnóstico usaba zcal.co/i/sTo1ewXN (evento distinto, sin prefill de a0). Si se quiere volver, cambiar solo esta línea.
@@ -1788,7 +1787,6 @@
         var PAGE_NAME = (window.SCI_TRACKING_CONFIG || {}).page_name || CONFIG.landingReference;
         var URL_PARAMS = new URLSearchParams(location.search);
         var QA_MODE = URL_PARAMS.get("qa") === "1";
-        var QA_NO_PIXELS = QA_MODE && URL_PARAMS.get("no_pixels") === "1";
         var QA_NO_WEBHOOK = QA_MODE && URL_PARAMS.get("no_webhook") === "1";
         var DEBUG = QA_MODE || !!(window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.debug);
 
@@ -1916,18 +1914,6 @@
             return ("sci_" + eventName + "_" + leadPart + "_" + sessionPart + "_" + stamp + "_" + rand).replace(/[^a-zA-Z0-9_/-]/g, "_");
         }
 
-        var ADS_ALLOWED_KEYS = [
-            "content_name", "description", "currency", "value", "quantity",
-            "lead_id", "session_id", "main_goal", "business_objective", "wants_zoom_meeting", "conversion_path",
-            "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "click_id_source",
-            "ttclid", "fbclid", "ttp", "page_url", "event_id", "crm_event_name", "crm_event_id", "event_stage"
-        ];
-        function sanitizeAdsPayload(payload) {
-            var out = {};
-            ADS_ALLOWED_KEYS.forEach(function (k) { if (payload[k] !== undefined && payload[k] !== "") out[k] = payload[k]; });
-            return out;
-        }
-
         /* Evento no-nativo: solo dataLayer (GTM decide qué hacer con él) */
         function track(eventName, extra) {
             window.dataLayer = window.dataLayer || [];
@@ -1935,8 +1921,10 @@
             if (DEBUG) console.info("dataLayer:", eventName, extra || {});
         }
 
-        /* Eventos publicitarios: estándar y personalizados, con el mismo event_id
-           para deduplicar Pixel/CAPI. Los conectores adicionales se activan vía GTM. */
+        /* Eventos publicitarios: estándar y personalizados. Solo dataLayer.push — GTM
+           (client-side + server-side en Google Cloud) es el único disparador hacia
+           TikTok/Meta. No hay pixel ni CAPI directos acá: evita duplicar el dato que
+           GTM ya reenvía. */
         function trackAdsEvent(eventName, payload) {
             payload = payload || {};
             var NATIVE = ["ViewContent", "Contact", "Lead", "Schedule", "InitiateCheckout"];
@@ -1958,65 +1946,7 @@
 
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push(eventPayload);
-
-            if (!QA_NO_PIXELS) {
-                var clean = sanitizeAdsPayload(eventPayload);
-                if (window.ttq && typeof window.ttq.track === "function") {
-                    // TikTok requiere event_id dentro del payload del píxel para que
-                    // Pixel Helper y Events API reconozcan el mismo evento. Si la
-                    // librería ya expone instance(), se apunta al Pixel configurado.
-                    var tiktokPayload = Object.assign({}, clean, { event_id: evId });
-                    try {
-                        var tiktokTarget = (CONFIG.tiktokPixelId && typeof window.ttq.instance === "function")
-                            ? window.ttq.instance(CONFIG.tiktokPixelId)
-                            : window.ttq;
-                        tiktokTarget.track(tiktokEventName, tiktokPayload);
-                    } catch (e) {}
-                }
-                if (window.fbq && typeof window.fbq === "function") {
-                    try {
-                        window.fbq(isCustom ? "trackCustom" : "track", eventPayload.meta_event_name, clean, { eventID: evId });
-                    } catch (e) {}
-                }
-                sendTikTokConversionsApiEvent(tiktokEventName, eventPayload);
-            }
             if (DEBUG) console.info("Ads tracking event:", eventPayload);
-        }
-
-        // Same-origin: /api/tiktok-capi (Cloudflare Function). Hashea email/phone y
-        // manda a TikTok en background vía waitUntil — ya no depende de que la pestaña
-        // siga abierta, y ya no lo bloquean ad-blockers/ITP como sí pasaba contra
-        // n8n.sotomayorconsulting.com (cross-origin).
-        function sendTikTokConversionsApiEvent(eventName, payload) {
-            if (QA_NO_WEBHOOK || !CONFIG.tiktokCapiWebhookUrl) return;
-            var c = getClickTrackingData();
-            var evId = payload.event_id || buildEventId(eventName, payload);
-            var eventTime = payload.event_time || Math.floor(Date.now() / 1000);
-            // leadData se llena al enviar el gate (paso 8); antes de eso (ej. ViewContent)
-            // no hay email/telefono todavia, y esta bien que vayan vacios.
-            var body = {
-                event_name: eventName,
-                event_id: evId,
-                event_time: eventTime,
-                pixel_id: CONFIG.tiktokPixelId,
-                ttclid: c.ttclid || payload.ttclid || "",
-                ttp: c.ttp || payload.ttp || "",
-                email: (leadData && leadData.email) || "",
-                phone: (leadData && leadData.phone_e164) || "",
-                external_id: (leadData && leadData.lead_id) || payload.lead_id || readStoredLead().lead_id || "",
-                page_url: payload.page_url || location.href,
-                referrer: document.referrer || "",
-                content_name: payload.content_name || (window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.service_content && window.SCI_TRACKING_CONFIG.service_content.content_name) || "Diagnostico LLC",
-                content_category: "LLC USA",
-                currency: payload.currency || "USD",
-                value: payload.value != null ? payload.value : 0
-            };
-            try {
-                fetch(CONFIG.tiktokCapiWebhookUrl, {
-                    method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(body), keepalive: true
-                }).catch(function (e) { if (DEBUG) console.warn("tiktok-capi fallo:", e); });
-            } catch (e) {}
         }
 
         async function sendLeadToWebhook(payload) {
