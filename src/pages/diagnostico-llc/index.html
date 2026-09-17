@@ -32,7 +32,7 @@
          (conversion_path: "diagnostico") con los 5 campos del quiz + stage_id + goal.
        · Tracking: GTM + TikTok Pixel + scaffold Meta. Eventos deduplicables (event_id):
          ViewContent · quiz_start · quiz_step_complete · quiz_complete · lead_form_start ·
-         CompleteRegistration/Subscribe (optimización) · InitiateCheckout · route_selected · Schedule.
+         Lead (optimización) · InitiateCheckout · route_selected · Schedule.
        · CAPI server-side vía n8n (webhook/pixel-api-conversiones), mismo event_id.
        · Atribución: utm_* + ttclid/fbclid/_ttp/_fbp → localStorage → payload → Odoo.
        · Zcal prellenado (name/email/smsPhone/a0) — mismo evento que A/B/C.
@@ -44,19 +44,18 @@
        · chooseRoute(): etapa 1 → guide · complejidad alta → zcal · resto → selfserve (plataforma es el default).
        · La ruta se decide al terminar el paso 5, ANTES del form (applyGateMode).
        · 3 destinos en la pantalla de resultado:
-         - "guide"     — etapa 1: guía pre-LLC + nurture WhatsApp. Form completo. Evento: Subscribe (value 0).
+         - "guide"     — etapa 1: guía pre-LLC + nurture WhatsApp. Form completo, sin evento publicitario.
          - "selfserve" — perfil simple: gate pide SOLO el correo (la plataforma /start hace el registro
                          completo con su propio quiz). Botón → app.sotomayorconsulting.com/start con
                          entity=llc + lead_id + diag + stage + suggested_state + email + utm/ttclid.
-                         Evento en el form: CompleteRegistration (value por etapa, conversion_path=diagnostico_selfserve).
+                         Evento en el form: Lead (value por etapa, conversion_path=diagnostico_selfserve).
                          Evento al clic a /start: InitiateCheckout (value 40).
                          Enlace secundario "prefiero un asesor" → abre el calendario Zcal (escape hatch).
          - "zcal"      — complejidad alta: form completo. El resultado DA A ELEGIR:
                          (a) "Agenda tu asesoría con un especialista" → Zcal prellenado (Schedule al reservar).
                          (b) "Prefiero el proceso ágil en la plataforma" → /start?...&advisor_review=1&priority=high
                              (InitiateCheckout value 90; un asesor experto supervisa el caso).
-       · Evento de registro graduado por etapa: value 0/40/70/120 (etapa 1-4). Etapa 1 usa
-         Subscribe en vez de CompleteRegistration para no sesgar la optimización hacia "validadores".
+       · El registro publicitario se reporta solo para etapas 2-4, con valor por etapa.
        · renderDynamicQuestion() render una sola vez + restaura la respuesta al volver con "Atrás".
 
       FASE 4 (confianza + scoring):
@@ -83,8 +82,8 @@
        · P6 (q6) = necesidad tecnológica (pagos/automatizacion/crm/ninguno). NO promedia etapa.
          Alimenta: +15 al value del lead, párrafo tech en el resultado, tag cross_sell en Odoo.
        · Paso 8 = GATE UNIVERSAL antes del resultado: adelanto espejeado (nombre + facturación +
-         visión + etapa) + apellido + correo. Es la captura de compromiso. Evento de fase 1 aquí:
-         etapa 1 -> Subscribe(0); etapa 2-4 -> CompleteRegistration(value etapa + bonus tech),
+         visión + etapa) + apellido + correo. Es la captura de compromiso. La etapa 1 no reporta
+         evento publicitario; etapas 2-4 -> Lead(value etapa + bonus tech),
          conversion_path=diagnostico_gate. TODO el que pasa el gate es un lead con contacto usable.
        · assembleLead(): payload con chosen_path="" (se rellena al elegir); pushLeadUpdate() re-envía
          por lead_id al elegir camino / capturar WhatsApp.
@@ -212,7 +211,7 @@
         standard_events: {
           view_content: "ViewContent",
           contact: "Contact",
-          complete_registration: "CompleteRegistration",
+          lead: "Lead",
           schedule: "Schedule",
           start_scheduling: "StartScheduling"
         },
@@ -1928,16 +1927,12 @@
            GTM ya reenvía. */
         function trackAdsEvent(eventName, payload) {
             payload = payload || {};
-            var NATIVE = ["ViewContent", "Contact", "CompleteRegistration", "Schedule", "Subscribe", "InitiateCheckout"];
+            var NATIVE = ["ViewContent", "Contact", "Lead", "Schedule", "InitiateCheckout"];
             var CUSTOM = ["StartScheduling"];
             var isCustom = CUSTOM.indexOf(eventName) !== -1;
             if (NATIVE.indexOf(eventName) === -1 && !isCustom) { if (DEBUG) console.warn("Evento no autorizado:", eventName); return; }
             var evId = payload.event_id || buildEventId(eventName, payload);
-            // TikTok tiene "Lead" como evento propio para captura de datos de contacto —
-            // más preciso que "CompleteRegistration" (pensado para alta de cuenta/trial) y
-            // el que TikTok reconoce para optimizar campañas de generación de leads. Meta ya
-            // hacía este mismo mapeo (meta_event_name); ahora se aplica igual para TikTok.
-            var tiktokEventName = (eventName === "CompleteRegistration") ? "Lead" : eventName;
+            var tiktokEventName = eventName;
             var eventPayload = Object.assign({
                 event: eventName,
                 event_id: evId,
@@ -1945,7 +1940,7 @@
                 event_source: "web",
                 event_source_id: CONFIG.tiktokPixelId,
                 tiktok_event_name: tiktokEventName,
-                meta_event_name: (eventName === "CompleteRegistration" ? "Lead" : eventName),
+                meta_event_name: eventName,
                 meta_is_custom: isCustom
             }, getBaseTrackingPayload(), payload);
 
@@ -2502,7 +2497,7 @@
             const stageId = computeStage().stageId;
             const goal = deriveGoal(userResponses);
             const uniqueId = 'DIAG-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7).toUpperCase();
-            const crmEventId = buildEventId("CompleteRegistration", { lead_id: leadId });
+            const crmEventId = buildEventId("Lead", { lead_id: leadId });
             const clicks = getClickTrackingData();
             const first = userResponses.first_name || "";
             const last = contact.lastName || "";
@@ -2511,7 +2506,7 @@
             const tech = userResponses.q6 || "";
             return Object.assign({
                 event_name: "diagnostico_gate_submit",
-                crm_event_name: "CompleteRegistration",
+                crm_event_name: "Lead",
                 crm_event_id: crmEventId,
                 event_id: crmEventId,
                 event_time: Math.floor(Date.now() / 1000),
@@ -2648,21 +2643,23 @@
                 // La respuesta de n8n nunca debe bloquear el diagnóstico. El envío continúa
                 // en segundo plano; así un timeout o CORS no deja al visitante atrapado aquí.
                 sendLeadToWebhook(payload);
-                    // Evento de optimización de fase 1, universal (todos pasan el gate).
-                    // etapa 1 = Subscribe (lead soft); etapa 2-4 = CompleteRegistration con value por etapa + bonus tech.
-                    var regEvent = stageId === 1 ? "Subscribe" : "CompleteRegistration";
-                    var stageValue = stageId === 1 ? 0 : (({ 2: 40, 3: 70, 4: 120 }[stageId] || 40) + techBonus);
-                    trackAdsEvent(regEvent, {
-                        event_id: crmEventId,
-                        crm_event_name: regEvent,
-                        crm_event_id: crmEventId,
-                        lead_id: payload.lead_id,
-                        main_goal: payload.goal,
-                        conversion_path: "diagnostico_gate",
-                        event_stage: "etapa_" + stageId,
-                        content_name: (window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.service_content && window.SCI_TRACKING_CONFIG.service_content.content_name) || "",
-                        value: stageValue, currency: "USD"
-                    });
+                    // Etapa 1 no es una conversión publicitaria. Solo las etapas 2-4
+                    // reportan el registro calificado como Lead.
+                    if (stageId > 1) {
+                        var regEvent = "Lead";
+                        var stageValue = ({ 2: 40, 3: 70, 4: 120 }[stageId] || 40) + techBonus;
+                        trackAdsEvent(regEvent, {
+                            event_id: crmEventId,
+                            crm_event_name: regEvent,
+                            crm_event_id: crmEventId,
+                            lead_id: payload.lead_id,
+                            main_goal: payload.goal,
+                            conversion_path: "diagnostico_gate",
+                            event_stage: "etapa_" + stageId,
+                            content_name: (window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.service_content && window.SCI_TRACKING_CONFIG.service_content.content_name) || "",
+                            value: stageValue, currency: "USD"
+                        });
+                    }
                     setActiveStep(9);
                     renderResult();
             });
@@ -3176,29 +3173,8 @@
                 if (!frame.querySelector('iframe')) { const fb = document.getElementById('cal-fallback'); if (fb) fb.classList.add('cal-fallback--urgent'); }
             }, 10000);
 
-            window.addEventListener("message", function onMsg(e) {
-                const host = (e.origin || "").replace(/^https?:\/\//, "").split("/")[0];
-                if (!/(^|\.)zcal\.co$/.test(host)) return;
-                const d = e.data;
-                const s = typeof d === "string" ? d : (d && typeof d === "object" ? JSON.stringify(d) : "");
-                if (/booking[_-]?(completed|confirmed|success)|schedule[_-]?confirmed|event[_-]?created|"?booked"?\s*[:=]\s*true/i.test(s)) {
-                    // Mismo criterio de valor por etapa que el gate submit (etapa_id -> 40/70/120 +
-                    // bonus si pidió automatización) — pero agendar es siempre señal fuerte, así que
-                    // Etapa 1 aquí no va en 0 (a diferencia de Subscribe en el gate).
-                    var schStage = (leadData && leadData.diag_stage_id) || 1;
-                    var schTechBonus = (leadData && leadData.tech_interest && leadData.tech_interest !== "ninguno") ? 15 : 0;
-                    var schValue = ({ 1: 40, 2: 40, 3: 70, 4: 120 }[schStage] || 40) + schTechBonus;
-                    trackAdsEvent("Schedule", {
-                        event_id: buildEventId("Schedule", { lead_id: leadData && leadData.lead_id }),
-                        lead_id: leadData && leadData.lead_id,
-                        main_goal: leadData && leadData.main_goal,
-                        conversion_path: "schedule_confirmed",
-                        content_name: (window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.service_content && window.SCI_TRACKING_CONFIG.service_content.content_name) || "",
-                        value: schValue, currency: "USD"
-                    });
-                    window.removeEventListener("message", onMsg);
-                }
-            });
+            // `Schedule` pertenece únicamente a la página de confirmación. Abrir o
+            // interactuar con el iframe no confirma una cita y no debe optimizar ads.
         }
 
         // ============================================================

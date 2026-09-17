@@ -5,8 +5,7 @@
 // El whitelist original se copió tal cual del workflow viejo, que sirve a las otras 13
 // landings (SubmitForm/SubmitApplication/Purchase). Nunca se cruzó contra los eventos que
 // el propio diagnóstico A/B dispara (ver NATIVE en trackAdsEvent, landing HTML): faltaban
-// "Subscribe" (gate en Etapa 1) e "InitiateCheckout" (camino plataforma) — esos dos
-// llegaban con 422 "evento no autorizado" y nunca salían hacia TikTok.
+// "InitiateCheckout" (camino plataforma) se conserva para las landings que lo requieren.
 
 export const TIKTOK_ALLOWED_EVENTS = new Set([
   "PageView",
@@ -17,7 +16,6 @@ export const TIKTOK_ALLOWED_EVENTS = new Set([
   "Schedule",
   "SubmitApplication",
   "Purchase",
-  "Subscribe",
   "InitiateCheckout",
   "Lead", // diagnóstico A/B manda esto en vez de CompleteRegistration — ver trackAdsEvent
   "StartScheduling", // intención explícita: abrió la agenda desde la CTA del diagnóstico
