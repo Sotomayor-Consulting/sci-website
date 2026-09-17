@@ -42,7 +42,7 @@
          (conversion_path: "diagnostico") con los 5 campos del quiz + stage_id + goal.
        · Tracking: GTM + TikTok Pixel + scaffold Meta. Eventos deduplicables (event_id):
          ViewContent · quiz_start · quiz_step_complete · quiz_complete · lead_form_start ·
-         CompleteRegistration/Subscribe (optimización) · InitiateCheckout · route_selected · Schedule.
+         CompleteRegistration (optimización) · InitiateCheckout · route_selected · Schedule.
        · CAPI server-side vía n8n (webhook/pixel-api-conversiones), mismo event_id.
        · Atribución: utm_* + ttclid/fbclid/_ttp/_fbp → localStorage → payload → Odoo.
        · Zcal prellenado (name/email/smsPhone/a0) — mismo evento que A/B/C.
@@ -54,7 +54,7 @@
        · chooseRoute(): etapa 1 → guide · complejidad alta → zcal · resto → selfserve (plataforma es el default).
        · La ruta se decide al terminar el paso 5, ANTES del form (applyGateMode).
        · 3 destinos en la pantalla de resultado:
-         - "guide"     — etapa 1: guía pre-LLC + nurture WhatsApp. Form completo. Evento: Subscribe (value 0).
+         - "guide"     — etapa 1: guía pre-LLC + nurture WhatsApp. Form completo, sin evento publicitario.
          - "selfserve" — perfil simple: gate pide SOLO el correo (la plataforma /start hace el registro
                          completo con su propio quiz). Botón → app.sotomayorconsulting.com/start con
                          entity=llc + lead_id + diag + stage + suggested_state + email + utm/ttclid.
@@ -65,8 +65,7 @@
                          (a) "Agenda tu asesoría con un especialista" → Zcal prellenado (Schedule al reservar).
                          (b) "Prefiero el proceso ágil en la plataforma" → /start?...&advisor_review=1&priority=high
                              (InitiateCheckout value 90; un asesor experto supervisa el caso).
-       · Evento de registro graduado por etapa: value 0/40/70/120 (etapa 1-4). Etapa 1 usa
-         Subscribe en vez de CompleteRegistration para no sesgar la optimización hacia "validadores".
+       · El registro publicitario se reporta solo para etapas 2-4, con valor por etapa.
        · renderDynamicQuestion() render una sola vez + restaura la respuesta al volver con "Atrás".
 
       FASE 4 (confianza + scoring):
@@ -93,8 +92,8 @@
        · P6 (q6) = necesidad tecnológica (pagos/automatizacion/crm/ninguno). NO promedia etapa.
          Alimenta: +15 al value del lead, párrafo tech en el resultado, tag cross_sell en Odoo.
        · Paso 8 = GATE UNIVERSAL antes del resultado: adelanto espejeado (nombre + facturación +
-         visión + etapa) + apellido + correo. Es la captura de compromiso. Evento de fase 1 aquí:
-         etapa 1 -> Subscribe(0); etapa 2-4 -> CompleteRegistration(value etapa + bonus tech),
+         visión + etapa) + apellido + correo. Es la captura de compromiso. La etapa 1 no reporta
+         evento publicitario; etapas 2-4 -> CompleteRegistration(value etapa + bonus tech),
          conversion_path=diagnostico_gate. TODO el que pasa el gate es un lead con contacto usable.
        · assembleLead(): payload con chosen_path="" (se rellena al elegir); pushLeadUpdate() re-envía
          por lead_id al elegir camino / capturar WhatsApp.
@@ -1890,7 +1889,7 @@
         /* Eventos publicitarios: estándar y personalizados, con mismo event_id. */
         function trackAdsEvent(eventName, payload) {
             payload = payload || {};
-            var NATIVE = ["ViewContent", "Contact", "CompleteRegistration", "Schedule", "Subscribe", "InitiateCheckout"];
+            var NATIVE = ["ViewContent", "Contact", "CompleteRegistration", "Schedule", "InitiateCheckout"];
             var CUSTOM = ["StartScheduling"];
             var isCustom = CUSTOM.indexOf(eventName) !== -1;
             if (NATIVE.indexOf(eventName) === -1 && !isCustom) { if (DEBUG) console.warn("Evento no autorizado:", eventName); return; }
@@ -2686,21 +2685,23 @@
                 // La respuesta de n8n nunca debe bloquear el diagnóstico. El envío continúa
                 // en segundo plano; así un timeout o CORS no deja al visitante atrapado aquí.
                 sendLeadToWebhook(payload);
-                    // Evento de optimización de fase 1, universal (todos pasan el gate).
-                    // etapa 1 = Subscribe (lead soft); etapa 2-4 = CompleteRegistration con value por etapa + bonus tech.
-                    var regEvent = stageId === 1 ? "Subscribe" : "CompleteRegistration";
-                    var stageValue = stageId === 1 ? 0 : (({ 2: 40, 3: 70, 4: 120 }[stageId] || 40) + techBonus);
-                    trackAdsEvent(regEvent, {
-                        event_id: crmEventId,
-                        crm_event_name: regEvent,
-                        crm_event_id: crmEventId,
-                        lead_id: payload.lead_id,
-                        main_goal: payload.goal,
-                        conversion_path: "diagnostico_gate",
-                        event_stage: "etapa_" + stageId,
-                        content_name: (window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.service_content && window.SCI_TRACKING_CONFIG.service_content.content_name) || "",
-                        value: stageValue, currency: "USD"
-                    });
+                    // Etapa 1 no es una conversión publicitaria. Solo las etapas 2-4
+                    // reportan el registro calificado como CompleteRegistration.
+                    if (stageId > 1) {
+                        var regEvent = "CompleteRegistration";
+                        var stageValue = ({ 2: 40, 3: 70, 4: 120 }[stageId] || 40) + techBonus;
+                        trackAdsEvent(regEvent, {
+                            event_id: crmEventId,
+                            crm_event_name: regEvent,
+                            crm_event_id: crmEventId,
+                            lead_id: payload.lead_id,
+                            main_goal: payload.goal,
+                            conversion_path: "diagnostico_gate",
+                            event_stage: "etapa_" + stageId,
+                            content_name: (window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.service_content && window.SCI_TRACKING_CONFIG.service_content.content_name) || "",
+                            value: stageValue, currency: "USD"
+                        });
+                    }
                     setActiveStep(9);
                     renderResult();
             });
