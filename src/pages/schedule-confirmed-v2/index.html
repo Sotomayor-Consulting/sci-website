@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tu sesión está confirmada | Sotomayor Consulting</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- GTM es único emisor de Pixel y Events API. Esta página nunca carga TikTok ni CAPI directo. -->
+  <script data-cfasync="false">
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var firstScript = d.getElementsByTagName(s)[0];
+      var script = d.createElement(s);
+      script.async = true;
+      script.src = "https://www.googletagmanager.com/gtm.js?id=" + i + (l !== "dataLayer" ? "&l=" + l : "");
+      firstScript.parentNode.insertBefore(script, firstScript);
+    })(window, document, "script", "dataLayer", "GTM-TNRQGDM");
+  </script>
+
+  <style>
+    :root { color-scheme: light; --navy:#102b3d; --gold:#c58c2c; --ink:#182634; --muted:#627284; --line:#dde5ea; --paper:#fff; --wash:#f4f7f8; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-width:320px; background:linear-gradient(135deg,#102b3d 0%,#16384b 52%,#0d2737 100%); color:var(--ink); font-family:Poppins,Arial,sans-serif; }
+    .page { width:min(720px,calc(100% - 32px)); margin:clamp(24px,7vw,76px) auto; padding:clamp(22px,5vw,44px); background:var(--paper); border-radius:22px; box-shadow:0 22px 60px rgba(2,18,30,.28); }
+    .rule { height:3px; width:100%; margin-bottom:33px; border-radius:4px; background:var(--gold); }
+    .brand { display:flex; align-items:center; gap:10px; margin:0 0 28px; color:#536678; font-size:12px; font-weight:600; letter-spacing:.03em; }
+    .brand-mark { width:25px; height:25px; display:grid; place-items:center; border:2px solid var(--gold); border-radius:50%; color:var(--gold); font-size:14px; }
+    .success { width:50px; height:50px; display:grid; place-items:center; margin-bottom:18px; border-radius:50%; background:#e8f4ee; color:#147344; }
+    .success svg { width:28px; height:28px; }
+    h1 { max-width:570px; margin:0; color:var(--navy); font-size:clamp(28px,5vw,42px); line-height:1.08; letter-spacing:-.045em; }
+    .intro { max-width:570px; margin:16px 0 0; color:var(--muted); font-size:16px; line-height:1.65; }
+    .agenda { margin-top:31px; padding:22px; border:1px solid var(--line); border-radius:16px; background:var(--wash); }
+    .agenda-label { margin:0 0 14px; color:var(--gold); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+    .agenda-date { margin:0; color:var(--navy); font-size:21px; font-weight:700; line-height:1.3; }
+    .agenda-meta { display:flex; flex-wrap:wrap; gap:8px 18px; margin:12px 0 0; color:#536678; font-size:14px; }
+    .agenda-meta span { display:flex; align-items:center; gap:7px; }
+    .agenda-meta span::before { width:5px; height:5px; flex:none; border-radius:50%; background:var(--gold); content:""; }
+    .next { margin:27px 0 0; padding-top:24px; border-top:1px solid var(--line); }
+    .next h2 { margin:0 0 8px; color:var(--navy); font-size:16px; }
+    .next p { margin:0; color:var(--muted); font-size:14px; line-height:1.65; }
+    .footer { margin:30px 0 0; color:#84919d; font-size:12px; line-height:1.55; }
+    .invalid .success { background:#fff3df; color:#a86e11; }
+    .invalid .agenda { display:none; }
+    @media (max-width:500px) { .page { width:calc(100% - 20px); border-radius:16px; } .agenda { padding:18px; } }
+  </style>
+</head>
+<body>
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TNRQGDM" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe>
+  </noscript>
+
+  <main id="schedule-page" class="page" aria-live="polite">
+    <div class="rule"></div>
+    <p class="brand"><span class="brand-mark">S</span> Sotomayor Consulting International</p>
+    <div class="success" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4.2 4.2L19 6.5" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h1 id="title">Tu sesión está confirmada.</h1>
+    <p id="intro" class="intro">Recibirás los detalles de la reunión en tu correo. Guarda este espacio para que podamos avanzar con claridad.</p>
+
+    <section class="agenda" aria-label="Detalle de tu sesión">
+      <p class="agenda-label">Tu sesión</p>
+      <p id="date" class="agenda-date">Fecha por confirmar</p>
+      <div class="agenda-meta">
+        <span id="time">Hora por confirmar</span>
+        <span id="duration">Sesión estratégica</span>
+        <span id="timezone">Hora local</span>
+      </div>
+    </section>
+
+    <section class="next" aria-label="Próximo paso">
+      <h2>Antes de nuestra reunión</h2>
+      <p>Ten a mano tus preguntas y la información que consideres importante para tu empresa.</p>
+    </section>
+
+    <p class="footer">Si necesitas modificar tu reserva, utiliza el enlace incluido en el correo de confirmación.</p>
+  </main>
+
+  <script data-cfasync="false">
+    (function () {
+      "use strict";
+
+      var query = new URLSearchParams(window.location.search);
+      var page = document.getElementById("schedule-page");
+      var bookingId = read("zcal_booking_id", "booking_id", "bookingId", "event_id", "eventId");
+      var startDate = read("startDate", "start_date", "start");
+      var timezone = read("timezone") || Intl.DateTimeFormat().resolvedOptions().timeZone || "Hora local";
+      var duration = read("duration") || "Sesión estratégica";
+      var email = read("email");
+      var confirmationSignal = Boolean(bookingId || (startDate && email));
+
+      renderAgenda(startDate, timezone, duration);
+
+      if (!confirmationSignal) {
+        page.classList.add("invalid");
+        document.getElementById("title").textContent = "No encontramos una reserva para mostrar.";
+        document.getElementById("intro").textContent = "Revisa el enlace de confirmación recibido por correo o comunícate con nuestro equipo.";
+        return;
+      }
+
+      var eventId = "sci_schedule_" + stableHash(bookingId || [startDate, email, timezone, duration].join("|"));
+      var storageKey = "sci_schedule_v2_" + eventId;
+      try {
+        if (window.sessionStorage.getItem(storageKey)) return;
+        window.sessionStorage.setItem(storageKey, "1");
+      } catch (error) {}
+
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "Schedule",
+        event_id: eventId,
+        booking_id: bookingId || "",
+        event_time: Math.floor(Date.now() / 1000),
+        content_name: "Sesión Estratégica: Tu Empresa en EE. UU.",
+        content_type: "service",
+        page_path: window.location.pathname,
+        landing_variant: "schedule-confirmed-v2"
+      });
+
+      // Evita conservar datos de reserva y contacto en la barra del navegador.
+      if (window.location.search) window.history.replaceState({}, document.title, window.location.pathname);
+
+      function read() {
+        for (var i = 0; i < arguments.length; i += 1) {
+          var value = String(query.get(arguments[i]) || "").trim();
+          if (value) return value;
+        }
+        return "";
+      }
+
+      function renderAgenda(rawStart, zone, meetingDuration) {
+        document.getElementById("duration").textContent = meetingDuration === "Sesión estratégica" ? meetingDuration : meetingDuration + " min";
+        document.getElementById("timezone").textContent = zone;
+        if (!rawStart) return;
+        var date = new Date(rawStart);
+        if (Number.isNaN(date.getTime())) return;
+        document.getElementById("date").textContent = new Intl.DateTimeFormat("es-EC", { weekday:"long", day:"numeric", month:"long", year:"numeric", timeZone:zone }).format(date);
+        document.getElementById("time").textContent = new Intl.DateTimeFormat("es-EC", { hour:"numeric", minute:"2-digit", timeZone:zone }).format(date);
+      }
+
+      function stableHash(value) {
+        var hash = 2166136261;
+        var text = String(value || "");
+        for (var i = 0; i < text.length; i += 1) {
+          hash ^= text.charCodeAt(i);
+          hash = Math.imul(hash, 16777619);
+        }
+        return (hash >>> 0).toString(36);
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -3170,29 +3170,12 @@
                 if (!zcalAlive) { const fb = document.getElementById('cal-fallback'); if (fb) fb.classList.add('cal-fallback--urgent'); }
             }, 4000);
 
-            window.addEventListener("message", function onMsg(e) {
+            window.addEventListener("message", function (e) {
                 const host = (e.origin || "").replace(/^https?:\/\//, "").split("/")[0];
                 if (!/(^|\.)zcal\.co$/.test(host)) return;
                 zcalAlive = true;
-                const d = e.data;
-                const s = typeof d === "string" ? d : (d && typeof d === "object" ? JSON.stringify(d) : "");
-                if (/booking[_-]?(completed|confirmed|success)|schedule[_-]?confirmed|event[_-]?created|"?booked"?\s*[:=]\s*true/i.test(s)) {
-                    // Mismo criterio de valor por etapa que el gate submit (etapa_id -> 40/70/120 +
-                    // bonus si pidió automatización) — pero agendar es siempre señal fuerte, así que
-                    // Etapa 1 aquí no va en 0 (a diferencia de Subscribe en el gate).
-                    var schStage = (leadData && leadData.diag_stage_id) || 1;
-                    var schTechBonus = (leadData && leadData.tech_interest && leadData.tech_interest !== "ninguno") ? 15 : 0;
-                    var schValue = ({ 1: 40, 2: 40, 3: 70, 4: 120 }[schStage] || 40) + schTechBonus;
-                    trackAdsEvent("Schedule", {
-                        event_id: buildEventId("Schedule", { lead_id: leadData && leadData.lead_id }),
-                        lead_id: leadData && leadData.lead_id,
-                        main_goal: leadData && leadData.main_goal,
-                        conversion_path: "schedule_confirmed",
-                        content_name: (window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.service_content && window.SCI_TRACKING_CONFIG.service_content.content_name) || "",
-                        value: schValue, currency: "USD"
-                    });
-                    window.removeEventListener("message", onMsg);
-                }
+                // `Schedule` pertenece únicamente a la página de confirmación.
+                // Este listener solo verifica disponibilidad del iframe Zcal.
             });
         }
 
