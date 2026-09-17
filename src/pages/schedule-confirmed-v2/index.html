@@ -49,7 +49,7 @@
   <style>
     :root { color-scheme:light; --navy:#0e2637; --navy-soft:#17394f; --gold:#b06f13; --ink:#102638; --muted:#536678; --line:rgba(16,38,56,.12); --paper:#fff; --wash:#f2f6f8; --radius:16px; }
     * { box-sizing:border-box; }
-    body { margin:0; min-width:320px; min-height:100dvh; background:linear-gradient(135deg,#f8fafb 0%,#edf3f6 72%,#e8eff3 100%); color:var(--ink); font-family:Poppins,Arial,sans-serif; }
+    body { margin:0; min-width:0; min-height:100dvh; background:linear-gradient(135deg,#f8fafb 0%,#edf3f6 72%,#e8eff3 100%); color:var(--ink); font-family:Poppins,Arial,sans-serif; }
     .page { width:min(860px,calc(100% - 40px)); margin:22px auto 42px; }
     .rule { display:none; }
     .brand { display:flex; align-items:center; justify-content:center; min-height:68px; margin:0 0 24px; padding:12px 24px; border:1px solid rgba(255,255,255,.14); border-radius:var(--radius); background:var(--navy); box-shadow:0 16px 36px rgba(14,38,55,.14); }
@@ -84,8 +84,8 @@
     .invalid .agenda { display:none; }
     .invalid .calendar-action { display:none; }
     @media (prefers-reduced-motion:no-preference) { .confirmation { animation:confirm-in .36s ease-out both; } @keyframes confirm-in { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } } }
-    @media (max-width:620px) { .page { width:calc(100% - 24px); margin:12px auto 28px; } .brand { min-height:62px; margin-bottom:16px; border-radius:14px; } .confirmation { grid-template-columns:1fr; border-radius:14px; } .confirmation-side { min-height:auto; padding:22px; } .success { width:42px; height:42px; margin:0; font-size:23px; } .status-label { margin:18px 0 5px; } .side-copy { max-width:none; } .side-rule { display:none; } .confirmation-body { padding:28px 22px 30px; } h1 { font-size:32px; } .agenda { padding:19px; } .agenda-meta { gap:9px 0; } .agenda-meta span { padding:0 9px; } }
-    @media (max-width:390px) { .agenda-meta { display:grid; grid-template-columns:1fr; } .agenda-meta span, .agenda-meta span:first-child { padding:0; border:0; } }
+    @media (max-width:620px) { .page { width:calc(100% - 24px); margin:12px auto 28px; } .brand { min-height:62px; margin-bottom:16px; border-radius:14px; } .confirmation { grid-template-columns:1fr; border-radius:14px; } .confirmation-side { display:grid; grid-template-columns:42px minmax(0,1fr); column-gap:14px; min-height:auto; padding:20px 22px; } .success { grid-row:span 2; width:42px; height:42px; margin:0; font-size:23px; } .status-label { align-self:end; margin:0 0 2px; } .side-copy { align-self:start; max-width:none; font-size:13px; line-height:1.45; } .side-rule { display:none; } .confirmation-body { padding:28px 22px 30px; } h1 { font-size:32px; } .agenda { padding:19px; } .agenda-meta { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 14px; } .agenda-meta span, .agenda-meta span:first-child { padding:0; border:0; } .agenda-meta span:last-child { grid-column:1 / -1; } .calendar-action { margin-top:18px; } .calendar-button { width:100%; min-height:48px; } }
+    @media (max-width:360px) { h1 { font-size:29px; } .confirmation-body { padding:25px 19px 28px; } .agenda { padding:17px; } .agenda-date { font-size:19px; } }
   </style>
 </head>
 <body>
