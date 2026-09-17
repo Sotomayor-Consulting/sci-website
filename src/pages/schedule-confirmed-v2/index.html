@@ -10,6 +10,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Misma captura de parámetros Zcal que V1. Conserva la consulta solo en sesión y limpia la URL. -->
+  <script data-cfasync="false">
+    (function () {
+      "use strict";
+      var storageKey = "sci_schedule_confirmed_query_v2";
+      var maxAge = 30 * 60 * 1000;
+      var urlQuery = window.location.search ? window.location.search.slice(1) : "";
+      var state = window.history.state && typeof window.history.state === "object" ? window.history.state : {};
+      var stateQuery = typeof state.sciScheduleQuery === "string" ? state.sciScheduleQuery : "";
+      var storedQuery = "";
+      try {
+        var stored = JSON.parse(window.sessionStorage.getItem(storageKey) || "null");
+        if (stored && typeof stored.query === "string" && Date.now() - Number(stored.savedAt) <= maxAge) storedQuery = stored.query;
+        else window.sessionStorage.removeItem(storageKey);
+      } catch (error) {}
+      window.__SCI_SCHEDULE_QUERY__ = urlQuery || stateQuery || storedQuery;
+      if (urlQuery) {
+        try { window.sessionStorage.setItem(storageKey, JSON.stringify({ query:urlQuery, savedAt:Date.now() })); } catch (error) {}
+        window.history.replaceState(Object.assign({}, state, { sciScheduleQuery:urlQuery }), document.title, window.location.pathname + window.location.hash);
+      }
+    })();
+  </script>
+
   <!-- GTM es único emisor de Pixel y Events API. Esta página nunca carga TikTok ni CAPI directo. -->
   <script data-cfasync="false">
     (function (w, d, s, l, i) {
@@ -29,8 +52,8 @@
     body { margin:0; min-width:320px; background:linear-gradient(135deg,#102b3d 0%,#16384b 52%,#0d2737 100%); color:var(--ink); font-family:Poppins,Arial,sans-serif; }
     .page { width:min(720px,calc(100% - 32px)); margin:clamp(24px,7vw,76px) auto; padding:clamp(22px,5vw,44px); background:var(--paper); border-radius:22px; box-shadow:0 22px 60px rgba(2,18,30,.28); }
     .rule { height:3px; width:100%; margin-bottom:33px; border-radius:4px; background:var(--gold); }
-    .brand { display:flex; align-items:center; gap:10px; margin:0 0 28px; color:#536678; font-size:12px; font-weight:600; letter-spacing:.03em; }
-    .brand-mark { width:25px; height:25px; display:grid; place-items:center; border:2px solid var(--gold); border-radius:50%; color:var(--gold); font-size:14px; }
+    .brand { display:block; width:277px; max-width:100%; margin:0 0 28px; }
+    .brand img { display:block; width:100%; height:auto; }
     .success { width:50px; height:50px; display:grid; place-items:center; margin-bottom:18px; border-radius:50%; background:#e8f4ee; color:#147344; }
     .success svg { width:28px; height:28px; }
     h1 { max-width:570px; margin:0; color:var(--navy); font-size:clamp(28px,5vw,42px); line-height:1.08; letter-spacing:-.045em; }
@@ -38,6 +61,7 @@
     .agenda { margin-top:31px; padding:22px; border:1px solid var(--line); border-radius:16px; background:var(--wash); }
     .agenda-label { margin:0 0 14px; color:var(--gold); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
     .agenda-date { margin:0; color:var(--navy); font-size:21px; font-weight:700; line-height:1.3; }
+    .attendee { margin:7px 0 0; color:#536678; font-size:14px; }
     .agenda-meta { display:flex; flex-wrap:wrap; gap:8px 18px; margin:12px 0 0; color:#536678; font-size:14px; }
     .agenda-meta span { display:flex; align-items:center; gap:7px; }
     .agenda-meta span::before { width:5px; height:5px; flex:none; border-radius:50%; background:var(--gold); content:""; }
@@ -57,7 +81,7 @@
 
   <main id="schedule-page" class="page" aria-live="polite">
     <div class="rule"></div>
-    <p class="brand"><span class="brand-mark">S</span> Sotomayor Consulting International</p>
+    <div class="brand"><img src="data:image/png;base64,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" alt="Sotomayor Consulting International"></div>
     <div class="success" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4.2 4.2L19 6.5" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
@@ -67,6 +91,7 @@
     <section class="agenda" aria-label="Detalle de tu sesión">
       <p class="agenda-label">Tu sesión</p>
       <p id="date" class="agenda-date">Fecha por confirmar</p>
+      <p id="attendee" class="attendee" hidden></p>
       <div class="agenda-meta">
         <span id="time">Hora por confirmar</span>
         <span id="duration">Sesión estratégica</span>
@@ -86,16 +111,21 @@
     (function () {
       "use strict";
 
-      var query = new URLSearchParams(window.location.search);
+      var query = new URLSearchParams(window.__SCI_SCHEDULE_QUERY__ || "");
       var page = document.getElementById("schedule-page");
       var bookingId = read("zcal_booking_id", "booking_id", "bookingId", "event_id", "eventId");
       var startDate = read("startDate", "start_date", "start");
       var timezone = read("timezone") || Intl.DateTimeFormat().resolvedOptions().timeZone || "Hora local";
       var duration = read("duration") || "Sesión estratégica";
+      var fullName = read("fullName", "name");
       var email = read("email");
-      var confirmationSignal = Boolean(bookingId || (startDate && email));
+      var confirmationSignal = Boolean(bookingId || (startDate && (email || fullName)));
 
       renderAgenda(startDate, timezone, duration);
+      if (fullName) {
+        document.getElementById("attendee").textContent = "Reserva para " + fullName;
+        document.getElementById("attendee").hidden = false;
+      }
 
       if (!confirmationSignal) {
         page.classList.add("invalid");
