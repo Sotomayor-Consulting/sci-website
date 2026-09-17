@@ -20,6 +20,7 @@ export const TIKTOK_ALLOWED_EVENTS = new Set([
   "Subscribe",
   "InitiateCheckout",
   "Lead", // diagnóstico A/B manda esto en vez de CompleteRegistration — ver trackAdsEvent
+  "StartScheduling", // intención explícita: abrió la agenda desde la CTA del diagnóstico
 ]);
 
 export interface TikTokEventInput {

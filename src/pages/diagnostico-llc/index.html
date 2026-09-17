@@ -15,6 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://zcal.co">
+    <link rel="preconnect" href="https://static.zcal.co" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!--
@@ -212,7 +213,8 @@
           view_content: "ViewContent",
           contact: "Contact",
           complete_registration: "CompleteRegistration",
-          schedule: "Schedule"
+          schedule: "Schedule",
+          start_scheduling: "StartScheduling"
         },
         service_content: {
           content_name: "Diagnóstico de madurez — LLC en EE. UU.",
@@ -461,9 +463,11 @@
         }
 
         .hero-badges span::before {
-            content: '✓';
-            color: var(--gold-primary);
-            font-weight: 700;
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold-primary);
         }
 
         .hero-highlight {
@@ -490,32 +494,15 @@
             border: none;
             border-radius: var(--radius);
             cursor: pointer;
-            box-shadow: 0 12px 30px -10px rgba(169, 116, 31, 0.55);
+            box-shadow: 0 6px 14px rgba(169, 116, 31, 0.18);
             transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
             min-width: 260px;
-        }
-
-        /* Brillo que cruza el botón de lado a lado: banda angosta, pasa y se queda
-           fuera de vista la mayor parte del ciclo (no es un loop constante). */
-        .btn-start::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -75%;
-            width: 35%; height: 100%;
-            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
-            transform: skewX(-20deg);
-            animation: btnShine 4.5s ease-in-out infinite;
-        }
-        @keyframes btnShine {
-            0% { left: -75%; }
-            18% { left: 125%; }
-            100% { left: 125%; }
         }
 
         .btn-start:hover {
             transform: translateY(-1px);
             background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 60%, var(--gold-light) 100%);
-            box-shadow: 0 16px 40px -10px rgba(169, 116, 31, 0.6);
+            box-shadow: 0 8px 18px rgba(169, 116, 31, 0.22);
         }
         .btn-start:active { transform: scale(0.97); }
 
@@ -914,14 +901,14 @@
             cursor: pointer;
             display: inline-block;
             text-decoration: none;
-            box-shadow: 0 12px 30px -12px rgba(14, 38, 55, 0.5);
+            box-shadow: 0 6px 14px rgba(14, 38, 55, 0.16);
             transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
         }
 
         .cta-primary:hover {
             transform: translateY(-1px);
             background: #1b3d59;
-            box-shadow: 0 16px 38px -12px rgba(14, 38, 55, 0.55);
+            box-shadow: 0 8px 18px rgba(14, 38, 55, 0.2);
         }
         .cta-primary:active { transform: scale(0.97); }
 
@@ -931,8 +918,7 @@
             padding: 0;
             /* Removed padding for tighter integration */
             margin-top: 16px;
-            overflow: hidden;
-            /* Ensure rounded corners clip content */
+            overflow: visible;
         }
 
         .zcal-inline-widget a {
@@ -941,13 +927,51 @@
             font-weight: 500;
         }
 
+        .cal-frame {
+            min-height: 920px;
+            overflow: visible;
+        }
+
         .cal-frame iframe {
             width: 100%;
-            min-height: 520px;
+            min-height: 920px !important;
+            height: 920px !important;
             border: 0;
             display: block;
             border-radius: var(--radius);
             background: #fff;
+        }
+
+        /* El informe permanece en pantalla; la agenda se expande justo bajo su CTA. */
+        #agenda-wrap[hidden] { display: none; }
+        #agenda-wrap {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.35s ease, transform 0.45s ease;
+        }
+        #agenda-wrap.agenda-open {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Se construye y carga en segundo plano al mostrar el diagnóstico. Así el
+           clic no espera el arranque frío de Zcal (que puede tardar varios segundos). */
+        #agenda-wrap.agenda-preload {
+            display: block;
+            max-height: none;
+            height: 1px;
+            min-height: 0;
+            margin: 0;
+            opacity: 0;
+            overflow: hidden;
+            transform: none;
+            pointer-events: none;
+        }
+
+        /* El diagnóstico ya explica el siguiente paso; dentro de este sub-paso se
+           muestra únicamente la agenda. El título accesible se conserva en el iframe. */
+        #agenda-wrap > h2,
+        #agenda-greeting {
+            display: none;
         }
 
         /* Responsive */
@@ -955,6 +979,10 @@
             .hero {
                 padding: 90px 16px 30px;
             }
+            .rp-hero { margin-bottom: 22px; }
+            .rp-verdict { font-size: clamp(24px, 7vw, 29px); }
+            .stage-progress { padding: 13px 12px 12px; }
+            .stage-context { align-items: flex-start; flex-direction: column; gap: 2px; }
 
             .hero-subtitle {
                 font-size: 16px;
@@ -988,17 +1016,20 @@
                 margin-left: -16px;
                 margin-right: -16px;
                 width: calc(100% + 32px);
+                min-height: 920px;
             }
 
             .cal-frame iframe {
                 border-radius: 0;
-                /* Sin esquinas redondeadas para el look de punta a punta */
+                min-height: 920px !important;
+                height: 920px !important;
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
             .step, .progress-fill, .btn-start, .btn-next, .cta-primary { transition: none !important; }
-            .btn-start::after, .path-card.recommended .path-cta::after { animation: none; display: none; }
+            .path-card.recommended .path-cta::after { animation: none; display: none; }
+            #agenda-wrap { transition: none; }
         }
 
         /* Foco programático (a11y) — sin anillo visible en elementos no interactivos */
@@ -1112,34 +1143,57 @@
 
         /* ===== HOJA DE RUTA — informe (Fase 10) ===== */
         #diagnostico-container { max-width: 560px; margin: 0 auto; }
-        .rp-eyebrow {
-            font-family: 'Poppins', sans-serif;
-            font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
-            color: var(--gold-dark); margin-bottom: 6px;
+        .rp-hero {
+            margin-bottom: 24px;
         }
         .rp-verdict {
             font-family: 'Poppins', sans-serif;
-            font-size: clamp(20px, 4.4vw, 24px); font-weight: 800;
-            color: var(--text-dark); line-height: 1.15; margin-bottom: 18px;
+            font-size: clamp(25px, 5.2vw, 31px); font-weight: 800;
+            color: var(--text-dark); letter-spacing: -0.035em; line-height: 1.12; margin: 0;
         }
         .rp-verdict .accent { color: var(--gold-dark); }
 
-        /* Indicador de etapa: el momento distintivo del informe — "estás aquí" en una escala real de 4. */
-        .stage-track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0 6px; position: relative; }
-        .stage-seg { height: 8px; border-radius: 999px; background: var(--bg-light); position: relative; }
-        .stage-seg.done { background: var(--gold-light); }
-        .stage-seg.here { background: var(--gold-primary); }
-        .stage-seg.here::after {
-            content: ''; position: absolute; top: -7px; left: 50%; transform: translateX(-50%);
-            width: 9px; height: 9px; border-radius: 50%; background: var(--bg-dark-deep);
-            box-shadow: 0 0 0 3px var(--gold-primary);
+        .stage-progress {
+            padding: 16px 0 15px; margin-bottom: 24px;
+            border-top: 1px solid #e8edf1; border-bottom: 1px solid #e8edf1;
         }
-        .stage-labels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 22px; }
-        .stage-labels span { font-size: 11px; letter-spacing: .01em; color: var(--text-muted); text-align: center; }
-        .stage-labels span.on { color: var(--gold-dark); font-weight: 700; }
+        .stage-context { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; margin-bottom: 13px; }
+        .stage-context p { margin: 0; color: var(--text-secondary); font-size: 12px; font-weight: 600; }
+        .stage-context strong { color: var(--gold-dark); font-family: 'Poppins', sans-serif; font-size: 12px; }
+        /* Un hilo continuo: el recorrido informa sin convertirse en un segundo titular. */
+        .stage-steps { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+        .stage-steps::before {
+            content: ''; position: absolute; top: 5px; left: 12.5%; right: 12.5%;
+            height: 1px; background: #dfe5e9;
+        }
+        .stage-step { position: relative; display: grid; grid-template-rows: 12px auto; justify-items: center; gap: 7px; min-width: 0; }
+        .stage-marker {
+            position: relative; z-index: 1; width: 8px; height: 8px; margin-top: 1px;
+            border-radius: 50%; background: var(--bg-white); border: 1px solid #cbd5dc;
+        }
+        .stage-step.done .stage-marker { background: var(--gold-light); border-color: var(--gold-light); }
+        .stage-step.current .stage-marker {
+            width: 10px; height: 10px; margin-top: 0;
+            background: var(--bg-dark-deep); border-color: var(--bg-dark-deep);
+        }
+        .stage-label { font-size: 11px; letter-spacing: .01em; line-height: 1.2; color: var(--text-muted); text-align: center; }
+        .stage-step.current .stage-label { color: var(--gold-dark); font-weight: 700; }
 
-        .rp-headline { font-size: 15.5px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 22px; }
+        .rp-headline { font-size: 15.5px; line-height: 1.6; color: var(--text-secondary); margin: 13px 0 0; max-width: 52ch; }
         .rp-headline strong { color: var(--text-dark); }
+        .rp-next-step {
+            display: flex; align-items: flex-start; gap: 10px;
+            margin-top: 17px; padding: 13px 0 0;
+            border-top: 1px solid #eadcc2; color: var(--text-dark);
+        }
+        .rp-next-step::before {
+            content: ''; flex: 0 0 auto; width: 7px; height: 7px; margin-top: 6px;
+            border-radius: 50%; background: var(--gold-primary);
+        }
+        .rp-next-step p {
+            margin: 0; font-size: 13.5px; font-weight: 600; line-height: 1.5;
+        }
+        .rp-next-step strong { color: var(--gold-dark); }
 
         .rp-section-label {
             font-family: 'Poppins', sans-serif;
@@ -1158,7 +1212,7 @@
 
         /* Costo de esperar: una línea con borde, sin caja tintada pesada */
         .rp-cost {
-            border-left: 3px solid var(--gold-primary);
+            border-left: 1px solid var(--gold-primary);
             padding: 4px 0 4px 14px; margin: 22px 0;
             font-size: 14px; line-height: 1.6; color: var(--text-secondary);
         }
@@ -1173,7 +1227,10 @@
             display: grid; grid-template-columns: 16px 1fr; gap: 10px;
             font-size: 14px; line-height: 1.5; color: var(--text-secondary);
         }
-        .rp-out li::before { content: "→"; color: var(--gold-primary); font-weight: 700; }
+        .rp-out li::before {
+            content: ""; width: 5px; height: 5px; margin: 8px 0 0 3px;
+            border-radius: 50%; background: var(--gold-primary);
+        }
         .rp-fine { font-size: 11.5px; line-height: 1.6; color: var(--text-muted); margin: 8px 0 0; }
         .rp-fine span {
             display: inline-block; font-weight: 700; color: var(--gold-dark);
@@ -1188,15 +1245,31 @@
         .rp-tech-body { font-size: 13px; line-height: 1.55; color: var(--text-secondary); }
 
         .mini-trust {
-            text-align: center; font-size: 11.5px; color: var(--text-muted);
-            margin-top: 16px; line-height: 1.6;
+            text-align: center; font-size: 13px; color: var(--text-muted);
+            margin: 16px auto 0; line-height: 1.6; max-width: 560px;
         }
-        .mini-trust .stars { color: var(--gold-primary); font-weight: 700; }
+        /* Identidad visual de Trustpilot: estrella verde y nombre en negro. */
+        #diagnostico-container .mini-trust { font-size: 13.65px; }
+        .mini-trust .stars { color: #00b67a; font-weight: 700; }
+        .mini-trust .trustpilot-word { color: #191919; font-weight: 600; }
+        #diagnostico-container .trust-stack {
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+        }
+        .trust-score { color: #191919; font-size: 1.05em; }
+        .trust-facts { color: #191919; font-size: 0.92em; }
+        .partner-logos {
+            display: flex; align-items: center; justify-content: center; gap: 13px;
+            margin-top: 3px; min-height: 24px;
+        }
+        .partner-logos img { display: block; object-fit: contain; }
+        .partner-logos .mercury-logo { width: 92px; height: auto; }
+        .partner-logos .relay-logo { width: 48px; height: auto; }
         .mini-trust.gate-trust { text-align: center; margin: 4px 0 18px; }
 
-        .cal-fallback { text-align: center; font-size: 12.5px; color: var(--text-muted); margin-top: 12px; }
+        .cal-fallback { display: none; text-align: center; font-size: 12.5px; color: var(--text-muted); margin-top: 12px; }
         .cal-fallback a { color: var(--gold-primary); font-weight: 600; }
         .cal-fallback--urgent {
+            display: block;
             margin-top: 14px; padding: 12px 14px; border: 1px solid var(--gold-light);
             background: var(--bg-cream); border-radius: 12px; color: var(--text-dark); font-size: 13.5px;
         }
@@ -1226,13 +1299,13 @@
             color: var(--text-white);
             border: none;
             background: var(--bg-dark-deep);
-            box-shadow: 0 14px 34px -12px rgba(14, 38, 55, 0.55);
+            box-shadow: 0 7px 16px rgba(14, 38, 55, 0.16);
             transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
         }
         .path-primary:hover {
             transform: translateY(-1px);
             background: #1b3d59;
-            box-shadow: 0 18px 42px -12px rgba(14, 38, 55, 0.6);
+            box-shadow: 0 9px 20px rgba(14, 38, 55, 0.2);
         }
         .path-primary:active { transform: scale(0.97); }
         .cta-reassure { text-align: center; font-size: 12px; color: var(--gold-dark); font-weight: 600; margin-top: 10px; letter-spacing: 0.01em; }
@@ -1302,7 +1375,7 @@
                 <span>Sin costo</span>
             </div>
 
-            <button class="btn-start" id="btnStart">Empezar el diagnóstico →</button>
+            <button class="btn-start" id="btnStart">Empezar el diagnóstico</button>
 
             <p class="disclaimer">Esta herramienta ofrece orientación consultiva preliminar; no constituye asesoramiento
                 legal vinculante hasta revisar el caso en detalle.</p>
@@ -1340,7 +1413,7 @@
                 </ol>
                 <p class="explainer-reassure">No hace falta que sepas de leyes ni de impuestos de EE. UU. — para eso está el diagnóstico. Contesta con lo que sabes de tu negocio hoy.</p>
                 <div class="explainer-bridge">
-                    <p>Si tu diagnóstico muestra que ya es momento de estructurarte, el paso 3 es una sesión de 30 minutos, uno a uno, con un asesor de la firma.</p>
+                    <p>Si tu diagnóstico muestra que ya es momento de estructurarte, el paso 3 es una conversación uno a uno con un asesor de la firma.</p>
                 </div>
             </div>
         </section>
@@ -1380,8 +1453,8 @@
 
         <section class="segment segment--cta">
             <div class="segment-inner">
-                <button type="button" class="cta-primary" id="btnStart2" style="width:100%; text-align:center;">Empezar el diagnóstico →</button>
-                <p class="cta-final-note">3 minutos · Resultado al instante · Hecho a tu medida</p>
+                <button type="button" class="cta-primary" id="btnStart2" style="width:100%; text-align:center;">Empezar el diagnóstico</button>
+                <p class="cta-final-note">Una orientación clara, hecha a tu medida</p>
             </div>
         </section>
     </div>
@@ -1437,7 +1510,7 @@
                 <span class="gate-badge" id="gate-badge"></span>
                 <h2 id="gate-title" tabindex="-1">Listo. Tu diagnóstico está hecho.</h2>
                 <p class="subtitle" id="gate-adelanto">Dinos a dónde te lo enviamos, con tu hoja de ruta completa.</p>
-                <p class="mini-trust gate-trust"><span class="stars">★ 4,3/5</span> Trustpilot · +5.000 empresas incorporadas · 10 años · Partner de Mercury &amp; Relay</p>
+                <p class="mini-trust gate-trust"><span class="stars">★ 4,3/5</span> <span class="trustpilot-word">Trustpilot</span><span class="trust-facts"> · +5.000 empresas incorporadas · 10 años · Partner de Mercury &amp; Relay</span></p>
                 <form id="lead-form" novalidate>
                     <input type="text" name="contact_channel" id="f-hp" class="hp" tabindex="-1" autocomplete="off"
                         aria-hidden="true">
@@ -1478,7 +1551,7 @@
                     </div>
                     <div class="navigation">
                         <button type="button" class="btn-back" id="gate-back" aria-label="Atrás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-                        <button type="submit" class="btn-next" id="lead-submit">Ver mi diagnóstico →</button>
+                        <button type="submit" class="btn-next" id="lead-submit">Ver mi diagnóstico</button>
                     </div>
                     <p class="fineprint">Al enviar aceptas nuestra <a
                             href="https://www.sotomayorconsulting.com/politicas" target="_blank"
@@ -1493,13 +1566,11 @@
                 <div id="diagnostico-container"></div>
             </div>
 
-            <!-- Sub-paso: calendario Zcal -->
-            <div id="agenda-wrap" hidden>
-                <h2 tabindex="-1">Elige tu horario</h2>
-                <p class="subtitle" id="agenda-greeting">Tus datos ya están cargados — solo elige el día y la hora.</p>
+            <!-- Se inserta bajo la CTA del diagnóstico al abrir la agenda. -->
+            <div id="agenda-wrap" hidden tabindex="-1" aria-label="Calendario de reserva">
                 <div class="cal-frame" id="cal-frame"></div>
                 <div id="cal-fallback" class="cal-fallback">
-                    <p>¿No carga el calendario? <a id="cal-open" href="#" target="_blank" rel="noopener">Ábrelo en una pestaña nueva →</a></p>
+                    <p>La agenda no pudo cargarse aquí. <a id="cal-open" href="#" target="_blank" rel="noopener">Abrir la agenda en otra pestaña</a></p>
                 </div>
                 <p class="path-alts" style="border-top:none; padding-top:0; margin-top:8px;">
                     <button type="button" id="cal-wa" class="path-alt" hidden>Prefiero que me escriban por WhatsApp primero</button>
@@ -1513,7 +1584,7 @@
 
     <!-- CTA flotante del informe (aparece al hacer scroll, tras 1,5 s) -->
     <div class="sticky-cta" id="sticky-cta" hidden>
-        <button type="button" id="sticky-cta-btn">Agendar mi sesión →</button>
+        <button type="button" id="sticky-cta-btn">Agendar mi sesión</button>
     </div>
 
     <script>
@@ -1625,7 +1696,7 @@
         const ROUTE_STEP = {
             advisor: {
                 line: "Tu caso tiene decisiones que no salen de una plantilla: qué estado, qué figura fiscal, en qué orden. Eso se define contigo, mirando tus números.",
-                heading: "En 30 minutos con un especialista, sales con:",
+                heading: "En una sesión con un especialista, sales con:",
                 outcomes: [
                     "El estado que te conviene, y por qué (no siempre es Delaware)",
                     "Tu estructura y tu plan, con el precio real por delante",
@@ -1633,13 +1704,13 @@
                 ],
                 incluye: INCLUYE,
                 noReq: NO_REQ,
-                cta: "Agendar mi sesión →",
-                note: "Con un especialista de la firma. Una persona, no un formulario."
+                cta: "Agendar mi sesión",
+                note: ""
             },
             // Variante para quien YA tiene LLC (P2 = "4") — landing B.
             advisor_correct: {
                 line: "Ya tienes tu LLC. Por lo que describes, algo no está bien puesto. Arreglarlo ahora cuesta mucho menos que un bloqueo o una multa con intereses.",
-                heading: "En 30 minutos con un especialista, sales con:",
+                heading: "En una sesión con un especialista, sales con:",
                 outcomes: [
                     "Qué está mal en tu empresa hoy, y qué urge más",
                     "Si te conviene cambiar de estado, y cuánto cuesta",
@@ -1647,8 +1718,8 @@
                 ],
                 incluye: "Revisión de la estructura · Figura fiscal · Reportes · Cambio de estado · Banca y pagos",
                 noReq: "",
-                cta: "Agendar mi revisión →",
-                note: "Con un especialista de la firma. Una persona, no un formulario."
+                cta: "Agendar mi revisión",
+                note: ""
             },
             // Camino AUXILIAR (estilo Firstbase): para quien ya sabe qué quiere abrir.
             platform: {
@@ -1661,7 +1732,7 @@
                 ],
                 incluye: INCLUYE,
                 noReq: NO_REQ,
-                cta: "Abrir mi empresa →",
+                cta: "Abrir mi empresa",
                 note: "Más rápido y más exacto que hacerlo a mano. Para quien ya tiene claro qué necesita."
             },
             guide: {
@@ -1674,7 +1745,7 @@
                 ],
                 incluye: "",
                 noReq: "",
-                cta: "Enviarme la guía →",
+                cta: "Enviarme la guía",
                 note: "Te llega al correo. Y te escribimos por WhatsApp para acompañarte."
             }
         };
@@ -1705,7 +1776,7 @@
             webhookUrl: "/api/diagnostico-lead",
             tiktokCapiWebhookUrl: "/api/tiktok-capi",
             tiktokPixelId: "D5KFDEBC77U6BL6T7LDG",
-            // ponytail: mismo evento Zcal que las landings A/B/C ("Sesión Estratégica", dura 30 min, slug /60min).
+            // Mismo evento Zcal que las landings A/B/C ("Sesión Estratégica", slug /60min).
             // Antes el diagnóstico usaba zcal.co/i/sTo1ewXN (evento distinto, sin prefill de a0). Si se quiere volver, cambiar solo esta línea.
             zcalBaseUrl: "https://zcal.co/t/agendar-asesoria-llc/60min",
             zcalPhoneParam: "smsPhone",       // built-in de Zcal (recordatorio SMS)
@@ -1850,7 +1921,7 @@
             "content_name", "description", "currency", "value", "quantity",
             "lead_id", "session_id", "main_goal", "business_objective", "wants_zoom_meeting", "conversion_path",
             "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "click_id_source",
-            "ttclid", "fbclid", "ttp", "page_url", "crm_event_name", "crm_event_id", "event_stage"
+            "ttclid", "fbclid", "ttp", "page_url", "event_id", "crm_event_name", "crm_event_id", "event_stage"
         ];
         function sanitizeAdsPayload(payload) {
             var out = {};
@@ -1865,11 +1936,14 @@
             if (DEBUG) console.info("dataLayer:", eventName, extra || {});
         }
 
-        /* Evento estándar: dataLayer + TikTok Pixel + Meta Pixel + CAPI n8n */
+        /* Eventos publicitarios: estándar y personalizados, con el mismo event_id
+           para deduplicar Pixel/CAPI. Los conectores adicionales se activan vía GTM. */
         function trackAdsEvent(eventName, payload) {
             payload = payload || {};
             var NATIVE = ["ViewContent", "Contact", "CompleteRegistration", "Schedule", "Subscribe", "InitiateCheckout"];
-            if (NATIVE.indexOf(eventName) === -1) { if (DEBUG) console.warn("Evento no nativo bloqueado:", eventName); return; }
+            var CUSTOM = ["StartScheduling"];
+            var isCustom = CUSTOM.indexOf(eventName) !== -1;
+            if (NATIVE.indexOf(eventName) === -1 && !isCustom) { if (DEBUG) console.warn("Evento no autorizado:", eventName); return; }
             var evId = payload.event_id || buildEventId(eventName, payload);
             // TikTok tiene "Lead" como evento propio para captura de datos de contacto —
             // más preciso que "CompleteRegistration" (pensado para alta de cuenta/trial) y
@@ -1883,7 +1957,8 @@
                 event_source: "web",
                 event_source_id: CONFIG.tiktokPixelId,
                 tiktok_event_name: tiktokEventName,
-                meta_event_name: (eventName === "CompleteRegistration" ? "Lead" : eventName)
+                meta_event_name: (eventName === "CompleteRegistration" ? "Lead" : eventName),
+                meta_is_custom: isCustom
             }, getBaseTrackingPayload(), payload);
 
             window.dataLayer = window.dataLayer || [];
@@ -1892,11 +1967,21 @@
             if (!QA_NO_PIXELS) {
                 var clean = sanitizeAdsPayload(eventPayload);
                 if (window.ttq && typeof window.ttq.track === "function") {
-                    try { window.ttq.track(tiktokEventName, clean, { event_id: evId }); }
-                    catch (e) { try { window.ttq.track(tiktokEventName, clean); } catch (e2) {} }
+                    // TikTok requiere event_id dentro del payload del píxel para que
+                    // Pixel Helper y Events API reconozcan el mismo evento. Si la
+                    // librería ya expone instance(), se apunta al Pixel configurado.
+                    var tiktokPayload = Object.assign({}, clean, { event_id: evId });
+                    try {
+                        var tiktokTarget = (CONFIG.tiktokPixelId && typeof window.ttq.instance === "function")
+                            ? window.ttq.instance(CONFIG.tiktokPixelId)
+                            : window.ttq;
+                        tiktokTarget.track(tiktokEventName, tiktokPayload);
+                    } catch (e) {}
                 }
                 if (window.fbq && typeof window.fbq === "function") {
-                    try { window.fbq("track", eventPayload.meta_event_name, clean, { eventID: evId }); } catch (e) {}
+                    try {
+                        window.fbq(isCustom ? "trackCustom" : "track", eventPayload.meta_event_name, clean, { eventID: evId });
+                    } catch (e) {}
                 }
                 sendTikTokConversionsApiEvent(tiktokEventName, eventPayload);
             }
@@ -2750,12 +2835,33 @@
             guide: "Todavía no — solo mándame la guía"
         };
         const STAGE_SHORT = ["Explora", "Estructura", "Formaliza", "Optimiza"];
+        // La conclusión abre con una implicación humana y accionable, no con una
+        // etiqueta interna de etapa. El mapa conserva la precisión del diagnóstico.
+        const RESULT_FRAMING = {
+            1: {
+                verdict: "No necesitas correr a constituir. Necesitas decidir bien.",
+                context: "Antes de asumir costos anuales, valida que tu negocio tenga tracción. Cuando llegue el momento, podrás abrir con claridad y sin rehacer el camino."
+            },
+            2: {
+                verdict: "Ya no estás probando si puedes vender. Estás construyendo algo real.",
+                context: "Separar tu operación de tu patrimonio y operar con una estructura propia te da la base para cobrar, contratar y crecer con más tranquilidad."
+            },
+            3: {
+                verdict: "Tu negocio está creciendo; dejar la estructura para después ya tiene un costo.",
+                context: "El siguiente paso es ordenar lo que hoy te expone: cobros, contratos y obligaciones. Hacerlo ahora protege el avance que ya lograste."
+            },
+            4: {
+                verdict: "Tu empresa ya creció. Ahora necesita una estructura a la altura.",
+                context: "Por lo que nos contaste, crecer, atraer inversión o vender exige una empresa que proteja tu patrimonio, ordene tus obligaciones y no frene tus decisiones."
+            }
+        };
 
         function esc(s) { return String(s == null ? "" : s).replace(/[<>&]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c])); }
 
         function renderResult() {
             const stageId = computeStage().stageId;
             const st = stages[stageId];
+            const framing = RESULT_FRAMING[stageId];
             const route = currentRoute || chooseRoute(stageId, userResponses);
             const complejidad = deriveComplexity(userResponses);
             const recommended = recommendedPathFor(route);
@@ -2773,7 +2879,7 @@
                         "Cuánto cuesta mantenerla al año, sin letra chica"
                     ],
                     incluye: "", noReq: "",
-                    cta: "Enviarme la guía →",
+                    cta: "Enviarme la guía",
                     note: "Te llega al correo. Cuando quieras, agendas tu sesión con un asesor."
                 };
             }
@@ -2781,11 +2887,13 @@
             const tech = userResponses.q6 || "";
             const trec = TECH_REC[tech];
 
-            // Track de 4 segmentos
-            const segs = [1, 2, 3, 4].map(i =>
-                `<span class="stage-seg ${i < stageId ? 'done' : i === stageId ? 'done here' : ''}"></span>`).join('');
-            const segLabels = STAGE_SHORT.map((l, i) =>
-                `<span class="${i + 1 === stageId ? 'on' : ''}">${l}</span>`).join('');
+            // Recorrido de cuatro etapas: una línea continua, con el estado actual bien localizado.
+            const stageItems = STAGE_SHORT.map((label, i) => {
+                const n = i + 1;
+                const state = n < stageId ? 'done' : n === stageId ? 'done current' : '';
+                const current = n === stageId ? ' aria-current="step"' : '';
+                return `<div class="stage-step ${state}"${current}><span class="stage-marker" aria-hidden="true"></span><span class="stage-label">${esc(label)}</span></div>`;
+            }).join('');
 
             // Tu situación — filas compactas
             const MODELO = { Servicios: "Servicios digitales", Inversiones: "Real Estate / Inversiones", Ecom: "E-commerce", Otro: "Por definir" };
@@ -2807,23 +2915,39 @@
             // Primera fase: el informe termina en UNA sola CTA. Sin caminos alternos ni "más información".
             // Micro-copy que desactiva las objeciones típicas de "agendar una llamada".
             const reassure = (recommended === 'advisor')
-                ? '<p class="cta-reassure">Sin costo · Sin compromiso de compra · 30 min · Puedes reagendar</p>' : '';
+                ? '<p class="cta-reassure">Sin costo · Sin compromiso</p>' : '';
+            const nextStep = (recommended === 'advisor')
+                ? '<div class="rp-next-step"><p><strong>Próximo paso:</strong> agenda una reunión con nuestro equipo de asesores para definir qué ajustar primero.</p></div>'
+                : '';
 
             // ARRIBA DEL FOLD: veredicto + una frase + la CTA. Nada más compite con la decisión.
             // EL DETALLE (situación, costo de esperar, qué te llevas) va bajo el separador.
             document.getElementById('diagnostico-container').innerHTML = `
-                <p class="rp-eyebrow">${nm ? esc(nm) + ', este es tu diagnóstico' : 'Tu diagnóstico'}</p>
-                <p class="rp-verdict">Estás en la <span class="accent">Etapa ${stageId} de 4</span><br>${esc(st.label)}${hasLLC ? ' · ya con LLC' : ''}</p>
+                <section class="rp-hero" aria-labelledby="result-verdict">
+                    <h1 class="rp-verdict" id="result-verdict">${nm ? esc(nm) + ', ' : ''}${esc(framing.verdict)}</h1>
+                    <p class="rp-headline">${esc(framing.context)}</p>
+                    ${nextStep}
+                </section>
 
-                <div class="stage-track">${segs}</div>
-                <div class="stage-labels">${segLabels}</div>
-
-                <p class="rp-headline">${st.headline}</p>
+                <div class="stage-progress" aria-label="Progreso de tu diagnóstico">
+                    <div class="stage-context">
+                        <p>Tu punto del recorrido</p>
+                        <strong>Etapa ${stageId} · ${esc(st.label)}</strong>
+                    </div>
+                    <div class="stage-steps">${stageItems}</div>
+                </div>
 
                 <button type="button" id="path-primary" class="path-primary" data-path="${recommended}">${esc(step.cta)}</button>
                 ${reassure}
-                <p class="path-primary-note">${esc(step.note)}</p>
-                <p class="mini-trust"><span class="stars">★ 4,3/5</span> Trustpilot · +5.000 empresas incorporadas · 10 años · Partner de Mercury &amp; Relay</p>
+                ${step.note ? `<p class="path-primary-note">${esc(step.note)}</p>` : ''}
+                <div class="mini-trust trust-stack" aria-label="Calificación y alianzas">
+                    <div class="trust-score"><span class="stars">★ 4,3/5</span> <span class="trustpilot-word">Trustpilot</span></div>
+                    <div class="trust-facts">+5.000 empresas incorporadas · 10 años · Partner de Mercury &amp; Relay</div>
+                    <div class="partner-logos" aria-label="Partners Mercury y Relay">
+                        <img class="mercury-logo" src="/mercury.svg" alt="Mercury">
+                        <img class="relay-logo" src="/relay.svg" alt="Relay">
+                    </div>
+                </div>
 
                 <hr class="rp-sep">
                 <p class="rp-section-label" style="color:var(--text-dark); font-size:12px; margin-top:2px;">Tu hoja de ruta en detalle</p>
@@ -2844,6 +2968,9 @@
                 </div>`;
 
             showResultView();
+            // La agenda empieza a cargar al llegar al resultado, pero permanece
+            // oculta hasta que la persona pulsa la CTA.
+            if (recommended === 'advisor') prewarmAgenda(leadData);
             track("route_selected", { destino: route, recommended_path: recommended, stage_id: stageId, complejidad: complejidad, tech_interest: tech, lead_temp: leadTemp(userResponses) });
 
             const go = (p) => (p === 'platform' ? goPlatform(recommended) : p === 'advisor' ? goAdvisor(recommended) : goGuide(recommended));
@@ -2873,7 +3000,7 @@
             var btn = document.getElementById('sticky-cta-btn');
             if (!bar || !btn) return;
             hideStickyCta();
-            btn.textContent = ctaLabel || 'Agendar mi sesión →';
+            btn.textContent = ctaLabel || 'Agendar mi sesión';
             stickyCta.go = function () {
                 return recommended === 'platform' ? goPlatform(recommended)
                     : recommended === 'advisor' ? goAdvisor(recommended)
@@ -2900,7 +3027,9 @@
         }
 
         function showResultView() {
-            document.getElementById('agenda-wrap').hidden = true;
+            const aw = document.getElementById('agenda-wrap');
+            aw.classList.remove('agenda-open', 'agenda-preload');
+            aw.hidden = true;
             document.getElementById('confirm-wrap').hidden = true;
             document.getElementById('result-wrap').hidden = false;
         }
@@ -2952,22 +3081,41 @@
 
         // --- Camino ASESORÍA: WhatsApp ya capturado en el gate -> directo al calendario Zcal ---
         function goAdvisor(recommended) {
+            trackStartScheduling();
             markPath('advisor', recommended);
             if (leadData) { leadData.wants_zoom_meeting = "si"; pushLeadUpdate("advisor"); }
-            document.getElementById('result-wrap').hidden = true;
             document.getElementById('confirm-wrap').hidden = true;
             showAgenda();
         }
 
+        // Una sesión puede abrir la agenda más de una vez; se registra una única intención
+        // real para no inflar la audiencia ni las conversiones de inicio de reserva.
+        var startSchedulingTracked = false;
+        function trackStartScheduling() {
+            if (startSchedulingTracked) return;
+            startSchedulingTracked = true;
+            var stageId = computeStage().stageId;
+            trackAdsEvent("StartScheduling", {
+                event_id: buildEventId("StartScheduling", { lead_id: leadData && leadData.lead_id }),
+                lead_id: leadData && leadData.lead_id,
+                main_goal: leadData && leadData.main_goal,
+                conversion_path: "schedule_started",
+                event_stage: "etapa_" + stageId,
+                content_name: (window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.service_content && window.SCI_TRACKING_CONFIG.service_content.content_name) || "Diagnóstico LLC"
+            });
+        }
+
         function showAgenda() {
             hideStickyCta();
-            document.getElementById('result-wrap').hidden = true;
+            document.getElementById('result-wrap').hidden = false;
             document.getElementById('confirm-wrap').hidden = true;
             const aw = document.getElementById('agenda-wrap');
+            const trust = document.querySelector('#diagnostico-container .mini-trust');
+            if (trust && aw.previousElementSibling !== trust) trust.after(aw);
             aw.hidden = false;
-            const first = (leadData && leadData.first_name) || "";
-            document.getElementById('agenda-greeting').textContent =
-                (first ? first + ", tus" : "Tus") + " datos ya están cargados — solo elige el día y la hora.";
+            aw.classList.remove('agenda-preload');
+            const primary = document.getElementById('path-primary');
+            if (primary) primary.setAttribute('aria-expanded', 'true');
             injectZcal(leadData);
             // Primera fase: un solo camino (quiz -> gate -> resultado -> agenda). El escape hatch
             // "que me escriban por WhatsApp primero" (switchToWhatsappFirst) queda desactivado;
@@ -2981,16 +3129,19 @@
                     wa.addEventListener('click', switchToWhatsappFirst);
                 }
             }
-            const h = aw.querySelector('h2');
-            if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
-            // ponytail: el logo + nombre del anfitrión + inicio del título son del PROPIO
-            // Zcal, dentro de un iframe cross-origin — no podemos medir su alto real ni
-            // recortarlo de forma robusta. En vez de aterrizar en el tope de "Elige tu
-            // horario" (deja esa cabecera de Zcal tapando el calendario), se salta un
-            // estimado fijo hacia abajo para que el calendario quede a la vista de una.
-            // Si Zcal cambia su maquetado y el salto queda corto/largo, ajustar este número.
-            const targetY = aw.getBoundingClientRect().top + window.scrollY + 280;
-            window.scrollTo({ top: targetY, behavior: 'smooth' });
+            requestAnimationFrame(function () {
+                aw.classList.add('agenda-open');
+                aw.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        }
+
+        function prewarmAgenda(payload) {
+            const aw = document.getElementById('agenda-wrap');
+            const trust = document.querySelector('#diagnostico-container .mini-trust');
+            if (trust && aw.previousElementSibling !== trust) trust.after(aw);
+            aw.hidden = false;
+            aw.classList.add('agenda-preload');
+            injectZcal(payload);
         }
 
         // Ruta advisor -> "que me escriban por WhatsApp primero" (menor compromiso que reservar).
@@ -3066,29 +3217,38 @@
             zcalInjected = true;
             const url = buildZcalUrl(payload);
             const frame = document.getElementById('cal-frame');
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.title = "Calendario de reserva — Sotomayor Consulting";
-            iframe.loading = "eager";
-            iframe.setAttribute("allow", "clipboard-write");
-            frame.appendChild(iframe);
+            // Embed oficial de Zcal: crea el widget responsive y evita el iframe
+            // about:blank que aparece cuando se inyecta manualmente en algunos navegadores.
+            const widget = document.createElement('div');
+            widget.className = 'zcal-inline-widget';
+            widget.innerHTML = '<a href="' + esc(url) + '">Agendar mi revisión</a>';
+            frame.appendChild(widget);
+            if (!document.querySelector('script[data-zcal-embed]')) {
+                const script = document.createElement('script');
+                script.async = true;
+                script.src = 'https://static.zcal.co/embed/v1/embed.js';
+                script.dataset.zcalEmbed = 'true';
+                document.head.appendChild(script);
+            }
+            // El script oficial crea su iframe con loading="lazy". Para este flujo
+            // lo promovemos a eager en cuanto aparece, ya que se precarga antes del clic.
+            [80, 250, 700].forEach(function (delay) {
+                setTimeout(function () {
+                    const zcalFrame = frame.querySelector('iframe');
+                    if (zcalFrame) zcalFrame.loading = 'eager';
+                }, delay);
+            });
             const openLink = document.getElementById('cal-open');
             if (openLink) openLink.href = url;
-            // ponytail: `load` del iframe dispara igual aunque Zcal devuelva su propia
-            // página de error (documento cruzado, no podemos leer su contenido) — no sirve
-            // como señal de éxito. Única señal real: que Zcal, ya vivo, nos mande CUALQUIER
-            // postMessage. Si no llega ninguno en 4s, asumimos que no cargó y mostramos el
-            // link de respaldo en modo urgente. Arreglo definitivo: agregar este dominio a
-            // la lista de dominios permitidos del evento en el dashboard de Zcal.
-            let zcalAlive = false;
+            // Ninguna capa tapa el iframe. Si no carga, mostramos una salida dentro
+            // del informe sin abrir otra pestaña automáticamente.
             setTimeout(function () {
-                if (!zcalAlive) { const fb = document.getElementById('cal-fallback'); if (fb) fb.classList.add('cal-fallback--urgent'); }
-            }, 4000);
+                if (!frame.querySelector('iframe')) { const fb = document.getElementById('cal-fallback'); if (fb) fb.classList.add('cal-fallback--urgent'); }
+            }, 10000);
 
             window.addEventListener("message", function onMsg(e) {
                 const host = (e.origin || "").replace(/^https?:\/\//, "").split("/")[0];
                 if (!/(^|\.)zcal\.co$/.test(host)) return;
-                zcalAlive = true;
                 const d = e.data;
                 const s = typeof d === "string" ? d : (d && typeof d === "object" ? JSON.stringify(d) : "");
                 if (/booking[_-]?(completed|confirmed|success)|schedule[_-]?confirmed|event[_-]?created|"?booked"?\s*[:=]\s*true/i.test(s)) {
