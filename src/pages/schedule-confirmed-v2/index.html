@@ -66,12 +66,16 @@
     .agenda-meta { display:flex; flex-wrap:wrap; gap:8px 18px; margin:12px 0 0; color:#536678; font-size:14px; }
     .agenda-meta span { display:flex; align-items:center; gap:7px; }
     .agenda-meta span::before { width:5px; height:5px; flex:none; border-radius:50%; background:var(--gold); content:""; }
+    .calendar-action { margin:20px 0 0; }
+    .calendar-button { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:10px 15px; border:1px solid rgba(14,38,55,.28); border-radius:10px; background:#fff; color:var(--navy); font:600 13px/1 Poppins,Arial,sans-serif; cursor:pointer; transition:background .16s ease,border-color .16s ease; }
+    .calendar-button:hover { border-color:var(--navy); background:#f4f7f9; }
     .next { margin:26px 0 0; }
     .next h2 { margin:0 0 8px; color:var(--navy); font-size:16px; }
     .next p { margin:0; color:var(--muted); font-size:14px; line-height:1.65; }
     .footer { margin:30px 0 0; color:#627487; font-size:12px; line-height:1.55; }
     .invalid .success { background:#fff3df; color:#a86e11; }
     .invalid .agenda { display:none; }
+    .invalid .calendar-action { display:none; }
     @media (max-width:500px) { .page { width:calc(100% - 22px); margin-top:10px; } .brand { border-radius:16px; } .confirmation { padding:26px 22px; border-radius:18px; } }
   </style>
 </head>
@@ -99,6 +103,9 @@
         <span id="duration">Sesión estratégica</span>
         <span id="timezone">Hora local</span>
       </div>
+      <div id="calendar-action" class="calendar-action" hidden>
+        <button id="add-calendar" class="calendar-button" type="button">Añadir a mi calendario</button>
+      </div>
     </section>
 
     <section class="next" aria-label="Próximo paso">
@@ -125,6 +132,7 @@
       var confirmationSignal = Boolean(bookingId || (startDate && (email || fullName)));
 
       renderAgenda(startDate, timezone, duration);
+      setupCalendar(startDate, timezone, duration, bookingId);
       if (fullName) {
         document.getElementById("attendee").textContent = "Reserva para " + fullName;
         document.getElementById("attendee").hidden = false;
@@ -175,6 +183,49 @@
         if (Number.isNaN(date.getTime())) return;
         document.getElementById("date").textContent = new Intl.DateTimeFormat("es-EC", { weekday:"long", day:"numeric", month:"long", year:"numeric", timeZone:zone }).format(date);
         document.getElementById("time").textContent = new Intl.DateTimeFormat("es-EC", { hour:"numeric", minute:"2-digit", timeZone:zone }).format(date);
+      }
+
+      function setupCalendar(rawStart, zone, meetingDuration, reservationId) {
+        var action = document.getElementById("calendar-action");
+        var button = document.getElementById("add-calendar");
+        var start = new Date(rawStart);
+        if (!action || !button || Number.isNaN(start.getTime())) return;
+
+        var parsedDuration = Number.parseInt(String(meetingDuration), 10);
+        var minutes = Number.isFinite(parsedDuration) && parsedDuration > 0 ? parsedDuration : 60;
+        var end = new Date(start.getTime() + minutes * 60 * 1000);
+        action.hidden = false;
+        button.addEventListener("click", function () {
+          var uid = "sci-" + stableHash(reservationId || rawStart) + "@sotomayorconsulting.com";
+          var calendar = [
+            "BEGIN:VCALENDAR",
+            "VERSION:2.0",
+            "PRODID:-//Sotomayor Consulting//Agenda//ES",
+            "CALSCALE:GREGORIAN",
+            "BEGIN:VEVENT",
+            "UID:" + uid,
+            "DTSTAMP:" + toIcsDate(new Date()),
+            "DTSTART:" + toIcsDate(start),
+            "DTEND:" + toIcsDate(end),
+            "SUMMARY:Sesión Estratégica | Sotomayor Consulting",
+            "DESCRIPTION:Revisa el correo de confirmación para los detalles de conexión.",
+            "END:VEVENT",
+            "END:VCALENDAR"
+          ].join("\r\n");
+          var file = new Blob([calendar], { type:"text/calendar;charset=utf-8" });
+          var url = URL.createObjectURL(file);
+          var link = document.createElement("a");
+          link.href = url;
+          link.download = "sesion-sotomayor-consulting.ics";
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+        });
+      }
+
+      function toIcsDate(date) {
+        return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
       }
 
       function stableHash(value) {
