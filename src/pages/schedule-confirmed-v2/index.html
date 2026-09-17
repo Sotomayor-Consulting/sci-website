@@ -33,7 +33,8 @@
     })();
   </script>
 
-  <!-- GTM es único emisor de Pixel y Events API. Esta página nunca carga TikTok ni CAPI directo. -->
+  <!-- GTM — único emisor para GA4 y Meta Pixel. TikTok Pixel se carga aquí directamente
+       para garantizar que ttq esté disponible independientemente de la configuración del contenedor. -->
   <script data-cfasync="false">
     (function (w, d, s, l, i) {
       w[l] = w[l] || [];
@@ -45,6 +46,33 @@
       firstScript.parentNode.insertBefore(script, firstScript);
     })(window, document, "script", "dataLayer", "GTM-TNRQGDM");
   </script>
+
+  <!-- TikTok Pixel base — D5KFDEBC77U6BL6T7LDG
+       Guards: solo en producción (sotomayorconsulting.com) y omitido con ?qa=1&no_pixels=1. -->
+  <script data-cfasync="false">
+    !function (w, d, t) {
+      var qa = new URLSearchParams(w.location.search || "");
+      if (qa.get("qa") === "1" && qa.get("no_pixels") === "1") return;
+      if (!/(^|\.)sotomayorconsulting\.com$/i.test(w.location.hostname)) return;
+      w.TiktokAnalyticsObject = t;
+      var ttq = w[t] = w[t] || [];
+      ttq.methods = ["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+      ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))); }; };
+      for (var i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
+      ttq.instance = function (t) { for (var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++) ttq.setAndDefer(e, ttq.methods[n]); return e; };
+      ttq.load = function (e, n) {
+        var i = "https://analytics.tiktok.com/i18n/pixel/events.js";
+        ttq._i = ttq._i || {}; ttq._i[e] = []; ttq._i[e]._u = i;
+        ttq._t = ttq._t || {}; ttq._t[e] = +new Date;
+        ttq._o = ttq._o || {}; ttq._o[e] = n || {};
+        var o = document.createElement("script"); o.type = "text/javascript"; o.async = true; o.src = i + "?sdkid=" + e + "&lib=" + t;
+        var a = document.getElementsByTagName("script")[0]; a.parentNode.insertBefore(o, a);
+      };
+      ttq.load("D5KFDEBC77U6BL6T7LDG");
+      ttq.page();
+    }(window, document, "ttq");
+  </script>
+
 
   <style>
     :root { color-scheme:light; --navy:#0e2637; --navy-soft:#17394f; --gold:#b06f13; --ink:#102638; --muted:#536678; --line:rgba(16,38,56,.12); --paper:#fff; --wash:#f2f6f8; --radius:16px; }
@@ -169,18 +197,42 @@
 
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
-        event: "Schedule",
-        event_id: eventId,
-        booking_id: bookingId || "",
-        event_time: Math.floor(Date.now() / 1000),
-        content_name: "Sesión Estratégica: Tu Empresa en EE. UU.",
-        content_type: "service",
-        page_path: window.location.pathname,
-        landing_variant: "schedule-confirmed-v2"
+        event:            "Schedule",
+        event_id:         eventId,
+        booking_id:       bookingId || "",
+        event_time:       Math.floor(Date.now() / 1000),
+        // Parámetros estándar TikTok
+        content_name:     "Sesión Estratégica: Tu Empresa en EE. UU.",
+        content_type:     "service",
+        content_id:       "sci-sesion-estrategica",
+        value:            0,
+        currency:         "USD",
+        // Datos de usuario para CAPI matching (GTM los hashea antes de enviar a CAPI)
+        user_email:       email || "",
+        user_external_id: bookingId || "",
+        // Metadatos internos (GTM / GA4 / Looker Studio — no van al Pixel TikTok)
+        scheduled_start:     startDate || "",
+        scheduled_timezone:  timezone || "",
+        page_path:           window.location.pathname,
+        landing_variant:     "schedule-confirmed-v2"
       });
+
+      // Disparo directo del Pixel TikTok (independiente de GTM).
+      // ttq fue inicializado en el <head>; el guard de QA y producción ya está allí.
+      if (typeof window.ttq !== "undefined" && typeof window.ttq.track === "function") {
+        window.ttq.track("Schedule", {
+          event_id:     eventId,
+          content_name: "Sesión Estratégica: Tu Empresa en EE. UU.",
+          content_type: "service",
+          content_id:   "sci-sesion-estrategica",
+          value:        0,
+          currency:     "USD"
+        });
+      }
 
       // Evita conservar datos de reserva y contacto en la barra del navegador.
       if (window.location.search) window.history.replaceState({}, document.title, window.location.pathname);
+
 
       function read() {
         for (var i = 0; i < arguments.length; i += 1) {
