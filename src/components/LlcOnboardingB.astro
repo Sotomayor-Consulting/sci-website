@@ -3,6 +3,7 @@ import Check from "@tabler/icons/outline/check.svg";
 import Lock from "@tabler/icons/outline/lock.svg";
 import { Badge } from "@/components/starwind/badge";
 import { Button } from "@/components/starwind/button";
+import { Icon } from 'astro-icon/components'
 import {
   Card,
   CardContent,
@@ -22,6 +23,7 @@ import {
   NativeSelectOption,
 } from "@/components/starwind/native-select";
 import { Textarea } from "@/components/starwind/textarea";
+// import Icon from "node_modules/astro-icon/components/Icon.astro";
 
 const activityGroups = [
   {
@@ -49,6 +51,7 @@ const benefits = [
   ["Sin visa ni residencia", "Sin SSN ni ITIN"],
   ["100% remoto", "Atención en español"],
 ];
+
 ---
 
 <main
@@ -68,18 +71,13 @@ const benefits = [
     class="relative z-10 grid min-h-screen xl:grid-cols-[minmax(0,1fr)_36.625rem]"
   >
     <section
-      class="flex min-h-[42rem] flex-col px-6 py-8 sm:px-10 lg:px-15 lg:py-10 xl:min-h-screen"
+      class="flex min-h-[40rem] flex-col px-6 py-8 sm:px-10 lg:px-15 lg:py-10 xl:min-h-screen"
       aria-labelledby="llc-b-title"
     >
-      <img
-        src="/Logo_blanco-redesing.png"
-        alt="Sotomayor Consulting International"
-        width="795"
-        height="177"
-        class="h-auto w-56 sm:w-64"
-      />
+      
+      <Icon name="logo-sotomayor-consulting-black" class="h-auto w-46 sm:w-54" />
 
-      <nav
+      <!-- <nav
         class="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm font-medium text-white/65"
         aria-label="Información del servicio"
       >
@@ -95,7 +93,7 @@ const benefits = [
         <a class="border-b border-primary pb-1 text-primary" href="#agendar-b"
           >Respaldo legal</a
         >
-      </nav>
+      </nav> -->
 
       <div class="my-auto max-w-3xl py-14 lg:py-20">
         <Badge
@@ -119,6 +117,9 @@ const benefits = [
           Te guiamos para elegir el estado ideal para tu LLC y estructurarla
           correctamente, evitando errores legales, fiscales y bancarios.
         </p>
+        <Button variant="primary" class="mt-4 md:hidden inline-flex" href="#agendar-b">
+          Agendar
+        </Button>
       </div>
 
       <dl class="grid gap-5 border-t border-white/10 pt-7 md:grid-cols-3">
@@ -136,7 +137,7 @@ const benefits = [
     <Card
       id="agendar-b"
       size="md"
-      class="min-h-screen scroll-mt-6 rounded-none border-0 bg-[#0d2537] text-white shadow-[-24px_0_60px_-30px_rgba(0,0,0,.8)]"
+      class="min-h-screen rounded-none border-0 bg-[#0d2537] text-white shadow-[-24px_0_60px_-30px_rgba(0,0,0,.8)] p-0"
     >
       <CardHeader class="bg-white px-6 py-7 text-center sm:px-11">
         <CardTitle class="font-display text-xl font-bold text-[#0d2537]">
@@ -374,7 +375,7 @@ const benefits = [
               <Field class="gap-2">
                 <FieldLabel for="question-b" class="text-white/85">
                   ¿Qué duda principal quieres resolver?
-                  <span class="font-normal text-white/40">Opcional</span>
+                  <span class="font-normal text-white/40"> Opcional</span>
                 </FieldLabel>
                 <Textarea
                   id="question-b"
