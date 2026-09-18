@@ -1,9 +1,9 @@
 // Define data structures for services and success stories
 export const servicesData = [
   {
-    title: "Incorporación de LLCs en EE. UU.",
+    title: "Asesoría para tu LLC en EE. UU.",
     description:
-      "Simplificamos la creación de tu Limited Liability Company (LLC) en los Estados Unidos.",
+      "Te acompañamos en la creación de tu Limited Liability Company (LLC) en los Estados Unidos.",
     icon: "edificio",
     url: "/servicios-empresariales/llcs/",
   },
@@ -15,9 +15,9 @@ export const servicesData = [
     url: "/servicios-empresariales/holding/",
   },
   {
-    title: "Servicios Migratorios",
+    title: "Asesoría Migratoria",
     description:
-      "Te ayudamos a cumplir con todos los requisitos y a gestionar la documentación necesaria para tu futuro en países como EE. UU. y España.",
+      "Te orientamos sobre las opciones y requisitos para tu futuro en países como EE. UU. y España.",
     icon: "pasaporte",
     url: "/servicios-familiares-individuos/asesoría-para-visas-y-residencias/",
   },

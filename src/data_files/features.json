@@ -1,12 +1,12 @@
 [
   {
-    "heading": "Constitucion Rapida e Intuitiva",
-    "content": "Nuestra app permite incorporar empresas y LLCs de forma rapida, facil e intuitiva, guiando al cliente paso a paso desde el inicio del proceso.",
+    "heading": "Acompañamiento paso a paso",
+    "content": "Nuestra app te guía en cada etapa de tu proceso, con el respaldo de nuestros asesores.",
     "svg": "rapidez"
   },
   {
     "heading": "Pagos Seguros y Automatizados",
-    "content": "La plataforma integra una pasarela de pagos segura gestionada por Stripe, para que el cliente pueda completar pagos con confianza dentro del mismo flujo de incorporacion.",
+    "content": "La plataforma integra una pasarela de pagos segura gestionada por Stripe, para que el cliente pueda completar pagos con confianza dentro de la misma plataforma.",
     "svg": "verified"
   },
   {
@@ -16,7 +16,7 @@
   },
   {
     "heading": "Centro de Control de su LLC",
-    "content": "Todo se gestiona desde un centro de control claro y seguro, donde el cliente puede seguir el estado de la incorporacion de su LLC y acceder a sus documentos oficiales en un solo lugar.",
+    "content": "Todo se gestiona desde un centro de control claro y seguro, donde el cliente puede seguir el avance de su proceso y acceder a sus documentos en un solo lugar.",
     "svg": "frame"
   }
 ]

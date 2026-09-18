@@ -1,5 +1,5 @@
 {
-  "title": "Constituye tu LLC de forma rápida",
+  "title": "Elige el plan de asesoría para tu LLC",
   "subTitle": "Elige el plan que mejor se adapta a tu negocio y comienza a operar en EE. UU. con respaldo legal y tributario.",
   "badge": "Favorito",
   "thirdOption": "¿Necesitas ayuda?",
@@ -13,8 +13,8 @@
     "cents": ".00",
     "billingFrequency": "USD",
     "features": [
-      "Incorporación de la LLC frente al Estado.",
-      "Obtención del EIN (Número de Identificación Tributaria).",
+      "Gestión del registro de tu LLC ante el Estado.",
+      "Acompañamiento en la solicitud del EIN ante el IRS.",
       "Agente Residente por un año."
     ],
     "purchaseBtnTitle": "Obtén el paquete básico",
@@ -33,7 +33,7 @@
     "purchaseBtnTitle": "Obtén el plan Business",
     "purchaseLink": "https://app.sotomayorconsulting.com/start",
     "bussines" : [
-      "Planificación y diseño legal - tributario.", "Acompañamiento bancario (Mercury o Relay + Stripe).", "EIN acelerado"
+      "Planificación y diseño legal - tributario.", "Acompañamiento bancario (Mercury o Relay + Stripe).", "Acompañamiento prioritario en la solicitud del EIN ante el IRS"
     ]
   },
 

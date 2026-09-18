@@ -37,7 +37,7 @@ const socialLinks = {
 
 const mensajes = {
   banco:
-    "Sotomayor Consulting International no es un banco, entidad financiera ni presta servicios de crédito directo. Somos una empresa de consultoría que brinda asesoría y acompañamiento en constitución de empresas, apertura de cuentas, trámites y servicios tecnológicos.",
+    "Sotomayor Consulting International no es un banco, entidad financiera ni presta servicios de crédito directo. Somos una empresa de consultoría que brinda asesoría y acompañamiento en constitución de empresas, apertura de cuentas y servicios tecnológicos. No es una entidad del Gobierno: los documentos oficiales los emiten las autoridades competentes.",
   experiencia: "",
 };
 

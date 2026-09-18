@@ -1,10 +1,10 @@
 {
-  "title": "Form Your LLC Quickly",
+  "title": "Choose the advisory plan for your LLC",
   "subTitle": "Choose the plan that best fits your business and start operating in the U.S. with legal and tax support.",
   "badge": "Favorite",
-  "thirdOption": "Looking for another service?",
-  "btnText": "View more services",
-  "linkServicios": "/en/#cartas-servicios",
+  "thirdOption": "Need help?",
+  "btnText": "Schedule an appointment",
+  "linkServicios": "https://zcal.co/t/agendar-asesoria-llc/60min",
 
   "starterKit": {
     "name": "Basic Plan",
@@ -13,12 +13,12 @@
     "cents": ".00",
     "billingFrequency": "USD",
     "features": [
-      "LLC incorporation with the state.",
-      "Obtaining the EIN (Employer Identification Number).",
-      "Registered agent for one year."
+      "Management of your LLC registration with the State.",
+      "Support with the EIN application before the IRS.",
+      "Registered Agent for one year."
     ],
-    "purchaseBtnTitle": "Get the Basic Package",
-    "purchaseLink": "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22:%2211-66%22%7D"
+    "purchaseBtnTitle": "Get the basic package",
+    "purchaseLink": "https://app.sotomayorconsulting.com/start"
   },
 
   "professionalToolbox": {
@@ -28,41 +28,39 @@
     "cents": ".00",
     "billingFrequency": "USD",
     "features": [
-      "The benefits of the Basic Plan and the Standard Plan, plus:"
+      "The benefits of the Basic Plan and the benefits of the Standard Plan, plus:"
     ],
     "purchaseBtnTitle": "Get the Business Plan",
-    "purchaseLink": "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22:%2211-67%22%7D",
+    "purchaseLink": "https://app.sotomayorconsulting.com/start",
     "bussines" : [
-      "Legal and tax planning and design.",
-      "Banking support (Mercury or Relay + Stripe).",
-      "Expedited EIN."
+      "Legal and tax planning and design.", "Banking support (Mercury or Relay + Stripe).", "Priority support with the EIN application before the IRS"
     ]
   },
 
-  "planestandar": {
+  "planestandar":{
     "name": "Standard Plan",
     "description": "Includes legal support and key documents to operate.",
-    "label": "The benefits of the Basic Plan plus:",
+    "label" : "The benefits of the Basic Plan plus:",
     "price": "600",
     "cents": ".00",
     "billingFrequency": "USD",
     "features": [
       "Preparation of the Operating Agreement.",
       "Unlimited consultations for one year.",
-      "BE-13 Claim for Exemption"
+      "BE-13 Exemption request"
     ],
-    "purchaseBtnTitle": "Get the Standard Package",
-    "purchaseLink": "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22:%2211-101%22%7D"
+    "purchaseBtnTitle": "Get the standard package",
+    "purchaseLink": "https://app.sotomayorconsulting.com/start"
   },
 
-  "planUpgrade": {
+  "planUpgrade":{
     "title": "Design Plan - upgrade",
-    "description": "Strategic and design planning for your LLC, ideal for those who want to go step by step.",
-    "price": "350",
+    "description": "Strategic planning and LLC design, ideal for those who want to go step by step.",
+    "price" : "350",
     "cents": ".00",
     "billing": "USD",
     "lista": [ "LLC planning and design" ],
     "button": "Get the Design Plan",
-    "link": "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22%3A%2211-224%22%7D"
+    "link": "https://app.sotomayorconsulting.com/start"
   }
 }

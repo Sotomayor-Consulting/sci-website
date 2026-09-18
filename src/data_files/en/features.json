@@ -1,22 +1,22 @@
 [
   {
-    "heading": "Corporate Architecture",
-    "content": "More than just incorporation, we design the optimal legal and tax structure (LLC, Holding, or international jurisdictions) according to your residency and business objectives.",
-    "svg": "groups"
+    "heading": "Step-by-step support",
+    "content": "Our app guides you through every stage of your process, with the support of our advisors.",
+    "svg": "rapidez"
   },
   {
-    "heading": "Prevention and Compliance",
-    "content": "We protect your investment through rigorous support before the IRS and banking entities, avoiding fines and common mistakes of unserious management firms.",
+    "heading": "Secure and Automated Payments",
+    "content": "The platform integrates a secure payment gateway managed by Stripe, so clients can complete payments with confidence within the same platform.",
     "svg": "verified"
   },
   {
-    "heading": "Structure with Tax Criteria",
-    "content": "We analyze tax implications, preventing critical errors that lead to IRS fines or bank rejections, ensuring impeccable compliance.",
+    "heading": "Documents, Tasks, and Notifications",
+    "content": "It includes document review, notifications, and a task system that tells the client which form to fill out, which document to upload, and which files to sign at each stage.",
     "svg": "books"
   },
   {
-    "heading": "Innovation and Leadership",
-    "content": "In a constantly changing world, we stay at the forefront. We incorporate innovative technologies and methodologies to ensure our solutions meet your current needs.",
+    "heading": "Your LLC Control Center",
+    "content": "Everything is managed from a clear and secure control center, where the client can track the progress of their process and access their documents in one place.",
     "svg": "frame"
   }
 ]

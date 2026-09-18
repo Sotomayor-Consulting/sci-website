@@ -24,9 +24,9 @@ export const dataLLC = {
     {
       icono: "mingcute:safe-shield-2-fill",
       titulo: "Identificación Fiscal y Cumplimiento",
-      descripcion: "Trámites fiscales esenciales",
+      descripcion: "Acompañamiento fiscal",
       lista: [
-        "EIN (número de identificación fiscal federal)",
+        "Solicitud del EIN ante el IRS",
         "Solicitud de Exención BE-13 ante el BEA",
         "Necesario para cuentas bancarias y contratos",
       ],
@@ -45,7 +45,7 @@ export const dataLLC = {
 
   /* Pricing */
 
-  titulopricing: "Constituye tu LLC de forma rápida",
+  titulopricing: "Elige el plan de asesoría para tu LLC",
   descripcionpricing:
     "Elige el plan que mejor se adapta a tu negocio y comienza a operar en EE. UU. con respaldo legal y tributario.",
   planes: [
@@ -57,11 +57,11 @@ export const dataLLC = {
       boton: "Obtén el paquete básico",
       icono: "mingcute:check-fill",
       lista: [
-        "Incorporación de la LLC frente al Estado.",
-        "Obtención del EIN (Número de Identificación Tributaria).",
+        "Gestión del registro de tu LLC ante el Estado.",
+        "Acompañamiento en la solicitud del EIN ante el IRS.",
         "Agente Residente por un año.",
       ],
-      link: "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22:%2211-66%22%7D",
+      link: "https://app.sotomayorconsulting.com/start",
     },
     {
       categoria: "popular",
@@ -76,9 +76,9 @@ export const dataLLC = {
       lista: [
         "Planificación y diseño legal-tributario.",   
         "Acompañamiento bancario (Mercury o Relay + Stripe).",
-        "EIN acelerado.",
+        "Acompañamiento prioritario en la solicitud del EIN ante el IRS.",
       ],
-      link: "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22:%2211-67%22%7D",
+      link: "https://app.sotomayorconsulting.com/start",
     },
     {
       categoria: "normal",
@@ -93,7 +93,7 @@ export const dataLLC = {
         "Consultas ilimitadas por un año.",
         "Solicitud de Exención BE-13",
       ],
-      link: "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22:%2211-101%22%7D",
+      link: "https://app.sotomayorconsulting.com/start",
     },
     {
       categoria: "normal",
@@ -104,7 +104,7 @@ export const dataLLC = {
       boton: "Obtén el plan diseño/upgrade",
       icono: "mingcute:check-fill",
       lista: ["Planificación y diseño de LLC"],
-      link: "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22%3A%2211-224%22%7D",
+      link: "https://app.sotomayorconsulting.com/start",
     },
   ],
 };
@@ -276,9 +276,9 @@ export const dataContabilidad = {
 
 export const dataitin = {
   categoria: "itin",
-  titulo: "Tramitación de ITIN",
+  titulo: "Asesoría para tu ITIN",
   descripcion:
-    "Obtén tu ITIN de forma segura y sin enviar documentos físicos. Te acompañamos en todo el proceso ante el IRS.",
+    "Te acompañamos en tu solicitud del ITIN ante el IRS, que es quien lo emite, sin enviar documentos físicos. El plazo lo define el IRS.",
 
   /* Features */
   titulofeatures: "¿Qué es el ITIN?",
@@ -291,13 +291,13 @@ export const dataitin = {
     "Permite declarar impuestos personales en EE. UU.",
     "Requisito para socios o miembros de LLCs",
     "Facilita el cumplimiento fiscal ante el IRS",
-    "Trámite seguro, guiado y sin envío de pasaporte físico",
+    "Proceso guiado y sin envío de pasaporte físico",
   ],
 
-  titulopricingitin: "Consto del tramite de ITIN",
+  titulopricingitin: "Costo de la asesoría ITIN",
   precioitin: "400",
-  tiempoitin: "Tiempo estimado",
-  tiempoitin2: "2 a 3 meses",
+  tiempoitin: "Plazo",
+  tiempoitin2: "Lo define el IRS",
 };
 
 /* Datos de itin*/
@@ -378,7 +378,7 @@ export const dataLegales = {
       icono: "mingcute:laurel-wreath-line",
       titulo: "CERTIFICATE OF GOOD STANDING",
       descripcion:
-        "Certificado oficial emitido por el estado que confirma que la empresa está activa, al día con sus obligaciones y autorizada para operar legalmente.",
+        "Te acompañamos en la solicitud del Certificate of Good Standing, que emite el Estado. Confirma que la empresa está activa, al día con sus obligaciones y autorizada para operar legalmente.",
       pregunta: "¿Cuándo me piden el Certificate of Good Standing?",
       respuesta:
         "Generalmente lo solicitan bancos para abrir cuentas, clientes corporativos para contratos, y cuando necesitas apostillar documentos o hacer negocios con el gobierno.",

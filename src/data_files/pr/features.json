@@ -1,22 +1,22 @@
 [
   {
-    "heading": "Arquitetura Corporativa",
-    "content": "Mais do que uma constituição, projetamos a estrutura legal e fiscal ideal (LLC, Holding ou jurisdições internacionais) de acordo com sua residência e objetivos de negócio.",
-    "svg": "groups"
+    "heading": "Acompanhamento passo a passo",
+    "content": "Nosso app orienta você em cada etapa do seu processo, com o respaldo dos nossos assessores.",
+    "svg": "rapidez"
   },
   {
-    "heading": "Prevenção e Conformidade",
-    "content": "Protegemos seu investimento por meio de um acompanhamento rigoroso junto ao IRS e instituições bancárias, evitando multas e erros comuns de gestoras pouco sérias.",
+    "heading": "Pagamentos Seguros e Automatizados",
+    "content": "A plataforma integra um gateway de pagamento seguro gerenciado pela Stripe, para que o cliente possa concluir pagamentos com confiança dentro da própria plataforma.",
     "svg": "verified"
   },
   {
-    "heading": "Estrutura com Critério Fiscal",
-    "content": "Analisamos as implicações tributárias, prevenindo erros críticos que resultam em multas do IRS ou rejeições bancárias, garantindo uma conformidade impecável.",
+    "heading": "Documentos, Tarefas e Notificações",
+    "content": "Inclui revisão de documentos, notificações e um sistema de tarefas que indica ao cliente qual formulário preencher, qual documento enviar e quais arquivos deve assinar em cada etapa.",
     "svg": "books"
   },
   {
-    "heading": "Inovação e Liderança",
-    "content": "Em um mundo em constante mudança, mantemo-nos na vanguarda. Incorporamos tecnologias e metodologias inovadoras para garantir que nossas soluções atendam às suas necessidades atuais.",
+    "heading": "Centro de Controle da sua LLC",
+    "content": "Tudo é gerenciado a partir de um centro de controle claro e seguro, onde o cliente pode acompanhar o progresso do seu processo e acessar seus documentos em um só lugar.",
     "svg": "frame"
   }
 ]

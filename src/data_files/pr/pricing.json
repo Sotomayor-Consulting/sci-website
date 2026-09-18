@@ -1,10 +1,10 @@
 {
-  "title": "Constitua sua LLC de forma rápida",
+  "title": "Escolha o plano de assessoria para sua LLC",
   "subTitle": "Escolha o plano que melhor se adapta ao seu negócio e comece a operar nos EUA com respaldo legal e tributário.",
   "badge": "Favorito",
-  "thirdOption": "Procurando outro serviço?",
-  "btnText": "Ver mais serviços",
-  "linkServicios": "/pr/#cartas-servicios",
+  "thirdOption": "Precisa de ajuda?",
+  "btnText": "Agende uma consulta",
+  "linkServicios": "https://zcal.co/t/agendar-asesoria-llc/60min",
 
   "starterKit": {
     "name": "Plano Básico",
@@ -13,56 +13,54 @@
     "cents": ".00",
     "billingFrequency": "USD",
     "features": [
-      "Incorporação da LLC perante o Estado.",
-      "Obtenção do EIN (Número de Identificação do Empregador).",
-      "Agente residente por um ano."
+      "Gestão do registro da sua LLC junto ao Estado.",
+      "Acompanhamento na solicitação do EIN junto ao IRS.",
+      "Agente Registrado por um ano."
     ],
     "purchaseBtnTitle": "Obtenha o pacote básico",
-    "purchaseLink": "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22:%2211-66%22%7D"
+    "purchaseLink": "https://app.sotomayorconsulting.com/start"
   },
 
   "professionalToolbox": {
     "name": "Plano Business",
-    "description": "Estratégia fiscal e legal completa para sua LLC. Ideal para fazer as coisas bem desde o início.",
+    "description": "Estratégia tributária e jurídica completa para sua LLC. Ideal para fazer as coisas certas desde o início.",
     "price": "950",
     "cents": ".00",
     "billingFrequency": "USD",
     "features": [
-      "Os benefícios do Plano Básico e do Plano Padrão, mais:"
+      "Os benefícios do Plano Básico e os benefícios do Plano Padrão, mais:"
     ],
     "purchaseBtnTitle": "Obtenha o plano Business",
-    "purchaseLink": "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22:%2211-67%22%7D",
-    "bussines": [
-      "Planejamento e design legal-tributário.",
-      "Acompanhamento bancário (Mercury ou Relay + Stripe).",
-      "EIN acelerado."
+    "purchaseLink": "https://app.sotomayorconsulting.com/start",
+    "bussines" : [
+      "Planejamento e design legal - tributário.", "Acompanhamento bancário (Mercury ou Relay + Stripe).", "Acompanhamento prioritário na solicitação do EIN junto ao IRS"
     ]
   },
 
-  "planestandar": {
+  "planestandar":{
     "name": "Plano Padrão",
-    "description": "Inclui suporte legal e documentos essenciais para operar.",
-    "label": "Os benefícios do Plano Básico mais:",
+    "description": "Inclui suporte jurídico e documentos essenciais para operar.",
+    "label" : "Os benefícios do Plano Básico mais:",
     "price": "600",
     "cents": ".00",
     "billingFrequency": "USD",
     "features": [
       "Elaboração do Acordo de Operação.",
       "Consultas ilimitadas por um ano.",
-      "Pedido de Isenção BE-13"
+      "Solicitação de Isenção BE-13"
     ],
     "purchaseBtnTitle": "Obtenha o pacote padrão",
-    "purchaseLink": "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22:%2211-101%22%7D"
+    "purchaseLink": "https://app.sotomayorconsulting.com/start"
   },
 
-  "planUpgrade": {
+  "planUpgrade":{
     "title": "Plano Design - upgrade",
-    "description": "Planejamento estratégico e de design da LLC, ideal para quem quer ir passo a passo.",
-    "price": "350",
+    "description": "Planejamento estratégico e design da LLC, ideal para quem quer ir passo a passo.",
+    "price" : "350",
     "cents": ".00",
     "billing": "USD",
-    "lista": [ "Planejamento e design da LLC" ],
+    "lista": [ "Planejamento e design de LLC" ],
     "button": "Obtenha o plano Design",
-    "link": "https://www.cognitoforms.com/SotomayorConsultingInternational/RegistroPlanesDeIncorporaci%C3%B3n?entry=%7B%22PlanDeServicio%22%3A%2211-224%22%7D"
+    "link": "https://app.sotomayorconsulting.com/start"
   }
 }

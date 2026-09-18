@@ -1,53 +1,53 @@
-// Define data structures for services and success stories
+// Define estruturas de dados para serviços e histórias de sucesso
 export const servicesDataPr = [
   {
-    title: "Incorporação de LLCs nos EUA",
+    title: "Assessoria para sua LLC nos EUA.",
     description:
-      "Simplificamos a criação da sua Limited Liability Company (LLC) nos Estados Unidos.",
+      "Acompanhamos você na criação da sua Limited Liability Company (LLC) nos Estados Unidos.",
     icon: "edificio",
-    url: "/pr/servicios-empresariales/llcs/",
+    url: "/servicios-empresariales/llcs/",
   },
   {
     title: "Incorporação de empresas holding ou operacionais",
     description:
-      "Simplificamos o processo de estabelecer a sua empresa holding ou operacional nos mercados internacionais.",
+      "Simplificamos o processo de estabelecer sua empresa holding ou operacional nos mercados internacionais.",
     icon: "puzzle",
-    url: "/pr/servicios-empresariales/holding/",
+    url: "/servicios-empresariales/holding/",
   },
   {
-    title: "Serviços Migratórios",
+    title: "Assessoria Migratória",
     description:
-      "Ajudamos você a cumprir todos os requisitos e a gerenciar a documentação necessária para o seu futuro em países como EUA e Espanha.",
+      "Orientamos você sobre as opções e requisitos para seu futuro em países como EUA e Espanha.",
     icon: "pasaporte",
-    url: "/pr/servicios-familiares-individuos/asesoría-para-visas-y-residencias/",
+    url: "/servicios-familiares-individuos/asesoría-para-visas-y-residencias/",
   },
   {
     title: "Registro e Proteção de Marcas",
     description:
-      "Garanta a exclusividade da sua marca nos mercados mais competitivos do mundo.",
+      "Assegure a exclusividade da sua marca nos mercados mais competitivos do mundo.",
     icon: "marcas",
-    url: "/pr/servicios-empresariales/registro-de-marca/",
+    url: "/servicios-empresariales/registro-de-marca/",
   },
   {
     title: "Imóveis",
     description:
-      "Orientamos você em cada passo para que tome decisões informadas e garanta o seu patrimônio em mercados-chave como Flórida e Madri.",
+      "Guiamos você em cada passo para que tome decisões informadas e assegure seu patrimônio em mercados-chave como Flórida e Madri.",
     icon: "bienes",
-    url: "/pr/servicios-familiares-individuos/bienes-raíces/",
+    url: "/servicios-familiares-individuos/bienes-raíces/",
   },
   {
-    title: "Consultoria Tributária Internacional",
+    title: "Assessoria Tributária Internacional",
     description:
-      "Garanta o cumprimento das normas de diferentes países e planeje estratégias fiscais eficientes para o seu patrimônio ou negócio.",
+      "Assegure o cumprimento das normativas de diferentes países e planeje estratégias fiscais eficientes para seu patrimônio ou negócio.",
     icon: "internacional",
-    url: "/pr/servicios-empresariales/asesoría-tributaria-internacional/",
+    url: "/servicios-empresariales/asesoría-tributaria-internacional/",
   },
   {
-    title: "Terceirização Contábil",
+    title: "Outsourcing Contábil",
     description:
       "Libere seu tempo e recursos delegando sua contabilidade a mãos especializadas.",
     icon: "cuadro",
-    url: "/pr/servicios-empresariales/outsourcing-contable/",
+    url: "/servicios-empresariales/outsourcing-contable/",
   },
 ];
 
@@ -55,9 +55,9 @@ export const successStoriesDataPr = [
   {
     image:
       "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    alt: "Image Description",
+    alt: "Descrição da imagem",
     description:
-      "Conheça nossos serviços tech especializados que ajudarão você a construir, proteger e fazer crescer o seu futuro.",
-    learnMoreUrl: "/pr/services",
+      "Conheça nossos serviços tech especializados que ajudarão você a construir, proteger e fazer crescer seu futuro.",
+    learnMoreUrl: "/services",
   },
 ];

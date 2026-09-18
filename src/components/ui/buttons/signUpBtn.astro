@@ -5,12 +5,12 @@ interface Props {
 }
 
 const baseClasses =
-  "group flex items-center gap-x-2 text-base md:text-sm font-medium text-primario-black ring-zinc-500 transition duration-300 focus-visible:ring-3 outline-hidden bg-secundario py-1 rounded-lg px-3";
+  "group flex items-center gap-x-2 text-xs md:text-base font-medium text-primario-black ring-zinc-500 transition duration-300 focus-visible:ring-3 outline-hidden bg-secundario py-1 rounded-lg px-3";
 const hoverClasses = "hover:text-white hover:bg-secundario/80";
 const darkClasses =
   "dark:border-neutral-700 dark:text-white dark:ring-zinc-200 dark:focus:outline-hidden";
 const mdClasses = "md:border-neutral-300 ";
-const txtSizeClasses = "2xl:text-lg";
+const txtSizeClasses = "2xl:text-base";
 
 const pathname = Astro.url.pathname;
 const isEnglish = pathname.startsWith("/en");
@@ -24,7 +24,7 @@ const title = isEnglish
   ? "Start Your LLC"
   : isPortuguese
     ? "Abra sua LLC"
-    : "crear una LLC";
+    : "abre una LLC";
 ---
 
 <div class="signup-cta-wrap">

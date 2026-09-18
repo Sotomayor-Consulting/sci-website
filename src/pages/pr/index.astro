@@ -18,38 +18,39 @@ import RelayPartnerSection from "@components/sections/landing/RelayPartnerSectio
 import Evaluacion from "@components/sections/evaluacion/CallToActionEvaluacion.astro";
 import Heroanimatev2 from "@components/sections/landing/Hero_animation_v2.astro";
 ---
-
 <MainLayout>
   <Banner
-    title="A Sotomayor Consulting International é uma empresa de consultoria, não um banco. Não concedemos créditos, mas oferecemos todo o nosso apoio na constituição da sua empresa, trâmites, abertura de contas e soluções tecnológicas. Estamos aqui para assessorar você!"
+    title="A Sotomayor Consulting International é uma empresa de consultoria, não um banco. Não concedemos crédito, mas oferecemos todo o nosso apoio na constituição da sua empresa, abertura de contas e soluções tecnológicas. Não somos uma entidade do Governo. Estamos aqui para assessorar você!"
     url="/"
     btnTitle="Saiba mais"
     btnId="xd"
   />
+
+  <!-- <Heroanimate/> -->
   <Heroanimatev2
     title="Estruturamos sua expansão global com precisão legal, fiscal e tecnológica."
     spam="Expanda seu negócio para os EUA."
-    description="A Sotomayor Consulting International é uma consultoria boutique especializada em consultoria legal, fiscal e tecnológica que ajuda clientes (principalmente internacionais) a abrir empresas nos EUA e em outras jurisdições, conectá-las ao sistema financeiro (bancos/fintechs), cumprir obrigações fiscais e contábeis, e montar a infraestrutura digital (IA, web, Stripe, telefonia) necessária para operar globalmente."
-    Btnlabel="Abra sua LLC"
+    description="A Sotomayor Consulting International é uma firma boutique de consultoria legal, fiscal e tecnológica que ajuda clientes (sobretudo internacionais) a criar empresas nos EUA e em outras jurisdições, conectá-las ao sistema financeiro (bancos/fintech), cumprir com impostos e contabilidade, e montar a infraestrutura digital (IA, web, Stripe, telefonia) necessária para operar globalmente."
+    Btnlabel="Comece sua LLC"
     slot="hero"
-/>
+  />
 
   <!-- <HeroSectionVideos
-    title=`Soluções 360° para LLCs, Fiscalidade e Tecnologia Global`
-    subTitle="A Sotomayor Consulting International é uma empresa boutique de consultoria jurídica, fiscal e tecnológica que ajuda clientes (especialmente internacionais) a criar empresas nos EUA e em outras jurisdições, conectá-las ao sistema financeiro (bancos/fintech), cumprir com impostos e contabilidade, e montar a infraestrutura digital (IA, web, Stripe, telefonia) necessária para operar globalmente."
-    primaryBtn="Comece sua LLC"
-    primaryBtnURL="/pr/#precios"
+    title=`Soluções 360° para LLCs, Tributação e Tecnologia Global`
+    subTitle="A Sotomayor Consulting International é uma firma boutique de consultoria legal, fiscal e tecnológica que ajuda clientes (sobretudo internacionais) a criar empresas nos EUA e em outras jurisdições, conectá-las ao sistema financeiro (bancos/fintech), cumprir com impostos e contabilidade, e montar a infraestrutura digital (IA, web, Stripe, telefonia) necessária para operar globalmente."
+    primaryBtn="Comece sua LLC "
+    primaryBtnURL="/#precios"
     secondaryBtn="Nossos Serviços"
-    secondaryBtnURL="/pr/#cartas-servicios"
+    secondaryBtnURL="/#cartas-servicios"
     rating=`<span class="font-bold">4.8</span> / 5`
     starCount={4}
-    reviews=`De Mais de <span class="font-bold">12.8k</span> Avaliações`
+    reviews=`From Over <span class="font-bold">12.8k</span> Reviews`
     alt="Vídeo de empresas, pessoas e desenvolvimento"
-    titleslide2="A sua expansão global merece uma estrutura, não apenas um trâmite."
-    descriptionslide2="Somos o aliado estratégico que cuida do seu patrimônio com rigor e acompanhamento especializado, assegurando que a sua entrada no mundo seja sólida, correta e, acima de tudo, definitiva."
+    titleslide2="Sua expansão global merece uma estrutura, não apenas um procedimento."
+    descriptionslide2="Somos o aliado estratégico que cuida do seu patrimônio com rigor e acompanhamento especializado, assegurando que sua entrada no mundo seja sólida, correta e, acima de tudo, definitiva."
     dabgeslide3="Oferecemos clareza e segurança"
-    tituloslide3="A sua visão em uma arquitetura jurídica sólida e estratégica."
-    descriptionslide3="Na Sotomayor Consulting International, projetamos a estrutura exata que o seu patrimônio precisa para expandir com sucesso. Somos arquitetos da sua segurança jurídica e fiscal nos Estados Unidos e no mundo."
+    tituloslide3="Sua visão em uma arquitetura legal sólida e estratégica."
+    descriptionslide3="Na Sotomayor Consulting International, desenhamos a estrutura exata que seu patrimônio precisa para se expandir com sucesso. Somos arquitetos da sua segurança jurídica e fiscal nos Estados Unidos e no mundo."
     button1slide3="Diagnóstico Gratuito"
     button2slide3="Agende uma reunião"
   /> -->
@@ -57,39 +58,39 @@ import Heroanimatev2 from "@components/sections/landing/Hero_animation_v2.astro"
   <RelayPartnerSection />
 
   <CartasDeServiciosV2
-    title="Tudo para a sua Empresa"
+    title="Tudo para sua Empresa"
     subTitle="Oferecemos soluções de serviço personalizadas para profissionais, indivíduos, famílias e empresas, atendendo às suas necessidades específicas."
   />
 
   <FeaturesGeneral
-    title="O que nos Diferencia"
-    subTitle="Nossa prioridade é a confiança do cliente. Com uma abordagem abrangente, projetamos soluções de excelência que constroem relacionamentos duradouros."
+    title="Conheça nosso aplicativo"
+    subTitle="Organize sua LLC e sua empresa em um só lugar, com o acompanhamento da nossa equipe."
     src={featureImage}
-    alt="Produtos ScrewFast em caixas flutuantes"
+    alt="ScrewFast products in floating boxes"
     features={features}
   />
 
   <GridServicios
-    title="Produto Estrela"
-    description="Acompanhamos empreendedores globais na constituição de sua empresa nos EUA, no planejamento tributário, na assessoria documental para integração bancária com terceiros e na consultoria de conformidade legal de qualquer lugar do mundo."
+    title="Produto destaque"
+    description="Acompanhamos empreendedores globais na constituição da sua empresa nos EUA, no design tributário, na assessoria de assistência documental para onboarding bancário com terceiros e na assessoria de conformidade legal de qualquer parte do mundo."
     link="#precios"
     grid2="Países"
     grid3="Explore nossos serviços"
-    grid3link="/pr/services"
-    grid4="Contate-nos"
-    grid4link="/pr/contact"
+    grid3link="/services"
+    grid4="Fale conosco"
+    grid4link="/contact"
   />
 
   <TestimonialsSection
     title="Impulsione seus Projetos"
-    subTitle="Na Sotomayor Consulting International, garantimos um início ágil com acompanhamento contínuo. Experimente a redefinição da consultoria."
+    subTitle="Na Sotomayor Consulting International, garantimos um início ágil com acompanhamento constante. Experimente a redefinição da assessoria."
     ;
     testimonials={[
       {
         content:
-          "A Sotomayor Consulting International me deu uma solução clara para minha LLC. O processo foi direto e o suporte me ajudou a configurar e habilitar pagamentos com processadores de pagamento de terceiros (ex.: Stripe/PayPal). Recomendo o serviço.",
+          "A Sotomayor Consulting International me deu uma solução clara para minha LLC. O processo foi direto e o suporte me ajudou e me assessorou a configurar e habilitar cobranças com processadores de pagamento de terceiros (p. ex., Stripe/PayPal). Recomendo o serviço.",
         author: "Diego Morales",
-        role: "Empreendedor de e-commerce",
+        role: "Empreendedor em comércio eletrônico",
         avatarSrc:
           "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=389&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       },
@@ -97,11 +98,11 @@ import Heroanimatev2 from "@components/sections/landing/Hero_animation_v2.astro"
     statistics={[
       {
         count: "5,000",
-        description: "Empresas Constituídas",
+        description: "Empresas acompanhadas",
       },
       {
         count: "1,354",
-        description: "Projetos Realizados",
+        description: "Projetos realizados",
       },
       {
         count: "97%",
@@ -116,12 +117,12 @@ import Heroanimatev2 from "@components/sections/landing/Hero_animation_v2.astro"
 
   <Evaluacion
     title="Descubra se uma LLC é realmente a melhor estrutura para você."
-    button="Faça o diagnóstico gratuito"
+    button="Realizar diagnóstico gratuito"
   >
     Evite erros legais e fiscais que podem custar milhares de dólares.
     <b>Em apenas 2 minutos, nosso diagnóstico gratuito</b> analisa sua situação específica
-    e indica com total clareza se uma LLC nos EUA é a opção certa para o seu caso
-    ou se existe uma alternativa melhor.
+    e indica com total clareza se uma LLC nos EUA é a opção correta para
+    o seu caso ou se existe uma alternativa melhor.
   </Evaluacion>
 
   <PricingSection pricing={pricing} />
@@ -130,8 +131,8 @@ import Heroanimatev2 from "@components/sections/landing/Hero_animation_v2.astro"
 
   <HeroSectionAlt
     title="Vamos Trabalhar Juntos"
-    subTitle="A SCI é um serviço integral especializado, meticulosamente projetado com soluções globais em constituição de empresas, planejamento fiscal, serviços migratórios e imóveis internacionais."
-    url="/pr/contact"
-    btnTitle="Contate-nos"
+    subTitle="A SCI é um serviço integral especializado, meticulosamente desenhado com soluções globais em constituição de empresas, planejamento fiscal, serviços migratórios e imóveis internacionais."
+    url="/contact"
+    btnTitle="Fale conosco"
   />
 </MainLayout>

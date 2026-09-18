@@ -19,15 +19,15 @@ longDescription:
   title: "Asesoría experta para emprender con una LLC en EE.UU."
   subTitle: |
     En Sotomayor Consulting International acompañamos a empresarios globales a registrar y mantener al día su LLC en EEUU. Adicional a la incorporación, ofrecemos todos los servicios relacionados que tu LLC puede necesitar.
-  btnTitle: "Adquire tu LLC"
+  btnTitle: "Agenda tu asesoría"
   btnURL: "/#precios"
 descriptionList:
-  - title: "Paso 1: Asesoría Personalizada (Opcional)"
+  - title: "Paso 1: Asesoría Personalizada"
     subTitle: "Un especialista evalúa tu proyecto y te orienta sobre el tipo de empresa, estado de incorporación y plan más conveniente."
   - title: "Paso 2: Selecciona tu Plan"
     subTitle: "Elige entre los planes Básico, Estándar o Business según tus objetivos. Nosotros te acompañamos en todo el proceso."
   - title: "Paso 3: Incorporación, cuenta bancaria y entrega de documentos"
-    subTitle: "Registramos tu LLC, obtenemos el EIN , y nos registramos como agente residente. Adicionalmente de acuerdo al plan, ofrecemos una serie de servicios adicionales"
+    subTitle: "Gestionamos el registro de tu LLC ante el Estado, te acompañamos en la solicitud del EIN ante el IRS y actuamos como tu agente residente. Adicionalmente de acuerdo al plan, ofrecemos una serie de servicios adicionales"
 specificationsLeft:
   - title: "Cumplimiento Tributario Anual IRS"
     subTitle: "Nos encargamos de preparar y enviar tus formularios fiscales al IRS, garantizando que tu LLC cumpla con sus obligaciones tributarias mientras usted se concentras en su negocio."
