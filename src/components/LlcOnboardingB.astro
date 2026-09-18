@@ -3,7 +3,7 @@ import Check from "@tabler/icons/outline/check.svg";
 import Lock from "@tabler/icons/outline/lock.svg";
 import { Badge } from "@/components/starwind/badge";
 import { Button } from "@/components/starwind/button";
-import { Icon } from 'astro-icon/components'
+import { Icon } from "astro-icon/components";
 import {
   Card,
   CardContent,
@@ -52,6 +52,7 @@ const benefits = [
   ["100% remoto", "Atención en español"],
 ];
 
+import HeromImage from "@images/Hero_Sotomayor_3.avif";
 ---
 
 <main
@@ -63,7 +64,8 @@ const benefits = [
   >
   </div>
   <div
-    class="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.06)_1px,transparent_1px)] [background-size:54px_54px]"
+    class="pointer-events-none absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.06)_1px,transparent_1px),var(--hero-image)] [background-size:54px_54px,54px_54px,cover] [background-position:0_0,0_0,center] [background-repeat:repeat,repeat,no-repeat] opacity-10"
+    style={`--hero-image: url('${HeromImage.src}');`}
   >
   </div>
 
@@ -74,8 +76,10 @@ const benefits = [
       class="flex min-h-[40rem] flex-col px-6 py-8 sm:px-10 lg:px-15 lg:py-10 xl:min-h-screen"
       aria-labelledby="llc-b-title"
     >
-      
-      <Icon name="logo-sotomayor-consulting-black" class="h-auto w-46 sm:w-54" />
+      <Icon
+        name="logo-sotomayor-consulting-black"
+        class="h-auto w-46 sm:w-54"
+      />
 
       <!-- <nav
         class="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm font-medium text-white/65"
@@ -100,7 +104,7 @@ const benefits = [
           tone="primary"
           appearance="outline"
           eyebrow
-          class="mb-5 border-primary/55 text-primary"
+          class="border-primary/55 text-primary mb-5"
         >
           Asesoría estratégica gratuita
         </Badge>
@@ -109,7 +113,7 @@ const benefits = [
           class="font-display text-4xl leading-[1.04] font-bold tracking-[-.04em] sm:text-6xl lg:text-7xl"
         >
           Tu LLC en Estados Unidos,
-          <span class="mt-2 block text-primary">bien hecha</span>
+          <span class="text-primary mt-2 block">bien hecha</span>
         </h1>
         <p
           class="mt-7 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg"
@@ -117,7 +121,11 @@ const benefits = [
           Te guiamos para elegir el estado ideal para tu LLC y estructurarla
           correctamente, evitando errores legales, fiscales y bancarios.
         </p>
-        <Button variant="primary" class="mt-4 md:hidden inline-flex" href="#agendar-b">
+        <Button
+          variant="primary"
+          class="mt-4 inline-flex md:hidden"
+          href="#agendar-b"
+        >
           Agendar
         </Button>
       </div>
@@ -125,7 +133,7 @@ const benefits = [
       <dl class="grid gap-5 border-t border-white/10 pt-7 md:grid-cols-3">
         {
           benefits.map(([title, description]) => (
-            <div class="border-l-2 border-primary/55 pl-4">
+            <div class="border-primary/55 border-l-2 pl-4">
               <dt class="text-sm font-semibold text-white">{title}</dt>
               <dd class="mt-1 text-xs text-white/55">{description}</dd>
             </div>
@@ -137,7 +145,7 @@ const benefits = [
     <Card
       id="agendar-b"
       size="md"
-      class="min-h-screen rounded-none border-0 bg-[#0d2537] text-white shadow-[-24px_0_60px_-30px_rgba(0,0,0,.8)] p-0"
+      class="min-h-screen rounded-none border-0 bg-[#0d2537] p-0 text-white shadow-[-24px_0_60px_-30px_rgba(0,0,0,.8)]"
     >
       <CardHeader class="bg-white px-6 py-7 text-center sm:px-11">
         <CardTitle class="font-display text-xl font-bold text-[#0d2537]">
@@ -220,7 +228,7 @@ const benefits = [
               {
                 activityGroups.map((group) => (
                   <fieldset class="space-y-2.5">
-                    <legend class="text-xs font-bold tracking-[.1em] text-primary uppercase">
+                    <legend class="text-primary text-xs font-bold tracking-[.1em] uppercase">
                       {group.label}
                     </legend>
                     <div class="grid gap-2 sm:grid-cols-2">
@@ -228,7 +236,7 @@ const benefits = [
                         <Button
                           type="button"
                           variant="outline"
-                          class="activity-button-b h-auto min-h-13 justify-between rounded-xl border-white/15 bg-white/5 px-4 py-3 text-left text-sm whitespace-normal text-white hover:border-white/35 hover:bg-white/10 hover:text-white aria-pressed:border-primary aria-pressed:bg-primary/15"
+                          class="activity-button-b aria-pressed:border-primary aria-pressed:bg-primary/15 h-auto min-h-13 justify-between rounded-xl border-white/15 bg-white/5 px-4 py-3 text-left text-sm whitespace-normal text-white hover:border-white/35 hover:bg-white/10 hover:text-white"
                           data-value={activity}
                           aria-pressed="false"
                         >
@@ -446,7 +454,7 @@ const benefits = [
                 href="https://zcal.co/t/agendar-asesoria-llc/60-USA"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="font-semibold text-primary underline underline-offset-4"
+                class="text-primary font-semibold underline underline-offset-4"
               >
                 Ábrelo en una pestaña nueva
               </a>.
