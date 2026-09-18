@@ -84,7 +84,7 @@ Gran parte de la lógica de negocio de `diagnostico-llc` **no vive en este repos
 | #58 | Fusionado | 2026-09-14 | feat(diagnostico-llc): validación de WhatsApp por país (A y B) |
 | #59 | Fusionado | 2026-09-15 | feat(diagnostico): validar que nombre/apellido parezcan reales |
 | #60 | Abierto | 2026-09-15 | feat(diagnostico): WhatsApp obligatorio en el gate (A y B) — pendiente de aprobación |
-| #61 | Abierto | 2026-09-18 | fix(diagnostico-llc): UX del paso de agenda (A y B) — orden del stepper, botón WhatsApp flotante, ancho del calendario, brillo del CTA |
+| #74 | Abierto | 2026-09-18 | fix(diagnostico-llc): UX del paso de agenda (A y B) — orden del stepper, botón WhatsApp flotante, ancho del calendario, brillo del CTA |
 <!-- pr-table-end -->
 
 Regenerar esta tabla con:
@@ -142,7 +142,7 @@ Odoo (crm.lead, stage_id=10)
 - **#58** — Validación de WhatsApp por país (rango de dígitos según código de país) en A y B.
 - **#59** — Validación de que nombre/apellido "parezcan reales" (`looksLikeRealName`) en el quiz (P2) y en el gate — ver detalle en 3.4.
 - **#60** (abierto, pendiente de aprobación) — WhatsApp pasa a ser obligatorio en el gate (antes era opcional). Reversión deliberada de una decisión anterior de reducir fricción — ver 3.4.
-- **#61** (abierto) — UX del paso de agenda (resultado → Zcal), en A y B, tras auditoría del funnel (ver 3.5): el stepper "Etapa X · [Nombre]" ahora va debajo del título del veredicto (antes iba después de todo el bloque de resultado); botón flotante de WhatsApp (mismo modelo que `BtnWhatsapp.astro`, alineado a la izquierda para no chocar con el CTA del informe) en vez del enlace-texto casi invisible que existía; `.cal-frame iframe` con `width:100% !important` para que un estilo inline que a veces mete el script de Zcal no angoste el calendario; brillo diagonal (sheen) en el botón "Agendar mi revisión"/CTA primario, con loop de 3.4s y respeto a `prefers-reduced-motion`. No toca el gate, WhatsApp obligatorio, ni nada de Supabase/Odoo/n8n.
+- **#74** (abierto) — UX del paso de agenda (resultado → Zcal), en A y B, tras una auditoría de funnel en Supabase (ver 5): el stepper "Etapa X · [Nombre]" ahora va debajo del título del veredicto (antes iba después de todo el bloque de resultado); botón flotante de WhatsApp (mismo modelo que `BtnWhatsapp.astro`, alineado a la izquierda para no chocar con el CTA del informe) en vez del enlace-texto casi invisible que existía; `.cal-frame iframe` con `width:100% !important` para que un estilo inline que a veces mete el script de Zcal no angoste el calendario; brillo diagonal (sheen) en el botón "Agendar mi revisión"/CTA primario, con loop de 3.4s y respeto a `prefers-reduced-motion`. No toca el gate, WhatsApp obligatorio, ni nada de Supabase/Odoo/n8n.
 
 ### 3.3 Qué pasó fuera de PRs (esta sesión, 2026-09-14/15)
 
@@ -238,7 +238,7 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 - **Lead Odoo 4008** (tier `needs_info`, con teléfono, nunca procesado) es el único lead histórico elegible para un backfill manual del WhatsApp de needs_info. No se disparó — requiere decisión explícita del usuario porque es un envío real e irreversible.
 - **Limpieza de leads de prueba**: lead sintético Odoo 4070 (`EmailQA Test`) y su fila en Supabase (`l_qaemail_1789441015`) siguen sin borrarse.
 - **Gap conocido, no cerrado**: la validación de email en cliente solo chequea formato; el chequeo de dominios desechables/prefijos basura solo existe server-side (`diag_contact_quality_ok`). Se preguntó si valía la pena espejarlo en cliente y no se decidió.
-- **PR #61 — pendiente de verificar con el iframe real de Zcal en móvil**: el `width:100% !important` sobre `.cal-frame iframe` se probó simulando el bloque del calendario (el sandbox de desarrollo no tiene salida de red hacia `static.zcal.co`). Falta confirmar en un navegador con internet real que el iframe real de Zcal también llena el ancho completo en mobile.
+- **PR #74 — pendiente de verificar con el iframe real de Zcal en móvil**: el `width:100% !important` sobre `.cal-frame iframe` se probó simulando el bloque del calendario (el sandbox de desarrollo no tiene salida de red hacia `static.zcal.co`). Falta confirmar en un navegador con internet real que el iframe real de Zcal también llena el ancho completo en mobile.
 - **Auditoría de funnel (2026-09-18, esta sesión)**: revisando Supabase (`v_diagnostico_funcion_embudo`, `zcal_bookings`) se encontró que `SCHEDULE_MODE=shadow` (variable del monorepo raíz, no de este repo — vive en el bridge/n8n que procesa el webhook de Zcal) hace que ninguna reserva real se escriba en producción; los 12 registros de `zcal_bookings` de la ventana 16–17 sep 2026 son todos `processing_mode:"shadow"`. Esto es INFRA fuera de este repo (ver sección 1) y sigue sin resolverse — bloquea que cualquier mejora de este PR se traduzca en citas reales hasta que se cambie esa variable a producción.
 
 ---
