@@ -13,7 +13,7 @@ import Pricing, { type PricingPlan } from "@components/ui/blocks/Pricing.astro";
 
 const benefits = [
   "Sin visa ni residencia",
-  "Sin SSN ni ITIN",
+  "Sin viajar a EE. UU.",
   "100% remoto y en español",
 ];
 const logos = [
@@ -81,6 +81,10 @@ const steps = [
 ];
 const faqs = [
   {
+    question: "¿Sotomayor Consulting es una entidad del Gobierno?",
+    answer: "No. Somos una firma privada de asesoría legal, fiscal y tecnológica. El registro de la LLC lo emite el Estado y el EIN lo emite el IRS; nosotros te asesoramos y acompañamos en el proceso."
+  },
+  {
     question: "¿La asesoría realmente es gratuita?",
     answer:
       "Sí. La reunión inicial no tiene costo ni compromiso. Primero evaluamos si una LLC encaja con tu situación.",
@@ -128,9 +132,9 @@ const planes: PricingPlan[] = [
     price: "$350",
     period: "Una vez",
     features: [
-      { text: "Incorporación de la LLC frente al Estado.", included: true },
+      { text: "Gestión del registro de tu LLC ante el Estado.", included: true },
       {
-        text: "Acompañamiento para la obtención del Número de Identificación Tributaria (EIN). Tiempo aproximado 8 a 9 semanas.",
+        text: "Acompañamiento en la solicitud del EIN ante el IRS.",
         included: true,
       },
       { text: "Agente Residente por un año.", included: true },
@@ -141,7 +145,7 @@ const planes: PricingPlan[] = [
   {
     name: "Business",
     description:
-      "Estrategia fiscal y legal para la incorporación de tú LLC. Ideal para escalar y tener bien estructurado desde el inicio.",
+      "Estrategia fiscal y legal para la incorporación de tu LLC. Ideal para escalar y tener bien estructurado desde el inicio.",
     price: "$950",
     period: "Una vez",
     features: [
@@ -155,7 +159,7 @@ const planes: PricingPlan[] = [
         included: true,
       },
 
-      { text: "Acompañamiento para la obtención del Número de Identificación Tributaria en hasta 1 semana.", included: true },
+      { text: "Acompañamiento prioritario en la solicitud del EIN ante el IRS.", included: true },
     ],
     buttonText: "Agenda un cita",
     buttonHref: "/tu-llc-en-usa/#agendar",
@@ -188,7 +192,7 @@ const experience = [
   },
   {
     title: "5.000+",
-    description: "empresas constituidas",
+    description: "empresas acompañadas",
   },
   {
     title: "97%",
@@ -223,7 +227,7 @@ const experience = [
         note="30 min · por Zoom · sin compromiso"
         labelBtn="Agendar mi asesoría"
         infolabels="+5.000"
-        infodescrition="empresas incorporadas"
+        infodescrition="empresas acompañadas"
         infoscore="4,8/5 clientes"
         benefits={benefits}
       />
@@ -266,7 +270,7 @@ const experience = [
 
   <section id="planes" class="scroll-mt-24 py-20 sm:py-24">
     <Pricing
-      heading="Valores anuales sin considerar pagos gubernamentales."
+      heading="Valores únicos. Las tasas del Estado se pagan aparte y las cobra el Estado."
       description="El plan ideal según tu caso lo definimos en la primera asesoría."
       plans={planes}
     />
