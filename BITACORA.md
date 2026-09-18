@@ -161,6 +161,13 @@ Todo lo siguiente se hizo directamente contra Supabase/Odoo/n8n vía API, **no e
 - **La intención (`intension`) no es un espejo 1:1 del valor**: una señal explícita del usuario (ruta advisor o "sí quiero Zoom") puede llevarlo a `ready_for_meeting` aunque su valor sea medio/bajo — **excepto** si la identidad no es creíble, en cuyo caso siempre gana `not_ready`. Ver función completa en 4.1.
 - **No se debe validar el nombre solo por longitud**: se probaron varias librerías de validación de nombres (Parsley, FormValidation, Bouncer.js, Just-validate, Clearout) y ninguna sirve para este caso (o son solo estructurales, o son de pago/entrenadas para EE. UU.). La validación es una heurística propia (`looksLikeRealName`) replicada en cliente y en servidor (SQL) — ver 4.1.
 
+### 3.5 Landings LLC heredadas (flujo separado de `diagnostico-llc`)
+
+- El 2026-09-18 se migraron a Astro y componentes Starwind las variantes `tu_llc_en_usa`, `tu-llc_en-usa/index_B` y `tu_llc-en_usa`, conservando su diseño y comportamiento responsive.
+- Estas variantes envían el lead a `functions/api/leads.ts` mediante `/api/leads`; **no** forman parte del pipeline `diagnostico-llc` descrito arriba y no deben conectarse por accidente a `diagnostico-lead.ts`.
+- El calendario Zcal solo se muestra después de un POST exitoso. Se conservan el evento `lead_datos_completados`, el identificador opcional `llcLeadSubmissionId` y los parámetros Zcal `name`, `email`, `smsPhone`, `a0`, `a1`, `a2` y `a3`.
+- `functions/api/leads.ts` no se modificó durante la migración y no se hicieron envíos reales de prueba.
+
 ---
 
 ## 4. Infraestructura fuera de git (la parte crítica)

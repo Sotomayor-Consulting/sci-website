@@ -1,0 +1,920 @@
+---
+import ArrowRight from "@tabler/icons/outline/arrow-right.svg";
+import Building from "@tabler/icons/outline/building.svg";
+import CalendarEvent from "@tabler/icons/outline/calendar-event.svg";
+import Check from "@tabler/icons/outline/check.svg";
+import CreditCard from "@tabler/icons/outline/credit-card.svg";
+import Lock from "@tabler/icons/outline/lock.svg";
+import ShieldCheck from "@tabler/icons/outline/shield-check.svg";
+import World from "@tabler/icons/outline/world.svg";
+import { Icon } from "astro-icon/components";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/starwind/card";
+import {
+  Field,
+  FieldControl,
+  FieldError,
+  FieldLabel,
+} from "@/components/starwind/field";
+import { Form } from "@/components/starwind/form";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/starwind/native-select";
+import { Textarea } from "@/components/starwind/textarea";
+import HeroImage from "@images/Hero_Sotomayor.avif";
+
+const activityGroups = [
+  {
+    label: "Operar un negocio",
+    activities: [
+      "Exportación de servicios profesionales",
+      "E-commerce",
+      "Trader / compra-venta de productos",
+      "Fintech",
+    ],
+  },
+  {
+    label: "Invertir o proteger",
+    activities: [
+      "Invertir en Bolsa de Valores",
+      "Trader de Stocks",
+      "Negocios en bienes raíces",
+      "Proteger mi patrimonio",
+    ],
+  },
+];
+
+const reviewItems = [
+  "El estado ideal según tu actividad",
+  "La estructura legal y fiscal correcta",
+  "Los errores bancarios que hay que evitar",
+];
+
+const benefits = [
+  {
+    icon: Building,
+    title: "Sin visa ni residencia",
+    description:
+      "No necesitas estatus migratorio en Estados Unidos para constituir tu LLC.",
+  },
+  {
+    icon: CreditCard,
+    title: "Sin SSN ni ITIN",
+    description:
+      "Te indicamos la ruta para operar y abrir cuentas sin número fiscal previo.",
+  },
+  {
+    icon: World,
+    title: "100% remoto y en español",
+    description:
+      "Todo el proceso por Zoom, sin viajar y sin barrera de idioma.",
+  },
+];
+---
+
+<main class="bg-background text-foreground" data-llc-classic>
+  <header
+    class="relative isolate flex min-h-[88svh] items-center overflow-hidden px-5 py-20 text-center text-white sm:px-8"
+    style={`--hero-image: url('${HeroImage.src}');`}
+  >
+    <div
+      class="absolute inset-0 -z-20 bg-cover bg-center [background-image:var(--hero-image)]"
+    >
+    </div>
+    <div
+      class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(9,26,40,.92)_0%,rgba(10,29,45,.75)_48%,rgba(9,26,40,.94)_100%)]"
+    >
+    </div>
+    <div class="mx-auto max-w-4xl">
+      <Icon
+        name="logo-sotomayor-consulting-black"
+        class="mx-auto h-auto w-52 brightness-0 invert sm:w-60"
+      />
+      <div
+        class="mx-auto mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/80"
+      >
+        <span class="h-px w-12 bg-white/25" aria-hidden="true"></span>
+        <span>30 min por Zoom</span>
+        <span class="text-primary" aria-hidden="true">•</span>
+        <span>100% remoto y en español</span>
+        <span class="h-px w-12 bg-white/25" aria-hidden="true"></span>
+      </div>
+      <Badge
+        tone="primary"
+        appearance="outline"
+        eyebrow
+        class="mt-8 border-primary/60 text-primary"
+      >
+        Asesoría estratégica gratuita
+      </Badge>
+      <h1
+        class="font-display mt-6 text-4xl leading-[1.02] font-bold tracking-[-.045em] sm:text-6xl lg:text-7xl"
+      >
+        Tu LLC en Estados Unidos,
+        <span class="block text-primary">bien hecha</span>
+      </h1>
+      <p
+        class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg"
+      >
+        Te guiamos para elegir el estado ideal para tu LLC y estructurarla
+        correctamente, evitando errores legales, fiscales y bancarios.
+      </p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <Button
+          as="a"
+          href="#agendar-classic"
+          size="lg"
+          class="rounded-xl font-semibold"
+        >
+          Agendar asesoría gratis
+          <ArrowRight class="size-4" aria-hidden="true" />
+        </Button>
+        <Button
+          as="a"
+          href="#incluye-classic"
+          variant="outline"
+          size="lg"
+          class="rounded-xl border-white/40 bg-white/5 text-white hover:bg-white/15 hover:text-white"
+        >
+          ¿Qué incluye?
+        </Button>
+      </div>
+    </div>
+  </header>
+
+  <nav
+    class="sticky top-0 z-40 border-b border-white/10 bg-[#0d2537]/95 backdrop-blur"
+    aria-label="Información de la asesoría"
+  >
+    <div
+      class="mx-auto flex max-w-6xl justify-start gap-7 overflow-x-auto px-5 sm:justify-center sm:gap-12 sm:px-8"
+    >
+      <a
+        href="#incluye-classic"
+        class="shrink-0 border-b-2 border-primary py-4 text-sm font-medium text-primary"
+        >¿Qué incluye?</a
+      >
+      <a
+        href="#agendar-classic"
+        class="shrink-0 border-b-2 border-transparent py-4 text-sm font-medium text-white/70 transition-colors hover:text-white"
+        >Agendar</a
+      >
+      <a
+        href="#respaldo-classic"
+        class="shrink-0 border-b-2 border-transparent py-4 text-sm font-medium text-white/70 transition-colors hover:text-white"
+        >Respaldo legal</a
+      >
+    </div>
+  </nav>
+
+  <section
+    id="respaldo-classic"
+    class="scroll-mt-16 bg-muted px-5 py-18 sm:px-8 lg:py-24"
+  >
+    <div
+      class="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16"
+    >
+      <div
+        class="relative min-h-80 overflow-hidden rounded-3xl bg-cover bg-center shadow-xl [background-image:var(--hero-image)]"
+        style={`--hero-image: url('${HeroImage.src}');`}
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-[#0d2537]/65 to-[#0d2537]/10"
+        >
+        </div>
+      </div>
+      <div>
+        <Badge tone="primary" appearance="soft" eyebrow
+          >Antes de constituir</Badge
+        >
+        <h2
+          class="font-display mt-5 text-3xl font-bold tracking-[-.035em] sm:text-4xl"
+        >
+          Qué revisamos antes de constituirla
+        </h2>
+        <p class="mt-5 leading-relaxed text-muted-foreground">
+          La mayoría de errores no se cometen al abrir la LLC, sino al elegir
+          mal el estado o la estructura. Eso es lo que revisamos primero.
+        </p>
+        <ul class="mt-7 divide-y divide-border">
+          {
+            reviewItems.map((item) => (
+              <li class="flex items-start gap-3 py-4 font-medium">
+                <span class="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-primary/15 text-primary-accent">
+                  <Check class="size-4" aria-hidden="true" />
+                </span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id="agendar-classic"
+    class="scroll-mt-16 px-4 py-18 sm:px-8 lg:py-24"
+  >
+    <div class="mx-auto mb-10 max-w-2xl text-center">
+      <CalendarEvent
+        class="mx-auto size-9 text-primary-accent"
+        aria-hidden="true"
+      />
+      <h2
+        class="font-display mt-4 text-3xl font-bold tracking-[-.035em] sm:text-4xl"
+      >
+        Agendar Asesoría Gratis
+      </h2>
+      <p class="mt-3 text-muted-foreground">Tres pasos y queda reservada.</p>
+    </div>
+
+    <Card
+      size="md"
+      class="mx-auto max-w-5xl overflow-hidden rounded-3xl border-border bg-card p-0 shadow-2xl shadow-black"
+    >
+      <Form id="onboarding-form-classic" novalidate class="gap-0">
+        <CardHeader
+          class="border-b border-border bg-muted/75 px-5 py-5 sm:px-10"
+        >
+          <ol class="flex items-center" aria-label="Progreso de la reserva">
+            {
+              ["Tu caso", "Tus datos", "Tu horario"].map((label, index) => (
+                <li class="contents">
+                  {index > 0 && (
+                    <span
+                      class="step-line-classic mx-2 h-px flex-1 bg-border transition-colors sm:mx-5"
+                      data-line={index}
+                      aria-hidden="true"
+                    />
+                  )}
+                  <span
+                    class="flex shrink-0 items-center gap-2"
+                    data-step-indicator={index + 1}
+                  >
+                    <span class="step-number-classic grid size-7 place-items-center rounded-full border border-border bg-background text-xs font-semibold text-muted-foreground">
+                      <span class="step-value-classic">{index + 1}</span>
+                      <Check
+                        class="step-check-classic hidden size-4"
+                        aria-hidden="true"
+                      />
+                    </span>
+                    <span class="step-label-classic hidden text-xs font-medium text-muted-foreground sm:inline">
+                      {label}
+                    </span>
+                  </span>
+                </li>
+              ))
+            }
+          </ol>
+        </CardHeader>
+
+        <section class="onboarding-step-classic" data-step="1">
+          <CardHeader class="px-5 pt-8 sm:px-10 sm:pt-10">
+            <CardTitle class="font-display text-2xl sm:text-3xl">
+              ¿Para qué quieres tu LLC?
+            </CardTitle>
+            <CardDescription class="max-w-2xl">
+              Elige la actividad principal. Con eso preparamos tu asesoría antes
+              de la llamada.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-7 px-5 sm:px-10">
+            <input
+              id="activity-classic"
+              type="hidden"
+              name="activity"
+              value=""
+              required
+            />
+            <input
+              type="hidden"
+              name="advice"
+              value="Sí, quiero revisar mi caso con un experto"
+            />
+            <div class="absolute -left-[9999px]" aria-hidden="true">
+              <label for="website-classic">Sitio web</label>
+              <input
+                id="website-classic"
+                name="website"
+                type="text"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+            {
+              activityGroups.map((group) => (
+                <fieldset class="space-y-3">
+                  <legend class="text-xs font-bold tracking-[.12em] text-primary-accent uppercase">
+                    {group.label}
+                  </legend>
+                  <div class="grid gap-2.5 sm:grid-cols-2">
+                    {group.activities.map((activity) => (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        class="activity-button-classic h-auto min-h-14 justify-between rounded-xl border-border bg-background px-4 py-3 text-left whitespace-normal text-foreground hover:border-primary hover:bg-primary/8 hover:text-foreground aria-pressed:border-primary aria-pressed:bg-primary/15"
+                        data-value={activity}
+                        aria-pressed="false"
+                      >
+                        <span>{activity}</span>
+                        <span class="activity-check-wrap-classic grid size-5 shrink-0 place-items-center rounded-full border border-input">
+                          <Check
+                            class="activity-check-classic hidden size-3.5"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </Button>
+                    ))}
+                  </div>
+                </fieldset>
+              ))
+            }
+          </CardContent>
+          <CardFooter class="flex-wrap gap-3 px-5 pt-3 pb-8 sm:px-10 sm:pb-10 mt-5">
+            <p
+              id="activity-hint-classic"
+              class="text-xs text-muted-foreground"
+              aria-live="polite"
+            >
+              Elige una actividad para continuar
+            </p>
+            <Button
+              id="continue-to-contact-classic"
+              type="button"
+              size="lg"
+              class="ml-auto rounded-xl font-semibold"
+            >
+              Continuar
+            </Button>
+          </CardFooter>
+        </section>
+
+        <section class="onboarding-step-classic hidden" data-step="2">
+          <CardHeader class="px-5 pt-8 sm:px-10 sm:pt-10">
+            <CardTitle
+              id="contact-title-classic"
+              class="font-display text-2xl sm:text-3xl"
+              tabindex="-1"
+            >
+              ¿A dónde te enviamos la cita?
+            </CardTitle>
+            <CardDescription>
+              Te llega el enlace de Zoom y un recordatorio antes de la llamada.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-5 px-5 sm:px-10">
+            <div class="grid gap-5 md:grid-cols-2">
+              <Field name="name" class="gap-2">
+                <FieldLabel for="full-name-classic">Nombre completo</FieldLabel>
+                <FieldControl
+                  id="full-name-classic"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  minlength="3"
+                  required
+                  placeholder="Tu nombre y apellido"
+                  class="bg-muted/60"
+                />
+                <FieldError match="valueMissing"
+                  >Escribe tu nombre completo.</FieldError
+                >
+                <FieldError match="tooShort"
+                  >Escribe al menos tres caracteres.</FieldError
+                >
+              </Field>
+              <Field name="email" class="gap-2">
+                <FieldLabel for="email-classic">Correo electrónico</FieldLabel>
+                <FieldControl
+                  id="email-classic"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  placeholder="nombre@empresa.com"
+                  class="bg-muted/60"
+                />
+                <FieldError match="valueMissing">Escribe tu correo.</FieldError>
+                <FieldError match="typeMismatch"
+                  >Escribe un correo válido.</FieldError
+                >
+              </Field>
+            </div>
+            <div class="grid grid-cols-[7rem_1fr] items-start gap-2.5">
+              <Field class="gap-2">
+                <FieldLabel for="country-code-classic">País</FieldLabel>
+                <NativeSelect
+                  id="country-code-classic"
+                  name="countryCode"
+                  class="bg-muted/60"
+                >
+                  <NativeSelectOption value="+593">EC +593</NativeSelectOption>
+                  <NativeSelectOption value="+52">MX +52</NativeSelectOption>
+                  <NativeSelectOption value="+57">CO +57</NativeSelectOption>
+                  <NativeSelectOption value="+54">AR +54</NativeSelectOption>
+                  <NativeSelectOption value="+34">ES +34</NativeSelectOption>
+                  <NativeSelectOption value="+1">US +1</NativeSelectOption>
+                </NativeSelect>
+              </Field>
+              <Field name="phone" class="gap-2">
+                <FieldLabel for="phone-classic">Teléfono / WhatsApp</FieldLabel>
+                <FieldControl
+                  id="phone-classic"
+                  name="phone"
+                  type="tel"
+                  inputmode="tel"
+                  autocomplete="tel"
+                  minlength="7"
+                  maxlength="15"
+                  pattern="[0-9+\-().\s]+"
+                  required
+                  placeholder="099 123 4567"
+                  class="bg-muted/60"
+                />
+                <FieldError match="valueMissing">Escribe tu número.</FieldError>
+                <FieldError match="tooShort"
+                  >Escribe un teléfono válido.</FieldError
+                >
+                <FieldError match="patternMismatch"
+                  >Revisa el formato del teléfono.</FieldError
+                >
+              </Field>
+            </div>
+            <Field class="gap-2">
+              <FieldLabel for="question-classic">
+                ¿Qué duda principal quieres resolver?
+                <span class="font-normal text-muted-foreground"> Opcional</span>
+              </FieldLabel>
+              <Textarea
+                id="question-classic"
+                name="question"
+                rows={3}
+                placeholder="Ej.: no sé si me conviene Wyoming o Florida, ni qué pasa con mis impuestos aquí."
+                class="min-h-20 resize-none bg-muted/60"
+              />
+            </Field>
+          </CardContent>
+          <CardFooter class="flex-wrap gap-3 px-5 pt-3 pb-8 sm:px-10 sm:pb-10 mt-5">
+            <Button
+              type="button"
+              variant="outline"
+              class="back-button-classic border border-black/20"
+              data-target="1"
+            >
+              Volver
+            </Button>
+            <Button
+              id="continue-to-schedule-classic"
+              type="button"
+              class="ml-auto rounded-xl font-semibold"
+            >
+              Elegir horario
+            </Button>
+            <p
+              id="form-status-classic"
+              class="flex w-full items-center justify-center gap-1.5 text-center text-xs text-muted-foreground"
+              aria-live="polite"
+            >
+              <Lock class="size-3.5" aria-hidden="true" />
+              Tus datos se usan solo para gestionar esta asesoría.
+            </p>
+          </CardFooter>
+        </section>
+
+        <section class="onboarding-step-classic hidden" data-step="3">
+          <CardHeader class="px-5 pt-8 sm:px-10 sm:pt-10">
+            <CardTitle
+              id="schedule-title-classic"
+              class="font-display text-2xl sm:text-3xl"
+              tabindex="-1"
+            >
+              Elige tu horario
+            </CardTitle>
+            <CardDescription>
+              Selecciona directamente en Zcal el día y la hora que mejor te
+              convengan.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="px-3 pb-8 sm:px-6 sm:pb-10">
+            <div
+              class="overflow-hidden rounded-2xl border border-border bg-white"
+            >
+              <iframe
+                id="zcal-frame-classic"
+                title="Calendario de reserva — Sotomayor Consulting"
+                src="about:blank"
+                loading="eager"
+                allow="clipboard-write; fullscreen"
+                class="h-[760px] w-full border-0 sm:h-[800px]"></iframe>
+            </div>
+            <p class="mt-4 text-center text-xs text-muted-foreground">
+              ¿No carga el calendario?
+              <a
+                id="zcal-open-classic"
+                href="https://zcal.co/t/agendar-asesoria-llc/60-USA"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-semibold text-primary-accent underline underline-offset-4"
+              >
+                Ábrelo en una pestaña nueva
+              </a>.
+            </p>
+          </CardContent>
+        </section>
+      </Form>
+    </Card>
+  </section>
+
+  <section
+    id="incluye-classic"
+    class="scroll-mt-16 bg-muted px-5 py-18 sm:px-8 lg:py-24"
+  >
+    <div class="mx-auto max-w-6xl">
+      <div class="mx-auto max-w-2xl text-center">
+        <ShieldCheck
+          class="mx-auto size-10 text-primary-accent"
+          aria-hidden="true"
+        />
+        <h2
+          class="font-display mt-4 text-3xl font-bold tracking-[-.035em] sm:text-4xl"
+        >
+          Qué incluye la asesoría
+        </h2>
+        <p class="mt-3 leading-relaxed text-muted-foreground">
+          Una conversación de 30 minutos para salir con una decisión tomada, no
+          con más dudas.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-5 md:grid-cols-3">
+        {
+          benefits.map(({ icon: BenefitIcon, title, description }) => (
+            <Card class="rounded-2xl border-border bg-background text-center shadow-sm">
+              <CardContent class="pt-8 pb-7">
+                <span class="mx-auto grid size-16 place-items-center rounded-full border border-border bg-card text-primary-accent">
+                  <BenefitIcon class="size-7" aria-hidden="true" />
+                </span>
+                <h3 class="mt-5 font-semibold">{title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {description}
+                </p>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="relative isolate overflow-hidden bg-[#0d2537] px-5 py-16 text-white sm:px-8"
+  >
+    <div
+      class="absolute inset-0 -z-20 bg-cover bg-center opacity-20 [background-image:var(--hero-image)]"
+      style={`--hero-image: url('${HeroImage.src}');`}
+    >
+    </div>
+    <div class="absolute inset-0 -z-10 bg-[#091a28]/85"></div>
+    <dl
+      class="mx-auto grid max-w-6xl gap-10 text-center md:grid-cols-3 md:gap-0"
+    >
+      <div class="px-7 md:border-r md:border-white/15">
+        <dt class="font-display text-4xl font-bold text-primary">+5 000</dt>
+        <dd class="mt-2 font-semibold">empresas constituidas</dd>
+        <p class="mt-2 text-xs leading-relaxed text-white/55">
+          Fundadores acompañados en la constitución y operación de su LLC.
+        </p>
+      </div>
+      <div class="px-7 md:border-r md:border-white/15">
+        <dt class="font-display text-4xl font-bold text-primary">9.8/10</dt>
+        <dd class="mt-2 font-semibold">satisfacción de clientes</dd>
+        <p class="mt-2 text-xs leading-relaxed text-white/55">
+          Valoración sobre la claridad del proceso y el acompañamiento.
+        </p>
+      </div>
+      <div class="px-7">
+        <dt class="font-display text-4xl font-bold text-primary">30 min</dt>
+        <dd class="mt-2 font-semibold">de asesoría sin costo</dd>
+        <p class="mt-2 text-xs leading-relaxed text-white/55">
+          Por Zoom, en español y desde cualquier parte del mundo.
+        </p>
+      </div>
+    </dl>
+  </section>
+
+  <footer class="bg-[#091a28] px-5 py-10 text-center text-white/55 sm:px-8">
+    <Icon
+      name="logo-sotomayor-consulting-black"
+      class="mx-auto h-auto w-44 brightness-0 invert"
+    />
+    <p class="mt-5 text-xs">
+      Firma legal, fiscal y tecnológica · Asesoría 100% remota y en español
+    </p>
+  </footer>
+</main>
+
+<script>
+  const scope = document.querySelector<HTMLElement>("[data-llc-classic]");
+  const form = scope?.querySelector<HTMLFormElement>(
+    "#onboarding-form-classic",
+  );
+
+  if (scope && form) {
+    const activeForm = form;
+    const activityInput =
+      activeForm.querySelector<HTMLInputElement>("#activity-classic");
+    const activityHint = activeForm.querySelector<HTMLElement>(
+      "#activity-hint-classic",
+    );
+    const continueToContact = activeForm.querySelector<HTMLButtonElement>(
+      "#continue-to-contact-classic",
+    );
+    const continueToSchedule = activeForm.querySelector<HTMLButtonElement>(
+      "#continue-to-schedule-classic",
+    );
+    const status = activeForm.querySelector<HTMLElement>(
+      "#form-status-classic",
+    );
+    const zcalFrame = activeForm.querySelector<HTMLIFrameElement>(
+      "#zcal-frame-classic",
+    );
+    const zcalOpen =
+      activeForm.querySelector<HTMLAnchorElement>("#zcal-open-classic");
+    let submissionId = "";
+    let isSubmitting = false;
+
+    if (continueToContact) continueToContact.disabled = true;
+
+    function showStep(step: number) {
+      activeForm
+        .querySelectorAll<HTMLElement>(".onboarding-step-classic")
+        .forEach((panel) => {
+          panel.classList.toggle("hidden", Number(panel.dataset.step) !== step);
+        });
+
+      activeForm
+        .querySelectorAll<HTMLElement>("[data-step-indicator]")
+        .forEach((indicator) => {
+          const indicatorStep = Number(indicator.dataset.stepIndicator);
+          const isCurrent = indicatorStep === step;
+          const isDone = indicatorStep < step;
+          indicator
+            .querySelector(".step-number-classic")
+            ?.classList.toggle("step-active-classic", isCurrent);
+          indicator
+            .querySelector(".step-label-classic")
+            ?.classList.toggle("step-label-active-classic", isCurrent);
+          indicator
+            .querySelector(".step-value-classic")
+            ?.classList.toggle("hidden", isDone);
+          indicator
+            .querySelector(".step-check-classic")
+            ?.classList.toggle("hidden", !isDone);
+          indicator
+            .querySelector(".step-number-classic")
+            ?.classList.toggle("step-done-classic", isDone);
+        });
+
+      activeForm
+        .querySelectorAll<HTMLElement>("[data-line]")
+        .forEach((line) => {
+          line.classList.toggle(
+            "step-line-active-classic",
+            Number(line.dataset.line) < step,
+          );
+        });
+
+      const headingSelector =
+        step === 2
+          ? "#contact-title-classic"
+          : step === 3
+            ? "#schedule-title-classic"
+            : null;
+      if (headingSelector) {
+        activeForm
+          .querySelector<HTMLElement>(headingSelector)
+          ?.focus({ preventScroll: true });
+      }
+    }
+
+    function setSubmitting(submitting: boolean) {
+      isSubmitting = submitting;
+      if (!continueToSchedule) return;
+      continueToSchedule.disabled = submitting;
+      continueToSchedule.textContent = submitting
+        ? "Abriendo calendario..."
+        : "Elegir horario";
+      if (submitting) continueToSchedule.setAttribute("aria-busy", "true");
+      else continueToSchedule.removeAttribute("aria-busy");
+    }
+
+    function setStatus(message: string, error = false) {
+      if (!status) return;
+      status.textContent = message;
+      status.classList.toggle("text-error", error);
+      status.classList.toggle("text-muted-foreground", !error);
+    }
+
+    function validateContactFields() {
+      const fields = ["#full-name-classic", "#email-classic", "#phone-classic"]
+        .map((selector) => activeForm.querySelector<HTMLInputElement>(selector))
+        .filter((field): field is HTMLInputElement => Boolean(field));
+      const invalidField = fields.find((field) => !field.checkValidity());
+      if (!invalidField) return true;
+      invalidField.reportValidity();
+      invalidField.focus();
+      return false;
+    }
+
+    function getSubmissionId() {
+      if (submissionId) return submissionId;
+      if (typeof globalThis.crypto?.randomUUID === "function") {
+        submissionId = globalThis.crypto.randomUUID();
+        return submissionId;
+      }
+      submissionId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        (character) => {
+          const random = Math.floor(Math.random() * 16);
+          const value = character === "x" ? random : (random & 0x3) | 0x8;
+          return value.toString(16);
+        },
+      );
+      return submissionId;
+    }
+
+    function buildZcalUrl(values: FormData) {
+      const countryCode = String(values.get("countryCode") ?? "");
+      const localPhone = String(values.get("phone") ?? "")
+        .replace(/\D/g, "")
+        .replace(/^0+/, "");
+      const phone = `${countryCode}${localPhone}`;
+      const url = new URL("https://zcal.co/t/agendar-asesoria-llc/60-USA");
+      url.searchParams.set("name", String(values.get("name") ?? ""));
+      url.searchParams.set("email", String(values.get("email") ?? ""));
+      url.searchParams.set("smsPhone", phone);
+      url.searchParams.set("a0", phone);
+      url.searchParams.set("a1", String(values.get("activity") ?? ""));
+      url.searchParams.set("a2", String(values.get("advice") ?? ""));
+      url.searchParams.set("a3", String(values.get("question") ?? ""));
+      return url.toString();
+    }
+
+    activeForm
+      .querySelectorAll<HTMLButtonElement>(".activity-button-classic")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          activeForm
+            .querySelectorAll<HTMLButtonElement>(".activity-button-classic")
+            .forEach((option) => {
+              const selected = option === button;
+              option.setAttribute("aria-pressed", String(selected));
+              option
+                .querySelector(".activity-check-classic")
+                ?.classList.toggle("hidden", !selected);
+              option
+                .querySelector(".activity-check-wrap-classic")
+                ?.classList.toggle("activity-check-selected-classic", selected);
+            });
+          if (activityInput) activityInput.value = button.dataset.value ?? "";
+          if (activityHint) activityHint.textContent = "Actividad seleccionada";
+          if (continueToContact) continueToContact.disabled = false;
+        });
+      });
+
+    continueToContact?.addEventListener("click", () => {
+      if (!activityInput?.value) return;
+      showStep(2);
+    });
+
+    continueToSchedule?.addEventListener("click", () =>
+      activeForm.requestSubmit(),
+    );
+
+    activeForm
+      .querySelectorAll<HTMLButtonElement>(".back-button-classic")
+      .forEach((button) => {
+        button.addEventListener("click", () =>
+          showStep(Number(button.dataset.target)),
+        );
+      });
+
+    activeForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (isSubmitting) return;
+
+      if (!validateContactFields()) {
+        showStep(2);
+        return;
+      }
+
+      const values = new FormData(activeForm);
+      const currentSubmissionId = getSubmissionId();
+      setSubmitting(true);
+      setStatus("Guardando tu asesoría...");
+
+      try {
+        const response = await fetch("/api/leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            submissionId: currentSubmissionId,
+            name: String(values.get("name") ?? ""),
+            email: String(values.get("email") ?? ""),
+            countryCode: String(values.get("countryCode") ?? ""),
+            phone: String(values.get("phone") ?? ""),
+            activity: String(values.get("activity") ?? ""),
+            advice: String(values.get("advice") ?? ""),
+            question: String(values.get("question") ?? ""),
+            source: "tu_llc-en_usa",
+            website: String(values.get("website") ?? ""),
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Lead request failed with status ${response.status}`);
+        }
+
+        const trackingWindow = window as Window & {
+          dataLayer?: Array<Record<string, unknown>>;
+        };
+        trackingWindow.dataLayer = trackingWindow.dataLayer || [];
+        trackingWindow.dataLayer.push({ event: "lead_datos_completados" });
+        try {
+          localStorage.setItem("llcLeadSubmissionId", currentSubmissionId);
+        } catch {
+          // Storage is optional; the successful lead submission must continue.
+        }
+
+        const zcalUrl = buildZcalUrl(values);
+        if (zcalFrame) zcalFrame.src = zcalUrl;
+        if (zcalOpen) zcalOpen.href = zcalUrl;
+        setSubmitting(false);
+        showStep(3);
+      } catch {
+        setStatus(
+          "No pudimos guardar tu asesoría. Revisa tu conexión e inténtalo nuevamente.",
+          true,
+        );
+        setSubmitting(false);
+      }
+    });
+
+    showStep(1);
+  }
+</script>
+
+<style>
+  .onboarding-step-classic:not(.hidden) {
+    animation: step-enter-classic 220ms ease-out both;
+  }
+
+  :global(.step-active-classic) {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  :global(.step-done-classic) {
+    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+    background: color-mix(in srgb, var(--primary) 20%, transparent);
+    color: var(--primary-accent);
+  }
+
+  :global(.step-label-active-classic) {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+
+  :global(.step-line-active-classic) {
+    background: color-mix(in srgb, var(--primary) 70%, transparent);
+  }
+
+  :global(.activity-check-selected-classic) {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  @keyframes step-enter-classic {
+    from {
+      opacity: 0;
+      transform: translateX(0.5rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .onboarding-step-classic:not(.hidden) {
+      animation: none;
+    }
+  }
+</style>

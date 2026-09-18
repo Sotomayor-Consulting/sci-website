@@ -1,0 +1,51 @@
+---
+import GoogleTagManager from "@components/ui/blocks/GoogleTagManager.astro";
+import LlcLandingClassic from "@/components/LlcLandingClassic.astro";
+import starwindStyles from "@/styles/starwind.css?inline";
+
+const gtm = "GTM-TNRQGDM";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Agenda una asesoría gratuita para estructurar correctamente tu LLC en Estados Unidos."
+    />
+    <meta name="theme-color" content="#0d2537" />
+    <meta name="generator" content={Astro.generator} />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/images/logos/isotipo-favicon.png?v=1"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global set:html={starwindStyles}></style>
+    <style is:global>
+      body {
+        padding-bottom: 0;
+      }
+    </style>
+    <title>SCI — Tu LLC en Estados Unidos</title>
+    <GoogleTagManager gtmId={gtm} />
+  </head>
+  <body>
+    <noscript>
+      <iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${gtm}`}
+        title="Google Tag Manager"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <LlcLandingClassic />
+  </body>
+</html>
