@@ -5,7 +5,7 @@
   z-index: 60;
   transform: translateY(-150%);
   border-radius: 0.5rem;
-  background: #0f172a;
+  background: #0d2636;
   color: #fff;
   padding: 0.75rem 1rem;
   font-weight: 700;
@@ -16,50 +16,197 @@
 }
 
 :focus-visible {
-  outline: 3px solid #0f172a;
+  outline: 3px solid #0d2636;
   outline-offset: 3px;
+}
+
+header :focus-visible,
+footer :focus-visible,
+.hero :focus-visible {
+  outline-color: #fff;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
 }
 
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 430, "GRAD" 0, "opsz" 24;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
 }
 
 .icon-filled {
   font-variation-settings: "FILL" 1, "wght" 430, "GRAD" 0, "opsz" 24;
 }
 
+/* Hero: azul de marca con un leve levantamiento tonal; el borde superior queda plano para fundirse con el header */
+.hero {
+  background-color: #0d2636;
+  background-image: radial-gradient(ellipse 70% 60% at 50% 66%, rgba(35, 84, 116, 0.5), rgba(13, 38, 54, 0) 100%);
+}
+
+.hero-title {
+  max-width: 62rem;
+  color: #fff;
+  font-size: clamp(2.25rem, 1.1rem + 5.2vw, 5rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+/* Texto corto y destacado sobre el titular: más pequeño que el h1, en el dorado de marca y en negrita */
+.hero-kicker {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: #b98d33;
+  font-size: clamp(1.125rem, 0.95rem + 0.9vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.hero-accent {
+  display: block;
+  color: #b98d33;
+}
+
+.partner-logo {
+  opacity: 0.55;
+  filter: brightness(0) invert(1);
+}
+
+.calendar-card {
+  box-shadow: 0 28px 60px -28px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Recorte del encabezado interno de Zcal (avatar, nombre, título y duración).
+   --crop = alto del encabezado de Zcal + 20 px de margen; --view = alto visible del calendario.
+   Medidas según el ancho del iframe: <440px 305, 440-599px 273, >=600px 300 (px donde termina el encabezado). */
+.agenda-viewport {
+  container-type: inline-size;
+}
+
+.agenda-crop {
+  --crop: 325px;
+  --view: 480px;
+  position: relative;
+  height: var(--view);
+  overflow: hidden;
+  background: #fff;
+}
+
 .agenda-frame {
   display: block;
   width: 100%;
-  height: 720px;
-  min-height: 720px;
+  height: calc(var(--view) + var(--crop));
+  margin-top: calc(var(--crop) * -1);
   border: 0;
   background: #fff;
 }
 
+@container (min-width: 440px) {
+  .agenda-crop {
+    --crop: 293px;
+    --view: 480px;
+  }
+}
+
+@container (min-width: 600px) {
+  .agenda-crop {
+    --crop: 320px;
+    --view: 480px;
+  }
+}
+
+/* Tras elegir fecha, Zcal muestra horas y formulario (sin encabezado): se quita el recorte */
+.agenda-crop[data-step] {
+  --crop: 0px;
+  --view: 760px;
+}
+
+@container (min-width: 600px) {
+  .agenda-crop[data-step] {
+    --view: 720px;
+  }
+}
+
 .mobile-sticky-cta {
-  display: none;
+  visibility: hidden;
   transform: translateY(110%);
   opacity: 0;
   pointer-events: none;
-  transition: transform 220ms ease, opacity 220ms ease;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  transition: transform 220ms ease, opacity 220ms ease, visibility 0s linear 220ms;
 }
 
 .mobile-sticky-cta.is-visible {
-  display: block;
+  visibility: visible;
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
+  transition-delay: 0s;
 }
 
-@media (max-width: 640px) {
-  body {
-    padding-bottom: 5.25rem;
+/* Popup de ayuda (elemento <dialog> nativo: foco atrapado, Esc cierra) */
+.help-popup {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(calc(100vw - 2rem), 28rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 1.25rem;
+  background: #fff;
+  color: #17303f;
+  box-shadow: 0 32px 80px -24px rgba(0, 0, 0, 0.55);
+}
+
+.help-popup:focus {
+  outline: none;
+}
+
+.help-popup::backdrop {
+  background: rgba(6, 18, 27, 0.66);
+  backdrop-filter: blur(3px);
+}
+
+@media (max-width: 767px) {
+  .site-footer {
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
   }
 
-  .agenda-frame {
-    height: 760px;
-    min-height: 760px;
+  .help-popup[open] {
+    animation: pop-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes rise {
+    from {
+      transform: translateY(10px);
+    }
+  }
+
+  @keyframes pop-in {
+    from {
+      transform: translateY(12px) scale(0.97);
+    }
   }
 }
 
@@ -69,6 +216,7 @@
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation: none !important;
   }
 }
