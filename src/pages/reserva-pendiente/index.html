@@ -47,12 +47,12 @@
     as="image"
     href="/images/logos/logo_azul_horizontal-320.png"
     imagesrcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w"
-    imagesizes="(min-width: 768px) 180px, 154px"
+    imagesizes="(min-width: 768px) 224px, 193px"
     fetchpriority="high"
   />
 
-  <link rel="stylesheet" href="/reserva-pendiente/tailwind.css?v=20260920b" />
-  <link rel="stylesheet" href="/reserva-pendiente/styles.css?v=20260920b" />
+  <link rel="stylesheet" href="/reserva-pendiente/tailwind.css?v=20260920g" />
+  <link rel="stylesheet" href="/reserva-pendiente/styles.css?v=20260920g" />
 
   <!-- Tracking configuration -->
   <script>
@@ -167,18 +167,18 @@
   <!-- Header -->
   <header class="bg-brand">
     <nav
-      class="mx-auto flex max-w-page items-center justify-between px-5 py-3 md:px-8 md:py-4 lg:px-10"
+      class="mx-auto flex max-w-page items-center justify-between px-6 py-3 md:px-10 md:py-4 lg:px-14"
       aria-label="Navegación principal"
     >
       <a href="#inicio" class="flex items-center" aria-label="Sotomayor Consulting International, ir al inicio">
         <img
           src="/images/logos/logo_azul_horizontal-320.png"
           srcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w"
-          sizes="(min-width: 768px) 180px, 154px"
+          sizes="(min-width: 768px) 224px, 193px"
           width="853"
           height="319"
           alt="Sotomayor Consulting International"
-          class="h-[57.6px] w-auto md:h-[67.2px]"
+          class="h-[72.2px] w-auto md:h-[83.3px]"
           loading="eager"
           fetchpriority="high"
           decoding="async"
@@ -200,67 +200,71 @@
   <main id="inicio">
     <!-- Hero -->
     <section id="hero-section" class="hero text-center text-white">
-      <div class="mx-auto flex max-w-page flex-col items-center px-4 pb-24 pt-4 md:px-6 md:pb-32 md:pt-8 lg:px-8">
-        <p
-          class="rise mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 py-1.5 pl-2.5 pr-4 text-sm font-semibold text-white md:mb-8"
-          style="--i: 0"
-        >
-          <span class="material-symbols-outlined icon-filled text-[20px] text-gold" aria-hidden="true">schedule</span>
+      <div class="hero-inner mx-auto flex max-w-page flex-col items-center px-4 md:px-6 lg:px-8">
+        <p class="hero-badge rise" style="--i: 0">
+          <span class="material-symbols-outlined icon-filled" aria-hidden="true">schedule</span>
           Agenda Pendiente
         </p>
 
         <h1 class="hero-title rise" style="--i: 1">
           <span class="hero-kicker">Da el siguiente paso</span><span class="sr-only">: </span>
-          <span class="block">Tu negocio en Estados Unidos,</span>
-          <span class="block">estructurado para operar <span class="hero-accent">globalmente</span></span>
+          <span class="hero-line">Tu negocio en Estados Unidos,</span>
+          <span class="hero-line">estructurado para operar</span>
+          <span class="hero-line hero-accent">globalmente</span>
         </h1>
 
-        <p class="rise mt-5 max-w-xl text-base leading-7 text-onBrand md:mt-6 md:text-lg md:leading-8" style="--i: 2">
-          Incorpora tu LLC, prepara tu estructura bancaria y mantén tus obligaciones al día desde una sola plataforma.
+        <p class="hero-sub rise" style="--i: 2">
+          Incorpora tu LLC, organiza tu estructura bancaria y mantén tus obligaciones al día desde una sola plataforma.
         </p>
+
+        <ul class="hero-indicators rise" style="--i: 3">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.5 2.5 7.25 12 12l9.5-4.75L12 2.5Z"/><path d="m2.5 12 9.5 4.75L21.5 12"/><path d="m2.5 16.75 9.5 4.75 9.5-4.75"/></svg>
+            <span>Estructura</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 9.5 12 3l9.5 6.5"/><path d="M4.5 9.5V19M9 9.5V19M15 9.5V19M19.5 9.5V19"/><path d="M2.5 21h19"/></svg>
+            <span>Banca</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.75 4.5 5.75v5.5c0 4.6 3.1 8.5 7.5 9.75 4.4-1.25 7.5-5.15 7.5-9.75v-5.5L12 2.75Z"/><path d="m8.75 12 2.25 2.25 4.25-4.5"/></svg>
+            <span>Cumplimiento</span>
+          </li>
+        </ul>
 
         <a
           id="hero-cta"
           href="#calendario"
           data-track-event="cta_hero_calendar"
           data-track-label="Agenda tu asesoría gratuita hero"
-          class="rise mt-8 inline-flex min-h-[46px] items-center justify-center gap-2 rounded-lg bg-white px-8 py-3 text-base font-semibold text-brand shadow-button transition hover:bg-surfaceSubtle"
-          style="--i: 3"
+          class="hero-cta rise"
+          style="--i: 4"
         >
           Agenda tu asesoría gratuita
-          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg>
         </a>
 
-        <ul class="rise mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-onBrand" style="--i: 4">
-          <li class="flex items-center gap-2">
-            <span class="material-symbols-outlined icon-filled text-[18px] text-gold" aria-hidden="true">check_circle</span>
-            Asesoría personalizada
-          </li>
-          <li class="flex items-center gap-2">
-            <span class="material-symbols-outlined icon-filled text-[18px] text-gold" aria-hidden="true">check_circle</span>
-            Por Zoom
-          </li>
-          <li class="flex items-center gap-2">
-            <span class="material-symbols-outlined icon-filled text-[18px] text-gold" aria-hidden="true">check_circle</span>
-            En español
-          </li>
+        <ul class="hero-points rise" style="--i: 5">
+          <li>Asesoría personalizada</li>
+          <li>Por Zoom</li>
+          <li>En español</li>
         </ul>
       </div>
     </section>
 
-    <div class="bg-background">
+    <div class="bg-background flow-root">
       <div class="mx-auto max-w-page px-4 pb-10 md:px-6 md:pb-14 lg:px-8">
         <!-- Calendario: sube sobre el hero -->
         <section
           id="calendario"
-          class="calendar-card relative z-10 mx-auto -mt-16 max-w-3xl scroll-mt-4 overflow-hidden rounded-2xl border border-borderSoft bg-surface md:-mt-20"
+          class="calendar-card relative z-10 mx-auto -mt-16 max-w-3xl scroll-mt-4 overflow-hidden bg-surface md:-mt-20"
           aria-label="Calendario de reserva"
         >
-          <div class="border-b border-borderSoft px-4 py-4 sm:px-6 sm:py-5">
-            <h2 class="text-xl font-extrabold leading-tight tracking-[-0.02em] text-primary sm:text-2xl">
+          <div class="calendar-head">
+            <h2 class="calendar-title">
               Selecciona el horario que mejor te acomode
             </h2>
-            <p class="mt-1 text-sm leading-6 text-textMuted">
+            <p class="calendar-sub">
               Elige día y hora. La zona horaria se ajusta a la tuya.
             </p>
           </div>
