@@ -339,15 +339,27 @@ li {
   }
 }
 
-/* Tras elegir fecha, Zcal muestra horas y formulario (sin encabezado): se quita el recorte */
+/* Tras elegir fecha, Zcal muestra horas y formulario: se quita el recorte (esas vistas empiezan arriba del todo) y el
+   iframe crece hasta el alto real de la vista, para que no haya scroll interno ni campos cortados por abajo.
+   Alturas medidas (px): horas ≈ 520 con 4 franjas; formulario móvil 892 (1011 con errores de validación) y en ancho
+   ≥ 600 px 1055 (1173 con errores; Zcal añade el avatar encima). data-step="form" es también el valor seguro cuando no
+   se puede saber el paso (historial saturado, teclado abierto). */
 .agenda-crop[data-step] {
   --crop: 0px;
+  --view: 1080px;
+}
+
+.agenda-crop[data-step="times"] {
   --view: 760px;
 }
 
 @container (min-width: 600px) {
   .agenda-crop[data-step] {
-    --view: 720px;
+    --view: 1240px;
+  }
+
+  .agenda-crop[data-step="times"] {
+    --view: 820px;
   }
 }
 

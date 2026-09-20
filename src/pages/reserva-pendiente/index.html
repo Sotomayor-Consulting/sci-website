@@ -51,8 +51,8 @@
     fetchpriority="high"
   />
 
-  <link rel="stylesheet" href="/reserva-pendiente/tailwind.css?v=20260920h" />
-  <link rel="stylesheet" href="/reserva-pendiente/styles.css?v=20260920h" />
+  <link rel="stylesheet" href="/reserva-pendiente/tailwind.css?v=20260920i" />
+  <link rel="stylesheet" href="/reserva-pendiente/styles.css?v=20260920i" />
 
   <!-- Tracking configuration -->
   <script>
@@ -599,13 +599,45 @@
 
         // Zcal es de otro dominio y no avisa de sus cambios de vista, pero cada avance (fecha → horas → formulario)
         // suma una entrada al historial de la pestaña; las flechas de mes no. Mientras solo se ve el calendario inicial
-        // se recorta su encabezado; al avanzar se muestra completo porque esas vistas empiezan arriba del todo.
+        // se recorta su encabezado. Al avanzar se quita el recorte (esas vistas empiezan arriba del todo) y el iframe
+        // crece hasta el alto de la vista: "times" tras el primer avance y "form" tras el segundo.
+        // Si no se puede saber en qué paso está el usuario se elige "form": mostrar de más solo cuesta estética, mientras
+        // que dejar el recorte tapa campos. El historial del navegador se satura en 50 entradas (deja de crecer, así que
+        // el detector queda ciego), por eso se desactiva el recorte cuando está cerca de ese tope; además, si se abre el
+        // teclado con el foco en el iframe, el usuario está en el formulario.
+        var HISTORY_CAP = 50;
+
+        function setAgendaStep(step) {
+          if (!agendaCrop) return;
+          var current = agendaCrop.getAttribute("data-step");
+          if (current === "form" || current === step) return;
+          agendaCrop.setAttribute("data-step", step);
+
+          // La vista nueva empieza arriba del iframe: se lleva la tarjeta al inicio de la pantalla si quedó fuera.
+          window.requestAnimationFrame(function () {
+            var section = document.getElementById("calendario");
+            if (!section) return;
+            var top = section.getBoundingClientRect().top;
+            if (top < 0 || top > (window.innerHeight || 1) * 0.4) {
+              var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+              section.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+            }
+          });
+        }
+
         function startZcalStepWatch() {
           if (!agendaCrop || historyWatchStarted) return;
           historyWatchStarted = true;
 
           var lastHistoryLength = window.history.length;
+          if (lastHistoryLength >= HISTORY_CAP - 2) {
+            // sin margen para ver los dos avances: no se recorta nada
+            agendaCrop.setAttribute("data-step", "form");
+            return;
+          }
+
           var lastHash = window.location.hash;
+          var advances = 0;
           var watchTimer = window.setInterval(function () {
             var length = window.history.length;
             var hash = window.location.hash;
@@ -618,13 +650,23 @@
             }
 
             if (length > lastHistoryLength) {
-              agendaCrop.setAttribute("data-step", "advanced");
-              window.clearInterval(watchTimer);
-              return;
+              advances += length - lastHistoryLength;
+              setAgendaStep(advances >= 2 || length >= HISTORY_CAP ? "form" : "times");
+              if (advances >= 2 || length >= HISTORY_CAP) window.clearInterval(watchTimer);
             }
 
             lastHistoryLength = length;
           }, 150);
+        }
+
+        // Teclado abierto con el foco en el iframe = el usuario está escribiendo en el formulario.
+        if (agendaCrop && agendaFrame && window.visualViewport) {
+          var baseViewportHeight = window.visualViewport.height;
+          window.visualViewport.addEventListener("resize", function () {
+            var height = window.visualViewport.height;
+            if (height > baseViewportHeight) baseViewportHeight = height;
+            if (baseViewportHeight - height > 150 && document.activeElement === agendaFrame) setAgendaStep("form");
+          });
         }
 
         if (agendaFrame) {
