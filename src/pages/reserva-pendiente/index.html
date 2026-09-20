@@ -37,7 +37,7 @@
     rel="stylesheet"
   />
   <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400..500,0..1&icon_names=account_balance,arrow_forward,calendar_month,check_circle,close,request_quote,route,sms&display=block"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400..500,0..1&icon_names=account_balance,arrow_forward,calendar_month,check_circle,close,request_quote,route,schedule,sms&display=block"
     rel="stylesheet"
   />
 
@@ -47,7 +47,7 @@
     as="image"
     href="/images/logos/logo_azul_horizontal-320.png"
     imagesrcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w"
-    imagesizes="(min-width: 768px) 150px, 128px"
+    imagesizes="(min-width: 768px) 180px, 154px"
     fetchpriority="high"
   />
 
@@ -167,18 +167,18 @@
   <!-- Header -->
   <header class="bg-brand">
     <nav
-      class="mx-auto flex max-w-page items-center justify-between px-4 py-1.5 md:px-6 md:py-2 lg:px-8"
+      class="mx-auto flex max-w-page items-center justify-between px-5 py-3 md:px-8 md:py-4 lg:px-10"
       aria-label="Navegación principal"
     >
       <a href="#inicio" class="flex items-center" aria-label="Sotomayor Consulting International, ir al inicio">
         <img
           src="/images/logos/logo_azul_horizontal-320.png"
           srcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w"
-          sizes="(min-width: 768px) 150px, 128px"
+          sizes="(min-width: 768px) 180px, 154px"
           width="853"
           height="319"
           alt="Sotomayor Consulting International"
-          class="h-12 w-auto md:h-14"
+          class="h-[57.6px] w-auto md:h-[67.2px]"
           loading="eager"
           fetchpriority="high"
           decoding="async"
@@ -200,58 +200,49 @@
   <main id="inicio">
     <!-- Hero -->
     <section id="hero-section" class="hero text-center text-white">
-      <div class="mx-auto flex max-w-page flex-col items-center px-4 pb-24 pt-10 md:px-6 md:pb-32 md:pt-16 lg:px-8">
+      <div class="mx-auto flex max-w-page flex-col items-center px-4 pb-24 pt-4 md:px-6 md:pb-32 md:pt-8 lg:px-8">
         <p
           class="rise mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 py-1.5 pl-2.5 pr-4 text-sm font-semibold text-white md:mb-8"
           style="--i: 0"
         >
-          <span class="material-symbols-outlined icon-filled text-[20px] text-gold" aria-hidden="true">check_circle</span>
-          Registro completado
+          <span class="material-symbols-outlined icon-filled text-[20px] text-gold" aria-hidden="true">schedule</span>
+          Agenda Pendiente
         </p>
 
         <h1 class="hero-title rise" style="--i: 1">
           <span class="hero-kicker">Da el siguiente paso</span><span class="sr-only">: </span>
-          Inicia tu negocio en Estados Unidos
-          <span class="hero-accent">desde cualquier lugar</span>
+          <span class="block">Tu negocio en Estados Unidos,</span>
+          <span class="block">estructurado para operar <span class="hero-accent">globalmente</span></span>
         </h1>
 
-        <p class="rise mt-5 max-w-2xl text-base leading-7 text-onBrand md:mt-6 md:text-xl md:leading-8" style="--i: 2">
-          Incorpora tu LLC, abre una cuenta bancaria en EE. UU. y cumple con la normativa, todo desde una única plataforma.
+        <p class="rise mt-5 max-w-xl text-base leading-7 text-onBrand md:mt-6 md:text-lg md:leading-8" style="--i: 2">
+          Incorpora tu LLC, prepara tu estructura bancaria y mantén tus obligaciones al día desde una sola plataforma.
         </p>
 
         <a
           id="hero-cta"
           href="#calendario"
           data-track-event="cta_hero_calendar"
-          data-track-label="Agendar Ahora hero"
-          class="rise mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-base font-semibold text-brand shadow-button transition hover:bg-surfaceSubtle"
+          data-track-label="Agenda tu asesoría gratuita hero"
+          class="rise mt-8 inline-flex min-h-[46px] items-center justify-center gap-2 rounded-lg bg-white px-8 py-3 text-base font-semibold text-brand shadow-button transition hover:bg-surfaceSubtle"
           style="--i: 3"
         >
-          Agendar Ahora
-          <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_forward</span>
+          Agenda tu asesoría gratuita
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
         </a>
 
         <ul class="rise mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-onBrand" style="--i: 4">
           <li class="flex items-center gap-2">
             <span class="material-symbols-outlined icon-filled text-[18px] text-gold" aria-hidden="true">check_circle</span>
-            Sesión por Zoom
+            Asesoría personalizada
           </li>
           <li class="flex items-center gap-2">
             <span class="material-symbols-outlined icon-filled text-[18px] text-gold" aria-hidden="true">check_circle</span>
-            Sin presión
+            Por Zoom
           </li>
           <li class="flex items-center gap-2">
             <span class="material-symbols-outlined icon-filled text-[18px] text-gold" aria-hidden="true">check_circle</span>
-            Reserva simple
-          </li>
-        </ul>
-
-        <ul class="rise mt-10 flex items-center justify-center gap-10 md:mt-12 md:gap-14" style="--i: 5" aria-label="Plataformas bancarias">
-          <li>
-            <img src="/mercury.svg" alt="Mercury" width="139" height="32" class="partner-logo h-6 w-auto md:h-7" loading="lazy" decoding="async" />
-          </li>
-          <li>
-            <img src="/relay.svg" alt="Relay" width="121" height="62" class="partner-logo h-9 w-auto md:h-11" loading="lazy" decoding="async" />
+            En español
           </li>
         </ul>
       </div>
@@ -262,7 +253,7 @@
         <!-- Calendario: sube sobre el hero -->
         <section
           id="calendario"
-          class="calendar-card relative z-10 mx-auto -mt-16 max-w-3xl scroll-mt-4 overflow-hidden rounded-3xl border border-borderSoft bg-surface md:-mt-20"
+          class="calendar-card relative z-10 mx-auto -mt-16 max-w-3xl scroll-mt-4 overflow-hidden rounded-2xl border border-borderSoft bg-surface md:-mt-20"
           aria-label="Calendario de reserva"
         >
           <div class="border-b border-borderSoft px-4 py-4 sm:px-6 sm:py-5">
