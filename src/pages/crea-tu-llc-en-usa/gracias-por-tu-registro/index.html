@@ -47,7 +47,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="preconnect" href="https://sotomayorconsulting.com" />
 <link rel="preconnect" href="https://zcal.co" />
-<link rel="preload" as="image" href="/images/logos/logo_azul_horizontal-320.png" imagesrcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w" imagesizes="(min-width: 768px) 135px, 124px" fetchpriority="high" />
+<link rel="preload" as="image" href="/images/logos/logo_azul_horizontal-320.png" imagesrcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w" imagesizes="(min-width: 768px) 149px, 136px" fetchpriority="high" />
 
 <link rel="icon" type="image/png" href="https://sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-6.png" />
 <link rel="apple-touch-icon" href="https://sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-6.png" />
@@ -193,8 +193,8 @@
   }
   .header :focus-visible{outline-color:#fff}
   .header .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:var(--header-h);width:min(var(--container), 100% - (var(--gutter) * 2) - 8px)}
-  .header .brand img{height:46.2px;width:auto}
-  @media (min-width:768px){ .header .brand img{height:50.6px} }
+  .header .brand img{height:50.8px;width:auto}
+  @media (min-width:768px){ .header .brand img{height:55.7px} }
   /* CTA del header: oculto mientras el CTA del hero está a la vista; aparece al pasar el hero */
   .js .header [data-cta="header"]{opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .2s var(--e-out), transform .2s var(--e-out), visibility .2s}
   .js .header.cta-on [data-cta="header"]{opacity:1;visibility:visible;transform:none}
@@ -222,6 +222,8 @@
   /* ============================ HERO ============================ */
   :root{--header-h:72px; --overlap:clamp(28px,3.6vw,44px)}
   @media (min-width:768px){ :root{--header-h:84px} }
+  /* La cabecera es fija: al enfocar un campo del formulario de Zcal (iframe) el navegador no debe dejarlo bajo ella */
+  html{scroll-padding-top:calc(var(--header-h) + 12px)}
   /* Azul marino con degradado casi imperceptible (arranca en el mismo azul del header) y un leve levantamiento tonal. */
   .hero{
     position:relative;text-align:center;color:#fff;
@@ -307,9 +309,17 @@
   .cal-crop iframe{display:block;width:100%;height:calc(var(--view) + var(--crop));margin-top:calc(var(--crop) * -1);border:0}
   @container (min-width:440px){ .cal-crop{--crop:293px} }
   @container (min-width:600px){ .cal-crop{--crop:320px} }
-  /* Tras elegir fecha, Zcal muestra horas y formulario (sin encabezado): se quita el recorte */
-  .cal-crop[data-step]{--crop:0px;--view:760px}
-  @container (min-width:600px){ .cal-crop[data-step]{--view:720px} }
+  /* Tras elegir fecha, Zcal muestra horas y formulario: se quita el recorte (esas vistas empiezan arriba del todo) y el
+     iframe crece hasta el alto real de la vista para que no haya scroll interno ni campos cortados por abajo.
+     Alturas medidas (px): horas ≈ 520 con 4 franjas; formulario móvil 892 (1011 con errores) y en ancho ≥ 600 px 1055
+     (1173 con errores; Zcal añade el avatar encima). data-step="form" es también el valor seguro cuando no se puede
+     saber el paso (historial saturado, teclado abierto). */
+  .cal-crop[data-step]{--crop:0px;--view:1080px}
+  .cal-crop[data-step="times"]{--view:760px}
+  @container (min-width:600px){
+    .cal-crop[data-step]{--view:1240px}
+    .cal-crop[data-step="times"]{--view:820px}
+  }
 
   /* ============================ PARTNERS AUTHORITY ============================ */
   .partners-auth{background:var(--mist);border-block:1px solid var(--line)}
@@ -504,7 +514,7 @@
 <header class="header">
   <div class="wrap">
     <a class="brand" href="https://sotomayorconsulting.com/" aria-label="Sotomayor Consulting International">
-      <img src="/images/logos/logo_azul_horizontal-320.png" srcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w" sizes="(min-width: 768px) 135px, 124px" alt="Sotomayor Consulting International" width="853" height="319" fetchpriority="high" decoding="async" />
+      <img src="/images/logos/logo_azul_horizontal-320.png" srcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w" sizes="(min-width: 768px) 149px, 136px" alt="Sotomayor Consulting International" width="853" height="319" fetchpriority="high" decoding="async" />
     </a>
     <a class="btn btn--primary btn--sm" href="#agendar" data-scroll-calendar data-cta="header">Elegir horario</a>
   </div>
@@ -1296,26 +1306,63 @@
       var calCrop = document.querySelector('.cal-crop');
       var zcalFrameEl = document.getElementById('zcalFrame');
       if (calCrop && zcalFrameEl) {
+        // Zcal (otro dominio) no avisa de sus cambios de vista, pero cada avance (fecha → horas → formulario) suma una
+        // entrada al historial de la pestaña; las flechas de mes no. Mientras solo se ve el calendario inicial se recorta
+        // su encabezado. Al avanzar se quita el recorte (esas vistas empiezan arriba del todo) y el iframe crece hasta el
+        // alto de la vista: 'times' tras el primer avance y 'form' tras el segundo. Si no se puede saber el paso se
+        // elige 'form': mostrar de más solo cuesta estética, mientras que dejar el recorte tapa campos. El historial se
+        // satura en 50 entradas (deja de crecer y el detector queda ciego), por eso no se recorta cuando está cerca del
+        // tope; además, con el teclado abierto y el foco en el iframe el usuario está en el formulario.
+        var HISTORY_CAP = 50;
         var stepWatchStarted = false;
+
+        var setCalStep = function (step) {
+          var current = calCrop.getAttribute('data-step');
+          if (current === 'form' || current === step) return;
+          calCrop.setAttribute('data-step', step);
+          // La vista nueva empieza arriba del iframe: se lleva la tarjeta al inicio de la pantalla si quedó fuera.
+          window.requestAnimationFrame(function () {
+            var card = document.getElementById('agendar');
+            if (!card) return;
+            var top = card.getBoundingClientRect().top;
+            if (top < 0 || top > (window.innerHeight || 1) * 0.4) {
+              card.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+            }
+          });
+        };
+
         var startZcalStepWatch = function () {
           if (stepWatchStarted) return;
           stepWatchStarted = true;
           var lastLen = window.history.length;
+          if (lastLen >= HISTORY_CAP - 2) { calCrop.setAttribute('data-step', 'form'); return; } // sin margen para ver los dos avances
           var lastHash = window.location.hash;
+          var advances = 0;
           var stepTimer = window.setInterval(function () {
             var len = window.history.length;
             var hash = window.location.hash;
             if (hash !== lastHash) { lastHash = hash; lastLen = len; return; } // navegación propia de la página
             if (len > lastLen) {
-              calCrop.setAttribute('data-step', 'advanced');
-              window.clearInterval(stepTimer);
-              return;
+              advances += len - lastLen;
+              var done = advances >= 2 || len >= HISTORY_CAP;
+              setCalStep(done ? 'form' : 'times');
+              if (done) window.clearInterval(stepTimer);
             }
             lastLen = len;
           }, 150);
         };
         // margen para que terminen las redirecciones internas de Zcal antes de tomar el historial de referencia
         zcalFrameEl.addEventListener('load', function () { window.setTimeout(startZcalStepWatch, 1500); });
+
+        // Teclado abierto con el foco en el iframe = el usuario está escribiendo en el formulario.
+        if (window.visualViewport) {
+          var baseViewportHeight = window.visualViewport.height;
+          window.visualViewport.addEventListener('resize', function () {
+            var height = window.visualViewport.height;
+            if (height > baseViewportHeight) baseViewportHeight = height;
+            if (baseViewportHeight - height > 150 && document.activeElement === zcalFrameEl) setCalStep('form');
+          });
+        }
       }
 
       /* ---------- sticky bar (solo móvil, la media query decide) ---------- */
