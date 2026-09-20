@@ -122,11 +122,11 @@ li {
   }
 }
 
-/* Texto corto sobre el titular: blanco, más pequeño y con algo de peso (el dorado queda solo en "globalmente") */
+/* Texto corto sobre el titular: más pequeño, dorado y con peso 600 (el dorado se reserva a este texto, a "globalmente" y a los iconos) */
 .hero-kicker {
   display: block;
   margin-bottom: 1.25rem;
-  color: rgba(255, 255, 255, 0.86);
+  color: #b98d33;
   font-size: clamp(0.9375rem, 0.9rem + 0.3vw, 1.0625rem);
   font-weight: 600;
   line-height: 1.3;
