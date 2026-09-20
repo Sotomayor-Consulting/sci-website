@@ -191,6 +191,13 @@
     position:sticky;top:0;z-index:var(--z-header);
     background:#0d2636; /* mismo azul sólido del logo horizontal, para que se funda sin recuadro */
   }
+  /* En móvil la cabecera fija se esconde mientras la tarjeta del calendario pasa por debajo de ella: así nunca tapa las
+     horas ni los campos del formulario de Zcal (iframe) cuando el navegador enfoca uno. Vuelve al subir sobre la tarjeta. */
+  @media (pointer:coarse), (max-width:767px){
+    .header{transition:transform .25s var(--e-out)}
+    .header.is-away{transform:translateY(-100%)}
+  }
+  @media (prefers-reduced-motion:reduce){ .header{transition:none} }
   .header :focus-visible{outline-color:#fff}
   .header .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:var(--header-h);width:min(var(--container), 100% - (var(--gutter) * 2) - 8px)}
   .header .brand img{height:50.8px;width:auto}
@@ -295,6 +302,10 @@
     box-shadow:0 0 0 1px rgba(14,36,56,.06), 0 26px 56px -30px rgba(6,18,27,.3), 0 2px 10px rgba(6,18,27,.06);
     scroll-margin-top:calc(var(--header-h) + 16px);
   }
+  /* Teléfonos muy pequeños (≤ 359 px): la tarjeta va de borde a borde. Zcal necesita ≥ ~300 px de ancho: con menos corta la columna del domingo y la flecha de mes siguiente (a 320 px el iframe quedaba de ~270 px). */
+  @media (max-width:359px){
+    .book{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);margin-right:0;border-radius:0;box-shadow:none}
+  }
   .book-head{padding:clamp(22px,3vw,30px) clamp(20px,3vw,32px) clamp(16px,2vw,20px)}
   .book h2{color:var(--navy-800);font-size:clamp(1.3rem, 2.2vw, 1.65rem);font-weight:700;letter-spacing:-.02em;line-height:1.15}
   .book .book-sub{color:var(--muted);font-size:.92rem;margin-top:7px;line-height:1.55}
@@ -319,6 +330,15 @@
   @container (min-width:600px){
     .cal-crop[data-step]{--view:1240px}
     .cal-crop[data-step="times"]{--view:820px}
+  }
+  /* MÓVIL Y TÁCTIL: nunca se recorta. El recorte solo es seguro si se sabe en qué paso está Zcal, y esa señal (history.length
+     del iframe) no es fiable en teléfonos: si falla, el recorte tapa las horas o los primeros campos y la reserva es imposible.
+     Sin recorte se ve la cabecera de Zcal en el primer paso (cuesta estética) pero todo el proceso queda siempre visible.
+     Alto base 1040 px (formulario 892 px sin errores, 1011 con ellos); con el paso "form" detectado sube a 1080 px (1011 con errores). */
+  @media (pointer:coarse), (max-width:767px){
+    .cal-crop, .cal-crop[data-step]{--crop:0px;--view:1040px}
+    .cal-crop[data-step="form"]{--view:1080px}
+    @container (min-width:600px){ .cal-crop[data-step="form"]{--view:1240px} }
   }
 
   /* ============================ PARTNERS AUTHORITY ============================ */
@@ -1373,6 +1393,25 @@
           entries.forEach(function (e) { sticky.classList.toggle('is-on', !e.isIntersecting); });
         }, { threshold: 0 });
         sio.observe(bookCard);
+      }
+
+      /* ---------- cabecera fija: se esconde mientras la tarjeta del calendario está bajo ella (solo móvil, lo decide el CSS) ---------- */
+      var awayHeader = document.querySelector('.header');
+      var awayCard = document.getElementById('agendar');
+      if (awayHeader && awayCard) {
+        var awayTicking = false;
+        var updateHeaderAway = function () {
+          awayTicking = false;
+          var box = awayCard.getBoundingClientRect();
+          var headerHeight = awayHeader.offsetHeight;
+          awayHeader.classList.toggle('is-away', box.top < headerHeight && box.bottom > headerHeight);
+        };
+        window.addEventListener('scroll', function () {
+          if (awayTicking) return;
+          awayTicking = true;
+          window.requestAnimationFrame(updateHeaderAway);
+        }, { passive: true });
+        updateHeaderAway();
       }
 
       /* ---------- CTA del header: aparece solo al pasar el CTA del hero (evita 2 CTA a la vez) ---------- */
