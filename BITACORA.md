@@ -87,7 +87,8 @@ Gran parte de la lógica de negocio de `diagnostico-llc` **no vive en este repos
 | #74 | Fusionado | 2026-09-18 | fix(diagnostico-llc): UX del paso de agenda (A y B) — orden del stepper, botón WhatsApp flotante, ancho del calendario, brillo del CTA |
 | #75 | Fusionado | 2026-09-20 | feat(reserva-pendiente): hero de marca, popup de ayuda por inactividad y calendario Zcal compacto |
 | #76 | Fusionado | 2026-09-20 | feat(gracias-por-tu-registro): hero premium, nav azul y calendario Zcal compacto |
-| #77 | Abierto | 2026-09-20 | feat(reserva-pendiente): revisión del hero (tag Agenda Pendiente, titular, CTA y nav) |
+| #77 | Fusionado | 2026-09-20 | feat(reserva-pendiente): revisión del hero (tag Agenda Pendiente, titular, CTA y nav) |
+| #78 | Abierto | 2026-09-20 | feat(gracias-por-tu-registro): popup de ayuda tras 5 s de inactividad |
 <!-- pr-table-end -->
 
 Regenerar esta tabla con:
@@ -211,6 +212,17 @@ Página de "registro completado" que muestra el calendario de Zcal (`https://zca
 - **Script**: `sotoScrollToCalendar` ahora usa `block:'start'` (antes `'center'`) para que la tarjeta quede bajo el header con las fechas a la vista; el `scroll-margin-top` sigue la altura del header (`--header-h`: 72 px móvil, 84 px escritorio). El tracking (`data-cta`, `data-scroll-calendar`, `data-track-schedule`, GTM/TikTok/Meta/CAPI) no cambió.
 
 **Hallazgos de la auditoría del 2026-09-20 que este PR NO corrige** (para próximos pasos): ver "Pendientes" (sección 5).
+
+---
+
+### 3.8 Popup de ayuda en `gracias-por-tu-registro` (PR #78, 2026-09-20)
+
+Se añadió a `crea-tu-llc-en-usa/gracias-por-tu-registro` el mismo popup por inactividad que tiene `reserva-pendiente` (3.6). Solo cambia `gracias-por-tu-registro/index.html` (CSS `.help-popup*`, un `<dialog id="help-popup">` antes de `.stickybar` y un bloque JS dentro del `DOMContentLoaded`).
+
+- **Comportamiento**: `<dialog>` nativo con `showModal()`; se abre a los 5 s sin `pointerdown/pointermove/keydown/scroll/wheel/touchstart`, una vez por sesión (`sessionStorage['sci_help_popup_seen']`). No se abre si la pestaña está oculta, si `#agendar` ocupa la zona central de la pantalla o si el iframe de Zcal tiene el foco (en esos casos rearma el temporizador). Cierra con la X, "No, gracias, ya lo averiguaré.", clic en el fondo y Esc.
+- **Salidas**: "Elegir mi horario" (cierra y llama a `sotoScrollToCalendar('help_popup')`) y WhatsApp con `https://api.whatsapp.com/send?phone=17542252904&text=Hola…` (el mismo de `reserva-pendiente`; la barra fija móvil sigue usando `wa.link/jx59a9`).
+- **Copy**: tuteo (como el resto de la página), sin duración ni "gratuita" ("Sin compromiso."). El popup no se oculta por la barra fija móvil: el `<dialog>` la tapa mientras está abierto.
+- **Tracking**: `help_popup_shown` (dataLayer), `cta_click` con `popup-calendar`/`popup-wa` (handler genérico de `a[data-cta]`; el de WhatsApp dispara `Contact`) y `calendar_scroll_cta_clicked` con `source_context: help_popup`. Nota preexistente: el CTA del hero se registra con `source_context: other` (falta mapear `.hero` en el handler).
 
 ---
 
