@@ -3,7 +3,7 @@
 **Lectura obligatoria para cualquier agente (Claude u otro) que trabaje en este repo.**
 Antes de tocar código del embudo `diagnostico-llc` (landings, `functions/api/diagnostico-*`, Supabase, Odoo o n8n), leer completo este documento. Ignorarlo lleva a repetir bugs ya corregidos o a romper piezas que viven fuera de git (Supabase, Odoo, n8n) y que este documento es la única fuente que las describe.
 
-Última actualización: 2026-09-18.
+Última actualización: 2026-09-20.
 
 ---
 
@@ -84,7 +84,8 @@ Gran parte de la lógica de negocio de `diagnostico-llc` **no vive en este repos
 | #58 | Fusionado | 2026-09-14 | feat(diagnostico-llc): validación de WhatsApp por país (A y B) |
 | #59 | Fusionado | 2026-09-15 | feat(diagnostico): validar que nombre/apellido parezcan reales |
 | #60 | Abierto | 2026-09-15 | feat(diagnostico): WhatsApp obligatorio en el gate (A y B) — pendiente de aprobación |
-| #74 | Abierto | 2026-09-18 | fix(diagnostico-llc): UX del paso de agenda (A y B) — orden del stepper, botón WhatsApp flotante, ancho del calendario, brillo del CTA |
+| #74 | Fusionado | 2026-09-18 | fix(diagnostico-llc): UX del paso de agenda (A y B) — orden del stepper, botón WhatsApp flotante, ancho del calendario, brillo del CTA |
+| #76 | Abierto | 2026-09-20 | feat(gracias-por-tu-registro): hero premium, nav azul y calendario Zcal compacto |
 <!-- pr-table-end -->
 
 Regenerar esta tabla con:
@@ -168,6 +169,19 @@ Todo lo siguiente se hizo directamente contra Supabase/Odoo/n8n vía API, **no e
 - El calendario Zcal solo se muestra después de un POST exitoso. Se conservan el evento `lead_datos_completados`, el identificador opcional `llcLeadSubmissionId` y los parámetros Zcal `name`, `email`, `smsPhone`, `a0`, `a1`, `a2` y `a3`.
 - `functions/api/leads.ts` no se modificó durante la migración y no se hicieron envíos reales de prueba.
 
+### 3.7 Landing `crea-tu-llc-en-usa/gracias-por-tu-registro` (PR #76, 2026-09-20)
+
+Página de "registro completado" que muestra el calendario de Zcal (`https://zcal.co/t/agendar-asesoria-llc/60min?embed=1`). Es un HTML autónomo con **CSS inline propio** (tokens en `:root`: navy `#0e2438`/`#0d2636`, dorado `#d6a144`, fuentes Poppins + Open Sans), no usa el Tailwind de `reserva-pendiente`. No escribe en Supabase/Odoo/n8n.
+
+**Qué cambió (solo hero, nav, tarjeta del calendario y un script; el resto de la página no se tocó):**
+- **Hero** con la estructura dictada por el usuario, en este orden: etiqueta "✓ Registro completado" › preheadline "Da el siguiente paso" (dentro del `<h1>`, con un ": " solo para lectores de pantalla) › headline "Incorpora tu LLC / o ponla en orden" (2ª línea dorada, peso 500) › propuesta de valor corta (2–3 líneas) › tres indicadores con iconos lineales (Estructura · Banca · Cumplimiento) › CTA "Agenda tu asesoría gratuita →" › confianza "Por Zoom · En español". "Gratuita" aparece **una sola vez** en el hero (a propósito: menos redundancia = más exclusividad). Se quitaron los logos de Mercury/Relay del hero porque la franja "Partners oficiales" queda justo debajo.
+- **Nav**: header azul sólido `#0d2636` con `logo_azul_horizontal` (`public/images/logos/`, 320/640/853 px, borde azul sólido; mismos archivos que el PR #75). El azul del header debe coincidir con el del PNG o se ve un recuadro. El CTA dorado del header sigue apareciendo solo al pasar el CTA del hero.
+- **Tarjeta del calendario**: blanca, flotante (máx. 640 px, solape ~28–44 px sobre el hero, ≥54 px de separación bajo el contenido del hero, sombra suave). Se eliminó la insignia "Asesoría gratuita · por Zoom" y el subtítulo largo sobre nombre/correo/WhatsApp; queda "Elige tu horario / Elige el día y la hora.".
+- **Recorte del encabezado de Zcal** (avatar, nombre del equipo, título del evento, duración): el iframe es de otro dominio (no se puede editar su HTML; `embed=1` no lo oculta). Se recorta con `.cal-frame` (container query) › `.cal-crop` (`overflow:hidden`) › iframe con `margin-top` negativo. Medidas según el **ancho del iframe**: < 440 px el encabezado termina en 305 px → recorte 325; 440–599 px → 273 → 293; ≥ 600 px → 300 → 320 (alto visible 480 px). Solo la vista inicial tiene ese encabezado; las de horas y formulario empiezan arriba del todo. Zcal no envía `postMessage`, pero cada avance de vista suma una entrada al historial de la pestaña (las flechas de mes no): un `setInterval` compara `history.length` (ignora cambios de `location.hash` propios) y pone `data-step="advanced"` en `.cal-crop`, que quita el recorte (760 px; 720 px en escritorio). Limitaciones: tras "Atrás" dentro de Zcal el encabezado reaparece; si Zcal cambia su diseño hay que volver a medir.
+- **Script**: `sotoScrollToCalendar` ahora usa `block:'start'` (antes `'center'`) para que la tarjeta quede bajo el header con las fechas a la vista; el `scroll-margin-top` sigue la altura del header (`--header-h`: 72 px móvil, 84 px escritorio). El tracking (`data-cta`, `data-scroll-calendar`, `data-track-schedule`, GTM/TikTok/Meta/CAPI) no cambió.
+
+**Hallazgos de la auditoría del 2026-09-20 que este PR NO corrige** (para próximos pasos): ver "Pendientes" (sección 5).
+
 ---
 
 ## 4. Infraestructura fuera de git (la parte crítica)
@@ -236,6 +250,7 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ## 5. Pendientes conocidos al cierre de esta bitácora (2026-09-16)
 
+- **`gracias-por-tu-registro` — auditoría del 2026-09-20 (14/20), sin corregir en el PR #76**: (P1) `--gold-ink #a9741f` da 4.03:1 sobre blanco y 3.65:1 sobre `#faf3e4` en texto pequeño (`.eyebrow`, `.pa-badge` de 10.9 px, `.fav` de 9.9 px); la barra fija móvil `.stickybar` lleva `aria-hidden="true"` pero contiene enlaces enfocables; la consola de producción avisa que el **Meta Pixel `687519373002559` no está disponible en este dominio por sus "traffic permission settings"** (se arregla en Events Manager, no en el repo); TikTok Pixel rechaza eventos con "Invalid Event Name Format" y "Missing content_id". (P2) 10 de 24 elementos interactivos miden menos de 44 px (enlaces "Leer ↗", footer, logo del footer); textos de 9.9–13 px; el foco `#2a5580` casi no se ve sobre fondos oscuros; jerarquía h1/h2 plana en el resto de la página; la página mide ~9600 px en móvil. (P3) tres mosaicos de icono sobre h3, cuatro etiquetas distintas del mismo CTA en el resto de la página, "gratis" repetido en la barra fija y en CTAs de otras secciones, y el logo del footer sigue siendo `Recurso-7.png` de WordPress. Además esta página usa Open Sans/Poppins y `#0e2438`, mientras `reserva-pendiente` usa Inter y `#0d2636`: decidir qué identidad manda en todo el embudo.
 - **Race condition en sync a Odoo confirmada con datos reales (lead 4076, 2026-09-15)**: cada cambio de camino en el resultado (`goGuide`/`goAdvisor`/`goPlatform`/`switchToWhatsappFirst`) llamaba `pushLeadUpdate()` de inmediato, disparando su propio pipeline completo (Cloudflare -> Supabase `leads-xb` -> trigger `diag_leads_xb_sync` -> n8n Paso 1b -> Paso 2 -> Odoo) en paralelo para el mismo `lead_id`. Un usuario cambiando de camino 2 veces en 8s generó 3 ejecuciones simultáneas de Paso 2 (n8n exec ids 142021/142022/142024, todas a las 23:30:2x) compitiendo por escribir el mismo lead Odoo 4076. Al menos una corrida resolvió `resolved_lead_id="4076"` correctamente (confirmado leyendo el runData de la ejecución 142024), pero el estado final en Odoo quedó sin `tag_ids`, sin `x_studio_diag_riesgo/resultado`, sin `x_nurture_*_source` — la corrida que terminó de escribir último ganó, y fue la que cayó en la rama de error (`sync_error: "sin resolved_lead_id: revisar subworkflow Odoo"` en `leads-xb`, pese a que el dato en Supabase es correcto). Bug secundario hallado de paso: `inferIntention()` en Paso 2 (nodo "Normalize Lead Identity") no reconoce el valor crudo `intension` que manda esta landing cuando no matchea ninguna de las 3 frases canónicas, cayendo al default `needs_info` aunque `wants_zoom_meeting` sea `"si"`.
   - **Fix aplicado (cliente, PR #68)**: `pushLeadUpdate()` en A y B ahora debounce de 1.5s con número de secuencia — si el usuario cambia de camino de nuevo antes de que venza el timer, se cancela el envío anterior. Reduce la frecuencia de la carrera, no la elimina del todo (el cliente no controla el orden de llegada al servidor).
   - **Fix pendiente (n8n, manual)**: `Odoo | Tag valor` y `Odoo | Nota diagnostico` en Paso 1b (`5P9PAd7mknoJAZAf`) tienen `onError: continueRegularOutput` — si el write a Odoo falla, la ejecución sigue como si nada, invisible. Cambiar "On Error" a "Stop Workflow" (default) en ambos nodos desde la UI de n8n — bloqueado para hacerlo por API en esta sesión (permiso de producción), pendiente de que el usuario lo aplique manualmente.
