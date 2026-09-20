@@ -3,7 +3,7 @@
 **Lectura obligatoria para cualquier agente (Claude u otro) que trabaje en este repo.**
 Antes de tocar código del embudo `diagnostico-llc` (landings, `functions/api/diagnostico-*`, Supabase, Odoo o n8n), leer completo este documento. Ignorarlo lleva a repetir bugs ya corregidos o a romper piezas que viven fuera de git (Supabase, Odoo, n8n) y que este documento es la única fuente que las describe.
 
-Última actualización: 2026-09-18.
+Última actualización: 2026-09-20.
 
 ---
 
@@ -84,7 +84,8 @@ Gran parte de la lógica de negocio de `diagnostico-llc` **no vive en este repos
 | #58 | Fusionado | 2026-09-14 | feat(diagnostico-llc): validación de WhatsApp por país (A y B) |
 | #59 | Fusionado | 2026-09-15 | feat(diagnostico): validar que nombre/apellido parezcan reales |
 | #60 | Abierto | 2026-09-15 | feat(diagnostico): WhatsApp obligatorio en el gate (A y B) — pendiente de aprobación |
-| #74 | Abierto | 2026-09-18 | fix(diagnostico-llc): UX del paso de agenda (A y B) — orden del stepper, botón WhatsApp flotante, ancho del calendario, brillo del CTA |
+| #74 | Fusionado | 2026-09-18 | fix(diagnostico-llc): UX del paso de agenda (A y B) — orden del stepper, botón WhatsApp flotante, ancho del calendario, brillo del CTA |
+| #75 | Abierto | 2026-09-20 | feat(reserva-pendiente): hero de marca, popup de ayuda por inactividad y calendario Zcal compacto |
 <!-- pr-table-end -->
 
 Regenerar esta tabla con:
@@ -168,6 +169,34 @@ Todo lo siguiente se hizo directamente contra Supabase/Odoo/n8n vía API, **no e
 - El calendario Zcal solo se muestra después de un POST exitoso. Se conservan el evento `lead_datos_completados`, el identificador opcional `llcLeadSubmissionId` y los parámetros Zcal `name`, `email`, `smsPhone`, `a0`, `a1`, `a2` y `a3`.
 - `functions/api/leads.ts` no se modificó durante la migración y no se hicieron envíos reales de prueba.
 
+### 3.6 Landing `reserva-pendiente` (PR #75, 2026-09-20)
+
+Página donde el lead que ya completó el registro elige horario en Zcal (`https://zcal.co/t/agendar-asesoria-llc/60min`). No pertenece al pipeline `diagnostico-llc` ni escribe en Supabase/Odoo/n8n: todo vive en este repo.
+
+**Cómo se sirve (trampa habitual):**
+- `src/pages/reserva-pendiente/index.html` lo procesa Astro, pero `styles.css` y `tailwind.css` se sirven desde `public/reserva-pendiente/` (PR #22/#23). Las de `src/pages/reserva-pendiente/` son la fuente: `styles.css` debe quedar idéntico en ambos sitios y `public/reserva-pendiente/tailwind.css` es el **compilado** de Tailwind v4 a partir de `src/pages/reserva-pendiente/tailwind.css`.
+- Ese compilado escanea **solo** `index.html` (≈17 KB; antes pesaba 130 KB por escanear todo el repo). El HTML no genera clases dinámicas (el JS solo alterna `is-visible`/`data-step`, que viven en `styles.css`). Si se añaden clases de Tailwind al HTML hay que recompilarlo, o no tendrán estilo. Los colores de marca están en el `@theme` (`brand` `#0d2636`, `gold` `#b98d33`, `onBrand`).
+- Logo: solo `logo_azul_horizontal` (`public/images/logos/`, en 320/640/853 px, PNG cuantizado con **borde azul sólido**: el original traía píxeles semitransparentes en el borde que dibujaban una línea sobre el header). Se eliminó `src/images/logos/logo_azul_200x200.png` (nada más lo usaba). Favicon y `apple-touch-icon` siguen siendo `isotipo-redondo.png`; `og:image` es el logo horizontal.
+
+**Contenido y decisiones de producto:**
+- Hero centrado ("Inicia un negocio en Estados Unidos desde cualquier lugar", subtítulo con "Incorpora tu LLC…"), insignia "Registro completado" y CTA "Agendar Ahora" → `#calendario` (scroll suave en la misma página; el calendario queda compacto y con las fechas a la vista). Muestra los logos de Mercury y Relay (`public/mercury.svg`, `public/relay.svg`, ya usados en `diagnostico-llc`).
+- **No hay cifras ni afirmaciones sin verificar** (la referencia de diseño traía "5.000 empresas", "150 países", ONU, Techstars, domain: no se copiaron). **No se menciona duración**: el usuario pidió quitar "30 minutos" y el widget en vivo mostró "60 min" el 2026-09-20, mientras las notas de `leads-landing` dicen "dura 30 min, slug /60min": verificar en Zcal.
+- Popup de ayuda (`<dialog id="help-popup">`): aparece tras 5 s sin interacción, una vez por sesión (`sessionStorage["sci_help_popup_seen"]`). No se muestra si la pestaña está oculta, si el calendario está a la vista, ni si el usuario ya hizo clic dentro del iframe. Ofrece "Reserva una llamada gratuita" (cierra y baja a la agenda) y WhatsApp (`https://api.whatsapp.com/send?phone=17542252904&text=Hola.%20Me%20gustar%C3%ADa%20pedir%20mas%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20Sotomayor%20Consulting.`).
+- CTA fijo de móvil: solo aparece con scroll mientras no se ven ni el CTA del hero ni el calendario, y solo en móvil (`md:hidden`).
+
+**Tracking:** GTM y TikTok Pixel no cambian. Eventos nuevos: `cta_hero_calendar`, `cta_popup_calendar`, `cta_popup_whatsapp` y `help_popup_shown`. Los que contienen "calendar" disparan también `Contact` de TikTok (lógica preexistente del script).
+
+**Recorte del encabezado de Zcal (parte frágil):** el iframe es de otro dominio (no se puede inyectar HTML/CSS y no hay opción oficial: `embed=1&embedType=iframe` sigue mostrando el encabezado). Se oculta el encabezado interno (avatar, nombre, título del evento, duración) con `.agenda-viewport` (container query) › `.agenda-crop` (`overflow:hidden`) › iframe con `margin-top` negativo:
+
+| Ancho del iframe | El encabezado de Zcal termina en | Recorte (`--crop`) |
+|---|---|---|
+| < 440 px | 305 px | 325 px |
+| 440–599 px | 273 px | 293 px |
+| ≥ 600 px | 300 px | 320 px |
+
+- Solo la vista inicial (calendario) tiene ese encabezado; las vistas de horas y de formulario empiezan arriba del todo y quedarían recortadas. Zcal no envía `postMessage`, pero cada avance de vista añade una entrada al historial de la pestaña (las flechas de mes no): un `setInterval` compara `history.length` e ignora los cambios de `location.hash` propios (las anclas a `#calendario` también suman historial). Al avanzar pone `data-step="advanced"` en `.agenda-crop`, que quita el recorte y sube la altura a 760 px (720 px en escritorio).
+- Limitaciones: si el usuario pulsa "Atrás" dentro de Zcal el encabezado reaparece (no se puede detectar); si Zcal cambia su diseño hay que **volver a medir** (captura con Edge del enlace en un iframe de ancho fijo y buscar por bandas de píxeles dónde termina el encabezado).
+
 ---
 
 ## 4. Infraestructura fuera de git (la parte crítica)
@@ -236,6 +265,8 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ## 5. Pendientes conocidos al cierre de esta bitácora (2026-09-16)
 
+- **`reserva-pendiente` (PR #75) — decisiones pendientes del usuario**: (a) el popup y el botón dicen "Reserva una llamada gratuita" (viene de la referencia): confirmar que la llamada realmente es gratuita; (b) las etiquetas de CTA no son uniformes (hero "Agendar Ahora", header "Elegir horario", fijo móvil "Elegir mi horario", popup "Reserva una llamada gratuita"); (c) mezcla de tú/usted heredada de la referencia ("Comience" y "Si tiene preguntas…" frente a "Selecciona…"); (d) Zcal vuelve a pedir nombre, correo y WhatsApp aunque la página dice "Sin repetir formularios": se pueden prellenar con `name`, `email` y `smsPhone` en la URL (como hacen las landings de `leads-landing`), no implementado; (e) `<title>` y `og:description` conservan el copy anterior ("Elige tu horario…"); (f) si las cifras y logos de la referencia (5.000 empresas, 150 países, ONU, Techstars, domain) son verídicos y hay autorización, añadirlos con sus assets.
+- **Entorno de desarrollo del repo (2026-09-20)**: `astro dev` no arranca desde una copia en la unidad virtual de Google Drive (`G:`): un `npm install` fallido dejó ~119 de 521 paquetes de `node_modules` con `package.json` ausente o truncado (errores EBADF/EPERM). Reinstalar con `pnpm install --frozen-lockfile` en un disco local. `package-lock.json` está **obsoleto** (Astro 5 frente a Astro 7 en `package.json`): el lockfile vigente es `pnpm-lock.yaml` (`packageManager: pnpm@9.15.9`, PR #7), no usar `npm ci`. En entornos con agente, Astro 7 lanza `astro dev` en segundo plano y lo mata a los 30 s si no arranca; forzar modo directo con `ASTRO_DEV_BACKGROUND=1`.
 - **Race condition en sync a Odoo confirmada con datos reales (lead 4076, 2026-09-15)**: cada cambio de camino en el resultado (`goGuide`/`goAdvisor`/`goPlatform`/`switchToWhatsappFirst`) llamaba `pushLeadUpdate()` de inmediato, disparando su propio pipeline completo (Cloudflare -> Supabase `leads-xb` -> trigger `diag_leads_xb_sync` -> n8n Paso 1b -> Paso 2 -> Odoo) en paralelo para el mismo `lead_id`. Un usuario cambiando de camino 2 veces en 8s generó 3 ejecuciones simultáneas de Paso 2 (n8n exec ids 142021/142022/142024, todas a las 23:30:2x) compitiendo por escribir el mismo lead Odoo 4076. Al menos una corrida resolvió `resolved_lead_id="4076"` correctamente (confirmado leyendo el runData de la ejecución 142024), pero el estado final en Odoo quedó sin `tag_ids`, sin `x_studio_diag_riesgo/resultado`, sin `x_nurture_*_source` — la corrida que terminó de escribir último ganó, y fue la que cayó en la rama de error (`sync_error: "sin resolved_lead_id: revisar subworkflow Odoo"` en `leads-xb`, pese a que el dato en Supabase es correcto). Bug secundario hallado de paso: `inferIntention()` en Paso 2 (nodo "Normalize Lead Identity") no reconoce el valor crudo `intension` que manda esta landing cuando no matchea ninguna de las 3 frases canónicas, cayendo al default `needs_info` aunque `wants_zoom_meeting` sea `"si"`.
   - **Fix aplicado (cliente, PR #68)**: `pushLeadUpdate()` en A y B ahora debounce de 1.5s con número de secuencia — si el usuario cambia de camino de nuevo antes de que venza el timer, se cancela el envío anterior. Reduce la frecuencia de la carrera, no la elimina del todo (el cliente no controla el orden de llegada al servidor).
   - **Fix pendiente (n8n, manual)**: `Odoo | Tag valor` y `Odoo | Nota diagnostico` en Paso 1b (`5P9PAd7mknoJAZAf`) tienen `onError: continueRegularOutput` — si el write a Odoo falla, la ejecución sigue como si nada, invisible. Cambiar "On Error" a "Stop Workflow" (default) en ambos nodos desde la UI de n8n — bloqueado para hacerlo por API en esta sesión (permiso de producción), pendiente de que el usuario lo aplique manualmente.
