@@ -363,6 +363,38 @@ li {
   }
 }
 
+/* Teléfonos muy pequeños (≤ 359 px): la tarjeta del calendario va de borde a borde. Zcal necesita ≥ ~300 px de ancho: con menos corta la columna del domingo y la flecha de mes siguiente
+   (a 320 px el iframe quedaba de 286 px). */
+@media (max-width: 359px) {
+  .calendar-card {
+    margin-inline: -1rem;
+    border-inline: 0;
+    border-radius: 0;
+  }
+}
+
+/* MÓVIL Y TÁCTIL: nunca se recorta. El recorte solo es seguro si se sabe en qué paso está Zcal, y esa señal (history.length
+   del iframe) no es fiable en teléfonos: si falla, el recorte tapa las horas o los primeros campos y la reserva es imposible.
+   Sin recorte se ve la cabecera de Zcal en el primer paso (cuesta estética) pero todo el proceso queda siempre visible.
+   Alto base 1040 px (formulario 892 px sin errores, 1011 con ellos); con el paso "form" detectado sube a 1080 px (1011 con errores). */
+@media (pointer: coarse), (max-width: 767px) {
+  .agenda-crop,
+  .agenda-crop[data-step] {
+    --crop: 0px;
+    --view: 1040px;
+  }
+
+  .agenda-crop[data-step="form"] {
+    --view: 1080px;
+  }
+
+  @container (min-width: 600px) {
+    .agenda-crop[data-step="form"] {
+      --view: 1240px;
+    }
+  }
+}
+
 .mobile-sticky-cta {
   visibility: hidden;
   transform: translateY(110%);
