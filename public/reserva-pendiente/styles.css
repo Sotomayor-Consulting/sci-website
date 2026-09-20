@@ -57,10 +57,10 @@ li {
 .hero-title {
   max-width: 62rem;
   color: #fff;
-  font-size: clamp(2.25rem, 1.1rem + 5.2vw, 5rem);
-  font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.035em;
+  font-size: clamp(1.9rem, 0.9rem + 3.9vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 /* Texto corto y destacado sobre el titular: más pequeño que el h1, en el dorado de marca y en negrita */
@@ -74,18 +74,13 @@ li {
   letter-spacing: 0.01em;
 }
 
+/* El dorado es solo un acento: una palabra corta dentro del titular */
 .hero-accent {
-  display: block;
   color: #b98d33;
 }
 
-.partner-logo {
-  opacity: 0.55;
-  filter: brightness(0) invert(1);
-}
-
 .calendar-card {
-  box-shadow: 0 28px 60px -28px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 44px -30px rgba(6, 18, 27, 0.28), 0 2px 8px rgba(6, 18, 27, 0.06);
 }
 
 /* Recorte del encabezado interno de Zcal (avatar, nombre, título y duración).
