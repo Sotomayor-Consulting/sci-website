@@ -1,13 +1,5 @@
----
-interface Props {
-  gtmId: string;
-  dataLayerName?: string;
-}
-
-const { gtmId, dataLayerName = "dataLayer" } = Astro.props;
----
-
-<script is:inline type="text/partytown" set:html={`
+<!-- Google Tag Manager -->
+<script is:inline>
   (function (w, d, s, l, i) {
     w[l] = w[l] || [];
     w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -17,5 +9,6 @@ const { gtmId, dataLayerName = "dataLayer" } = Astro.props;
     j.async = true;
     j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
     f.parentNode.insertBefore(j, f);
-  })(window, document, "script", "${dataLayerName}", "${gtmId}");
-`} />
+  })(window, document, "script", "dataLayer", "GTM-TNRQGDM");
+</script>
+<!-- End Google Tag Manager -->

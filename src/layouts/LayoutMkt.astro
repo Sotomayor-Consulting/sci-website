@@ -48,17 +48,18 @@ const gtm = "GTM-TNRQGDM";
       {title}
     </title>
     <!-- Google Tag Manager -->
-    <GoogleTagManager gtmId={gtm} />
+    <GoogleTagManager />
     <!-- End Google Tag Manager -->
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <iframe
-      src={`https://www.googletagmanager.com/ns.html?id=${gtm}`}
-      title="Google Tag Manager"
-      height="0"
-      width="0"
-      style="display:none;visibility:hidden"></iframe>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-TNRQGDM"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe></noscript
+    >
     <!-- End Google Tag Manager (noscript) -->
     <Navbar />
     <slot />
