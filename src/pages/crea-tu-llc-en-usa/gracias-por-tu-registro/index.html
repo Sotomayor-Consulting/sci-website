@@ -199,6 +199,8 @@
   }
   @media (prefers-reduced-motion:reduce){ .header{transition:none} }
   .header :focus-visible{outline-color:#fff}
+  /* Barra dorada que separa el nav del contenido (estándar en todas las landings) */
+  .header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#d6a144;pointer-events:none}
   .header .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:var(--header-h);width:min(var(--container), 100% - (var(--gutter) * 2) - 8px)}
   .header .brand img{height:40px;width:auto;display:block}
   @media (max-width:430px){ .header .brand img{height:34px} }

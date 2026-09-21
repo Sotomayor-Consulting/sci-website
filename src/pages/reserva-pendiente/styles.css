@@ -87,6 +87,18 @@ html {
   background: #0d2636; /* mismo azul sólido del logo horizontal, para que se funda sin recuadro */
 }
 
+/* Barra dorada que separa el nav del contenido (estándar en todas las landings) */
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #d6a144;
+  pointer-events: none;
+}
+
 .site-header__wrap {
   display: flex;
   align-items: center;
