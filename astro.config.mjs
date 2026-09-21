@@ -32,7 +32,7 @@ export default defineConfig({
         logImageRequests: false,
         logScriptExecution: false,
         logStackTraces: false,
-        forward: ['dataLayer.push'],
+        forward: [['dataLayer.push', { preserveBehavior: true }]],
       },
     }),
     pagefind(),

@@ -14,7 +14,13 @@ const { gtmId, dataLayerName = "dataLayer" } = Astro.props;
     (function () {
       var gtmId = ${JSON.stringify(gtmId)};
       var dataLayerName = ${JSON.stringify(dataLayerName)};
-      var isDebug = new URL(window.location.href).searchParams.has("gtm_debug");
+      var url = new URL(window.location.href);
+      var isLocalhost = url.hostname === "localhost" || url.hostname === "127.0.0.1";
+      var isDebug =
+        isLocalhost ||
+        url.searchParams.has("gtm_debug") ||
+        url.searchParams.has("gtm_preview") ||
+        url.searchParams.has("gtm_auth");
 
       if (document.querySelector('script[data-gtm-id="' + gtmId + '"]')) return;
 
