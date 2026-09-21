@@ -47,7 +47,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="preconnect" href="https://sotomayorconsulting.com" />
 <link rel="preconnect" href="https://zcal.co" />
-<link rel="preload" as="image" href="/images/logos/logo_azul_horizontal-320.png" imagesrcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w" imagesizes="(min-width: 768px) 149px, 136px" fetchpriority="high" />
+<link rel="preload" as="image" href="/images/logos/logo_azul_horizontal-trim-368.png" imagesrcset="/images/logos/logo_azul_horizontal-trim-368.png 368w, /images/logos/logo_azul_horizontal-trim-552.png 552w" imagesizes="(max-width: 430px) 151px, 177px" fetchpriority="high" />
 
 <link rel="icon" type="image/png" href="https://sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-6.png" />
 <link rel="apple-touch-icon" href="https://sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-6.png" />
@@ -199,12 +199,16 @@
   }
   @media (prefers-reduced-motion:reduce){ .header{transition:none} }
   .header :focus-visible{outline-color:#fff}
+  /* Barra dorada que separa el nav del contenido (estándar en todas las landings) */
+  .header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#d6a144;pointer-events:none}
   .header .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:var(--header-h);width:min(var(--container), 100% - (var(--gutter) * 2) - 8px)}
-  .header .brand img{height:50.8px;width:auto}
-  @media (min-width:768px){ .header .brand img{height:55.7px} }
+  .header .brand img{height:40px;width:auto;display:block}
+  @media (max-width:430px){ .header .brand img{height:34px} }
   /* CTA del header: oculto mientras el CTA del hero está a la vista; aparece al pasar el hero */
   .js .header [data-cta="header"]{opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .2s var(--e-out), transform .2s var(--e-out), visibility .2s}
   .js .header.cta-on [data-cta="header"]{opacity:1;visibility:visible;transform:none}
+  /* En móvil manda la barra fija inferior: el CTA del header se oculta para no tener dos CTA a la vez */
+  @media (max-width:820px){ .header [data-cta="header"]{display:none} }
 
   /* ============================ BUTTONS ============================ */
   .btn{
@@ -227,8 +231,7 @@
   .btn svg{width:16px;height:16px;flex:none}
 
   /* ============================ HERO ============================ */
-  :root{--header-h:72px; --overlap:clamp(28px,3.6vw,44px)}
-  @media (min-width:768px){ :root{--header-h:84px} }
+  :root{--header-h:66px; --overlap:clamp(28px,3.6vw,44px)}
   /* La cabecera es fija: al enfocar un campo del formulario de Zcal (iframe) el navegador no debe dejarlo bajo ella */
   html{scroll-padding-top:calc(var(--header-h) + 12px)}
   /* Azul marino con degradado casi imperceptible (arranca en el mismo azul del header) y un leve levantamiento tonal. */
@@ -240,6 +243,11 @@
       linear-gradient(180deg, #0d2636 0%, #102d45 100%);
     padding-block:clamp(52px,7vw,104px) calc(var(--overlap) + clamp(64px,7.5vw,104px));
   }
+  /* Foto business bajo el azul del hero (mismo patrón que .hero-bg de diagnostico-llc): la imagen cubre el hero y el velo azul mantiene el contraste */
+  .hero{isolation:isolate}
+  .hero-bg{position:absolute;inset:0;z-index:-1;overflow:hidden}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,38,54,.90) 0%,rgba(13,38,54,.80) 45%,rgba(16,45,69,.94) 100%)}
   .hero .wrap{display:flex;flex-direction:column;align-items:center}
   .hero-badge{
     display:inline-flex;align-items:center;gap:8px;margin-bottom:clamp(34px,4.2vw,52px);
@@ -534,7 +542,7 @@
 <header class="header">
   <div class="wrap">
     <a class="brand" href="https://sotomayorconsulting.com/" aria-label="Sotomayor Consulting International">
-      <img src="/images/logos/logo_azul_horizontal-320.png" srcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w" sizes="(min-width: 768px) 149px, 136px" alt="Sotomayor Consulting International" width="853" height="319" fetchpriority="high" decoding="async" />
+      <img src="/images/logos/logo_azul_horizontal-trim-368.png" srcset="/images/logos/logo_azul_horizontal-trim-368.png 368w, /images/logos/logo_azul_horizontal-trim-552.png 552w" sizes="(max-width: 430px) 151px, 177px" alt="Sotomayor Consulting International" width="731" height="165" fetchpriority="high" decoding="async" />
     </a>
     <a class="btn btn--primary btn--sm" href="#agendar" data-scroll-calendar data-cta="header">Elegir horario</a>
   </div>
@@ -544,6 +552,7 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero">
+    <div class="hero-bg" aria-hidden="true"><picture><source media="(max-width:700px)" srcset="/images/hero/hero-business-m-720.avif" type="image/avif"><img src="/images/hero/hero-business-1920.avif" srcset="/images/hero/hero-business-1280.avif 1280w, /images/hero/hero-business-1920.avif 1920w" sizes="100vw" alt="" width="1920" height="762" fetchpriority="high" decoding="async"></picture></div>
     <div class="wrap">
       <p class="hero-badge rise" style="--i:0">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#c0872e"/><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#0e2438" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1387,14 +1396,28 @@
         }
       }
 
-      /* ---------- sticky bar (solo móvil, la media query decide) ---------- */
+      /* ---------- sticky bar: aparece solo cuando NO hay otro CTA a la vista (hero, CTAs de sección o formulario) ---------- */
+      // Un solo CTA activo a la vez: si el usuario ya ve un botón "#agendar" (o el formulario), la barra fija se esconde.
+      // Solo alterna la clase; la media query decide si se renderiza (solo móvil).
       var sticky = document.querySelector('.stickybar');
-      var bookCard = document.getElementById('agendar');
-      if (sticky && bookCard && 'IntersectionObserver' in window) {
-        var sio = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) { sticky.classList.toggle('is-on', !e.isIntersecting); });
+      if (sticky && 'IntersectionObserver' in window) {
+        var ctaWatch = [].slice.call(document.querySelectorAll('a[href="#agendar"]')).filter(function (a) {
+          return !a.closest('.stickybar, .header, dialog');
+        });
+        var ctaForm = document.getElementById('agendar');
+        if (ctaForm && ctaWatch.indexOf(ctaForm) === -1) ctaWatch.push(ctaForm);
+        var ctaSeen = [];
+        var ctaObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            var i = ctaSeen.indexOf(e.target);
+            if (e.isIntersecting && i === -1) ctaSeen.push(e.target);
+            else if (!e.isIntersecting && i !== -1) ctaSeen.splice(i, 1);
+          });
+          var show = ctaSeen.length === 0;
+          sticky.classList.toggle('is-on', show);
+          sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
         }, { threshold: 0 });
-        sio.observe(bookCard);
+        ctaWatch.forEach(function (el) { ctaObserver.observe(el); });
       }
 
       /* ---------- cabecera fija: se esconde mientras la tarjeta del calendario está bajo ella (solo móvil, lo decide el CSS) ---------- */
