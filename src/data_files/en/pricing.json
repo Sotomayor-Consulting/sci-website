@@ -1,6 +1,6 @@
 {
   "title": "Choose the advisory plan for your LLC",
-  "subTitle": "Choose the plan that best fits your business and start operating in the U.S. with legal and tax support.",
+  "subTitle": "Choose the consulting plan that best fits your business. Prices are professional fees; applicable official fees are paid separately.",
   "badge": "Favorite",
   "thirdOption": "Need help?",
   "btnText": "Schedule an appointment",
@@ -8,12 +8,12 @@
 
   "starterKit": {
     "name": "Basic Plan",
-    "description": "Form your LLC with the essentials to operate legally.",
+    "description": "Document support to apply for the formation of your LLC.",
     "price": "350",
     "cents": ".00",
     "billingFrequency": "USD",
     "features": [
-      "Management of your LLC registration with the State.",
+      "Preparation and filing support for your LLC registration with the State.",
       "Support with the EIN application before the IRS.",
       "Registered Agent for one year."
     ],
@@ -33,7 +33,7 @@
     "purchaseBtnTitle": "Get the Business Plan",
     "purchaseLink": "https://app.sotomayorconsulting.com/start",
     "bussines" : [
-      "Legal and tax planning and design.", "Banking support (Mercury or Relay + Stripe).", "Priority support with the EIN application before the IRS"
+      "Legal and tax planning and design.", "Application support for Mercury or Relay and Stripe setup.", "Priority support with the EIN application before the IRS"
     ]
   },
 

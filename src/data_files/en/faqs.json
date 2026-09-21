@@ -3,27 +3,27 @@
   "faqs": [
     {
       "question": "What is an LLC?",
-      "answer": "An LLC, or Limited Liability Company, is a U.S. business structure that offers the ideal combination of personal asset protection—by completely separating them from business debts and risks—and the tax and operational flexibility of a partnership. Forming this company is the perfect tool to expand your business globally, as it facilitates access to the international market by allowing you to charge and make payments through platforms like Stripe or PayPal, open a bank account with U.S. banks or third-party fintechs to manage finances securely, and even operate in the country to buy properties or invest. All of this is achieved through an agile and straightforward process, without complicated procedures, making it the ideal choice to grow your company and strengthen your operations."
+      "answer": "An LLC, or Limited Liability Company, is a U.S. business structure that may separate certain business liabilities from its members' personal assets when properly formed and maintained. Its legal and tax treatment depends on the state, activity, and each member's circumstances. An LLC may support applications to banks or platforms such as Stripe and PayPal, but each provider applies its own requirements and independently decides whether to approve an account."
     },
     {
       "question": "What are the costs to open an LLC?",
-      "answer": "We offer three service plans designed to fit your specific needs: the Basic Plan ($350), ideal if you already have everything ready and want to start immediately, includes legal formation of your LLC, obtaining the EIN (Employer Identification Number), and a registered agent for one year; the Standard Plan ($600), which adds the operating agreement and unlimited consultations; and the Business Plan ($950), our most comprehensive option, created for those who require personalized planning and comprehensive support to ensure no detail is left unresolved. With any of these options, you can form your LLC quickly, securely, and without needing to leave your country."
+      "answer": "We offer three consulting plans: Basic ($350), with preparation and filing support for the state registration and EIN application plus one year of registered agent service; Standard ($600), which adds an operating agreement and consultations; and Business ($950), with customized planning and additional support. These are SCI professional fees and exclude applicable official fees, which are disclosed and paid separately. The State and IRS decide approval, issuance, and timing."
     },
     {
       "question": "What are the requirements to open a company?",
-      "answer": "To form your LLC with us, the only essential requirements are a valid passport for all members and a recent proof of address, such as a utility bill (water, electricity, etc.). We will request these documents progressively as you fill out our incorporation form, to streamline the process. Our team will provide personalized guidance at every stage to ensure you meet all requirements quickly and easily."
+      "answer": "A valid passport for each member and recent proof of address are commonly requested. Requirements may vary by state, activity, members, and third-party verification. Our team provides guidance and prepares documents, but the relevant authority or provider determines whether additional information is required."
     },
     {
       "question": "How long does it take to open an LLC?",
-      "answer": "The total time to establish your LLC fully consists of two main phases: first, the company registration with the state, which our team handles and usually completes within 5 to 7 business days (the time varies depending on the chosen state); and second, obtaining the EIN (Employer Identification Number), an essential procedure to operate and open a bank account, which, being managed by federal authorities, can take between 2 to 6 weeks. We take care of the entire process to ensure it is as smooth and hassle-free as possible for you."
+      "answer": "There is no guaranteed timeline. State registration and EIN issuance are separate processes, and timing depends on the State, the IRS, the filing method, and any request for additional information. SCI prepares documents and supports filing and follow-up, but does not control approval or government processing times."
     },
     {
       "question": "Besides forming my LLC in the United States, what other services can help me operate and protect my business internationally?",
-      "answer": "We offer a complete suite of services designed for global entrepreneurs. Once your LLC is formed, we can act as your Registered Agent, assist with opening a bank account with third-party entities, handle tax filings with the IRS, and even set up a phone line with a U.S. number to give you a professional local presence. Additionally, we provide international tax advisory and accounting outsourcing to ensure your operation is compliant and efficient from day one."
+      "answer": "We can provide registered agent services, guidance and document preparation for third-party banking applications, tax-return preparation within the agreed scope, and support with phone-line setup. We also offer international tax advisory and accounting outsourcing. Banks, fintechs, payment processors, and authorities independently evaluate and decide their processes; our services do not guarantee approval or automatic compliance."
     },
     {
       "question": "My strategy requires more than a U.S. company. Can you assist me in forming holding or operating companies in other jurisdictions?",
-      "answer": "Absolutely. Our expertise extends to incorporating companies in a global network of key countries. Whether for asset structuring, tax optimization, or operational expansion, we manage the formation of entities in destinations such as the United Kingdom, Canada, Panama, Portugal, Chile, Mexico, Belize, and specialized jurisdictions like the British Virgin Islands and the Marshall Islands. We guide you in choosing the optimal jurisdiction for your specific goals."
+      "answer": "Yes. We provide guidance, planning, and document support for holding or operating structures in jurisdictions including the United Kingdom, Canada, Panama, Portugal, Chile, Mexico, Belize, the British Virgin Islands, and the Marshall Islands. Recommendations depend on your circumstances and may require local advisers or providers; each authority decides registration and timing."
     }
   ]
 }

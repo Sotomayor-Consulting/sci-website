@@ -99,7 +99,7 @@
       FASE 11 (promesas A/B + tech + botones):
        · El informe incorpora las promesas de las landings A/B: `INCLUYE` (EIN · agente registrado ·
          operating agreement · dirección · Mercury/Relay · Stripe) y `NO_REQ` (sin visa/SSN/viajar ·
-         en español · lista en semanas · planes desde USD 350).
+         en español · plazos sujetos a la autoridad · planes desde USD 350).
        · Persona B (ya tiene LLC, q2="4"): ROUTE_STEP.advisor_correct — copy de "corregir/optimizar",
          outcomes de 5472/1120 + cambio de estado. Verdict muestra "· ya con LLC".
        · Hooks B añadidos a HERO_HOOKS: atrasadas · estado · ordenar (además de dolares/patrimonio/estructura).
@@ -1395,8 +1395,9 @@
 
             <button class="btn-start" id="btnStart">Empezar el diagnóstico</button>
 
-            <p class="disclaimer">Esta herramienta ofrece orientación consultiva preliminar; no constituye asesoramiento
-                legal vinculante hasta revisar el caso en detalle.</p>
+            <p class="disclaimer">SCI es una consultora privada e independiente: no es una agencia gubernamental ni está
+                afiliada o respaldada por una. Brindamos orientación, preparación documental y acompañamiento; la autoridad
+                competente emite y decide los documentos y sus plazos. Esta herramienta ofrece orientación preliminar.</p>
         </div>
     </section>
 
@@ -1442,7 +1443,7 @@
                 <div class="mini-plans">
                     <div class="mini-plan">
                         <h4>Básico <span class="price">USD 350/año</span></h4>
-                        <p>Constitución ante el estado, EIN y agente residente.</p>
+                        <p>Preparación del registro estatal, solicitud del EIN y coordinación con el agente residente.</p>
                     </div>
                     <div class="mini-plan">
                         <h4>Estándar <span class="price">USD 600/año</span></h4>
@@ -1706,10 +1707,10 @@
         };
 
         // Siguiente paso + qué se lleva el cliente, POR CAMINO. Incorpora las promesas de las
-        // landings A/B (deliverables, "sin visa/SSN/viajar", "lista en semanas").
+        // landings A/B (deliverables y requisitos de visa/SSN/viaje).
         // La plataforma de incorporación es SIEMPRE un camino AUXILIAR — nunca la recomendación primaria.
-        const NO_REQ = "Sin visa · Sin SSN ni ITIN · Sin viajar · En español · Lista en semanas";
-        const INCLUYE = "EIN · Agente registrado · Operating Agreement · Dirección comercial · Cuenta bancaria de empresa · Pasarela de pagos internacional";
+        const NO_REQ = "Sin visa · Sin SSN ni ITIN · Sin viajar · En español · Plazos sujetos a la autoridad";
+        const INCLUYE = "Solicitud de EIN · Agente registrado · Operating Agreement · Dirección comercial · Acompañamiento bancario · Pasarela de pagos internacional";
 
         const ROUTE_STEP = {
             advisor: {

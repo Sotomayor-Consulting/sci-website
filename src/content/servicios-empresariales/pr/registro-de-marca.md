@@ -4,7 +4,7 @@ description: "Proteção e Registro de Propriedade Intelectual Global"
 main:
   id: 21
   content: |
-    Expandir sua presença comercial requer uma proteção sólida de sua identidade. Nosso serviço de registro de marca internacional foi desenvolvido para gerenciar a complexidade da propriedade intelectual em múltiplas jurisdições, assegurando que seu nome, logo e produtos contem com o respaldo legal necessário para competir com sucesso no mercado global.
+    Expandir sua presença comercial requer uma estratégia sólida para sua identidade. Nosso serviço de apoio ao registro internacional de marcas ajuda a gerenciar documentos e procedimentos de propriedade intelectual em múltiplas jurisdições.
   imgCard: "@/images/marca-2.avif"
   imgMain: "@/images/marca-2.avif"
   imgAlt: "Empresários em laptop"
@@ -18,34 +18,34 @@ tabs:
 longDescription:
   title: "Proteção de Marca em Nível Mundial"
   subTitle: |
-    Gerencie sua propriedade intelectual com total confiança. A burocracia dos registros internacionais já não precisa ser um obstáculo para seu crescimento. Oferecemos uma gestão integral que simplifica o processo de registro, permitindo que você proteja seus ativos intangíveis e assegure o cumprimento dos requisitos formais em cada país onde desejar operar.
+    Oferecemos orientação, preparação documental, apoio à apresentação e acompanhamento para facilitar o processo de registro e atender aos requisitos formais identificados em cada país. A SCI é uma empresa privada, não um órgão governamental de marcas; cada autoridade decide a registrabilidade, aceitação, aprovação e os prazos.
   btnTitle: "Agendar uma consulta"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
   - title: "Gestão de Processos"
-    subTitle: "Elaboramos e validamos toda a documentação técnica e legal exigida pelos escritórios de patentes e marcas no exterior."
+    subTitle: "Preparamos e revisamos a documentação técnica e administrativa identificada para apresentar a solicitação aos escritórios de marcas no exterior."
   - title: "Segurança Jurídica"
-    subTitle: "Garantimos que o processo cumpra com as normas locais de cada jurisdição, evitando rejeições por erros de forma ou fundo."
+    subTitle: "Revisamos a solicitação conforme os requisitos identificados de cada jurisdição para reduzir erros, sem garantir aceitação nem ausência de objeções ou recusas."
   - title: "Proteção de Ativos"
-    subTitle: "Assessoramos você sobre a melhor estratégia para proteger sua identidade corporativa e assegurar a exclusividade de seus produtos."
+    subTitle: "Orientamos você sobre alternativas para proteger sua identidade corporativa; o alcance e a exclusividade dos direitos dependem do registro concedido e da legislação aplicável."
 specificationsLeft:
   - title: "Planejamento de Registro Global"
     subTitle: "Desenhamos o roteiro para proteger sua marca em mercados estratégicos, selecionando as categorias e jurisdições mais relevantes para seu negócio."
   - title: "Validação de Requisitos Técnicos"
-    subTitle: "Revisamos exaustivamente que sua marca e documentação cumpram com os padrões internacionais para minimizar o risco de oposições."
+    subTitle: "Revisamos sua marca e documentação conforme os requisitos identificados para reduzir erros previsíveis, sem eliminar o risco de oposições."
   - title: "Gestão Documental Especializada"
-    subTitle: "Cuidamos da preparação e apresentação de formulários, traduções técnicas e certificados necessários para os organismos internacionais."
+    subTitle: "Apoiamos a preparação e apresentação de formulários, traduções técnicas e certificados identificados para as autoridades correspondentes."
   - title: "Análise de Disponibilidade"
     subTitle: "Avaliamos a viabilidade do registro nos territórios de interesse, identificando possíveis conflitos antes de iniciar os trâmites formais."
 specificationsRight:
   - title: "Proteção em Mercados-Chave"
     subTitle: "Oferecemos suporte especializado para o registro em potências econômicas como a União Europeia (Alemanha, França, Espanha), Estados Unidos e Ásia."
   - title: "Monitoramento de Processos"
-    subTitle: "Realizamos um acompanhamento ativo de suas solicitações de registro, informando sobre o progresso e os tempos de aprovação em cada país."
+    subTitle: "Acompanhamos suas solicitações e informamos sobre o andamento e os prazos estimados publicados ou comunicados por cada autoridade."
   - title: "Ligação Técnica Internacional"
-    subTitle: "Atuamos como seu representante técnico perante autoridades de propriedade intelectual, resolvendo requerimientos administrativos de forma eficiente."
+    subTitle: "Atuamos como elo administrativo e, quando houver autorização e habilitação profissional aplicáveis, podemos representar você perante a autoridade competente."
   - title: "Manutenção de Direitos"
-    subTitle: "Assessoramos você na vigilância e renovação de seus registros para assegurar que sua proteção legal se mantenha vigente a longo prazo."
+    subTitle: "Orientamos você sobre monitoramento e renovações para apoiar a continuidade dos direitos, sujeita aos requisitos e decisões de cada autoridade."
 blueprints:
   first: "@/images/icono.png"
   second: "@/images/icono.png"

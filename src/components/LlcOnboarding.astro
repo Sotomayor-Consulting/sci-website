@@ -67,15 +67,23 @@ const { activityGroups } = Astro.props as Props;
           <span class="mt-2 block text-primary">bien hecha</span>
         </h1>
       </div>
-      <Button
-        as="a"
-        href="#agendar"
-        variant="outline"
-        size="lg"
-        class="border-white/70 bg-transparent text-white hover:bg-white hover:text-[#0d2537] md:min-w-52"
-      >
-        Agendar asesoría gratis
-      </Button>
+      <div class="flex max-w-sm flex-col gap-3 md:items-end">
+        <Button
+          as="a"
+          href="#agendar"
+          variant="outline"
+          size="lg"
+          class="border-white/70 bg-transparent text-white hover:bg-white hover:text-[#0d2537] md:min-w-52"
+        >
+          Agendar asesoría gratis
+        </Button>
+        <p class="text-xs leading-relaxed text-white/60 md:text-right">
+          SCI es una consultora privada e independiente: no es una agencia
+          gubernamental ni está afiliada o respaldada por una. Brindamos
+          orientación, preparación documental y acompañamiento; la autoridad
+          competente decide la emisión y los plazos.
+        </p>
+      </div>
     </div>
 
     <div
@@ -84,8 +92,8 @@ const { activityGroups } = Astro.props as Props;
       <p
         class="mx-auto max-w-7xl px-5 text-sm leading-relaxed font-semibold sm:px-8 sm:text-base"
       >
-        Te guiamos para elegir el estado ideal para tu LLC y estructurarla
-        correctamente, evitando errores legales, fiscales y bancarios.
+        Te guiamos para evaluar el estado adecuado para tu LLC y estructurarla
+        con criterios legales, fiscales y bancarios, reduciendo riesgos.
       </p>
     </div>
   </section>

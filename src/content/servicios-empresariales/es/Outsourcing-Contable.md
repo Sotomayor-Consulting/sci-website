@@ -4,7 +4,7 @@ description: "Outsourcing Contable para LLCs en EE.UU."
 main:
   id: 12
   content: |
-    Liberar a tu empresa de las complejidades de la gestión contable es crucial para el crecimiento. Nuestro servicio de outsourcing contable te ofrece la oportunidad de delegar la totalidad de tus procesos financieros a un equipo de expertos, garantizando precisión, transparencia y un enfoque estratégico.
+    Nuestro servicio de outsourcing contable te permite delegar los procesos financieros incluidos en tu plan a un equipo especializado, con controles orientados a la precisión, la transparencia y el análisis estratégico.
   imgCard: "@/images/outsoursing-servicios.avif"
   imgMain: "@/images/outsoursing-servicios.avif"
   imgAlt: "Chicos trabajando en una laptop"
@@ -21,7 +21,7 @@ tabs:
 longDescription:
   title: "Outsourcing Contable para LLCs en EE.UU."
   subTitle: |
-    Nos encargamos de gestionar tu contabilidad de manera remota y eficiente, permitiéndote enfocarte en las decisiones que realmente impulsan tu negocio, mientras nosotros nos aseguramos de que tus finanzas estén en orden y cumplan con todas las normativas.
+    Gestionamos de forma remota los procesos contables contratados y te ayudamos a organizar la información financiera y atender los requisitos identificados. La exactitud y el cumplimiento dependen también de que la información entregada sea completa y de las normas aplicables.
   btnTitle: "Agendar una cita"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
@@ -30,21 +30,21 @@ descriptionList:
   - title: "Elaboración de estados financieros"
     subTitle: "Preparación de informes financieros clave, como el balance general y el estado de resultados, para que tengas una visión clara del desempeño de tu negocio."
   - title: "Conciliaciones bancarias"
-    subTitle: "Revisión y comparación de los registros de tu empresa con los estados de cuenta bancarios para asegurar la exactitud de tus datos financieros."
+    subTitle: "Revisión y comparación de los registros de tu empresa con los estados de cuenta bancarios para identificar y corregir posibles diferencias."
 specificationsLeft:
   - title: "Registro Contable Diario"
-    subTitle: "Nos encargamos de registrar y clasificar todas las transacciones financieras de tu negocio, incluyendo ingresos, gastos, activos y pasivos, asegurando la precisión de tus registros."
+    subTitle: "Registramos y clasificamos las transacciones financieras incluidas en el servicio, a partir de la documentación que proporciones, y señalamos diferencias que requieran aclaración."
   - title: "Preparación de Estados Financieros"
     subTitle: "Elaboramos informes financieros clave como el Balance General, el Estado de Resultados y el Estado de Flujo de Efectivo, proporcionándote una visión clara del desempeño financiero de tu empresa."
   - title: "Gestión de Cuentas por Pagar y por Cobrar"
-    subTitle: "Administramos tus cuentas, asegurando que las facturas a clientes se emitan y cobren a tiempo, y que los pagos a proveedores se realicen de manera eficiente."
+    subTitle: "Apoyamos la administración de cuentas por cobrar y pagar según el alcance contratado; la emisión, el cobro y el pago dependen de tus autorizaciones y de terceros."
   - title: "Análisis de Reportes Gerenciales"
     subTitle: "Te proporcionamos reportes financieros personalizados y análisis de datos clave para que tomes decisiones estratégicas y orientadas al crecimiento."
 specificationsRight:
   - title: "Conciliaciones Bancarias"
-    subTitle: "Realizamos conciliaciones periódicas entre los registros contables y los extractos bancarios para asegurar la exactitud de tus datos y detectar cualquier discrepancia a tiempo."
+    subTitle: "Realizamos conciliaciones periódicas entre los registros contables y los extractos bancarios para identificar discrepancias y solicitar las aclaraciones necesarias."
   - title: "Preparación de Impuestos y Declaraciones"
-    subTitle: "Nos encargamos de la preparación y presentación de tus declaraciones de impuestos, garantizando el cumplimiento de las normativas fiscales federales y estatales."
+    subTitle: "Preparamos y presentamos las declaraciones incluidas en el servicio con base en la información proporcionada, para apoyar el cumplimiento de las normas fiscales federales y estatales aplicables."
   - title: "Soporte en Auditorías"
     subTitle: "Te ofrecemos el apoyo y la documentación necesaria en caso de que tu empresa sea sometida a una auditoría por parte de las autoridades fiscales."
   - title: "Asesoría Financiera ContinuaApplications"

@@ -4,7 +4,7 @@ description: "Global Intellectual Property Protection and Registration"
 main:
   id: 7
   content: |
-    Expanding your business presence requires solid protection of your identity. Our international trademark registration service is designed to manage the complexity of intellectual property across multiple jurisdictions, ensuring your name, logo, and products have the necessary legal backing to compete successfully in the global market.
+    Expanding your business presence requires a sound identity strategy. Our international trademark filing support helps you manage intellectual-property documents and procedures across multiple jurisdictions.
   imgCard: "@/images/marca-2.avif"
   imgMain: "@/images/marca-2.avif"
   imgAlt: "Businesspeople on laptop"
@@ -18,34 +18,34 @@ tabs:
 longDescription:
   title: "Worldwide Brand Protection"
   subTitle: |
-    Manage your intellectual property with full confidence. The bureaucracy of international registrations no longer has to be an obstacle to your growth. We offer comprehensive management that simplifies the registration process, allowing you to protect your intangible assets and ensure compliance with formal requirements in each country where you wish to operate.
+    We provide guidance, document preparation, filing support, and follow-up to help you navigate the registration process and identified formal requirements in each country. SCI is a private firm, not a government trademark office; each authority decides registrability, acceptance, approval, and timing.
   btnTitle: "Schedule a consultation"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
   - title: "File Management"
-    subTitle: "We prepare and validate all technical and legal documentation required by patent and trademark offices abroad."
+    subTitle: "We prepare and review the technical and administrative documents identified for filing with trademark offices abroad."
   - title: "Legal Security"
-    subTitle: "We guarantee that the process complies with local regulations in each jurisdiction, avoiding rejections due to formal or substantive errors."
+    subTitle: "We review the application against identified local requirements to reduce errors, without guaranteeing acceptance or the absence of objections or refusals."
   - title: "Asset Protection"
-    subTitle: "We advise you on the best strategy to protect your corporate identity and ensure the exclusivity of your products."
+    subTitle: "We advise you on options for protecting your corporate identity; the scope and exclusivity of rights depend on the registration granted and applicable law."
 specificationsLeft:
   - title: "Global Registration Planning"
     subTitle: "We design the roadmap to protect your brand in strategic markets, selecting the most relevant categories and jurisdictions for your business."
   - title: "Technical Requirements Validation"
-    subTitle: "We thoroughly review that your brand and documentation comply with international standards to minimize the risk of oppositions."
+    subTitle: "We review your mark and documents against identified requirements to reduce foreseeable errors, without eliminating the risk of opposition."
   - title: "Specialized Document Management"
-    subTitle: "We handle the preparation and filing of forms, technical translations, and certificates required by international organizations."
+    subTitle: "We support the preparation and filing of forms, technical translations, and certificates identified for the relevant authorities."
   - title: "Availability Analysis"
     subTitle: "We evaluate the feasibility of registration in territories of interest, identifying potential conflicts before initiating formal proceedings."
 specificationsRight:
   - title: "Key Markets Protection"
     subTitle: "We offer specialized support for registration in economic powers such as the European Union (Germany, France, Spain), United States, and Asia."
   - title: "Process Monitoring"
-    subTitle: "We actively track your registration applications, informing you of progress and approval timelines in each country."
+    subTitle: "We track your applications and report status updates and estimated timelines published or communicated by each authority."
   - title: "International Technical Liaison"
-    subTitle: "We act as your technical representative before intellectual property authorities, efficiently resolving administrative requirements."
+    subTitle: "We serve as an administrative liaison and, where properly authorized and professionally qualified, may represent you before the relevant authority."
   - title: "Rights Maintenance"
-    subTitle: "We advise you on monitoring and renewing your registrations to ensure your legal protection remains in force long-term."
+    subTitle: "We advise you on monitoring and renewals to support continuity of rights, subject to each authority's requirements and decisions."
 blueprints:
   first: "@/images/icono.png"
   second: "@/images/icono.png"

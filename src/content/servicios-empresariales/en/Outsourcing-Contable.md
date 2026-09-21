@@ -4,7 +4,7 @@ description: "Accounting Outsourcing for LLCs in the USA"
 main:
   id: 1
   content: |
-    Freeing your company from the complexities of accounting management is crucial for growth. Our accounting outsourcing service offers you the opportunity to delegate all your financial processes to a team of experts, guaranteeing precision, transparency, and a strategic approach.
+    Our accounting outsourcing service lets you delegate the financial processes included in your plan to a specialized team, with controls designed to support accuracy, transparency, and strategic analysis.
   imgCard: "@/images/outsoursing-servicios.avif"
   imgMain: "@/images/outsoursing-servicios.avif"
   imgAlt: "Young people working on a laptop"
@@ -21,7 +21,7 @@ tabs:
 longDescription:
   title: "Accounting Outsourcing for LLCs in the USA"
   subTitle: |
-    We handle managing your accounting remotely and efficiently, allowing you to focus on the decisions that truly drive your business, while we ensure your finances are in order and comply with all regulations.
+    We remotely manage the contracted accounting processes and help organize your financial information and address identified requirements. Accuracy and compliance also depend on complete information and the rules that apply to your business.
   btnTitle: "Schedule a consultation"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
@@ -30,21 +30,21 @@ descriptionList:
   - title: "Financial Statement Preparation"
     subTitle: "Preparation of key financial reports, such as the balance sheet and income statement, giving you a clear view of your business performance."
   - title: "Bank Reconciliations"
-    subTitle: "Review and comparison of your company records with bank statements to ensure the accuracy of your financial data."
+    subTitle: "Review and comparison of company records with bank statements to identify and help correct potential differences."
 specificationsLeft:
   - title: "Daily Accounting Records"
-    subTitle: "We handle recording and classifying all financial transactions of your business, including income, expenses, assets, and liabilities, ensuring the accuracy of your records."
+    subTitle: "We record and classify transactions included in the service from the documentation you provide and flag differences that require clarification."
   - title: "Financial Statement Preparation"
     subTitle: "We prepare key financial statements such as the Balance Sheet, Income Statement, and Cash Flow Statement, providing you with a clear view of your company's financial performance."
   - title: "Accounts Payable and Receivable Management"
-    subTitle: "We administer your accounts, ensuring that customer invoices are issued and collected on time, and that supplier payments are made efficiently."
+    subTitle: "We support accounts receivable and payable administration within the contracted scope; invoicing, collection, and payment depend on your authorizations and third parties."
   - title: "Management Report Analysis"
     subTitle: "We provide personalized financial reports and key data analysis to help you make strategic, growth-oriented decisions."
 specificationsRight:
   - title: "Bank Reconciliations"
-    subTitle: "We perform periodic reconciliations between accounting records and bank statements to ensure the accuracy of your data and detect any discrepancies in time."
+    subTitle: "We perform periodic reconciliations between accounting records and bank statements to identify discrepancies and request needed clarification."
   - title: "Tax and Return Preparation"
-    subTitle: "We handle preparing and filing your tax returns, guaranteeing compliance with federal and state tax regulations."
+    subTitle: "We prepare and file returns included in the service based on the information provided, supporting compliance with applicable federal and state tax rules."
   - title: "Audit Support"
     subTitle: "We offer support and necessary documentation in case your company is subject to an audit by tax authorities."
   - title: "Continuous Financial Consulting"

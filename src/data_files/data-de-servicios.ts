@@ -47,17 +47,17 @@ export const dataLLC = {
 
   titulopricing: "Elige el plan de asesoría para tu LLC",
   descripcionpricing:
-    "Elige el plan que mejor se adapta a tu negocio y comienza a operar en EE. UU. con respaldo legal y tributario.",
+    "Elige el plan de consultoría que mejor se adapta a tu negocio. Los precios corresponden a honorarios profesionales; las tasas oficiales aplicables se cobran por separado.",
   planes: [
     {
       categoria: "normal",
       titulo: "Plan Básico",
-      descripcion: "Constituye tu LLC con lo esencial para operar legalmente.",
+      descripcion: "Recibe apoyo documental para solicitar la constitución de tu LLC.",
       precio: "350",
       boton: "Obtén el paquete básico",
       icono: "mingcute:check-fill",
       lista: [
-        "Gestión del registro de tu LLC ante el Estado.",
+        "Preparación y apoyo para presentar el registro de tu LLC ante el Estado.",
         "Acompañamiento en la solicitud del EIN ante el IRS.",
         "Agente Residente por un año.",
       ],
@@ -75,7 +75,7 @@ export const dataLLC = {
         "Los beneficios del Plan Básico y los beneficios del plan estándar, más:",
       lista: [
         "Planificación y diseño legal-tributario.",   
-        "Acompañamiento bancario (Mercury o Relay + Stripe).",
+        "Acompañamiento para solicitudes con Mercury o Relay y configuración de Stripe.",
         "Acompañamiento prioritario en la solicitud del EIN ante el IRS.",
       ],
       link: "https://app.sotomayorconsulting.com/start",
@@ -115,7 +115,7 @@ export const dataBanking = {
   categoria: "Banking",
   titulo: "Banking y cobros para tu empresa en EE. UU.",
   descripcion:
-    "Conecta tu empresa a la infraestructura financiera más sólida del mundo y cobra a clientes globales de forma segura y eficiente.",
+    "Te orientamos y preparamos la documentación para solicitar servicios financieros y de cobro de terceros. Cada proveedor evalúa y decide la aprobación de forma independiente.",
 
   /* Features */
   titulofeatures: "¿Que puede incluir nuestros planes?",
@@ -129,14 +129,14 @@ export const dataBanking = {
       svg: "relay",
       icono: "mingcute:check-circle-fill",
       titulo: "Procesador de pagos con Relay",
-      titulo2: "Activación de Relay",
+      titulo2: "Apoyo de solicitud para Relay",
       descripcion:
-        "Relay es una plataforma de pagos que permite a tu empresa cobrar con tarjeta de crédito y débito a clientes de cualquier parte del mundo de forma rápida, segura y profesional.",
+        "Relay ofrece servicios financieros empresariales sujetos a sus requisitos. Te apoyamos con la preparación documental y el onboarding; Relay decide la aprobación y los tiempos.",
       precio: "200",
       boton: "Hablar con un asesor",
       lista: [
-        "Hasta 20 cuentas corrientes separadas en una plataforma",
-        "Tarjetas de débito individuales para cada cuenta",
+        "Acceso a las funciones disponibles según el plan aprobado por Relay",
+        "Opciones de tarjetas de débito sujetas a elegibilidad",
         "Control de gastos por equipo/departamento",
         "Aprobaciones para transferencias ACH y pagos",
         "Integración con QuickBooks, Gusto y herramientas de nómina",
@@ -147,14 +147,14 @@ export const dataBanking = {
       pocision: "left",
       svg: "mercury",
       icono: "mingcute:check-circle-fill",
-      titulo: "Cuenta bancaria empresarial en Mercury Bank",
-      titulo2: "Apertura de cuenta Mercury",
+      titulo: "Solicitud de cuenta empresarial con Mercury",
+      titulo2: "Apoyo de solicitud para Mercury",
       descripcion:
-        "Mercury es una plataforma bancaria digital diseñada para empresas modernas. Permite gestionar tu dinero en EE. UU. de forma 100% online, segura y sin fricciones, ideal para empresas internacionales y no residentes.",
+        "Mercury es una plataforma financiera para empresas. Te orientamos y preparamos la documentación para su proceso de onboarding; Mercury y sus proveedores bancarios deciden la elegibilidad, aprobación y tiempos.",
       precio: "200",
       boton: "Hablar con un asesor",
       lista: [
-        "Cuenta bancaria en EE. UU. a nombre de tu empresa",
+        "Solicitud de cuenta empresarial en EE. UU.",
         "Sin sucursales físicas, gestión 100% digital",
         "Transferencias ACH y Wire",
         "Integración con Stripe y QuickBooks",
@@ -167,16 +167,16 @@ export const dataBanking = {
       svg: "stripe",
       icono: "mingcute:check-circle-fill",
       titulo: "Procesador de pagos con Stripe",
-      titulo2: "Activación de Stripe",
+      titulo2: "Apoyo de configuración de Stripe",
       descripcion:
-        "Stripe es una de las plataformas de pagos más utilizadas a nivel mundial. Permite a tu empresa cobrar con tarjeta de crédito y débito a clientes de cualquier parte del mundo de forma rápida, segura y profesional.",
+        "Stripe es una plataforma de pagos de terceros. Te apoyamos con la preparación y configuración de la solicitud; Stripe determina la disponibilidad, verificación y activación de la cuenta.",
       precio: "200",
       boton: "Hablar con un asesor",
       lista: [
         "Cobros con tarjetas internacionales",
         "Pagos recurrentes y suscripciones",
         "Facturación automática",
-        "Alta tasa de aprobación de pagos",
+        "Herramientas de gestión y optimización de pagos de Stripe",
         "Integración con sitios web y plataformas digitales",
       ],
       link: "https://wa.link/vq453r",
@@ -195,7 +195,7 @@ export const dataContabilidad = {
   categoria: "contabilidad",
   titulo: "Contabilidad para tu empresa.",
   descripcion:
-    "Mantén tu empresa en cumplimiento con las regulaciones fiscales estadounidenses. Nuestros contadores especializados preparan tus declaraciones y te asesoran en estrategias de optimización tributaria.",
+    "Apoya el cumplimiento fiscal de tu empresa en Estados Unidos. Nuestro equipo prepara declaraciones según el alcance contratado y te orienta sobre tus obligaciones y opciones tributarias.",
 
   /* Features */
   titulofeatures: "¿Qué incluye nuestro servicio de contabilidad?",
@@ -230,8 +230,8 @@ export const dataContabilidad = {
     {
       estado: "inactive",
       icono: "mingcute:safe-shield-2-fill",
-      titulo: "Representación IRS",
-      descripcion: "Te representamos ante el IRS si es necesario.",
+      titulo: "Apoyo en comunicaciones con el IRS",
+      descripcion: "Te orientamos y apoyamos en respuestas al IRS según el alcance contratado y las autorizaciones aplicables.",
       imagen:
         "https://images.unsplash.com/photo-1567449303183-ae0d6ed1498e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -278,7 +278,7 @@ export const dataitin = {
   categoria: "itin",
   titulo: "Asesoría para tu ITIN",
   descripcion:
-    "Te acompañamos en tu solicitud del ITIN ante el IRS, que es quien lo emite, sin enviar documentos físicos. El plazo lo define el IRS.",
+    "Te orientamos, preparamos la documentación y apoyamos la presentación de tu solicitud de ITIN. El IRS decide su emisión y el tiempo de procesamiento; cuando corresponda, revisamos contigo las alternativas para acreditar identidad sin enviar el pasaporte original.",
 
   /* Features */
   titulofeatures: "¿Qué es el ITIN?",
@@ -291,7 +291,7 @@ export const dataitin = {
     "Permite declarar impuestos personales en EE. UU.",
     "Requisito para socios o miembros de LLCs",
     "Facilita el cumplimiento fiscal ante el IRS",
-    "Proceso guiado y sin envío de pasaporte físico",
+    "Orientación sobre las opciones aceptadas para acreditar identidad",
   ],
 
   titulopricingitin: "Costo de la asesoría ITIN",
@@ -308,7 +308,7 @@ export const dataLegales = {
   categoria: "legales",
   titulo: "Servicios Legales",
   descripcion:
-    "Preparamos todos los documentos legales que tu empresa necesita para operar correctamente en Estados Unidos. Operating Agreement, resoluciones corporativas, enmiendas y más.",
+    "Preparamos documentos corporativos privados según las necesidades y el alcance contratado, como Operating Agreement, resoluciones y enmiendas. Los documentos oficiales los emite la autoridad competente.",
 
   listadelegales: [
     {

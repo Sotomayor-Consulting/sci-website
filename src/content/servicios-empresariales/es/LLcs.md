@@ -4,7 +4,7 @@ description: "Incorporación de LLCs en EE. UU."
 main:
   id: 11
   content: |
-    Te acompañamos en la creación de tu Limited Liability Company (LLC) en los Estados Unidos y te brindamos todos los servicios posteriores que puedes necesitar. Con nuestro servicio de incorporación, te guiamos a través de cada etapa del proceso. Nuestro equipo de expertos está listo para ofrecerte soluciones a la medida.
+    Te acompañamos en la preparación y presentación de la documentación para crear tu Limited Liability Company (LLC) en Estados Unidos y en los servicios posteriores que contrates. Nuestro equipo te orienta en cada etapa con soluciones adaptadas a tu proyecto.
   imgCard: "@/images/SLLc-servicio.avif"
   imgMain: "@/images/SLLc-servicio.avif"
   imgAlt: "Empresas en estados unidos"
@@ -18,7 +18,7 @@ tabs:
 longDescription:
   title: "Asesoría experta para emprender con una LLC en EE.UU."
   subTitle: |
-    En Sotomayor Consulting International acompañamos a empresarios globales a registrar y mantener al día su LLC en EEUU. Adicional a la incorporación, ofrecemos todos los servicios relacionados que tu LLC puede necesitar.
+    En Sotomayor Consulting International acompañamos a empresarios globales en la preparación, presentación y seguimiento de trámites para registrar y mantener su LLC en EE. UU. SCI es una firma privada y no forma parte ni actúa en nombre del gobierno de Estados Unidos; el Estado, el IRS y los proveedores privados deciden la aceptación, emisión y tiempos de cada trámite o servicio.
   btnTitle: "Agenda tu asesoría"
   btnURL: "/#precios"
 descriptionList:
@@ -27,23 +27,23 @@ descriptionList:
   - title: "Paso 2: Selecciona tu Plan"
     subTitle: "Elige entre los planes Básico, Estándar o Business según tus objetivos. Nosotros te acompañamos en todo el proceso."
   - title: "Paso 3: Incorporación, cuenta bancaria y entrega de documentos"
-    subTitle: "Gestionamos el registro de tu LLC ante el Estado, te acompañamos en la solicitud del EIN ante el IRS y actuamos como tu agente residente. Adicionalmente de acuerdo al plan, ofrecemos una serie de servicios adicionales"
+    subTitle: "Preparamos y presentamos la documentación de registro de tu LLC ante el Estado, te acompañamos en la solicitud del EIN ante el IRS y, cuando el plan lo incluye, prestamos el servicio de agente residente. También ofrecemos servicios adicionales según el plan."
 specificationsLeft:
   - title: "Cumplimiento Tributario Anual IRS"
-    subTitle: "Nos encargamos de preparar y enviar tus formularios fiscales al IRS, garantizando que tu LLC cumpla con sus obligaciones tributarias mientras usted se concentras en su negocio."
+    subTitle: "Preparamos y presentamos los formularios fiscales incluidos en tu servicio con base en la información que proporciones, para apoyar el cumplimiento de las obligaciones aplicables de tu LLC."
   - title: "Cumplimiento de la Solicitud de Exención BE-13"
-    subTitle: "La Solicitud de Exención BE-13 es una presentación ante la Oficina de Análisis Económico (BEA) de EE. UU. Le guiamos en el cumplimiento, asegurando que la solicitud de exención se presente correctamente y a tiempo."
+    subTitle: "La Solicitud de Exención BE-13 es una presentación ante la Oficina de Análisis Económico (BEA) de EE. UU. Te ayudamos a preparar y presentar la documentación dentro del plazo aplicable; la BEA determina su aceptación."
   - title: "Mantenimiento Anual de tu LLC"
-    subTitle: "Nos encargamos del agente residente, reporte anual ante el Estado y tasas estatales, para que tu empresa se mantenga al día sin complicaciones."
+    subTitle: "Te apoyamos con el agente residente, la preparación del reporte anual ante el Estado y la gestión de tasas estatales según el alcance contratado."
   - title: "Tu Agente Residente y tu LLC"
-    subTitle: "Un Agente Residente es el punto de contacto oficial entre tu LLC y el estado. Gestionamos este servicio para garantizar que cualquier documento legal o notificación gubernamental sea recibido y procesado a tiempo, protegiendo a tu empresa de posibles sanciones."
+    subTitle: "Un Agente Residente es el punto de contacto designado entre tu LLC y el Estado. Cuando prestamos este servicio, recibimos y canalizamos documentos legales o notificaciones gubernamentales conforme a sus condiciones, sin garantizar resultados ni la ausencia de sanciones."
 specificationsRight:
   - title: "Tranquilidad Fiscal"
-    subTitle: "La fiscalidad internacional no tiene que ser una preocupación. Nos aseguramos de que tu LLC cumpla con todos los requisitos fiscales del IRS, gestionando tus formularios para que tengas la tranquilidad de que tu empresa opera con total legalidad."
+    subTitle: "Te orientamos sobre requisitos fiscales identificados para tu LLC y preparamos los formularios incluidos en el servicio. El cumplimiento depende de los hechos, la información entregada y las decisiones de las autoridades."
   - title: "Mantén tu LLC en Buen Estado"
-    subTitle: "Evita multas y la disolución de tu LLC por incumplimiento. Nuestro servicio de mantenimiento anual incluye el reporte anual ante el estado, garantizando que tu empresa esté siempre al día con las regulaciones locales."
+    subTitle: "Nuestro servicio de mantenimiento anual puede incluir la preparación y presentación del reporte estatal para ayudarte a atender obligaciones periódicas. El Estado determina la aceptación y el estatus de la LLC."
   - title: "Gestión de Tasa y Reporte Estatal"
-    subTitle: "Cada estado tiene sus propios requisitos para mantener una LLC activa. Te ayudamos a gestionar el reporte anual y las tasas estatales, simplificando el proceso para que no tengas que preocuparte por las fechas de vencimiento o la documentación necesaria."
+    subTitle: "Cada estado tiene sus propios requisitos para mantener una LLC activa. Te ayudamos a identificar fechas, preparar el reporte anual y gestionar las tasas estatales incluidas en el servicio."
   - title: "El Cumplimiento no tiene que ser complicado"
     subTitle: "Requisitos regulatorios como la Solicitud de Exención BE-13 de la BEA son esenciales para obtener datos económicos precisos. Con nuestra guía experta, cumplir con esta presentación se convierte en un proceso sencillo y directo, permitiéndole concentrarse en hacer crecer su negocio sin distracciones."
 blueprints:

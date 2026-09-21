@@ -1,6 +1,6 @@
 {
   "title": "Elige el plan de asesoría para tu LLC",
-  "subTitle": "Elige el plan que mejor se adapta a tu negocio y comienza a operar en EE. UU. con respaldo legal y tributario.",
+  "subTitle": "Elige el plan de consultoría que mejor se adapta a tu negocio. Los precios son honorarios profesionales; las tasas oficiales aplicables se pagan por separado.",
   "badge": "Favorito",
   "thirdOption": "¿Necesitas ayuda?",
   "btnText": "Agenda una cita",
@@ -8,12 +8,12 @@
 
   "starterKit": {
     "name": "Plan Básico",
-    "description": "Constituye tu LLC con lo esencial para operar legalmente.",
+    "description": "Apoyo documental para solicitar la constitución de tu LLC.",
     "price": "350",
     "cents": ".00",
     "billingFrequency": "USD",
     "features": [
-      "Gestión del registro de tu LLC ante el Estado.",
+      "Preparación y apoyo para presentar el registro de tu LLC ante el Estado.",
       "Acompañamiento en la solicitud del EIN ante el IRS.",
       "Agente Residente por un año."
     ],
@@ -33,7 +33,7 @@
     "purchaseBtnTitle": "Obtén el plan Business",
     "purchaseLink": "https://app.sotomayorconsulting.com/start",
     "bussines" : [
-      "Planificación y diseño legal - tributario.", "Acompañamiento bancario (Mercury o Relay + Stripe).", "Acompañamiento prioritario en la solicitud del EIN ante el IRS"
+      "Planificación y diseño legal - tributario.", "Acompañamiento para solicitudes con Mercury o Relay y configuración de Stripe.", "Acompañamiento prioritario en la solicitud del EIN ante el IRS"
     ]
   },
 

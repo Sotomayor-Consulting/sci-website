@@ -7,7 +7,7 @@ interface Props {
 const { gtmId, dataLayerName = "dataLayer" } = Astro.props;
 ---
 
-<script type="text/partytown" set:html={`
+<script is:inline type="text/partytown" set:html={`
   (function (w, d, s, l, i) {
     w[l] = w[l] || [];
     w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });

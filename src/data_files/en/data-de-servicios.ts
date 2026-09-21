@@ -47,17 +47,17 @@ export const dataLLC = {
 
   titulopricing: "Choose the advisory plan for your LLC",
   descripcionpricing:
-    "Choose the plan that best fits your business and start operating in the U.S. with legal and tax support.",
+    "Choose the consulting plan that best fits your business. Prices are professional fees; applicable official fees are charged separately.",
   planes: [
     {
       categoria: "normal",
       titulo: "Basic Plan",
-      descripcion: "Form your LLC with the essentials to operate legally.",
+      descripcion: "Get document support to apply for the formation of your LLC.",
       precio: "350",
       boton: "Get the basic package",
       icono: "mingcute:check-fill",
       lista: [
-        "Management of your LLC registration with the State.",
+        "Preparation and filing support for your LLC registration with the State.",
         "Support with the EIN application before the IRS.",
         "Registered Agent for one year.",
       ],
@@ -75,7 +75,7 @@ export const dataLLC = {
         "The benefits of the Basic Plan and the benefits of the Standard Plan, plus:",
       lista: [
         "Legal and tax planning and design.",
-        "Banking support (Mercury or Relay + Stripe).",
+        "Application support for Mercury or Relay and Stripe setup.",
         "Priority support with the EIN application before the IRS.",
       ],
       link: "https://app.sotomayorconsulting.com/start",
@@ -115,7 +115,7 @@ export const dataBanking = {
   categoria: "Banking",
   titulo: "Banking and payments for your company in the U.S.",
   descripcion:
-    "Connect your company to the world's most solid financial infrastructure and charge global clients securely and efficiently.",
+    "We provide guidance and document preparation for applications to third-party financial and payment providers. Each provider independently evaluates and decides approval.",
 
   /* Features */
   titulofeatures: "What can our plans include?",
@@ -129,14 +129,14 @@ export const dataBanking = {
       svg: "relay",
       icono: "mingcute:check-circle-fill",
       titulo: "Payment processor with Relay",
-      titulo2: "Relay Activation",
+      titulo2: "Relay application support",
       descripcion:
-        "Relay is a payment platform that allows your company to charge clients anywhere in the world by credit and debit card quickly, securely, and professionally.",
+        "Relay offers business financial services subject to its requirements. We support document preparation and onboarding; Relay decides approval and timing.",
       precio: "200",
       boton: "Talk to an advisor",
       lista: [
-        "Up to 20 separate checking accounts on one platform",
-        "Individual debit cards for each account",
+        "Access to features available under the plan approved by Relay",
+        "Debit card options subject to eligibility",
         "Expense control by team/department",
         "Approvals for ACH transfers and payments",
         "Integration with QuickBooks, Gusto, and payroll tools",
@@ -147,14 +147,14 @@ export const dataBanking = {
       pocision: "left",
       svg: "mercury",
       icono: "mingcute:check-circle-fill",
-      titulo: "Business bank account at Mercury Bank",
-      titulo2: "Mercury Account Opening",
+      titulo: "Business account application with Mercury",
+      titulo2: "Mercury application support",
       descripcion:
-        "Mercury is a digital banking platform designed for modern companies. It lets you manage your money in the U.S. 100% online, securely, and without friction, ideal for international and non-resident companies.",
+        "Mercury is a financial platform for businesses. We provide guidance and document preparation for its onboarding process; Mercury and its banking providers decide eligibility, approval, and timing.",
       precio: "200",
       boton: "Talk to an advisor",
       lista: [
-        "U.S. bank account in your company's name",
+        "Application for a U.S. business account",
         "No physical branches, 100% digital management",
         "ACH and Wire transfers",
         "Integration with Stripe and QuickBooks",
@@ -167,16 +167,16 @@ export const dataBanking = {
       svg: "stripe",
       icono: "mingcute:check-circle-fill",
       titulo: "Payment processor with Stripe",
-      titulo2: "Stripe Activation",
+      titulo2: "Stripe setup support",
       descripcion:
-        "Stripe is one of the most widely used payment platforms in the world. It allows your company to charge clients anywhere in the world by credit and debit card quickly, securely, and professionally.",
+        "Stripe is a third-party payment platform. We support application preparation and setup; Stripe determines availability, verification, and account activation.",
       precio: "200",
       boton: "Talk to an advisor",
       lista: [
         "Charges with international cards",
         "Recurring payments and subscriptions",
         "Automatic invoicing",
-        "High payment approval rate",
+        "Stripe payment management and optimization tools",
         "Integration with websites and digital platforms",
       ],
       link: "https://wa.link/vq453r",
@@ -195,7 +195,7 @@ export const dataContabilidad = {
   categoria: "contabilidad",
   titulo: "Accounting for your company.",
   descripcion:
-    "Keep your company compliant with U.S. tax regulations. Our specialized accountants prepare your returns and advise you on tax optimization strategies.",
+    "Support your company's U.S. tax compliance. Our team prepares returns within the agreed scope and advises you on tax obligations and available planning options.",
 
   /* Features */
   titulofeatures: "What does our accounting service include?",
@@ -230,8 +230,8 @@ export const dataContabilidad = {
     {
       estado: "inactive",
       icono: "mingcute:safe-shield-2-fill",
-      titulo: "IRS Representation",
-      descripcion: "We represent you before the IRS if necessary.",
+      titulo: "Support with IRS communications",
+      descripcion: "We provide guidance and support with IRS responses within the agreed scope and under any required authorization.",
       imagen:
         "https://images.unsplash.com/photo-1567449303183-ae0d6ed1498e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -278,7 +278,7 @@ export const dataitin = {
   categoria: "itin",
   titulo: "Advisory for your ITIN",
   descripcion:
-    "We support you in your ITIN application before the IRS, which is the agency that issues it, without sending physical documents. The deadline is set by the IRS.",
+    "We provide guidance, document preparation, and filing support for your ITIN application. The IRS decides issuance and processing time; when applicable, we review accepted identity-verification alternatives with you so you do not send your original passport.",
 
   /* Features */
   titulofeatures: "What is the ITIN?",
@@ -291,7 +291,7 @@ export const dataitin = {
     "Allows you to file personal taxes in the U.S.",
     "Requirement for partners or members of LLCs",
     "Facilitates tax compliance before the IRS",
-    "Guided process without sending a physical passport",
+    "Guidance on accepted identity-verification options",
   ],
 
   titulopricingitin: "Cost of the ITIN advisory",
@@ -308,7 +308,7 @@ export const dataLegales = {
   categoria: "legales",
   titulo: "Legal Services",
   descripcion:
-    "We prepare all the legal documents your company needs to operate correctly in the United States. Operating Agreement, corporate resolutions, amendments, and more.",
+    "We prepare private corporate documents based on your needs and the agreed scope, such as an Operating Agreement, resolutions, and amendments. Official documents are issued by the appropriate authority.",
 
   listadelegales: [
     {
