@@ -1,14 +1,38 @@
+---
+interface Props {
+  gtmId: string;
+  dataLayerName?: string;
+}
+
+const { gtmId, dataLayerName = "dataLayer" } = Astro.props;
+---
+
 <!-- Google Tag Manager -->
-<script is:inline>
-  (function (w, d, s, l, i) {
-    w[l] = w[l] || [];
-    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-    var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s),
-      dl = l != "dataLayer" ? "&l=" + l : "";
-    j.async = true;
-    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-    f.parentNode.insertBefore(j, f);
-  })(window, document, "script", "dataLayer", "GTM-TNRQGDM");
-</script>
+<script
+  is:inline
+  set:html={`
+    (function () {
+      var gtmId = ${JSON.stringify(gtmId)};
+      var dataLayerName = ${JSON.stringify(dataLayerName)};
+      var isDebug = new URL(window.location.href).searchParams.has("gtm_debug");
+
+      if (document.querySelector('script[data-gtm-id="' + gtmId + '"]')) return;
+
+      var script = document.createElement("script");
+      script.type = isDebug ? "text/javascript" : "text/partytown";
+      script.setAttribute("data-gtm-id", gtmId);
+      script.text = \`
+        (function(w,d,s,l,i){
+          w[l]=w[l]||[];
+          w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+          var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+          j.async=true;
+          j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+          f.parentNode.insertBefore(j,f);
+        })(window,document,'script',${JSON.stringify(dataLayerName)},${JSON.stringify(gtmId)});
+      \`;
+      document.head.appendChild(script);
+    })();
+  `}
+/>
 <!-- End Google Tag Manager -->

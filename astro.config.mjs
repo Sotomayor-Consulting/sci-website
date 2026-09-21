@@ -25,6 +25,13 @@ export default defineConfig({
   integrations: [
     partytown({
       config: {
+        debug: false,
+        logCalls: false,
+        logGetters: false,
+        logSetters: false,
+        logImageRequests: false,
+        logScriptExecution: false,
+        logStackTraces: false,
         forward: ['dataLayer.push'],
       },
     }),
