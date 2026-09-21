@@ -380,7 +380,7 @@
             right: 0;
             display: flex;
             justify-content: center;
-            padding: 16px 0;
+            padding: 13px 0; /* barra de 66 px con el logo de 40 px, igual que el resto de landings */
             background: rgba(14, 38, 55, 0.95);
             backdrop-filter: blur(10px);
             z-index: 100;
@@ -388,8 +388,13 @@
         }
 
         .logo-top {
-            height: 48px;
+            height: 40px;
             filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        @media (max-width: 430px) {
+            .logo-bar { padding: 16px 0; }
+            .logo-top { height: 34px; }
         }
 
         .hero-content {
