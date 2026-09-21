@@ -36,6 +36,11 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap"
     rel="stylesheet"
   />
+  <!-- Poppins + Open Sans: tipografía del nav y el hero (igual que gracias-por-tu-registro) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
   <link
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400..500,0..1&icon_names=account_balance,arrow_forward,calendar_month,check_circle,close,request_quote,route,schedule,sms&display=block"
     rel="stylesheet"
@@ -52,7 +57,9 @@
   />
 
   <link rel="stylesheet" href="/reserva-pendiente/tailwind.css?v=20260920l" />
-  <link rel="stylesheet" href="/reserva-pendiente/styles.css?v=20260921a" />
+  <link rel="stylesheet" href="/reserva-pendiente/styles.css?v=20260921b" />
+
+  <script>document.documentElement.classList.add("js")</script>
 
   <!-- Tracking configuration -->
   <script>
@@ -165,12 +172,9 @@
   <a class="skip-link" href="#inicio">Saltar al contenido</a>
 
   <!-- Header -->
-  <header class="bg-brand">
-    <nav
-      class="mx-auto flex max-w-page items-center justify-between px-6 py-3 md:px-10 md:py-4 lg:px-14"
-      aria-label="Navegación principal"
-    >
-      <a href="#inicio" class="flex items-center" aria-label="Sotomayor Consulting International, ir al inicio">
+  <header class="site-header" id="site-header">
+    <div class="site-header__wrap">
+      <a href="#inicio" class="site-header__brand" aria-label="Sotomayor Consulting International, ir al inicio">
         <img
           src="/images/logos/logo_azul_horizontal-320.png"
           srcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w"
@@ -178,7 +182,6 @@
           width="853"
           height="319"
           alt="Sotomayor Consulting International"
-          class="h-[72.2px] w-auto md:h-[83.3px]"
           loading="eager"
           fetchpriority="high"
           decoding="async"
@@ -189,12 +192,11 @@
         href="#calendario"
         data-track-event="cta_header_calendar"
         data-track-label="Elegir horario header"
-        class="hidden rounded-full bg-white px-5 py-2.5 text-sm font-bold text-brand transition hover:bg-surfaceSubtle md:inline-flex"
+        class="site-header__cta"
       >
         Elegir horario
-        <span class="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
       </a>
-    </nav>
+    </div>
   </header>
 
   <main id="inicio">
@@ -203,7 +205,7 @@
       <div class="hero-bg" aria-hidden="true"><picture><source media="(max-width:700px)" srcset="/images/hero/hero-business-m-720.avif" type="image/avif"><img src="/images/hero/hero-business-1920.avif" srcset="/images/hero/hero-business-1280.avif 1280w, /images/hero/hero-business-1920.avif 1920w" sizes="100vw" alt="" width="1920" height="762" fetchpriority="high" decoding="async"></picture></div>
       <div class="hero-inner mx-auto flex max-w-page flex-col items-center px-4 md:px-6 lg:px-8">
         <p class="hero-badge rise" style="--i: 0">
-          <span class="material-symbols-outlined icon-filled" aria-hidden="true">schedule</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="#c0872e"/><path d="M12 6.8V12l3.4 2" fill="none" stroke="#0e2438" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Agenda Pendiente
         </p>
 
@@ -680,6 +682,44 @@
             // margen para que terminen las redirecciones internas de Zcal antes de tomar el historial de referencia
             window.setTimeout(startZcalStepWatch, 1500);
           });
+        }
+
+        // Cabecera fija: el CTA aparece solo al pasar el CTA del hero (evita dos CTA a la vez)
+        var siteHeader = document.getElementById("site-header");
+        var heroCtaEl = document.getElementById("hero-cta");
+        if (siteHeader && heroCtaEl && "IntersectionObserver" in window) {
+          new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                siteHeader.classList.toggle("cta-on", !entry.isIntersecting);
+              });
+            },
+            { threshold: 0, rootMargin: "-70px 0px 0px 0px" }
+          ).observe(heroCtaEl);
+        } else if (siteHeader) {
+          siteHeader.classList.add("cta-on");
+        }
+
+        // En móvil la cabecera se esconde mientras la tarjeta del calendario pasa bajo ella (el CSS decide si aplica)
+        var awayCard = document.getElementById("calendario");
+        if (siteHeader && awayCard) {
+          var awayTicking = false;
+          var updateHeaderAway = function () {
+            awayTicking = false;
+            var box = awayCard.getBoundingClientRect();
+            var headerHeight = siteHeader.offsetHeight;
+            siteHeader.classList.toggle("is-away", box.top < headerHeight && box.bottom > headerHeight);
+          };
+          window.addEventListener(
+            "scroll",
+            function () {
+              if (awayTicking) return;
+              awayTicking = true;
+              window.requestAnimationFrame(updateHeaderAway);
+            },
+            { passive: true }
+          );
+          updateHeaderAway();
         }
 
         var mobileStickyCta = document.getElementById("mobile-sticky-cta");
