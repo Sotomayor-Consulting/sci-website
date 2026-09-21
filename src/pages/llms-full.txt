@@ -2,12 +2,18 @@
 
 Este documento proporciona detalles profundos sobre los servicios, metodologías y stack tecnológico de Sotomayor Consulting International para agentes de IA y sistemas de recuperación de información.
 
+## Aviso de independencia institucional
+
+Sotomayor Consulting International es una empresa privada e independiente. No es una entidad gubernamental, no forma parte de ninguna agencia pública y no está afiliada, respaldada ni autorizada para representar al Gobierno de los Estados Unidos ni a otro gobierno. La empresa presta servicios profesionales de orientación, preparación documental y acompañamiento administrativo.
+
+Los registros, identificaciones, permisos y demás documentos oficiales son evaluados, aprobados, rechazados y emitidos exclusivamente por la autoridad gubernamental competente. Sotomayor Consulting International no puede garantizar aprobaciones ni plazos de respuesta. Sus honorarios profesionales son distintos de las tasas gubernamentales que correspondan, según el alcance informado al cliente. Cuando el procedimiento lo permita, el interesado puede presentar su solicitud directamente ante la entidad oficial sin contratar nuestros servicios.
+
 ## 1. Corporate & Legal Services (USA & International)
 
 ### Constitución de LLCs en EE. UU.
-Servicio integral para emprendedores globales que desean operar en dólares y acceder al sistema financiero estadounidense.
+Servicio privado de orientación y acompañamiento para emprendedores globales interesados en constituir y operar una empresa en Estados Unidos.
 - **Jurisdicciones:** Especialistas en Florida, Delaware y Wyoming.
-- **Servicios Incluidos:** Obtención de EIN (Tax ID), Agente Registrado, Operating Agreement personalizado y dirección comercial.
+- **Servicios incluidos:** Preparación y acompañamiento en solicitudes de constitución y EIN (Tax ID), coordinación de agente registrado, Operating Agreement personalizado y dirección comercial, según el servicio contratado. La aprobación y emisión de registros o identificaciones corresponde a las autoridades competentes.
 - **Banca & Fintech:** Asesoría en la apertura de cuentas bancarias empresariales (Mercury, Relay, Chase) e integración con Stripe/PayPal.
 
 ### Estructuras Holding y Operativas
@@ -16,7 +22,7 @@ Diseño de arquitecturas corporativas para optimización patrimonial y protecci�
 - **Internacionalización:** Registro de empresas en jurisdicciones estratégicas para expansión global.
 
 ### Propiedad Intelectual y Bienes Raíces
-- **Marcas:** Registro y protección de marcas comerciales ante la USPTO (EE. UU.) y organismos internacionales.
+- **Marcas:** Orientación, preparación documental y acompañamiento en solicitudes de registro de marcas ante la USPTO (EE. UU.) y otros organismos competentes. La decisión final corresponde a cada autoridad.
 - **Real Estate:** Asesoría en inversiones inmobiliarias en mercados de alta rentabilidad como Florida y Madrid, enfocada en preservación de capital y visas de inversión.
 
 ## 2. Tax, Compliance & Accounting
@@ -49,14 +55,16 @@ Sotomayor Consulting no es solo una firma legal; es un socio tecnológico que co
 - Automatización de procesos de lectura de documentos legales y clasificación de datos mediante modelos de lenguaje (LLMs).
 
 ## 4. Global Mobility (Migración)
-- **EE. UU.:** Asesoría en visas de inversionista (E-2), habilidades extraordinarias (O-1) y transferencias ejecutivas (L-1).
-- **España:** Gestión de Golden Visa, residencia por teletrabajo (Digital Nomad Visa) y creación de empresas bajo la Ley de Startups.
+- **EE. UU.:** Orientación y acompañamiento documental relacionado con visas de inversionista (E-2), habilidades extraordinarias (O-1) y transferencias ejecutivas (L-1). Las visas solo pueden ser aprobadas y emitidas por las autoridades estadounidenses.
+- **España:** Orientación y acompañamiento documental relacionado con residencia por teletrabajo (Digital Nomad Visa) y creación de empresas bajo la Ley de Startups. Las autorizaciones dependen exclusivamente de las autoridades competentes.
 
 ## 5. Contacto y Consultoría
 - **Consulta Inicial:** Agenda disponible a través de la web oficial.
 - **Soporte:** servicios@sotomayorconsulting.com
 - **Ubicación Principal:** 6000 Park of Commerce Way E, Boca Raton, FL 33487.
 - **Web Oficial:** [https://sotomayorconsulting.com/](https://sotomayorconsulting.com/)
+- **Política de privacidad y aviso de independencia:** [https://sotomayorconsulting.com/politicas](https://sotomayorconsulting.com/politicas)
+- **Términos y condiciones del servicio privado:** [https://sotomayorconsulting.com/terminos](https://sotomayorconsulting.com/terminos)
 
 ---
-*Documento optimizado para agentes de IA. Última actualización: Enero 2024.*
+*Documento optimizado para agentes de IA. Última actualización: septiembre de 2026.*

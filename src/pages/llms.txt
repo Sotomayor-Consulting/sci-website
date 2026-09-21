@@ -2,14 +2,19 @@
 
 > Firma boutique de consultoría legal, fiscal y tecnológica especializada en expansión internacional, creación de LLCs en EE. UU. y digitalización empresarial.
 
+## Independent Private Service Disclaimer
+Sotomayor Consulting International es una empresa privada e independiente. No es una entidad gubernamental ni está afiliada, respaldada o autorizada para representar a ninguna agencia de gobierno. Ofrece orientación, preparación documental y acompañamiento administrativo; no emite documentos oficiales ni decide sobre solicitudes.
+
+Toda aprobación, rechazo, plazo y emisión de registros, identificaciones, permisos o visas depende exclusivamente de la autoridad gubernamental competente. Los honorarios profesionales son distintos de las tasas gubernamentales aplicables, según el alcance informado al cliente. Cuando esté permitido, el usuario puede realizar el trámite directamente ante la entidad oficial sin contratar a Sotomayor Consulting International.
+
 ## Business Profile
 Sotomayor Consulting International facilita la entrada de clientes globales al mercado estadounidense y europeo. Cubrimos el ciclo de vida completo de un negocio internacional: desde la constitución legal y cumplimiento fiscal hasta la infraestructura tecnológica avanzada (IA, automatizaciones y desarrollo web).
 
 ## Core Capabilities
-* **Legal & Corporate:** Constitución de LLCs en Florida/EE. UU., holdings internacionales y protección de marcas.
+* **Legal & Corporate:** Orientación, preparación documental y acompañamiento para constituir LLCs en Florida/EE. UU., estructurar holdings internacionales y presentar solicitudes de marcas ante las autoridades competentes.
 * **Compliance & Tax:** Asesoría tributaria internacional, outsourcing contable y cumplimiento normativo (Fintech/Stripe).
 * **Technology & AI:** Implementación de infraestructuras digitales usando IA, n8n, Python, y frameworks modernos como Astro.
-* **Global Mobility:** Servicios migratorios para empresarios en EE. UU. y España, junto con asesoría en bienes raíces (Florida/Madrid).
+* **Global Mobility:** Orientación y acompañamiento documental privado en procesos migratorios para empresarios en EE. UU. y España, junto con asesoría en bienes raíces (Florida/Madrid). Las decisiones migratorias corresponden exclusivamente a las autoridades competentes.
 
 ## Technical Stack & Innovation
 Integramos consultoría tradicional con automatización de vanguardia:
@@ -28,9 +33,11 @@ Emprendedores, PYMES y corporaciones que buscan:
 - **Email:** [servicios@sotomayorconsulting.com](mailto:servicios@sotomayorconsulting.com)
 - **Phone:** +1 (754) 225-2904
 - **Address:** 6000 Park of Commerce Way E, Boca Raton, FL 33487
+- **Privacy & Independence Notice:** [https://sotomayorconsulting.com/politicas](https://sotomayorconsulting.com/politicas)
+- **Terms for Private Services:** [https://sotomayorconsulting.com/terminos](https://sotomayorconsulting.com/terminos)
 
 ## Conversion Goals
-- Registro y creación de LLCs en EE. UU.
+- Contratación de acompañamiento profesional privado para preparar y presentar solicitudes relacionadas con LLCs en EE. UU.
 - Desarrollo de infraestructura web y automatización de procesos con IA.
 - Consultoría para formación de holdings y expansión internacional.
 
