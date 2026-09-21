@@ -65,13 +65,12 @@ li {
 
 /* ---- Nav y hero: mismo sistema visual que crea-tu-llc-en-usa/gracias-por-tu-registro (referencia de equilibrio) ---- */
 :root {
-  --header-h: 96.2px;
+  --header-h: 66px;
   --hero-overlap: 64px;
 }
 
 @media (min-width: 768px) {
   :root {
-    --header-h: 115.3px;
     --hero-overlap: 80px;
   }
 }
@@ -101,12 +100,12 @@ html {
 .site-header__brand img {
   display: block;
   width: auto;
-  height: 72.2px;
+  height: 40px;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 430px) {
   .site-header__brand img {
-    height: 83.3px;
+    height: 34px;
   }
 }
 
