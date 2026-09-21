@@ -10,35 +10,16 @@ const { gtmId, dataLayerName = "dataLayer" } = Astro.props;
 <!-- Google Tag Manager -->
 <script
   is:inline
+  data-cfasync="false"
   set:html={`
-    (function () {
-      var gtmId = ${JSON.stringify(gtmId)};
-      var dataLayerName = ${JSON.stringify(dataLayerName)};
-      var url = new URL(window.location.href);
-      var isLocalhost = url.hostname === "localhost" || url.hostname === "127.0.0.1";
-      var isDebug =
-        isLocalhost ||
-        url.searchParams.has("gtm_debug") ||
-        url.searchParams.has("gtm_preview") ||
-        url.searchParams.has("gtm_auth");
-
-      if (document.querySelector('script[data-gtm-id="' + gtmId + '"]')) return;
-
-      var script = document.createElement("script");
-      script.type = isDebug ? "text/javascript" : "text/partytown";
-      script.setAttribute("data-gtm-id", gtmId);
-      script.text = \`
-        (function(w,d,s,l,i){
-          w[l]=w[l]||[];
-          w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-          var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-          j.async=true;
-          j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-          f.parentNode.insertBefore(j,f);
-        })(window,document,'script',${JSON.stringify(dataLayerName)},${JSON.stringify(gtmId)});
-      \`;
-      document.head.appendChild(script);
-    })();
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script',${JSON.stringify(dataLayerName)},${JSON.stringify(gtmId)});
   `}
 />
 <!-- End Google Tag Manager -->

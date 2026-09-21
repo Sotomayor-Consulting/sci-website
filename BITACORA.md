@@ -234,6 +234,12 @@ Se añadió a `crea-tu-llc-en-usa/gracias-por-tu-registro` el mismo popup por in
 - **Copy**: tuteo (como el resto de la página), sin duración ni "gratuita" ("Sin compromiso."). El popup no se oculta por la barra fija móvil: el `<dialog>` la tapa mientras está abierto.
 - **Tracking**: `help_popup_shown` (dataLayer), `cta_click` con `popup-calendar`/`popup-wa` (handler genérico de `a[data-cta]`; el de WhatsApp dispara `Contact`) y `calendar_scroll_cta_clicked` con `source_context: help_popup`. Nota preexistente: el CTA del hero se registra con `source_context: other` (falta mapear `.hero` en el handler).
 
+### 3.9 Google Tag Manager y Cloudflare Rocket Loader (2026-09-21)
+
+- Se retiró `@astrojs/partytown` del proyecto. GTM `GTM-TNRQGDM` vuelve a cargarse con el snippet oficial asíncrono en el hilo principal; el modo híbrido anterior (`text/partytown` en producción y script directo en debug/local) impedía una detección consistente en Tag Assistant y complicaba `dataLayer` y los píxeles de terceros.
+- Los scripts de arranque de GTM en `MainLayout.astro` y `GoogleTagManager.astro` llevan `data-cfasync="false"` porque Cloudflare Rocket Loader estaba reescribiendo su `type` y demorando su ejecución. Si Cloudflare ignora esa exclusión, desactivar Rocket Loader para las rutas afectadas mediante una Configuration Rule.
+- El resolvedor DNS local `ifibramax.local` (`200.63.105.194`) devolvía NXDOMAIN para `www.googletagmanager.com`, mientras los DNS públicos sí resolvían. Si GTM sigue sin cargar tras el despliegue, separar este bloqueo de red local del comportamiento del sitio y probar con `1.1.1.1` o `8.8.8.8`.
+
 ---
 
 ## 4. Infraestructura fuera de git (la parte crítica)
