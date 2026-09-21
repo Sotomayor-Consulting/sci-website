@@ -5,7 +5,7 @@
   z-index: 60;
   transform: translateY(-150%);
   border-radius: 0.5rem;
-  background: #0f172a;
+  background: #0d2636;
   color: #fff;
   padding: 0.75rem 1rem;
   font-weight: 700;
@@ -16,50 +16,453 @@
 }
 
 :focus-visible {
-  outline: 3px solid #0f172a;
+  outline: 3px solid #0d2636;
   outline-offset: 3px;
+}
+
+header :focus-visible,
+footer :focus-visible,
+.hero :focus-visible {
+  outline-color: #fff;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
 }
 
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 430, "GRAD" 0, "opsz" 24;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
 }
 
 .icon-filled {
   font-variation-settings: "FILL" 1, "wght" 430, "GRAD" 0, "opsz" 24;
 }
 
+/* Hero: azul de marca con un degradado vertical casi imperceptible (arranca en el mismo azul del header, para que se funda)
+   y un leve levantamiento tonal detrás del titular */
+.hero {
+  background-color: #0d2636;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 50% 46%, rgba(35, 84, 116, 0.34), rgba(13, 38, 54, 0) 100%),
+    linear-gradient(180deg, #0d2636 0%, #11304a 100%);
+}
+
+/* Más compacto arriba (el logo ya da aire) y +32 px de separación antes de la tarjeta del calendario */
+.hero-inner {
+  padding-top: 0.25rem;
+  padding-bottom: 8rem;
+}
+
+@media (min-width: 768px) {
+  .hero-inner {
+    padding-top: 0.5rem;
+    padding-bottom: 10rem;
+  }
+}
+
+/* Etiqueta fina: poca altura, borde sutil e icono pequeño */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  margin: 0 0 1.75rem;
+  padding: 0.1875rem 0.6875rem 0.1875rem 0.4375rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+.hero-badge .material-symbols-outlined {
+  font-size: 14px;
+  color: #b98d33;
+}
+
+@media (min-width: 768px) {
+  .hero-badge {
+    margin-bottom: 2.25rem;
+  }
+}
+
+/* Titular en 3 líneas (escritorio); en móvil cada bloque puede partirse */
+.hero-title {
+  max-width: 36rem;
+  color: #fff;
+  font-size: clamp(1.5rem, 0.95rem + 2.5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+}
+
+.hero-line {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    max-width: none;
+  }
+
+  .hero-line {
+    white-space: nowrap;
+  }
+}
+
+/* Texto corto sobre el titular: más pequeño, dorado y con peso 600 (el dorado se reserva a este texto, a "globalmente" y a los iconos) */
+.hero-kicker {
+  display: block;
+  margin-bottom: 1.25rem;
+  color: #b98d33;
+  font-size: clamp(0.9375rem, 0.9rem + 0.3vw, 1.0625rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.015em;
+}
+
+/* El dorado es solo un acento: una palabra */
+.hero-accent {
+  color: #b98d33;
+  font-size: calc(1em + 2px);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.hero-sub {
+  margin: 1.75rem 0 0;
+  max-width: 33rem;
+  color: #d0d7dc;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.85;
+}
+
+@media (min-width: 768px) {
+  .hero-sub {
+    margin-top: 2rem;
+    font-size: 1.0625rem;
+  }
+}
+
+/* CTA: 50 px de alto, más ancho, radio 10 px, semibold y flecha fina */
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.875rem;
+  min-height: 50px;
+  min-width: min(100%, 19rem);
+  margin-top: 2.5rem;
+  padding: 0.75rem 2.25rem;
+  border-radius: 10px;
+  background: #fff;
+  color: #0d2636;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.45);
+  transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.hero-cta:hover {
+  background: #eef2f5;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px -12px rgba(0, 0, 0, 0.5);
+}
+
+.hero-cta:active {
+  transform: none;
+}
+
+/* Tres indicadores con icono lineal fino (mismo orden que la propuesta de valor) */
+.hero-indicators {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  column-gap: clamp(1.5rem, 6vw, 3.5rem);
+  margin: 2.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-indicators li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.hero-indicators svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  fill: none;
+  stroke: #b98d33;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (min-width: 768px) {
+  .hero-indicators {
+    margin-top: 2.5rem;
+  }
+
+  .hero-indicators li {
+    flex-direction: row;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+  }
+}
+
+/* Línea de confianza bajo el CTA: texto corto separado por puntos */
+.hero-points {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.375rem 0;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: rgba(208, 215, 220, 0.78);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.hero-points li {
+  display: flex;
+  align-items: center;
+}
+
+.hero-points li + li::before {
+  content: "";
+  flex: none;
+  width: 3px;
+  height: 3px;
+  margin-inline: 0.8em;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Tarjeta del calendario: radio 14 px, borde gris casi imperceptible y sombra muy suave */
+.calendar-card {
+  border: 1px solid rgba(13, 38, 54, 0.07);
+  border-radius: 14px;
+  box-shadow: 0 32px 72px -40px rgba(6, 18, 27, 0.26), 0 8px 20px -12px rgba(6, 18, 27, 0.07), 0 1px 3px rgba(6, 18, 27, 0.05);
+}
+
+.calendar-head {
+  padding: 1.75rem 1.25rem 1.125rem;
+  border-bottom: 1px solid rgba(13, 38, 54, 0.07);
+}
+
+.calendar-sub {
+  margin-top: 0.375rem;
+  color: #5b6b78;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.calendar-title {
+  color: #0d2636;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+@media (min-width: 640px) {
+  .calendar-head {
+    padding: 2.125rem 2rem 1.5rem;
+  }
+
+  .calendar-title {
+    font-size: 1.3125rem;
+  }
+}
+
+/* Recorte del encabezado interno de Zcal (avatar, nombre, título y duración).
+   --crop = alto del encabezado de Zcal + 20 px de margen; --view = alto visible del calendario.
+   Medidas según el ancho del iframe: <440px 305, 440-599px 273, >=600px 300 (px donde termina el encabezado). */
+.agenda-viewport {
+  container-type: inline-size;
+}
+
+.agenda-crop {
+  --crop: 325px;
+  --view: 480px;
+  position: relative;
+  height: var(--view);
+  overflow: hidden;
+  background: #fff;
+}
+
 .agenda-frame {
   display: block;
   width: 100%;
-  height: 720px;
-  min-height: 720px;
+  height: calc(var(--view) + var(--crop));
+  margin-top: calc(var(--crop) * -1);
   border: 0;
   background: #fff;
 }
 
+@container (min-width: 440px) {
+  .agenda-crop {
+    --crop: 293px;
+    --view: 480px;
+  }
+}
+
+@container (min-width: 600px) {
+  .agenda-crop {
+    --crop: 320px;
+    --view: 480px;
+  }
+}
+
+/* Tras elegir fecha, Zcal muestra horas y formulario: se quita el recorte (esas vistas empiezan arriba del todo) y el
+   iframe crece hasta el alto real de la vista, para que no haya scroll interno ni campos cortados por abajo.
+   Alturas medidas (px): horas ≈ 520 con 4 franjas; formulario móvil 892 (1011 con errores de validación) y en ancho
+   ≥ 600 px 1055 (1173 con errores; Zcal añade el avatar encima). data-step="form" es también el valor seguro cuando no
+   se puede saber el paso (historial saturado, teclado abierto). */
+.agenda-crop[data-step] {
+  --crop: 0px;
+  --view: 1080px;
+}
+
+.agenda-crop[data-step="times"] {
+  --view: 760px;
+}
+
+@container (min-width: 600px) {
+  .agenda-crop[data-step] {
+    --view: 1240px;
+  }
+
+  .agenda-crop[data-step="times"] {
+    --view: 820px;
+  }
+}
+
+/* Teléfonos muy pequeños (≤ 359 px): la tarjeta del calendario va de borde a borde. Zcal necesita ≥ ~300 px de ancho: con menos corta la columna del domingo y la flecha de mes siguiente
+   (a 320 px el iframe quedaba de 286 px). */
+@media (max-width: 359px) {
+  .calendar-card {
+    margin-inline: -1rem;
+    border-inline: 0;
+    border-radius: 0;
+  }
+}
+
+/* MÓVIL Y TÁCTIL: nunca se recorta. El recorte solo es seguro si se sabe en qué paso está Zcal, y esa señal (history.length
+   del iframe) no es fiable en teléfonos: si falla, el recorte tapa las horas o los primeros campos y la reserva es imposible.
+   Sin recorte se ve la cabecera de Zcal en el primer paso (cuesta estética) pero todo el proceso queda siempre visible.
+   Alto base 1040 px (formulario 892 px sin errores, 1011 con ellos); con el paso "form" detectado sube a 1080 px (1011 con errores). */
+@media (pointer: coarse), (max-width: 767px) {
+  .agenda-crop,
+  .agenda-crop[data-step] {
+    --crop: 0px;
+    --view: 1040px;
+  }
+
+  .agenda-crop[data-step="form"] {
+    --view: 1080px;
+  }
+
+  @container (min-width: 600px) {
+    .agenda-crop[data-step="form"] {
+      --view: 1240px;
+    }
+  }
+}
+
 .mobile-sticky-cta {
-  display: none;
+  visibility: hidden;
   transform: translateY(110%);
   opacity: 0;
   pointer-events: none;
-  transition: transform 220ms ease, opacity 220ms ease;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  transition: transform 220ms ease, opacity 220ms ease, visibility 0s linear 220ms;
 }
 
 .mobile-sticky-cta.is-visible {
-  display: block;
+  visibility: visible;
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
+  transition-delay: 0s;
 }
 
-@media (max-width: 640px) {
-  body {
-    padding-bottom: 5.25rem;
+/* Popup de ayuda (elemento <dialog> nativo: foco atrapado, Esc cierra) */
+.help-popup {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(calc(100vw - 2rem), 28rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 1.25rem;
+  background: #fff;
+  color: #17303f;
+  box-shadow: 0 32px 80px -24px rgba(0, 0, 0, 0.55);
+}
+
+.help-popup:focus {
+  outline: none;
+}
+
+.help-popup::backdrop {
+  background: rgba(6, 18, 27, 0.66);
+  backdrop-filter: blur(3px);
+}
+
+@media (max-width: 767px) {
+  .site-footer {
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
   }
 
-  .agenda-frame {
-    height: 760px;
-    min-height: 760px;
+  .help-popup[open] {
+    animation: pop-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes rise {
+    from {
+      transform: translateY(10px);
+    }
+  }
+
+  @keyframes pop-in {
+    from {
+      transform: translateY(12px) scale(0.97);
+    }
   }
 }
 
@@ -69,6 +472,7 @@
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation: none !important;
   }
 }

@@ -2,7 +2,8 @@
 <html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d2636" />
   <meta
     name="description"
     content="Completa tu reserva para revisar tu LLC con Sotomayor Consulting. La sesión ayuda a ordenar estructura, bancos, plataformas de pago, impuestos y siguientes pasos para operar en EE. UU."
@@ -11,9 +12,11 @@
   <title>Elige tu horario | Sotomayor Consulting</title>
 
   <!-- Favicon / Isotipo -->
-  <!-- Sube el isotipo redondo a tu servidor y reemplaza esta ruta si corresponde. -->
   <link rel="icon" type="image/png" href="/wp-content/uploads/2026/03/isotipo-redondo.png" />
   <link rel="apple-touch-icon" href="/wp-content/uploads/2026/03/isotipo-redondo.png" />
+  <link rel="preconnect" href="https://zcal.co" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Elige tu horario | Sotomayor Consulting" />
@@ -22,25 +25,34 @@
     content="Selecciona un horario para revisar tu LLC y definir el mejor siguiente paso para operar, cobrar y crecer en EE. UU."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://www.sotomayorconsulting.com/wp-content/uploads/2026/03/isotipo-redondo.png" />
+  <meta property="og:image" content="https://www.sotomayorconsulting.com/images/logos/logo_azul_horizontal.png" />
+  <meta property="og:image:width" content="853" />
+  <meta property="og:image:height" content="319" />
 
-  <!-- Fonts -->
+  <!-- Fonts: Inter variable (1 archivo por subset) + Material Symbols solo con los 8 iconos usados -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400..500,0..1&icon_names=account_balance,arrow_forward,calendar_month,check_circle,close,request_quote,route,schedule,sms&display=block"
     rel="stylesheet"
   />
 
-  <!-- Logo principal -->
+  <!-- Logo principal (header) -->
   <link
     rel="preload"
     as="image"
-    href="/wp-content/uploads/2026/03/isotipo-redondo.png"
+    href="/images/logos/logo_azul_horizontal-320.png"
+    imagesrcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w"
+    imagesizes="(min-width: 768px) 224px, 193px"
+    fetchpriority="high"
   />
 
-  <link rel="stylesheet" href="/reserva-pendiente/tailwind.css" />
-  <link rel="stylesheet" href="/reserva-pendiente/styles.css" />
+  <link rel="stylesheet" href="/reserva-pendiente/tailwind.css?v=20260920l" />
+  <link rel="stylesheet" href="/reserva-pendiente/styles.css?v=20260920l" />
 
   <!-- Tracking configuration -->
   <script>
@@ -151,18 +163,25 @@
 
 <body class="bg-background text-textMain font-sans antialiased selection:bg-primary selection:text-white">
   <a class="skip-link" href="#inicio">Saltar al contenido</a>
+
   <!-- Header -->
-  <header class="border-b border-borderSoft bg-surface">
+  <header class="bg-brand">
     <nav
-      class="mx-auto flex max-w-page items-center justify-between px-4 py-3 md:px-6 lg:px-8"
+      class="mx-auto flex max-w-page items-center justify-between px-6 py-3 md:px-10 md:py-4 lg:px-14"
       aria-label="Navegación principal"
     >
-      <a href="#inicio" class="flex items-center gap-3" aria-label="Ir al inicio">
+      <a href="#inicio" class="flex items-center" aria-label="Sotomayor Consulting International, ir al inicio">
         <img
-          src="/wp-content/uploads/2026/03/isotipo-redondo.png"
+          src="/images/logos/logo_azul_horizontal-320.png"
+          srcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w"
+          sizes="(min-width: 768px) 224px, 193px"
+          width="853"
+          height="319"
           alt="Sotomayor Consulting International"
-          class="h-12 w-auto object-contain"
+          class="h-[72.2px] w-auto md:h-[83.3px]"
           loading="eager"
+          fetchpriority="high"
+          decoding="async"
         />
       </a>
 
@@ -170,7 +189,7 @@
         href="#calendario"
         data-track-event="cta_header_calendar"
         data-track-label="Elegir horario header"
-        class="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-button transition hover:-translate-y-0.5 hover:bg-textMain md:inline-flex"
+        class="hidden rounded-full bg-white px-5 py-2.5 text-sm font-bold text-brand transition hover:bg-surfaceSubtle md:inline-flex"
       >
         Elegir horario
         <span class="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
@@ -179,131 +198,89 @@
   </header>
 
   <main id="inicio">
-    <!-- Main booking section -->
-    <section id="hero-section" class="border-b border-borderSoft bg-background">
-      <div
-        class="mx-auto grid max-w-page gap-8 px-4 py-10 md:grid-cols-[0.82fr_1.18fr] md:px-6 md:py-14 lg:px-8 lg:py-16"
-      >
-        <!-- Left content -->
-        <div class="md:sticky md:top-8 md:self-start">
-          <div
-            class="mb-5 inline-flex items-center gap-2 rounded-full border border-borderSoft bg-surface px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-textMuted"
-          >
-            <span class="material-symbols-outlined text-[18px] text-primary icon-filled">
-              schedule
-            </span>
-            Reserva pendiente
-          </div>
+    <!-- Hero -->
+    <section id="hero-section" class="hero text-center text-white">
+      <div class="hero-inner mx-auto flex max-w-page flex-col items-center px-4 md:px-6 lg:px-8">
+        <p class="hero-badge rise" style="--i: 0">
+          <span class="material-symbols-outlined icon-filled" aria-hidden="true">schedule</span>
+          Agenda Pendiente
+        </p>
 
-          <h1 class="text-[34px] font-extrabold leading-[1.08] tracking-[-0.04em] text-primary sm:text-[42px] lg:text-[52px]">
-            Elige tu horario para revisar tu LLC.
-          </h1>
+        <h1 class="hero-title rise" style="--i: 1">
+          <span class="hero-kicker">Da el siguiente paso</span><span class="sr-only">: </span>
+          <span class="hero-line">Tu negocio en Estados Unidos,</span>
+          <span class="hero-line">estructurado para operar</span>
+          <span class="hero-line hero-accent">globalmente</span>
+        </h1>
 
-          <p class="mt-5 text-[17px] leading-8 text-textMuted md:text-[18px]">
-            Ya tenemos la información necesaria para avanzar. Selecciona un espacio en el calendario y revisaremos tu estructura, prioridades y próximos pasos para operar, cobrar y crecer en EE. UU. con mayor claridad.
-          </p>
+        <p class="hero-sub rise" style="--i: 2">
+          Incorpora tu LLC, organiza tu estructura bancaria y mantén tus obligaciones al día desde una sola plataforma.
+        </p>
 
-          <div class="mt-7 rounded-3xl border border-borderSoft bg-surface p-5 shadow-subtle">
-            <p class="text-sm font-bold uppercase tracking-[0.14em] text-textMuted">
-              En la asesoría revisamos
-            </p>
+        <ul class="hero-indicators rise" style="--i: 3">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.5 2.5 7.25 12 12l9.5-4.75L12 2.5Z"/><path d="m2.5 12 9.5 4.75L21.5 12"/><path d="m2.5 16.75 9.5 4.75 9.5-4.75"/></svg>
+            <span>Estructura</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 9.5 12 3l9.5 6.5"/><path d="M4.5 9.5V19M9 9.5V19M15 9.5V19M19.5 9.5V19"/><path d="M2.5 21h19"/></svg>
+            <span>Banca</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.75 4.5 5.75v5.5c0 4.6 3.1 8.5 7.5 9.75 4.4-1.25 7.5-5.15 7.5-9.75v-5.5L12 2.75Z"/><path d="m8.75 12 2.25 2.25 4.25-4.5"/></svg>
+            <span>Cumplimiento</span>
+          </li>
+        </ul>
 
-            <div class="mt-5 space-y-4">
-              <div class="flex gap-3">
-                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surfaceSubtle text-primary">
-                  <span class="material-symbols-outlined text-[20px]">account_balance</span>
-                </span>
+        <a
+          id="hero-cta"
+          href="#calendario"
+          data-track-event="cta_hero_calendar"
+          data-track-label="Agenda tu asesoría gratuita hero"
+          class="hero-cta rise"
+          style="--i: 4"
+        >
+          Agenda tu asesoría gratuita
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg>
+        </a>
 
-                <div>
-                  <p class="font-bold text-primary">Bancos y plataformas</p>
-                  <p class="mt-1 text-sm leading-6 text-textMuted">
-                    Si tu estructura facilita o complica abrir cuentas y cobrar con plataformas de pago.
-                  </p>
-                </div>
-              </div>
+        <ul class="hero-points rise" style="--i: 5">
+          <li>Asesoría personalizada</li>
+          <li>Por Zoom</li>
+          <li>En español</li>
+        </ul>
+      </div>
+    </section>
 
-              <div class="flex gap-3">
-                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surfaceSubtle text-primary">
-                  <span class="material-symbols-outlined text-[20px]">request_quote</span>
-                </span>
-
-                <div>
-                  <p class="font-bold text-primary">Impuestos y cumplimiento</p>
-                  <p class="mt-1 text-sm leading-6 text-textMuted">
-                    Riesgos básicos, obligaciones y próximos pasos tributarios.
-                  </p>
-                </div>
-              </div>
-
-              <div class="flex gap-3">
-                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surfaceSubtle text-primary">
-                  <span class="material-symbols-outlined text-[20px]">route</span>
-                </span>
-
-                <div>
-                  <p class="font-bold text-primary">Ruta clara</p>
-                  <p class="mt-1 text-sm leading-6 text-textMuted">
-                    Qué hacer primero, qué evitar y cómo avanzar con criterio.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-6 grid gap-3 text-sm text-textMuted sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-3">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-[19px] text-primary">schedule</span>
-              30 minutos
-            </div>
-
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-[19px] text-primary">videocam</span>
-              Online
-            </div>
-
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-[19px] text-primary">fact_check</span>
-              Sin presión
-            </div>
-          </div>
-        </div>
-
-        <!-- Calendar -->
+    <div class="bg-background flow-root">
+      <div class="mx-auto max-w-page px-4 pb-10 md:px-6 md:pb-14 lg:px-8">
+        <!-- Calendario: sube sobre el hero -->
         <section
           id="calendario"
-          class="overflow-hidden rounded-3xl border border-borderSoft bg-surface shadow-subtle"
+          class="calendar-card relative z-10 mx-auto -mt-16 max-w-3xl scroll-mt-4 overflow-hidden bg-surface md:-mt-20"
           aria-label="Calendario de reserva"
         >
-          <div class="border-b border-borderSoft bg-surface px-5 py-5">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p class="text-sm font-bold uppercase tracking-[0.14em] text-textMuted">
-                  Reserva tu espacio
-                </p>
-
-                <h2 class="mt-1 text-2xl font-extrabold tracking-[-0.03em] text-primary">
-                  Selecciona el horario que mejor te acomode
-                </h2>
-              </div>
-
-              <div
-                class="inline-flex items-center gap-2 rounded-full border border-borderSoft bg-background px-3 py-2 text-xs font-bold text-textMuted"
-              >
-                <span class="material-symbols-outlined text-[17px] text-primary">
-                  verified
-                </span>
-                Sotomayor Consulting
-              </div>
-            </div>
+          <div class="calendar-head">
+            <h2 class="calendar-title">
+              Selecciona el horario que mejor te acomode
+            </h2>
+            <p class="calendar-sub">
+              Elige día y hora. La zona horaria se ajusta a la tuya.
+            </p>
           </div>
 
-          <iframe
-            class="agenda-frame"
-            src="https://zcal.co/t/agendar-asesoria-llc/60min?utm_source=ready_for_meeting&utm_medium=landing&utm_campaign=booking_page&utm_content=zcal_embed"
-            title="Calendario para reservar asesoría estratégica de LLC"
-            loading="eager"
-            allow="camera; microphone; fullscreen; payment"
-          ></iframe>
+          <!-- El iframe de Zcal es de otro dominio (no se puede editar su HTML): se recorta su encabezado interno con un contenedor y un desplazamiento negativo -->
+          <div class="agenda-viewport">
+            <div class="agenda-crop">
+              <iframe
+                class="agenda-frame"
+                src="https://zcal.co/t/agendar-asesoria-llc/60min?utm_source=ready_for_meeting&utm_medium=landing&utm_campaign=booking_page&utm_content=zcal_embed"
+                title="Calendario para reservar asesoría estratégica de LLC"
+                loading="eager"
+                allow="camera; microphone; fullscreen; payment"
+              ></iframe>
+            </div>
+          </div>
 
           <div class="border-t border-borderSoft bg-surface px-5 py-4 text-center">
             <p class="text-sm leading-6 text-textMuted">
@@ -321,62 +298,106 @@
             </p>
           </div>
         </section>
+
+        <!-- Qué se revisa -->
+        <div class="mx-auto mt-12 max-w-3xl">
+          <h2 class="text-xl font-extrabold tracking-[-0.02em] text-primary">
+            En la asesoría revisamos
+          </h2>
+
+          <ul class="mt-4 divide-y divide-borderSoft border-y border-borderSoft">
+            <li class="flex gap-4 py-4">
+              <span class="material-symbols-outlined mt-0.5 shrink-0 text-primary" aria-hidden="true">account_balance</span>
+              <div>
+                <p class="font-bold text-primary">Bancos y plataformas</p>
+                <p class="mt-1 text-sm leading-6 text-textMuted">
+                  Si tu estructura facilita o complica abrir cuentas y cobrar con plataformas de pago.
+                </p>
+              </div>
+            </li>
+
+            <li class="flex gap-4 py-4">
+              <span class="material-symbols-outlined mt-0.5 shrink-0 text-primary" aria-hidden="true">request_quote</span>
+              <div>
+                <p class="font-bold text-primary">Impuestos y cumplimiento</p>
+                <p class="mt-1 text-sm leading-6 text-textMuted">
+                  Riesgos básicos, obligaciones y próximos pasos tributarios.
+                </p>
+              </div>
+            </li>
+
+            <li class="flex gap-4 py-4">
+              <span class="material-symbols-outlined mt-0.5 shrink-0 text-primary" aria-hidden="true">route</span>
+              <div>
+                <p class="font-bold text-primary">Ruta clara</p>
+                <p class="mt-1 text-sm leading-6 text-textMuted">
+                  Qué hacer primero, qué evitar y cómo avanzar con criterio.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-    </section>
 
-    <!-- Trust strip -->
-    <section class="mx-auto max-w-page px-4 py-10 md:px-6 lg:px-8">
-      <div class="grid gap-4 rounded-3xl border border-borderSoft bg-surface p-5 shadow-subtle md:grid-cols-3 md:p-6">
-        <div>
-          <p class="text-sm font-bold text-primary">Sin repetir formularios</p>
-          <p class="mt-1 text-sm leading-6 text-textMuted">
-            Esta página está pensada para que avances directo a elegir un horario.
-          </p>
-        </div>
+      <!-- Garantías de claridad -->
+      <section class="mx-auto max-w-page px-4 pb-12 md:px-6 md:pb-16 lg:px-8">
+        <div class="grid gap-6 border-t border-borderSoft pt-8 md:grid-cols-3 md:gap-10">
+          <div>
+            <p class="font-bold text-primary">Sin repetir formularios</p>
+            <p class="mt-1 text-sm leading-6 text-textMuted">
+              Esta página está pensada para que avances directo a elegir un horario.
+            </p>
+          </div>
 
-        <div class="border-borderSoft md:border-l md:pl-6">
-          <p class="text-sm font-bold text-primary">Reserva simple</p>
-          <p class="mt-1 text-sm leading-6 text-textMuted">
-            El calendario muestra los espacios disponibles para la asesoría estratégica.
-          </p>
-        </div>
+          <div>
+            <p class="font-bold text-primary">Reserva simple</p>
+            <p class="mt-1 text-sm leading-6 text-textMuted">
+              El calendario muestra los espacios disponibles para la asesoría estratégica.
+            </p>
+          </div>
 
-        <div class="border-borderSoft md:border-l md:pl-6">
-          <p class="text-sm font-bold text-primary">Claridad para decidir</p>
-          <p class="mt-1 text-sm leading-6 text-textMuted">
-            La sesión ayuda a ordenar estructura, riesgos y próximos pasos antes de avanzar.
-          </p>
+          <div>
+            <p class="font-bold text-primary">Claridad para decidir</p>
+            <p class="mt-1 text-sm leading-6 text-textMuted">
+              La sesión ayuda a ordenar estructura, riesgos y próximos pasos antes de avanzar.
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-borderSoft bg-surface">
+  <footer class="site-footer bg-brand text-onBrand">
     <div
       class="mx-auto flex max-w-page flex-col gap-6 px-4 py-8 md:flex-row md:items-center md:justify-between md:px-6 lg:px-8"
     >
       <div>
         <img
-          src="/wp-content/uploads/2026/03/isotipo-redondo.png"
+          src="/images/logos/logo_azul_horizontal-320.png"
+          srcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w"
+          sizes="128px"
+          width="853"
+          height="319"
           alt="Sotomayor Consulting International"
-          class="h-12 w-auto object-contain"
+          class="h-12 w-auto"
           loading="lazy"
+          decoding="async"
         />
 
-        <p class="mt-3 max-w-xl text-xs leading-6 text-textMuted">
+        <p class="mt-3 max-w-xl text-xs leading-6">
           Sotomayor Consulting no es banco ni institución financiera. Nuestros servicios se
           enfocan en consultoría, acompañamiento estratégico y gestión de trámites relacionados
           con constitución de empresas, cuentas bancarias internacionales y asesoría comercial.
         </p>
       </div>
 
-      <div class="flex flex-wrap gap-4 text-sm text-textMuted">
+      <div class="flex flex-wrap gap-x-6 text-sm">
         <a
           href="https://sotomayorconsulting.com/inicio/politicas/"
           target="_blank"
           rel="noopener noreferrer"
-          class="hover:text-primary"
+          class="inline-flex min-h-11 items-center text-white underline-offset-4 hover:underline"
         >
           Política de privacidad
         </a>
@@ -385,7 +406,7 @@
           href="https://sotomayorconsulting.com/inicio/terminos/"
           target="_blank"
           rel="noopener noreferrer"
-          class="hover:text-primary"
+          class="inline-flex min-h-11 items-center text-white underline-offset-4 hover:underline"
         >
           Términos de servicio
         </a>
@@ -394,17 +415,80 @@
   </footer>
 
   <!-- Mobile sticky CTA -->
-  <div id="mobile-sticky-cta" class="mobile-sticky-cta fixed inset-x-0 bottom-0 z-40 border-t border-borderSoft bg-white/95 p-3 shadow-subtle backdrop-blur-md md:hidden" aria-hidden="true">
+  <div id="mobile-sticky-cta" class="mobile-sticky-cta fixed inset-x-0 bottom-0 z-40 border-t border-borderSoft bg-white/95 p-3 shadow-subtle backdrop-blur-md md:hidden">
     <a
       href="#calendario"
       data-track-event="cta_sticky_calendar_mobile"
       data-track-label="Elegir horario sticky mobile"
-      class="mx-auto inline-flex w-full max-w-page items-center justify-center rounded-2xl bg-primary px-4 py-3 text-sm font-extrabold text-white"
+      class="mx-auto inline-flex min-h-12 w-full max-w-page items-center justify-center rounded-2xl bg-brand px-4 py-3 text-sm font-extrabold text-white"
     >
       Elegir mi horario
       <span class="material-symbols-outlined ml-2 text-[18px]">arrow_forward</span>
     </a>
   </div>
+
+  <!-- Popup de ayuda (tras 5 s de inactividad) -->
+  <dialog id="help-popup" class="help-popup" tabindex="-1" aria-labelledby="help-popup-title" aria-describedby="help-popup-desc">
+    <form method="dialog" class="absolute right-2 top-2">
+      <button
+        type="submit"
+        aria-label="Cerrar"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-full text-textMuted transition hover:bg-surfaceSubtle hover:text-primary"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
+    </form>
+
+    <div class="px-6 pb-6 pt-9 text-center sm:px-8 sm:pb-7">
+      <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-surfaceSubtle text-primary">
+        <span class="material-symbols-outlined" aria-hidden="true">sms</span>
+      </span>
+
+      <h2 id="help-popup-title" class="mt-5 text-2xl font-extrabold tracking-[-0.02em] text-primary">
+        Estamos aquí para ayudar
+      </h2>
+
+      <p id="help-popup-desc" class="mt-3 text-base leading-7 text-textMuted">
+        Si tiene preguntas sobre la constitución de una LLC, el cumplimiento normativo o los próximos pasos, nuestro equipo está aquí para ayudarle.
+      </p>
+
+      <a
+        href="#calendario"
+        data-popup-close
+        data-track-event="cta_popup_calendar"
+        data-track-label="Popup reservar llamada"
+        class="mt-6 flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 text-base font-bold text-white transition hover:bg-textMain"
+      >
+        <span class="material-symbols-outlined text-[22px]" aria-hidden="true">calendar_month</span>
+        Reserva una llamada gratuita
+      </a>
+
+      <a
+        href="https://api.whatsapp.com/send?phone=17542252904&amp;text=Hola.%20Me%20gustar%C3%ADa%20pedir%20mas%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20Sotomayor%20Consulting."
+        target="_blank"
+        rel="noopener noreferrer"
+        data-popup-close
+        data-track-event="cta_popup_whatsapp"
+        data-track-label="Popup WhatsApp"
+        class="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-xl border border-borderSoft bg-white px-5 text-base font-bold text-primary transition hover:bg-surfaceSubtle"
+      >
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="#25D366">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+        </svg>
+        WhatsApp
+      </a>
+
+      <p class="mt-4 text-xs leading-5 text-textMuted">Llamada gratuita, sin compromiso.</p>
+
+      <button
+        type="button"
+        data-popup-close
+        class="mt-1 inline-flex min-h-11 items-center px-3 text-sm font-medium text-textMuted underline-offset-4 transition hover:text-primary hover:underline"
+      >
+        No, gracias, ya lo averiguaré.
+      </button>
+    </div>
+  </dialog>
 
   <!-- DOM events and conversion tracking -->
   <script>
@@ -510,19 +594,96 @@
 
         var agendaFrame = document.querySelector(".agenda-frame");
 
+        var agendaCrop = document.querySelector(".agenda-crop");
+        var historyWatchStarted = false;
+
+        // Zcal es de otro dominio y no avisa de sus cambios de vista, pero cada avance (fecha → horas → formulario)
+        // suma una entrada al historial de la pestaña; las flechas de mes no. Mientras solo se ve el calendario inicial
+        // se recorta su encabezado. Al avanzar se quita el recorte (esas vistas empiezan arriba del todo) y el iframe
+        // crece hasta el alto de la vista: "times" tras el primer avance y "form" tras el segundo.
+        // Si no se puede saber en qué paso está el usuario se elige "form": mostrar de más solo cuesta estética, mientras
+        // que dejar el recorte tapa campos. El historial del navegador se satura en 50 entradas (deja de crecer, así que
+        // el detector queda ciego), por eso se desactiva el recorte cuando está cerca de ese tope; además, si se abre el
+        // teclado con el foco en el iframe, el usuario está en el formulario.
+        var HISTORY_CAP = 50;
+
+        function setAgendaStep(step) {
+          if (!agendaCrop) return;
+          var current = agendaCrop.getAttribute("data-step");
+          if (current === "form" || current === step) return;
+          agendaCrop.setAttribute("data-step", step);
+
+          // La vista nueva empieza arriba del iframe: se lleva la tarjeta al inicio de la pantalla si quedó fuera.
+          window.requestAnimationFrame(function () {
+            var section = document.getElementById("calendario");
+            if (!section) return;
+            var top = section.getBoundingClientRect().top;
+            if (top < 0 || top > (window.innerHeight || 1) * 0.4) {
+              var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+              section.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+            }
+          });
+        }
+
+        function startZcalStepWatch() {
+          if (!agendaCrop || historyWatchStarted) return;
+          historyWatchStarted = true;
+
+          var lastHistoryLength = window.history.length;
+          if (lastHistoryLength >= HISTORY_CAP - 2) {
+            // sin margen para ver los dos avances: no se recorta nada
+            agendaCrop.setAttribute("data-step", "form");
+            return;
+          }
+
+          var lastHash = window.location.hash;
+          var advances = 0;
+          var watchTimer = window.setInterval(function () {
+            var length = window.history.length;
+            var hash = window.location.hash;
+
+            if (hash !== lastHash) {
+              // navegación propia de la página (anclas a #calendario), no de Zcal
+              lastHash = hash;
+              lastHistoryLength = length;
+              return;
+            }
+
+            if (length > lastHistoryLength) {
+              advances += length - lastHistoryLength;
+              setAgendaStep(advances >= 2 || length >= HISTORY_CAP ? "form" : "times");
+              if (advances >= 2 || length >= HISTORY_CAP) window.clearInterval(watchTimer);
+            }
+
+            lastHistoryLength = length;
+          }, 150);
+        }
+
+        // Teclado abierto con el foco en el iframe = el usuario está escribiendo en el formulario.
+        if (agendaCrop && agendaFrame && window.visualViewport) {
+          var baseViewportHeight = window.visualViewport.height;
+          window.visualViewport.addEventListener("resize", function () {
+            var height = window.visualViewport.height;
+            if (height > baseViewportHeight) baseViewportHeight = height;
+            if (baseViewportHeight - height > 150 && document.activeElement === agendaFrame) setAgendaStep("form");
+          });
+        }
+
         if (agendaFrame) {
           agendaFrame.addEventListener("load", function () {
             dispatchSciEvent("zcal_iframe_loaded", {
               event_label: "Zcal iframe cargado",
               iframe_src: agendaFrame.getAttribute("src")
             });
+
+            // margen para que terminen las redirecciones internas de Zcal antes de tomar el historial de referencia
+            window.setTimeout(startZcalStepWatch, 1500);
           });
         }
 
         var mobileStickyCta = document.getElementById("mobile-sticky-cta");
         if (mobileStickyCta) {
           var threshold = 0.08;
-          var heroSection = document.getElementById("hero-section");
           var agendaSection = document.getElementById("calendario");
           var scrollThresholdReached = false;
           var ticking = false;
@@ -534,18 +695,16 @@
           }
 
           function setStickyVisibility(visible) {
-            var shouldShow = Boolean(visible);
-            mobileStickyCta.classList.toggle("is-visible", shouldShow);
-            mobileStickyCta.style.display = shouldShow ? "block" : "none";
-            mobileStickyCta.setAttribute("aria-hidden", shouldShow ? "false" : "true");
+            mobileStickyCta.classList.toggle("is-visible", Boolean(visible));
           }
 
-          function updateMobileStickyCta() {
-            var heroVisibleNow = heroSection ? isElementInViewport(heroSection) : false;
-            var agendaVisibleNow = agendaSection ? isElementInViewport(agendaSection) : false;
-            var shouldShow = scrollThresholdReached && !heroVisibleNow && !agendaVisibleNow;
+          var heroCta = document.getElementById("hero-cta");
 
-            setStickyVisibility(shouldShow);
+          function updateMobileStickyCta() {
+            var agendaVisibleNow = agendaSection ? isElementInViewport(agendaSection) : false;
+            var heroCtaVisibleNow = heroCta ? isElementInViewport(heroCta) : false;
+
+            setStickyVisibility(scrollThresholdReached && !agendaVisibleNow && !heroCtaVisibleNow);
           }
 
           function updateScrollThreshold() {
@@ -584,6 +743,72 @@
               scheduleUpdate();
             }
           });
+        }
+
+        var helpPopup = document.getElementById("help-popup");
+        if (helpPopup && typeof helpPopup.showModal === "function") {
+          var IDLE_MS = 5000;
+          var POPUP_STORAGE_KEY = "sci_help_popup_seen";
+          var idleTimer = null;
+          var popupDone = false;
+
+          try {
+            popupDone = window.sessionStorage.getItem(POPUP_STORAGE_KEY) === "1";
+          } catch (error) {}
+
+          function markPopupSeen() {
+            popupDone = true;
+            try {
+              window.sessionStorage.setItem(POPUP_STORAGE_KEY, "1");
+            } catch (error) {}
+          }
+
+          // El usuario ya está usando el calendario (clic dentro del iframe) o lo tiene a la vista: no interrumpir.
+          function userIsBookingNow() {
+            var section = document.getElementById("calendario");
+            var insideCalendar = Boolean(agendaFrame) && document.activeElement === agendaFrame;
+            if (!section) return insideCalendar;
+            var rect = section.getBoundingClientRect();
+            var viewportHeight = window.innerHeight || 1;
+            var calendarInFocusZone = rect.top < viewportHeight * 0.55 && rect.bottom > viewportHeight * 0.45;
+            return insideCalendar || calendarInFocusZone;
+          }
+
+          function openHelpPopup() {
+            if (popupDone || helpPopup.open) return;
+            if (document.hidden || userIsBookingNow()) {
+              armIdleTimer();
+              return;
+            }
+            markPopupSeen();
+            helpPopup.showModal();
+            helpPopup.focus({ preventScroll: true });
+            dispatchSciEvent("help_popup_shown", {
+              event_label: "Popup de ayuda mostrado tras 5 s de inactividad"
+            });
+          }
+
+          function armIdleTimer() {
+            window.clearTimeout(idleTimer);
+            if (popupDone) return;
+            idleTimer = window.setTimeout(openHelpPopup, IDLE_MS);
+          }
+
+          ["pointerdown", "pointermove", "keydown", "scroll", "wheel", "touchstart"].forEach(function (name) {
+            window.addEventListener(name, armIdleTimer, { passive: true });
+          });
+
+          helpPopup.querySelectorAll("[data-popup-close]").forEach(function (element) {
+            element.addEventListener("click", function () {
+              helpPopup.close();
+            });
+          });
+
+          helpPopup.addEventListener("click", function (event) {
+            if (event.target === helpPopup) helpPopup.close();
+          });
+
+          armIdleTimer();
         }
       });
     })();

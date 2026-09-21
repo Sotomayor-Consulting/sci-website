@@ -47,7 +47,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="preconnect" href="https://sotomayorconsulting.com" />
 <link rel="preconnect" href="https://zcal.co" />
-<link rel="preload" as="image" href="https://sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-4.png" />
+<link rel="preload" as="image" href="/images/logos/logo_azul_horizontal-320.png" imagesrcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w" imagesizes="(min-width: 768px) 149px, 136px" fetchpriority="high" />
 
 <link rel="icon" type="image/png" href="https://sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-6.png" />
 <link rel="apple-touch-icon" href="https://sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-6.png" />
@@ -189,13 +189,19 @@
   /* ============================ HEADER ============================ */
   .header{
     position:sticky;top:0;z-index:var(--z-header);
-    background:rgba(255,255,255,.9);
-    backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
-    border-bottom:1px solid var(--line);
+    background:#0d2636; /* mismo azul sólido del logo horizontal, para que se funda sin recuadro */
   }
-  .header .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:66px}
-  .header .brand img{height:40px;width:auto}
-  @media (max-width:430px){ .header .brand img{height:34px} }
+  /* En móvil la cabecera fija se esconde mientras la tarjeta del calendario pasa por debajo de ella: así nunca tapa las
+     horas ni los campos del formulario de Zcal (iframe) cuando el navegador enfoca uno. Vuelve al subir sobre la tarjeta. */
+  @media (pointer:coarse), (max-width:767px){
+    .header{transition:transform .25s var(--e-out)}
+    .header.is-away{transform:translateY(-100%)}
+  }
+  @media (prefers-reduced-motion:reduce){ .header{transition:none} }
+  .header :focus-visible{outline-color:#fff}
+  .header .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:var(--header-h);width:min(var(--container), 100% - (var(--gutter) * 2) - 8px)}
+  .header .brand img{height:50.8px;width:auto}
+  @media (min-width:768px){ .header .brand img{height:55.7px} }
   /* CTA del header: oculto mientras el CTA del hero está a la vista; aparece al pasar el hero */
   .js .header [data-cta="header"]{opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .2s var(--e-out), transform .2s var(--e-out), visibility .2s}
   .js .header.cta-on [data-cta="header"]{opacity:1;visibility:visible;transform:none}
@@ -221,57 +227,118 @@
   .btn svg{width:16px;height:16px;flex:none}
 
   /* ============================ HERO ============================ */
-  .hero{position:relative;overflow:hidden;padding-top:clamp(26px,3.4vw,44px);padding-bottom:0}
-  .hero .wrap{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.9fr);gap:clamp(28px,4vw,54px);align-items:start}
-  .hero-eyebrow{
-    font-family:var(--font-display);font-weight:600;font-size:.78rem;letter-spacing:.03em;
-    color:var(--gold-ink);display:inline-flex;align-items:center;gap:9px;margin-bottom:16px;
+  :root{--header-h:72px; --overlap:clamp(28px,3.6vw,44px)}
+  @media (min-width:768px){ :root{--header-h:84px} }
+  /* La cabecera es fija: al enfocar un campo del formulario de Zcal (iframe) el navegador no debe dejarlo bajo ella */
+  html{scroll-padding-top:calc(var(--header-h) + 12px)}
+  /* Azul marino con degradado casi imperceptible (arranca en el mismo azul del header) y un leve levantamiento tonal. */
+  .hero{
+    position:relative;text-align:center;color:#fff;
+    background-color:#0d2636;
+    background-image:
+      radial-gradient(ellipse 70% 55% at 50% 58%, rgba(35,84,116,.38), rgba(13,38,54,0) 100%),
+      linear-gradient(180deg, #0d2636 0%, #102d45 100%);
+    padding-block:clamp(52px,7vw,104px) calc(var(--overlap) + clamp(64px,7.5vw,104px));
   }
-  .hero-eyebrow::before{content:"";width:26px;height:2px;background:var(--gold);border-radius:2px}
-  .status-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:#ecf7f1;color:#0b6b45;font-family:var(--font-display);font-size:.78rem;font-weight:700;margin-bottom:14px}
-  .status-pill .dot{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:var(--ok);color:#fff;font-size:11px}
-  .hero h1{font-size:clamp(2rem, 4.3vw, 3.05rem);font-weight:700;line-height:1.07;letter-spacing:-.028em;max-width:20ch}
-  .hero h1 .u{background:linear-gradient(transparent 76%, rgba(228,192,120,.55) 76%);padding-inline:.04em}
-  .hero p.lede{margin-top:18px}
-  .hero > .wrap > div > .btn{margin-top:22px}
-  @media (max-width:900px){ .hero > .wrap > div > .btn{display:flex;width:100%;justify-content:center} }
-  .hero-obj{display:flex;flex-wrap:wrap;gap:7px 16px;margin-top:20px;font-size:.85rem;color:var(--muted)}
-  .hero-obj span{display:inline-flex;align-items:center;gap:6px}
-  .hero-obj svg{width:14px;height:14px;color:var(--ok);flex:none}
-  .hero-trust{margin-top:16px;font-size:.83rem;color:var(--muted);line-height:1.7}
-  .hero-trust b{color:var(--navy-800);font-family:var(--font-display);font-weight:600}
-  .hero-trust .stars{color:var(--gold);letter-spacing:1px}
+  .hero .wrap{display:flex;flex-direction:column;align-items:center}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-bottom:clamp(34px,4.2vw,52px);
+    padding:6px 15px 6px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);
+    font-family:var(--font-display);font-weight:600;font-size:.86rem;color:#fff;
+  }
+  .hero-badge svg{width:20px;height:20px;flex:none}
+  .hero h1{
+    max-width:min(100%,46rem);color:#fff;
+    font-size:clamp(1.85rem, .8rem + 4.6vw, 3.6rem);font-weight:700;line-height:1.12;letter-spacing:-.026em;
+  }
+  /* Texto corto y destacado sobre el titular (dentro del h1): más pequeño, dorado y en negrita */
+  .hero-kicker{
+    display:block;margin-bottom:clamp(18px,2.3vw,26px);color:var(--gold-cta);
+    font-size:clamp(1.05rem, .95rem + .9vw, 1.35rem);font-weight:700;line-height:1.2;letter-spacing:.005em;
+  }
+  /* Segunda línea del titular: mismo dorado pero más liviana para que no compita con la primera */
+  .hero-accent{display:block;margin-top:.04em;color:var(--gold-cta);font-weight:500;letter-spacing:-.018em}
+  .hero .lede{
+    margin-top:clamp(26px,3vw,38px);max-width:31rem;color:rgba(255,255,255,.8);
+    font-size:clamp(1.02rem, .96rem + .4vw, 1.16rem);line-height:1.65;text-wrap:balance;
+  }
+  /* Tres indicadores con iconos lineales finos */
+  .hero-indicators{
+    list-style:none;display:grid;grid-template-columns:repeat(3,auto);justify-content:center;
+    column-gap:clamp(24px,6vw,54px);margin:clamp(32px,3.8vw,44px) 0 0;padding:0;
+  }
+  .hero-indicators li{
+    display:flex;flex-direction:column;align-items:center;gap:9px;
+    font-family:var(--font-display);font-weight:500;font-size:.86rem;letter-spacing:.02em;color:rgba(255,255,255,.9);
+  }
+  .hero-indicators svg{width:22px;height:22px;flex:none;fill:none;stroke:var(--gold-cta);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:.92}
+  @media (min-width:768px){
+    .hero-indicators li{flex-direction:row;gap:10px;font-size:.94rem}
+  }
+  /* Lista corta separada por un punto dorado (confianza) */
+  .hero-points{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 0;margin:0;padding:0}
+  .hero-points li{display:flex;align-items:center}
+  .hero-points li + li::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--gold-cta);margin-inline:.85em;flex:none}
+  .btn--light{--_bg:#fff;--_fg:var(--navy-900);--_bd:#fff}
+  .btn--light:hover{--_bg:var(--mist)}
+  /* CTA más refinado: menos alto, esquinas menos redondeadas y flecha delicada */
+  .hero .btn{
+    margin-top:clamp(36px,4.2vw,50px);min-height:48px;padding:12px clamp(22px,4vw,28px);border-radius:8px;
+    font-size:.98rem;line-height:1.2;letter-spacing:.01em;box-shadow:0 8px 20px rgba(0,0,0,.16);
+  }
+  .hero .btn svg{width:16px;height:16px}
+  .hero-trust{margin-top:clamp(22px,2.6vw,30px);font-size:.86rem;letter-spacing:.02em;color:rgba(255,255,255,.66)}
+  .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  @media (prefers-reduced-motion:no-preference){
+    .rise{animation:rise .64s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i,0) * 70ms)}
+    @keyframes rise{from{transform:translateY(10px)}}
+  }
 
-  /* ---- Booking card (calendario) ---- */
+  /* ---- Booking card (calendario): tarjeta flotante con sombra suave, poco solapada sobre el hero ---- */
+  .book-section{padding-top:0;padding-bottom:clamp(30px,4vw,56px)}
   .book{
-    position:relative;border-radius:20px;overflow:hidden;
-    background:radial-gradient(120% 120% at 12% 0%, var(--navy-700), var(--navy-900) 72%);
-    color:#fff;padding:clamp(22px,2.6vw,30px);box-shadow:var(--shadow-lg);scroll-margin-top:84px;
+    position:relative;z-index:1;width:calc(100% - 12px);max-width:640px;margin:calc(-1 * var(--overlap)) auto 0;
+    background:#fff;color:var(--ink);border-radius:20px;overflow:hidden;
+    box-shadow:0 0 0 1px rgba(14,36,56,.06), 0 26px 56px -30px rgba(6,18,27,.3), 0 2px 10px rgba(6,18,27,.06);
+    scroll-margin-top:calc(var(--header-h) + 16px);
   }
-  .book .globe{position:absolute;inset:auto -20% -34% auto;width:78%;opacity:.42;pointer-events:none}
-  .book-badge{
-    display:inline-flex;align-items:center;gap:7px;font-family:var(--font-display);font-weight:600;
-    font-size:.72rem;letter-spacing:.04em;color:var(--gold-300);
-    border:1px solid var(--navy-600);border-radius:999px;padding:5px 11px;margin-bottom:14px;position:relative;
+  /* Teléfonos muy pequeños (≤ 359 px): la tarjeta va de borde a borde. Zcal necesita ≥ ~300 px de ancho: con menos corta la columna del domingo y la flecha de mes siguiente (a 320 px el iframe quedaba de ~270 px). */
+  @media (max-width:359px){
+    .book{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);margin-right:0;border-radius:0;box-shadow:none}
   }
-  .book h2{color:#fff;font-size:1.16rem;font-weight:600;letter-spacing:-.01em;position:relative}
-  .book .book-sub{color:rgba(255,255,255,.72);font-size:.86rem;margin-top:5px;position:relative}
-  .book-cal{position:relative}
-  .book-cal .cal-frame{margin-top:14px;border-radius:12px;overflow:hidden;background:#fff;min-height:560px}
-  .book-cal .cal-frame iframe{width:100%;min-height:560px;border:0;display:block}
-  .book-cal .cal-fallback{font-size:.8rem;color:rgba(255,255,255,.6);margin-top:10px;text-align:center}
-  .book-cal .cal-fallback a{color:var(--gold-300);font-weight:600}
+  .book-head{padding:clamp(22px,3vw,30px) clamp(20px,3vw,32px) clamp(16px,2vw,20px)}
+  .book h2{color:var(--navy-800);font-size:clamp(1.3rem, 2.2vw, 1.65rem);font-weight:700;letter-spacing:-.02em;line-height:1.15}
+  .book .book-sub{color:var(--muted);font-size:.92rem;margin-top:7px;line-height:1.55}
+  .book-cal .cal-fallback{font-size:.85rem;color:var(--muted);text-align:center;padding:14px 18px;border-top:1px solid var(--line)}
+  .book-cal .cal-fallback a{color:var(--navy-800);font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
 
-  @media (max-width:900px){
-    .hero .wrap{grid-template-columns:1fr;gap:26px}
-    .hero h1{max-width:22ch}
-    .book .globe{opacity:.3;width:60%}
+  /* Recorte del encabezado interno de Zcal (avatar, nombre, título y duración): el iframe es de otro
+     dominio y no se puede editar. --crop = alto del encabezado de Zcal + 20 px de margen; --view = alto visible.
+     Medidas según el ancho del iframe: <440px el encabezado termina a 305, 440-599px a 273, >=600px a 300. */
+  .cal-frame{container-type:inline-size;background:#fff;border-top:1px solid var(--line)}
+  .cal-crop{--crop:325px;--view:480px;position:relative;height:var(--view);overflow:hidden;background:#fff}
+  .cal-crop iframe{display:block;width:100%;height:calc(var(--view) + var(--crop));margin-top:calc(var(--crop) * -1);border:0}
+  @container (min-width:440px){ .cal-crop{--crop:293px} }
+  @container (min-width:600px){ .cal-crop{--crop:320px} }
+  /* Tras elegir fecha, Zcal muestra horas y formulario: se quita el recorte (esas vistas empiezan arriba del todo) y el
+     iframe crece hasta el alto real de la vista para que no haya scroll interno ni campos cortados por abajo.
+     Alturas medidas (px): horas ≈ 520 con 4 franjas; formulario móvil 892 (1011 con errores) y en ancho ≥ 600 px 1055
+     (1173 con errores; Zcal añade el avatar encima). data-step="form" es también el valor seguro cuando no se puede
+     saber el paso (historial saturado, teclado abierto). */
+  .cal-crop[data-step]{--crop:0px;--view:1080px}
+  .cal-crop[data-step="times"]{--view:760px}
+  @container (min-width:600px){
+    .cal-crop[data-step]{--view:1240px}
+    .cal-crop[data-step="times"]{--view:820px}
   }
-  /* Móvil: el calendario Zcal usa todo el ancho de la tarjeta y más alto, para llenar los campos sin scroll interno apretado */
-  @media (max-width:560px){
-    .hero .book{padding:16px}
-    .book-cal .cal-frame{margin-inline:-16px;border-radius:0;min-height:760px}
-    .book-cal .cal-frame iframe{min-height:760px}
+  /* MÓVIL Y TÁCTIL: nunca se recorta. El recorte solo es seguro si se sabe en qué paso está Zcal, y esa señal (history.length
+     del iframe) no es fiable en teléfonos: si falla, el recorte tapa las horas o los primeros campos y la reserva es imposible.
+     Sin recorte se ve la cabecera de Zcal en el primer paso (cuesta estética) pero todo el proceso queda siempre visible.
+     Alto base 1040 px (formulario 892 px sin errores, 1011 con ellos); con el paso "form" detectado sube a 1080 px (1011 con errores). */
+  @media (pointer:coarse), (max-width:767px){
+    .cal-crop, .cal-crop[data-step]{--crop:0px;--view:1040px}
+    .cal-crop[data-step="form"]{--view:1080px}
+    @container (min-width:600px){ .cal-crop[data-step="form"]{--view:1240px} }
   }
 
   /* ============================ PARTNERS AUTHORITY ============================ */
@@ -415,6 +482,41 @@
     body{padding-bottom:66px}
   }
 
+  /* ============================ POPUP DE AYUDA (5 s de inactividad) ============================ */
+  .help-popup{
+    position:fixed;inset:0;margin:auto;width:min(calc(100vw - 32px),28rem);max-height:calc(100dvh - 32px);overflow:auto;
+    padding:0;border:0;border-radius:20px;background:var(--paper);color:var(--ink);
+    box-shadow:0 32px 80px -24px rgba(0,0,0,.55);
+  }
+  .help-popup:focus{outline:none}
+  .help-popup::backdrop{background:rgba(6,18,27,.66);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+  .help-popup__close{position:absolute;top:8px;right:8px;margin:0}
+  .help-popup__close button{
+    display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;
+    background:transparent;color:var(--muted);cursor:pointer;transition:background-color .2s var(--e-out), color .2s var(--e-out);
+  }
+  .help-popup__close button:hover{background:var(--mist);color:var(--navy-800)}
+  .help-popup__close svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+  .help-popup__body{padding:36px 24px 22px;text-align:center}
+  @media (min-width:640px){ .help-popup__body{padding:40px 32px 26px} }
+  .help-popup__icon{display:block;color:var(--gold-ink)}
+  .help-popup__icon svg{display:block;width:32px;height:32px;margin:0 auto;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .help-popup h2{margin-top:16px;color:var(--navy-800);font-size:1.5rem;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+  .help-popup p.help-popup__desc{margin-top:12px;color:var(--muted);font-size:1rem;line-height:1.65;text-wrap:balance}
+  .help-popup .btn{width:100%;min-height:52px;margin-top:12px;border-radius:12px;font-size:1rem}
+  .help-popup .btn--primary{margin-top:24px}
+  .help-popup .btn--ghost svg{width:20px;height:20px}
+  .help-popup__note{margin-top:16px;color:var(--muted);font-size:.8rem}
+  .help-popup__dismiss{
+    display:inline-flex;align-items:center;min-height:44px;margin-top:2px;padding:0 12px;border:0;background:none;cursor:pointer;
+    color:var(--muted);font:inherit;font-size:.88rem;font-weight:500;text-underline-offset:4px;
+  }
+  .help-popup__dismiss:hover{color:var(--navy-800);text-decoration:underline}
+  @media (prefers-reduced-motion:no-preference){
+    .help-popup[open]{animation:pop-in .32s var(--e-out) both}
+    @keyframes pop-in{from{transform:translateY(12px) scale(.97)}}
+  }
+
   /* ============================ MOTION ============================ */
   .js .reveal{opacity:0;transform:translateY(16px)}
   .js .hero .reveal{opacity:1;transform:none;transition:none}   /* hero visible en el primer paint — tráfico social no espera */
@@ -432,7 +534,7 @@
 <header class="header">
   <div class="wrap">
     <a class="brand" href="https://sotomayorconsulting.com/" aria-label="Sotomayor Consulting International">
-      <img src="https://sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-4.png" alt="Sotomayor Consulting International" width="200" height="40" />
+      <img src="/images/logos/logo_azul_horizontal-320.png" srcset="/images/logos/logo_azul_horizontal-320.png 320w, /images/logos/logo_azul_horizontal-640.png 640w" sizes="(min-width: 768px) 149px, 136px" alt="Sotomayor Consulting International" width="853" height="319" fetchpriority="high" decoding="async" />
     </a>
     <a class="btn btn--primary btn--sm" href="#agendar" data-scroll-calendar data-cta="header">Elegir horario</a>
   </div>
@@ -443,47 +545,65 @@
   <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="wrap">
-      <div>
-        <span class="status-pill reveal"><span class="dot">&#10003;</span> Registro recibido</span>
-        <h1 class="reveal d1" id="hero-h1">Ya casi está. Elige el horario de tu <span class="u">asesoría gratuita</span>.</h1>
-        <p class="lede reveal d2" id="hero-sub">Solo falta un paso. Elige un horario y confirma tus datos de contacto para recibir el enlace de Zoom. Asesoría <strong>gratuita</strong> para <strong>e-commerce</strong>, <strong>agencias</strong>, <strong>SaaS</strong>, <strong>consultores</strong> e <strong>inversionistas</strong>.</p>
-        <a class="btn btn--primary reveal d2" href="#agendar" data-scroll-calendar data-cta="hero">Elegir mi horario →</a>
-        <div class="hero-obj reveal d2">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Gratuita</span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Enfocada en tu caso</span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Por Zoom</span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>En español</span>
-        </div>
-        <p class="hero-trust reveal d3">
-          <b>+5.000 empresas</b> incorporadas &middot; <b>10 años</b> &middot; <b>Partner de Mercury &amp; Relay</b><br>
-          <span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4,3/5 en Trustpilot con reseñas verificadas
-        </p>
-      </div>
+      <p class="hero-badge rise" style="--i:0">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#c0872e"/><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#0e2438" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Registro completado
+      </p>
 
+      <h1 class="rise" id="hero-h1" style="--i:1">
+        <span class="hero-kicker">Da el siguiente paso</span><span class="sr-only">: </span>
+        Incorpora tu LLC
+        <span class="hero-accent">o ponla en orden</span>
+      </h1>
+
+      <p class="lede rise" id="hero-sub" style="--i:2">Te ayudamos a estructurar o reorganizar tu LLC y a mantener tu banca y tus obligaciones al día.</p>
+
+      <ul class="hero-indicators rise" style="--i:3">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 2.5 7.25 12 12l9.5-4.75L12 2.5Z"/><path d="m2.5 12 9.5 4.75L21.5 12"/><path d="m2.5 16.75 9.5 4.75 9.5-4.75"/></svg>
+          <span>Estructura</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 3l9.5 6.5"/><path d="M4.5 9.5V19M9 9.5V19M15 9.5V19M19.5 9.5V19"/><path d="M2.5 21h19"/></svg>
+          <span>Banca</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.75 4.5 5.75v5.5c0 4.6 3.1 8.5 7.5 9.75 4.4-1.25 7.5-5.15 7.5-9.75v-5.5L12 2.75Z"/><path d="m8.75 12 2.25 2.25 4.25-4.5"/></svg>
+          <span>Cumplimiento</span>
+        </li>
+      </ul>
+
+      <a class="btn btn--light rise" href="#agendar" data-scroll-calendar data-cta="hero" style="--i:4">
+        Agenda tu asesoría gratuita
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6.5 18.5 12 13 17.5"/></svg>
+      </a>
+
+      <ul class="hero-points hero-trust rise" style="--i:5">
+        <li>Por Zoom</li>
+        <li>En español</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ AGENDA (calendario Zcal) ============ -->
+  <section class="book-section">
+    <div class="wrap">
       <aside class="book" id="agendar" aria-label="Agenda tu asesoría gratuita">
-        <svg class="globe" viewBox="0 0 200 200" fill="none" aria-hidden="true">
-          <circle cx="100" cy="100" r="78" stroke="#fff" stroke-opacity=".35"/>
-          <ellipse cx="100" cy="100" rx="30" ry="78" stroke="#fff" stroke-opacity=".25"/>
-          <ellipse cx="100" cy="100" rx="58" ry="78" stroke="#fff" stroke-opacity=".18"/>
-          <path d="M24 78h152M30 122h140M22 100h156" stroke="#fff" stroke-opacity=".2"/>
-          <path d="M40 66c30 26 90 26 120 0" stroke="#e4c078" stroke-width="1.5"/>
-          <path d="M46 138c28-22 82-22 108 4" stroke="#e4c078" stroke-width="1.5"/>
-          <g fill="#e4c078"><circle cx="40" cy="66" r="3.4"/><circle cx="160" cy="66" r="3.4"/></g>
-          <g fill="#fff"><circle cx="100" cy="22" r="3"/><circle cx="22" cy="100" r="3"/><circle cx="178" cy="100" r="3"/></g>
-        </svg>
-
         <div class="book-cal">
-          <span class="book-badge">Asesoría gratuita &middot; por Zoom</span>
-          <h2>Elige tu horario</h2>
-          <p class="book-sub">Elige el día y la hora. En el último paso confirmas tu nombre, correo y WhatsApp — así te enviamos el enlace de Zoom y el recordatorio de la reunión.</p>
+          <div class="book-head">
+            <h2>Elige tu horario</h2>
+            <p class="book-sub">Elige el día y la hora.</p>
+          </div>
           <div class="cal-frame" id="cal-frame">
-            <iframe
-              id="zcalFrame"
-              title="Calendario de reserva — Sotomayor Consulting"
-              src="https://zcal.co/t/agendar-asesoria-llc/60min?embed=1"
-              loading="eager"
-              allow="clipboard-write; fullscreen">
-            </iframe>
+            <div class="cal-crop">
+              <iframe
+                id="zcalFrame"
+                title="Calendario de reserva — Sotomayor Consulting"
+                src="https://zcal.co/t/agendar-asesoria-llc/60min?embed=1"
+                loading="eager"
+                allow="clipboard-write; fullscreen">
+              </iframe>
+            </div>
           </div>
           <p class="cal-fallback">¿No carga? <a id="cal-open" href="https://zcal.co/t/agendar-asesoria-llc/60min" target="_blank" rel="noopener" data-track-schedule>Abre el calendario en una pestaña nueva</a>.</p>
         </div>
@@ -783,6 +903,36 @@
   </div>
 </footer>
 
+<!-- Popup de ayuda (tras 5 s de inactividad) -->
+<dialog id="help-popup" class="help-popup" tabindex="-1" aria-labelledby="help-popup-title" aria-describedby="help-popup-desc">
+  <form method="dialog" class="help-popup__close">
+    <button type="submit" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </form>
+
+  <div class="help-popup__body">
+    <span class="help-popup__icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 12a8 8 0 0 1-11.9 7l-4.1 1.2 1.3-3.9A8 8 0 1 1 20.5 12Z"/><path d="M8.5 11h7M8.5 14h4"/></svg>
+    </span>
+
+    <h2 id="help-popup-title">Estamos aquí para ayudar</h2>
+    <p id="help-popup-desc" class="help-popup__desc">Si tienes preguntas sobre tu LLC, tu cuenta bancaria o tus obligaciones, nuestro equipo está aquí para ayudarte.</p>
+
+    <a class="btn btn--primary" href="#agendar" data-popup-calendar data-cta="popup-calendar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+      Elegir mi horario
+    </a>
+    <a class="btn btn--ghost" href="https://api.whatsapp.com/send?phone=17542252904&amp;text=Hola.%20Me%20gustar%C3%ADa%20pedir%20mas%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20Sotomayor%20Consulting." target="_blank" rel="noopener noreferrer" data-popup-close data-cta="popup-wa">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      WhatsApp
+    </a>
+
+    <p class="help-popup__note">Sin compromiso.</p>
+    <button type="button" class="help-popup__dismiss" data-popup-close>No, gracias, ya lo averiguaré.</button>
+  </div>
+</dialog>
+
 <div class="stickybar" aria-hidden="true">
   <a class="btn btn--ghost btn--wa" href="https://wa.link/jx59a9" target="_blank" rel="noopener" data-cta="sticky-wa" aria-label="WhatsApp">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2Zm5.7 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.8-.6-3-1.3-5-4.4-5.2-4.6-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.1.5.1.7-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.8-.1 1.4Z"/></svg>
@@ -1030,7 +1180,7 @@
     function sotoScrollToCalendar(source) {
       const calendar = document.getElementById('agendar');
       if (!calendar) return;
-      calendar.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block:'center' });
+      calendar.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block:'start' });
       window.dataLayer.push({
         event:'calendar_scroll_cta_clicked',
         source_context:source || 'unknown'
@@ -1169,6 +1319,72 @@
 
       sotoInitCalendarVisibilityTracking();
 
+      /* ---------- recorte del encabezado de Zcal ---------- */
+      // Zcal (otro dominio) no avisa de sus cambios de vista, pero cada avance (fecha → horas → formulario) suma una
+      // entrada al historial de la pestaña; las flechas de mes no. Mientras solo se ve el calendario inicial se recorta
+      // su encabezado; al avanzar se muestra completo porque esas vistas empiezan arriba del todo.
+      var calCrop = document.querySelector('.cal-crop');
+      var zcalFrameEl = document.getElementById('zcalFrame');
+      if (calCrop && zcalFrameEl) {
+        // Zcal (otro dominio) no avisa de sus cambios de vista, pero cada avance (fecha → horas → formulario) suma una
+        // entrada al historial de la pestaña; las flechas de mes no. Mientras solo se ve el calendario inicial se recorta
+        // su encabezado. Al avanzar se quita el recorte (esas vistas empiezan arriba del todo) y el iframe crece hasta el
+        // alto de la vista: 'times' tras el primer avance y 'form' tras el segundo. Si no se puede saber el paso se
+        // elige 'form': mostrar de más solo cuesta estética, mientras que dejar el recorte tapa campos. El historial se
+        // satura en 50 entradas (deja de crecer y el detector queda ciego), por eso no se recorta cuando está cerca del
+        // tope; además, con el teclado abierto y el foco en el iframe el usuario está en el formulario.
+        var HISTORY_CAP = 50;
+        var stepWatchStarted = false;
+
+        var setCalStep = function (step) {
+          var current = calCrop.getAttribute('data-step');
+          if (current === 'form' || current === step) return;
+          calCrop.setAttribute('data-step', step);
+          // La vista nueva empieza arriba del iframe: se lleva la tarjeta al inicio de la pantalla si quedó fuera.
+          window.requestAnimationFrame(function () {
+            var card = document.getElementById('agendar');
+            if (!card) return;
+            var top = card.getBoundingClientRect().top;
+            if (top < 0 || top > (window.innerHeight || 1) * 0.4) {
+              card.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+            }
+          });
+        };
+
+        var startZcalStepWatch = function () {
+          if (stepWatchStarted) return;
+          stepWatchStarted = true;
+          var lastLen = window.history.length;
+          if (lastLen >= HISTORY_CAP - 2) { calCrop.setAttribute('data-step', 'form'); return; } // sin margen para ver los dos avances
+          var lastHash = window.location.hash;
+          var advances = 0;
+          var stepTimer = window.setInterval(function () {
+            var len = window.history.length;
+            var hash = window.location.hash;
+            if (hash !== lastHash) { lastHash = hash; lastLen = len; return; } // navegación propia de la página
+            if (len > lastLen) {
+              advances += len - lastLen;
+              var done = advances >= 2 || len >= HISTORY_CAP;
+              setCalStep(done ? 'form' : 'times');
+              if (done) window.clearInterval(stepTimer);
+            }
+            lastLen = len;
+          }, 150);
+        };
+        // margen para que terminen las redirecciones internas de Zcal antes de tomar el historial de referencia
+        zcalFrameEl.addEventListener('load', function () { window.setTimeout(startZcalStepWatch, 1500); });
+
+        // Teclado abierto con el foco en el iframe = el usuario está escribiendo en el formulario.
+        if (window.visualViewport) {
+          var baseViewportHeight = window.visualViewport.height;
+          window.visualViewport.addEventListener('resize', function () {
+            var height = window.visualViewport.height;
+            if (height > baseViewportHeight) baseViewportHeight = height;
+            if (baseViewportHeight - height > 150 && document.activeElement === zcalFrameEl) setCalStep('form');
+          });
+        }
+      }
+
       /* ---------- sticky bar (solo móvil, la media query decide) ---------- */
       var sticky = document.querySelector('.stickybar');
       var bookCard = document.getElementById('agendar');
@@ -1177,6 +1393,25 @@
           entries.forEach(function (e) { sticky.classList.toggle('is-on', !e.isIntersecting); });
         }, { threshold: 0 });
         sio.observe(bookCard);
+      }
+
+      /* ---------- cabecera fija: se esconde mientras la tarjeta del calendario está bajo ella (solo móvil, lo decide el CSS) ---------- */
+      var awayHeader = document.querySelector('.header');
+      var awayCard = document.getElementById('agendar');
+      if (awayHeader && awayCard) {
+        var awayTicking = false;
+        var updateHeaderAway = function () {
+          awayTicking = false;
+          var box = awayCard.getBoundingClientRect();
+          var headerHeight = awayHeader.offsetHeight;
+          awayHeader.classList.toggle('is-away', box.top < headerHeight && box.bottom > headerHeight);
+        };
+        window.addEventListener('scroll', function () {
+          if (awayTicking) return;
+          awayTicking = true;
+          window.requestAnimationFrame(updateHeaderAway);
+        }, { passive: true });
+        updateHeaderAway();
       }
 
       /* ---------- CTA del header: aparece solo al pasar el CTA del hero (evita 2 CTA a la vez) ---------- */
@@ -1189,6 +1424,62 @@
         hio.observe(heroCta);
       } else if (headerEl) {
         headerEl.classList.add('cta-on');
+      }
+      /* ---------- popup de ayuda: 5 s de inactividad, una vez por sesión ---------- */
+      var helpPopup = document.getElementById('help-popup');
+      if (helpPopup && typeof helpPopup.showModal === 'function') {
+        var IDLE_MS = 5000;
+        var POPUP_KEY = 'sci_help_popup_seen';
+        var idleTimer = null;
+        var popupDone = false;
+        try { popupDone = window.sessionStorage.getItem(POPUP_KEY) === '1'; } catch (e) {}
+
+        // El usuario ya está usando el calendario (clic dentro del iframe) o lo tiene a la vista: no interrumpir.
+        var userIsBookingNow = function () {
+          var insideCalendar = Boolean(zcalFrameEl) && document.activeElement === zcalFrameEl;
+          var section = document.getElementById('agendar');
+          if (!section) return insideCalendar;
+          var rect = section.getBoundingClientRect();
+          var vh = window.innerHeight || 1;
+          return insideCalendar || (rect.top < vh * 0.55 && rect.bottom > vh * 0.45);
+        };
+
+        var armIdleTimer = function () {
+          window.clearTimeout(idleTimer);
+          if (popupDone) return;
+          idleTimer = window.setTimeout(openHelpPopup, IDLE_MS);
+        };
+
+        var openHelpPopup = function () {
+          if (popupDone || helpPopup.open) return;
+          if (document.hidden || userIsBookingNow()) { armIdleTimer(); return; }
+          popupDone = true;
+          try { window.sessionStorage.setItem(POPUP_KEY, '1'); } catch (e) {}
+          helpPopup.showModal();
+          helpPopup.focus({ preventScroll: true });
+          window.dataLayer.push({ event:'help_popup_shown', page_name:'thank_you_crea_tu_llc_agenda' });
+        };
+
+        ['pointerdown', 'pointermove', 'keydown', 'scroll', 'wheel', 'touchstart'].forEach(function (name) {
+          window.addEventListener(name, armIdleTimer, { passive:true });
+        });
+
+        helpPopup.querySelectorAll('[data-popup-close]').forEach(function (el) {
+          el.addEventListener('click', function () { helpPopup.close(); });
+        });
+        // Agenda: cierra el popup y lleva al calendario (misma animación y evento que el resto de CTAs)
+        helpPopup.querySelectorAll('[data-popup-calendar]').forEach(function (el) {
+          el.addEventListener('click', function (event) {
+            event.preventDefault();
+            helpPopup.close();
+            sotoScrollToCalendar('help_popup');
+          });
+        });
+        helpPopup.addEventListener('click', function (event) {
+          if (event.target === helpPopup) helpPopup.close();
+        });
+
+        armIdleTimer();
       }
     });
 </script>
