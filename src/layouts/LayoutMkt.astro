@@ -5,12 +5,12 @@ import GoogleTagManager from "@components/ui/blocks/GoogleTagManager.astro";
 import starwindStyles from "@/styles/starwind.css?inline";
 
 interface Props {
-    title: string
+  title: string;
 }
 
-const { title } = Astro.props
+const { title } = Astro.props;
 
-const gtm = "GTM-TNRQGDM"
+const gtm = "GTM-TNRQGDM";
 ---
 
 <!doctype html>
@@ -24,7 +24,11 @@ const gtm = "GTM-TNRQGDM"
     />
     <meta name="theme-color" content="#0b2334" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/png" href="/images/logos/isotipo-favicon.png?v=1" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/images/logos/isotipo-favicon.png?v=1"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -39,7 +43,7 @@ const gtm = "GTM-TNRQGDM"
         rel="stylesheet"
       />
     </noscript>
-    <style is:global set:html={starwindStyles} />
+    <style is:global set:html={starwindStyles}></style>
     <title>
       {title}
     </title>
@@ -49,15 +53,12 @@ const gtm = "GTM-TNRQGDM"
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript
-       ><iframe
-         src={`https://www.googletagmanager.com/ns.html?id=${gtm}`}
-         title="Google Tag Manager"
-         height="0"
-         width="0"
-        style="display:none;visibility:hidden"
-      ></iframe></noscript
-    >
+    <iframe
+      src={`https://www.googletagmanager.com/ns.html?id=${gtm}`}
+      title="Google Tag Manager"
+      height="0"
+      width="0"
+      style="display:none;visibility:hidden"></iframe>
     <!-- End Google Tag Manager (noscript) -->
     <Navbar />
     <slot />
