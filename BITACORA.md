@@ -251,6 +251,24 @@ Se añadió a `crea-tu-llc-en-usa/gracias-por-tu-registro` el mismo popup por in
 
 ---
 
+### 3.9 CTA del hero dorado con brillo (2026-09-22)
+
+En `gracias-por-tu-registro` y `reserva-pendiente` el botón principal del hero pasa de blanco a dorado, con el mismo recurso de brillo horizontal (`::after` con gradiente diagonal + `translateX` en loop) que `.path-primary` de `diagnostico-llc`/`-b`. Degradado `linear-gradient(135deg, #c0872e 0%, #d6a144 55%, #e4c078 100%)`, texto navy (`#0a1a2a`, no blanco: da ~6:1 de contraste contra ese dorado). El brillo cruza el 22% inicial de un ciclo de 3,4 s y descansa el resto; respeta `prefers-reduced-motion` (`display:none` en el `::after`). En `reserva-pendiente` el CSS va en `styles.css` (versión de caché `?v=20260921f`).
+
+---
+
+### 3.10 Landing `agendar-asesoria-llc` (2026-09-22, sin PR aún)
+
+Página nueva, solo-calendario: nav + ticker + iframe de Zcal + footer, sin hero de venta ni FAQ. Pensada como destino del botón "Página siguiente" de formularios nativos (TikTok/Meta Lead Ads) y de anuncios ya calificados, cuando no hace falta repetir el argumento de venta.
+
+- **Chrome superior**: `.top-chrome` es un único contenedor `sticky top:0` con el header (logo 40/34 px, igual que el resto del embudo — **si se reduce pierde peso frente al mensaje de al lado, ya pasó una vez**) y, debajo, un mensaje "kicker" dorado (no blanco: el blanco compite con el logo) "Elige la fecha y la hora de tu reunión". Bajo el header va un ticker: cinta de texto en loop CSS (dos copias idénticas, la 2ª `aria-hidden`, `translateX(-50%)` en 32 s) con la propuesta de valor en 6 frases separadas por flechas; se pausa al hover y se apaga con `prefers-reduced-motion` (oculta la copia duplicada para no dejar texto repetido y estático).
+- **Sin recorte del encabezado de Zcal** (a diferencia de `gracias-por-tu-registro`/`reserva-pendiente`, ver 3.6/3.7): en vez de `overflow:hidden` + margen negativo, esta página hace un **scroll de la página completa, una sola vez al cargar**, para que la cuadrícula de fechas quede debajo del chrome fijo. No oculta nada de forma permanente (el usuario siempre puede volver arriba), así que es más seguro que el crop, a costa de ser aproximado: el alto real del encabezado de Zcal (avatar, equipo, título, duración — solo aparece en la vista inicial del calendario, ver 3.6) varía un poco entre cargas y no se puede medir desde fuera (iframe de otro dominio). Mitigaciones: `estimate` usa las mismas medidas que 3.6/3.7 (305/273/300 px según ancho), el scroll espera 2 s tras el `load` del iframe (1,2 s fue insuficiente: a veces se calculaba antes de que Zcal terminara de dibujar) y hay un límite (`Math.min(delta, frameBox.height - 420)`) para que nunca aterrice pasado el calendario, en blanco. **Si Zcal cambia su diseño hay que volver a medir**, igual que en 3.6/3.7.
+- **Iframe sin crop**: el alto crece solo según el paso (`data-step`, mismo detector por `history.length` que 3.6/3.7): sin atributo 850 px, `times` 820 px, `form` 1080/1240 px (contenedor query ≥600 px). No hay rama especial de móvil/táctil porque, al no recortar, no hay nada que se pueda quedar tapado.
+- **Tracking**: mismo GTM (`GTM-TNRQGDM`) y TikTok Pixel (`D5KFDEBC77U6BL6T7LDG`, con el mismo guard de producción que el resto), `page_name: "agendar_asesoria_llc_calendar"`. `noindex,nofollow`.
+- **Pendiente de confirmar con el negocio**: el ticker incluye "Devolución del importe si no podemos prestar el servicio acordado" — es una promesa de reembolso, copy dado tal cual por el usuario; falta que alguien del equipo confirme que es exacta (ver 3.4 sobre revisiones de cumplimiento ya hechas en otras páginas).
+
+---
+
 ## 4. Infraestructura fuera de git (la parte crítica)
 
 ### 4.1 Supabase (proyecto `vzrrjkdhqqkxjedeukml`)
