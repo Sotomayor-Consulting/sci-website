@@ -646,6 +646,14 @@ const { activityGroups } = Astro.props as Props;
   }
 </script>
 
+<script is:inline>
+  // Asegura que dataLayer exista antes de hacer el push
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    'event': 'lead_datos_completados'
+  });
+</script>
+
 <style>
   .onboarding-step:not(.hidden) {
     animation: step-enter 220ms ease-out both;
