@@ -342,7 +342,7 @@ export const dataLegales = {
       icono: "mingcute:seal-line",
       titulo: "APOSTILLAMIENTO",
       descripcion:
-        "Legalización de documentos para uso internacional mediante la Apostilla de La Haya, válida en más de 100 países.",
+        "Te orientamos y apoyamos en la preparación y presentación de la solicitud de Apostilla de La Haya ante la autoridad competente, que decide su emisión y plazo.",
       pregunta: "¿Qué documentos necesito apostillar?",
       respuesta:
         "Usualmente se requiere para Operating Agreement, certificados de buena standing y documentos de constitución cuando necesitas abrir cuentas bancarias o realizar trámites fuera de Estados Unidos.",
@@ -351,7 +351,7 @@ export const dataLegales = {
       icono: "mingcute:building-2-line",
       titulo: "DBA (DOING BUSINESS AS)",
       descripcion:
-        "Registro de nombre comercial que permite operar tu empresa bajo un nombre diferente al legal registrado.",
+        "Te ayudamos a preparar y presentar la solicitud de registro de un nombre comercial; la autoridad competente decide su aceptación.",
       pregunta: "¿Cuándo debo registrar un DBA?",
       respuesta:
         "Cuando quieres operar bajo un nombre diferente al legal de tu LLC, necesitas abrir una cuenta bancaria con el nombre comercial o estás creando una línea de productos con marca propia.",
@@ -360,7 +360,7 @@ export const dataLegales = {
       icono: "mingcute:paper-line",
       titulo: "RESELLER CERTIFICATE",
       descripcion:
-        "Certificado de exención de impuestos para compras al por mayor destinadas a reventa comercial.",
+        "Te orientamos en la preparación de la solicitud del certificado aplicable a compras para reventa; la autoridad fiscal decide su emisión y alcance.",
       pregunta: "¿Cuánto puedo ahorrar con el Reseller Certificate?",
       respuesta:
         "Puedes evitar pagar el sales tax en tus compras de inventario, lo que representa un ahorro promedio del 6-10% en cada compra. Es esencial para negocios de reventa o dropshipping.",

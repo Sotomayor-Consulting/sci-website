@@ -1,10 +1,10 @@
 ---
-title: "Creating Stripe Accounts for Your Business"
-description: "Creating Stripe Accounts for Your Business"
+title: "Guidance to Apply for and Configure Stripe"
+description: "Document guidance and technical support to apply for and configure a Stripe account"
 main:
   id: 36
   content: |
-    Accessing a global payment processor is essential for growing your digital business. Our Stripe account creation service allows you to process credit card payments securely, no matter what country you're in, and project a professional and global image.
+    Access to a global payment processor can support your digital business. We guide you in preparing the application and technically configuring Stripe; Stripe independently evaluates account availability, verification, and activation.
   imgCard: "@/images/stripe-servicios.png"
   imgMain: "@/images/stripe-servicios.png"
   imgAlt: "Independent professional on a video call"
@@ -22,15 +22,15 @@ longDescription:
   btnTitle: "Get more information"
   btnURL: "https://wa.link/j0r7zw"
 descriptionList:
-  - title: "Fast and Guaranteed Activation"
-    subTitle: "We handle the entire process of creating your Stripe account, from initial setup to verification, so you can start receiving payments as soon as possible."
+  - title: "Application Guidance"
+    subTitle: "We guide you in preparing the information and initial setup. Stripe determines account verification, activation, and timing."
   - title: "International Payment Support"
     subTitle: "Allow your business to accept credit card payments from customers anywhere in the world, expanding your market reach without borders."
   - title: "Integration with Your Business"
     subTitle: "We help you connect your Stripe account with your website or e-commerce platform, ensuring a smooth shopping experience for your customers."
 specificationsLeft:
   - title: "Setup and Verification"
-    subTitle: "We handle Stripe's setup and verification procedures, which require specific US documents, to ensure your account is approved without issues."
+    subTitle: "We support application preparation and setup under the identified requirements. Stripe independently decides account verification and approval."
   - title: "Documentation Consulting"
     subTitle: "We guide you in preparing the necessary documents, such as your EIN and a US address (if needed), to meet Stripe's requirements."
   - title: "Specialized Technical Support"

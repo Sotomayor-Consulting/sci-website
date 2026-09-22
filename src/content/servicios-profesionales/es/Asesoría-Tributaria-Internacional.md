@@ -4,7 +4,7 @@ description: "Asesoría Tributaria Internacional"
 main:
   id: 37
   content: |
-    Como profesional independiente, gestionar tus ingresos en múltiples países puede ser un desafío fiscal. Nuestro servicio de asesoría tributaria internacional está diseñado para ofrecerte una visión clara y estratégica que te permite optimizar tu carga fiscal y garantizar el cumplimiento en cada jurisdicción donde operes.
+    Como profesional independiente, gestionar tus ingresos en múltiples países puede ser un desafío fiscal. Te orientamos para identificar obligaciones y opciones de planificación permitidas según tus hechos y las jurisdicciones donde operes.
   imgCard: "@/images/tributaria-profesional-servicios.avif"
   imgMain: "@/images/tributaria-profesional-servicios.avif"
   imgAlt: "Profesional en laptop"
@@ -18,25 +18,25 @@ tabs:
 longDescription:
   title: "Tu Fiscalidad Global con Confianza"
   subTitle: |
-    La complejidad de las leyes tributarias internacionales ya no tiene que ser una preocupación. Te ofrecemos una asesoría estratégica que simplifica tu situación fiscal, permitiéndote optimizar tus impuestos y asegurar el cumplimiento en todas las jurisdicciones donde trabajes. Con nuestra ayuda, tendrás el control y la tranquilidad que necesitas para enfocarte en tu carrera.
+    Te ayudamos a comprender requisitos fiscales identificados y a evaluar alternativas de planificación según tu situación. Los resultados y el cumplimiento dependen de los hechos, la información proporcionada y las decisiones de las autoridades.
   btnTitle: "Agendar una cita"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
   - title: "Estructuración de Ingresos"
     subTitle: "Diseñamos estrategias eficientes para gestionar tus ingresos a nivel global, optimizando tu estructura fiscal como consultor o profesional independiente."
   - title: "Cumplimiento Normativo"
-    subTitle: "Te guiamos para que cumplas con las regulaciones fiscales en cada país donde tengas clientes o ingresos, evitando sanciones y auditorías."
+    subTitle: "Te guiamos para identificar y atender regulaciones fiscales aplicables, sin garantizar la ausencia de sanciones o auditorías."
   - title: "Optimización de Gastos Deducibles"
     subTitle: "Te asesoramos sobre cómo gestionar tus gastos profesionales de la manera más fiscalmente eficiente para maximizar tus beneficios."
 specificationsLeft:
   - title: "Planificación Estratégica Internacional"
     subTitle: "Diseñamos y optimizamos tu estructura fiscal, incluyendo la selección de jurisdicciones y la configuración de entidades (como LLCs) para reducir tu carga tributaria de manera legal y eficiente."
   - title: "Cumplimiento Normativo Multinacional"
-    subTitle: "Te garantizamos el correcto cumplimiento de las normativas fiscales en todas las jurisdicciones donde prestes servicios, evitando sanciones y riesgos legales."
+    subTitle: "Te apoyamos para identificar obligaciones, preparar documentación y coordinar presentaciones en las jurisdicciones analizadas, sin garantizar resultados ni ausencia de sanciones."
   - title: "Análisis de Tratados Fiscales"
-    subTitle: "Te asesoramos en el uso estratégico de tratados de doble imposición, garantizando que no tributes dos veces por el mismo ingreso en diferentes países."
+    subTitle: "Te orientamos sobre la posible aplicación de tratados de doble imposición según tus hechos; su tratamiento final depende de las normas y autoridades competentes."
   - title: "Asesoría en Precios de Transferencia"
-    subTitle: "Te ayudamos a establecer políticas de precios para transacciones entre tus entidades o empresas relacionadas, cumpliendo con las regulaciones internacionales para evitar auditorías."
+    subTitle: "Te ayudamos a documentar políticas de precios para transacciones entre entidades relacionadas conforme a los requisitos identificados, sin garantizar que no haya revisiones o auditorías."
 specificationsRight:
   - title: "Gestión de Patrimonios Personales"
     subTitle: "Ofrecemos asesoría específica a profesionales independientes con patrimonio en el extranjero, optimizando la gestión de sus activos y la declaración de impuestos sobre rentas y herencias internacionales."

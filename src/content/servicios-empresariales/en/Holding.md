@@ -1,10 +1,10 @@
 ---
-title: "Across Jurisdictions: Incorporation of Holding, Operating Companies, Trusts, and Foundations"
-description: "Incorporation of holding, operating, trust, and foundation companies" 
+title: "International Guidance for Holding and Operating Structures"
+description: "Guidance and document support to apply for the formation of holding companies, operating companies, trusts, and foundations"
 main:
   id: 3
   content: |
-    We help you establish your company in strategic countries such as the United Kingdom, Canada, Panama, Mexico, Peru, Ecuador, Chile, and Portugal, as well as in jurisdictions like the British Virgin Islands, Marshall Islands, and Belize.
+    We guide you and coordinate document support for applications to establish structures in different jurisdictions, working with local providers or advisers when appropriate.
   imgCard: "@/images/holding-servicios.png"
   imgMain: "@/images/holding-servicios.png"
   imgAlt: "Businesspeople walking"
@@ -16,25 +16,25 @@ tabs:
     dataTab: "#tabs-with-card-2"
     title: "Specifications"
 longDescription:
-  title: "Across Jurisdictions: Incorporation of Holding, Operating, Trust, and Foundation Companies"
+  title: "Guidance for Structures Across Jurisdictions"
   subTitle: |
-    We guide you in expanding your business internationally. Our service facilitates the incorporation of holding, operating, trust, and foundation companies in strategic jurisdictions around the world. With our expert consulting, you can efficiently establish your company in countries like the United Kingdom, Canada, Panama, Mexico, Peru, Ecuador, Chile, and Portugal, as well as key jurisdictions like the British Virgin Islands, Marshall Islands, and Belize.
+    We guide you in planning and preparing documents to apply for the formation of holding companies, operating companies, trusts, and foundations in different jurisdictions. We coordinate with local providers or advisers when appropriate; each authority decides registration, acceptance, and timing.
   btnTitle: "Schedule a consultation"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
   - title: "Wide Variety of Jurisdictions"
     subTitle: "Our service covers a wide range of countries and jurisdictions, including the most strategic globally. This allows you to choose the option that best fits your structure and business objectives, optimizing your international expansion."
   - title: "Simplicity in the Process"
-    subTitle: "Each stage of incorporation is designed to be a smooth and uncomplicated process. We handle regulatory and legal complexity so you can focus on your business strategy without worrying about paperwork."
+    subTitle: "We guide you through identified steps, prepare the documents included in the engagement, and coordinate filing so you can focus on your business strategy."
   - title: "Comfort and Efficiency"
-    subTitle: "Eliminates the need to coordinate with multiple consultants in different countries. With Sotomayor Consulting International, you get all incorporation and consulting services in one place, saving time and effort on your expansion project."
+    subTitle: "We centralize guidance and coordination with the local professionals each jurisdiction may require, keeping you informed throughout the process."
 specificationsLeft:
   - title: "Quality Focus"
-    subTitle: "Our service is built with the highest standards of excellence, ensuring a rigorous, precise, and reliable incorporation process. This guarantees the durability and solidity of your company's legal structure in any jurisdiction."
+    subTitle: "We review the included documents against identified requirements to reduce foreseeable errors, without guaranteeing acceptance or the permanent suitability of a structure."
   - title: "Variety of Services"
-    subTitle: "We offer a comprehensive package of services, including incorporation of holding and operating companies, as well as regulatory and tax compliance management. This way, we cover all the needs of your expansion project."
+    subTitle: "We offer planning, document preparation, and coordination of corporate, regulatory, and tax filings according to the agreed scope and applicable jurisdiction."
   - title: "Comprehensive Coverage"
-    subTitle: "Each project receives full dedication to ensure its success. We provide the necessary consulting and support to manage all aspects of your expansion project, from initial planning to completion of paperwork."
+    subTitle: "We support you from initial planning through filing and follow-up for the included procedures; authorities and third parties decide the outcome."
   - title: "Adaptability and Versatility"
     subTitle: "Our services adapt to your specific requirements. Whether you're looking to establish a holding to consolidate your assets or an operating company to expand your business, our consulting provides the compatibility and versatility needed to achieve your goals."
 tableData:

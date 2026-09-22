@@ -342,7 +342,7 @@ export const dataLegales = {
       icono: "mingcute:seal-line",
       titulo: "APOSTILLE",
       descripcion:
-        "Legalization of documents for international use through the Hague Apostille, valid in more than 100 countries.",
+        "We guide and support you in preparing and filing a Hague Apostille request with the appropriate authority, which decides issuance and timing.",
       pregunta: "What documents do I need to apostille?",
       respuesta:
         "It is usually required for the Operating Agreement, certificates of good standing, and incorporation documents when you need to open bank accounts or carry out procedures outside the United States.",
@@ -351,7 +351,7 @@ export const dataLegales = {
       icono: "mingcute:building-2-line",
       titulo: "DBA (DOING BUSINESS AS)",
       descripcion:
-        "Trade name registration that allows your company to operate under a name different from the registered legal name.",
+        "We help prepare and file an application to register a trade name; the appropriate authority decides acceptance.",
       pregunta: "When should I register a DBA?",
       respuesta:
         "When you want to operate under a name different from your LLC's legal name, you need to open a bank account with the trade name, or you are creating a product line with its own brand.",
@@ -360,7 +360,7 @@ export const dataLegales = {
       icono: "mingcute:paper-line",
       titulo: "RESELLER CERTIFICATE",
       descripcion:
-        "Tax exemption certificate for wholesale purchases intended for commercial resale.",
+        "We guide you in preparing the application for a certificate applicable to resale purchases; the tax authority decides issuance and scope.",
       pregunta: "How much can I save with the Reseller Certificate?",
       respuesta:
         "You can avoid paying sales tax on your inventory purchases, which represents an average savings of 6-10% on each purchase. It is essential for resale or dropshipping businesses.",

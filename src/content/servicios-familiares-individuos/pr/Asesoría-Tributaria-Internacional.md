@@ -32,7 +32,7 @@ specificationsLeft:
   - title: "Planejamento Estratégico Patrimonial"
     subTitle: "Desenhamos e otimizamos sua estrutura fiscal a nível global, incluindo a seleção de jurisdições e a configuração de entidades para reduzir a carga tributária de forma legal e eficiente."
   - title: "Conformidade Normativa Multinacional"
-    subTitle: "Garantimos o correto cumprimento das normativas fiscais em todas as jurisdições onde tenha investimentos, evitando sanções e riscos legais."
+    subTitle: "Apoiamos a identificação de obrigações, a preparação de documentos e a coordenação de declarações nas jurisdições analisadas, sem garantir resultados ou ausência de sanções."
   - title: "Análise de Tratados Fiscais"
     subTitle: "Assessoramos você no uso estratégico de tratados de dupla tributação, garantizando que seu patrimônio não tribute duas vezes pelo mesmo rendimento em diferentes países."
   - title: "Assessoria em Retornos de Investimento"

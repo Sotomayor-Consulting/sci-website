@@ -4,7 +4,7 @@ description: "Assessoria Tributária Internacional"
 main:
   id: 43
   content: |
-    Como profissional independente, gerenciar seus rendimentos em múltiplos países pode ser um desafio fiscal. Nosso serviço de assessoria tributária internacional foi desenvolvido para oferecer-lhe uma visão clara e estratégica que permite otimizar sua carga fiscal e garantir o cumprimento em cada jurisdição onde opere.
+    Como profissional independente, gerenciar rendimentos em vários países pode ser um desafio fiscal. Orientamos você na identificação de obrigações e opções de planejamento permitidas conforme seus fatos e as jurisdições onde atua.
   imgCard: "@/images/tributaria-profesional-servicios.avif"
   imgMain: "@/images/tributaria-profesional-servicios.avif"
   imgAlt: "Profissional no laptop"
@@ -18,25 +18,25 @@ tabs:
 longDescription:
   title: "Sua Tributação Global com Confiança"
   subTitle: |
-    A complexidade das leis tributárias internacionais não precisa ser uma preocupação. Oferecemos uma assessoria estratégica que simplifica sua situação fiscal, permitindo otimizar seus impostos e garantir o cumprimento em todas as jurisdições onde trabalhe. Com nossa ajuda, você terá o controle e a tranquilidade que precisa para focar em sua carreira.
+    Ajudamos você a compreender requisitos fiscais identificados e avaliar alternativas de planejamento conforme sua situação. Os resultados e a conformidade dependem dos fatos, das informações fornecidas e das decisões das autoridades competentes.
   btnTitle: "Agendar uma consulta"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
   - title: "Estruturação de Rendimentos"
     subTitle: "Desenhamos estratégias eficientes para gerenciar seus rendimentos em nível global, otimizando sua estrutura fiscal como consultor ou profissional independente."
   - title: "Cumprimento Normativo"
-    subTitle: "Guiamos você para cumprir com as regulamentações fiscais em cada país onde tenha clientes ou rendimentos, evitando sanções e auditorias."
+    subTitle: "Orientamos você a identificar e atender às regras fiscais aplicáveis, sem garantir a ausência de sanções ou auditorias."
   - title: "Otimização de Despesas Deduíveis"
     subTitle: "Assessamos você sobre como gerenciar suas despesas profissionais da maneira mais fiscalmente eficiente para maximizar seus benefícios."
 specificationsLeft:
   - title: "Planejamento Estratégico Internacional"
     subTitle: "Desenhamos e otimizamos sua estrutura fiscal, incluindo a seleção de jurisdições e a configuração de entidades (como LLCs) para reduzir sua carga tributária de maneira legal e eficiente."
   - title: "Cumprimento Normativo Multinacional"
-    subTitle: "Garantimos o correto cumprimento das normativas fiscais em todas as jurisdições onde preste serviços, evitando sanções e riscos legais."
+    subTitle: "Apoiamos a identificação de obrigações, a preparação de documentos e a coordenação de declarações nas jurisdições analisadas, sem garantir resultados ou ausência de sanções."
   - title: "Análise de Tratados Fiscais"
-    subTitle: "Assessamos você no uso estratégico de tratados de dupla tributação, garantindo que não tribute duas vezes pelo mesmo rendimento em diferentes países."
+    subTitle: "Orientamos você sobre a possível aplicação de tratados de dupla tributação conforme seus fatos; o tratamento final depende das normas e autoridades competentes."
   - title: "Assessoria em Preços de Transferência"
-    subTitle: "Ajudamos você a estabelecer políticas de preços para transações entre suas entidades ou empresas relacionadas, cumprindo com as regulamentações internacionais para evitar auditorias."
+    subTitle: "Ajudamos a documentar políticas de preços para transações entre entidades relacionadas conforme os requisitos identificados, sem garantir que não ocorram revisões ou auditorias."
 specificationsRight:
   - title: "Gestão de Patromônios Pessoais"
     subTitle: "Oferecemos assessoria específica a profissionais independentes com patrimônio no exterior, otimizando a gestão de seus ativos e a declaração de impostos sobre rendas e heranças internacionais."

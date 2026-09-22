@@ -4,7 +4,7 @@ description: "Asesoría Tributaria Internacional"
 main:
   id: 4
   content: |
-    Proteger el patrimonio familiar a través de fronteras puede ser un desafío. Nuestro servicio de asesoría tributaria internacional está diseñado para ofrecerte una visión clara y estratégica que te permita optimizar tu carga fiscal y garantizar el cumplimiento en múltiples jurisdicciones, asegurando la tranquilidad y el futuro de tu familia.
+    Proteger el patrimonio familiar a través de fronteras puede ser un desafío. Te orientamos para identificar obligaciones y opciones de planificación permitidas según tus hechos y las jurisdicciones aplicables.
   imgCard: "@/images/tributaria-familia-servicios.avif"
   imgMain: "@/images/tributaria-familia-servicios.avif"
   imgAlt: "Familias e individuos con un abogado"
@@ -18,7 +18,7 @@ tabs:
 longDescription:
   title: "Tu Fiscalidad Global con Confianza"
   subTitle: |
-    La complejidad de las leyes tributarias internacionales ya no tiene que ser una preocupación. Te ofrecemos una asesoría estratégica que simplifica tu situación fiscal, permitiéndote optimizar tus impuestos y asegurar el cumplimiento en todas las jurisdicciones donde tengas patrimonio. Con nuestra ayuda, tendrás el control y la tranquilidad que necesitas para proteger tu legado.
+    Te ayudamos a comprender requisitos fiscales identificados y a evaluar alternativas de planificación según tu situación. Los resultados y el cumplimiento dependen de los hechos, la información proporcionada y las decisiones de las autoridades.
   btnTitle: "Agendar una cita"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
@@ -32,7 +32,7 @@ specificationsLeft:
   - title: "Planificación Estratégica Patrimonial"
     subTitle: "Diseñamos y optimizamos tu estructura fiscal a nivel global, incluyendo la selección de jurisdicciones y la configuración de entidades para reducir la carga tributaria de manera legal y eficiente."
   - title: "Cumplimiento Normativo Multinacional"
-    subTitle: "Te garantizamos el correcto cumplimiento de las normativas fiscales en todas las jurisdicciones donde tengas inversiones, evitando sanciones y riesgos legales."
+    subTitle: "Te apoyamos para identificar obligaciones, preparar documentación y coordinar presentaciones en las jurisdicciones analizadas, sin garantizar resultados ni ausencia de sanciones."
   - title: "Análisis de Tratados Fiscales"
     subTitle: "Te asesoramos en el uso estratégico de tratados de doble imposición, garantizando que tu patrimonio no tribute dos veces por el mismo ingreso en diferentes países."
   - title: "Asesoría en Retornos de Inversión"

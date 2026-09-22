@@ -1,10 +1,10 @@
 ---
-title: "Incorporação de LLCs"
-description: "Incorporação de LLCs nos EUA"
+title: "Acompanhamento para constituir uma LLC"
+description: "Assessoria e apoio documental para solicitar o registro de uma LLC nos EUA"
 main:
   id: 46
   content: |
-    Como profissional independente, seu talento não tem fronteiras. A criação de uma LLC nos Estados Unidos oferece a estrutura legal para projetar uma imagem global e expandir seus serviços. Com nosso acompanhamento, simplificamos o processo para que você possa focar no que melhor sabe fazer: fazer crescer sua carreira profissional.
+    Como profissional independente, seu talento não tem fronteiras. Orientamos e apoiamos você na preparação e apresentação da solicitação para registrar uma LLC nos Estados Unidos, para que possa se concentrar no crescimento da sua carreira profissional.
   imgCard: "@/images/llcs-profesional-servicios.avif"
   imgMain: "@/images/llcs-profesional-servicios.avif"
   imgAlt: "Profissional independente no laptop"
@@ -18,30 +18,30 @@ tabs:
 longDescription:
   title: "Sua Plataforma de Lançamento Global: A LLC nos EUA"
   subTitle: |
-    Na Sotomayor Consulting International, entendemos a visão dos profissionais independentes. Por isso, oferecemos uma solução completa para estabelecer sua empresa nos EUA, obter seu EIN, abrir uma conta bancária e garantir o cumprimento legal, não importa em que parte do mundo você se encontre.
-  btnTitle: "Adquira sua LLC"
+    Apoiamos profissionais independentes na preparação, apresentação e acompanhamento de processos para registrar e manter uma LLC nos EUA. A SCI é uma empresa privada e não integra nem atua em nome do governo dos EUA; os estados, o IRS e os provedores privados decidem a aceitação, emissão e os prazos de cada solicitação ou serviço.
+  btnTitle: "Agende sua assessoria"
   btnURL: "/#precios"
 descriptionList:
   - title: "Passo 1: Assessoria Personalizada (Opcional)"
     subTitle: "Um especialista avalia seu projeto como profissional e orienta sobre o tipo de empresa, estado de incorporação e plano mais conveniente para seu negócio."
   - title: "Passo 2: Selecione seu Plano"
     subTitle: "Escolha entre os planos Básico, Padrão ou Business segundo seus objetivos profissionais. Nós o acompanhamos em todo o processo."
-  - title: "Passo 3: Incorporação, conta bancária e entrega de documentos"
-    subTitle: "Constituímos sua LLC, obtemos o EIN e assessamos você na abertura de sua conta bancária nos EUA. Você recebe todos os documentos legais prontos para operar."
+  - title: "Passo 3: Apresentação e acompanhamento de solicitações"
+    subTitle: "Preparamos e apoiamos a apresentação do registro da sua LLC ao estado e da solicitação do EIN ao IRS. Também orientamos você em solicitações bancárias; cada autoridade ou provedor decide a aprovação, emissão e os prazos."
 specificationsLeft:
   - title: "Cumprimento Tributário Anual IRS"
-    subTitle: "Cuidamos de preparar e enviar seus formulários fiscais ao IRS, garantindo que sua LLC cumpra com suas obrigações tributárias enquanto você se concentra em sua profissão."
+    subTitle: "Preparamos e enviamos os formulários fiscais incluídos no serviço com base nas informações fornecidas, apoiando sua LLC no atendimento das obrigações aplicáveis."
   - title: "Conformidade com o Pedido de Isenção BE-13"
-    subTitle: "O Pedido de Isenção BE-13 é um arquivamento junto ao Escritório de Análise Econômica (BEA) dos EUA. Nós o orientamos na conformidade, garantindo que o pedido de isenção seja enviado corretamente e dentro do prazo."
+    subTitle: "O Pedido de Isenção BE-13 é uma declaração junto ao Bureau of Economic Analysis (BEA) dos EUA. Ajudamos a preparar e apresentar a documentação no prazo aplicável; o BEA decide sobre sua aceitação."
   - title: "Manutenção Anual de sua LLC"
-    subTitle: "Cuidamos do agente residente, relatório anual perante o Estado e taxas estaduais, para que sua empresa se mantenha em dia sem complicações."
+    subTitle: "Apoiamos você com o serviço de agente registrado, a preparação do relatório anual estadual e a gestão das taxas incluídas na contratação."
   - title: "Seu Agente Residente e sua LLC"
-    subTitle: "Um Agente Residente é o ponto de contato oficial entre sua LLC e o estado. Gerenciamos este serviço para garantir que qualquer documento legal ou notificação governamental seja recebido e processado no prazo, protegendo sua empresa de possíveis sanções."
+    subTitle: "Um Agente Registrado é o ponto de contato designado entre sua LLC e o estado. Quando prestamos esse serviço, recebemos e encaminhamos documentos legais ou notificações governamentais conforme as condições contratadas, sem garantir resultados ou ausência de sanções."
 specificationsRight:
   - title: "Tranquilidade Fiscal"
-    subTitle: "A tributação internacional não precisa ser uma preocupação. Garantimos que sua LLC cumpra com todos os requisitos fiscais do IRS, gerenciando seus formulários para que você tenha a tranquilidade de que sua empresa opera com total legalidade."
+    subTitle: "Orientamos você sobre os requisitos fiscais identificados para sua LLC e preparamos os formulários incluídos no serviço. A conformidade depende dos fatos, das informações fornecidas e das decisões das autoridades competentes."
   - title: "Mantenha sua LLC em Bom Estado"
-    subTitle: "Evite multas e a dissolução de sua LLC por descumprimento. Nosso serviço de manutenção anual inclui o relatório anual perante o estado, garantindo que sua empresa esteja sempre em dia com as regulamentações locais."
+    subTitle: "Nosso serviço de manutenção anual pode incluir a preparação e apresentação do relatório estadual para ajudar no atendimento das obrigações periódicas. O estado decide a aceitação e a situação da LLC."
   - title: "Gestão de Taxa e Relatório Estadual"
     subTitle: "Cada estado tem seus próprios requisitos para manter uma LLC ativa. Ajudamos você a gerenciar o relatório anual e as taxas estaduais, simplificando o processo para que não precise se preocupar com datas de vencimento ou documentação necessária."
   - title: "O Cumprimento não precisa ser complicado"

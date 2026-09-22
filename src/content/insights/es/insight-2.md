@@ -31,7 +31,7 @@ Una LLC es una entidad legal flexible y fácil de administrar en EE.UU. que **pr
     * **Wyoming** – Sin impuestos estatales, privacidad y bajo costo de renovación.
     * **Delaware** – Ideal para startups tecnológicas y negocios con socios.
     * **Florida** – Recomendado si planeas invertir en Real Estate en EE.UU.
-2.  **Registrar la empresa y obtener EIN:** Se completa el proceso de constitución ante el estado. Se solicita el **EIN (Employer Identification Number)** para operar legalmente.
+2.  **Presentar el registro de la empresa y solicitar el EIN:** La solicitud de constitución se presenta ante el estado y el **EIN (Employer Identification Number)** se solicita al IRS. Cada autoridad decide la aprobación, emisión y plazos.
 3.  **Abrir una cuenta bancaria en EE.UU.:** Bancos como **Mercury, Relay o Wise** permiten a extranjeros abrir cuentas online. Una LLC facilita el proceso y evita bloqueos bancarios.
 4.  **Configurar Stripe, PayPal y pasarelas de pago:** Con tu LLC y cuenta bancaria, puedes activar Stripe o PayPal Business sin restricciones. Esto mejora la recepción de pagos internacionales y reduce bloqueos.
 5.  **Cumplir con las obligaciones anuales:** Presentar informes de cumplimiento (BE-13, tax reports si aplica). Mantener un agente registrado en EE.UU. (generalmente incluido en los paquetes de constitución).

@@ -1,11 +1,11 @@
 export const translationPtempresas = {
   pageTitle: "Serviços Empresariais",
   pageSubTitle:
-    "Esta seção foca nas necessidades corporativas, desde a constituição até a gestão contábil e tecnológica.",
+    "Esta seção foca nas necessidades corporativas, desde o apoio para solicitar uma constituição até a gestão contábil e tecnológica.",
   metaDescription:
-    "Soluções corporativas completas para constituir e gerenciar sua empresa nos EUA.",
+    "Orientação e apoio documental para solicitar a constituição e gerenciar sua empresa nos EUA.",
   siteDescription:
-    "Consultoria internacional para constituição de empresas nos EUA.",
+    "Consultoria internacional e acompanhamento para solicitações de constituição de empresas nos EUA.",
   backButton: "Voltar",
   testimonialsTitle: "O Que Nossos Clientes Dizem",
   testimonials: [

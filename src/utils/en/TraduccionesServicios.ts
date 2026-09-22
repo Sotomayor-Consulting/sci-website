@@ -1,11 +1,11 @@
 export const translationEnempresas = {
   pageTitle: "Business Services",
   pageSubTitle:
-    "This section focuses on corporate needs, from incorporation to accounting and technology management.",
+    "This section focuses on corporate needs, from support with formation applications to accounting and technology management.",
   metaDescription:
-    "Complete corporate solutions to establish and manage your business in the U.S.",
+    "Guidance and document support to apply for business formation and manage your U.S. company.",
   siteDescription:
-    "International consulting for business incorporation in the U.S.",
+    "International consulting and support for U.S. business formation applications.",
   backButton: "Go Back",
   testimonialsTitle: "What Our Clients Say",
   testimonials: [

@@ -111,7 +111,7 @@ Comparada con estructuras corporativas de otros países, la LLC es sorprendentem
 
 1. **Elegir el estado** (Wyoming, Florida o Delaware son los más populares).
 2. **Presentar los Articles of Organization** ante la Secretaría de Estado (115 días hábiles).
-3. **Obtener el EIN** del IRS (gratuito, 14 semanas para extranjeros).
+3. **Solicitar el EIN** ante el IRS. El IRS decide la emisión y el tiempo de procesamiento.
 4. **Redactar el Operating Agreement** (documento interno de gestión).
 5. **Abrir cuenta bancaria** (remotamente en la mayoría de los casos).
 

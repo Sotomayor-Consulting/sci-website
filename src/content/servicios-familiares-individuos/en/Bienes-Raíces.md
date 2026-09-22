@@ -32,7 +32,7 @@ specificationsLeft:
   - title: "Strategic Market Analysis"
     subTitle: "We conduct a detailed market analysis to identify the most profitable investment opportunities in key locations like Florida and Madrid."
   - title: "Legal Property Structuring"
-    subTitle: "We guarantee proper compliance with property regulations in each jurisdiction, ensuring your investment is safe and protected."
+    subTitle: "We guide you on identified property requirements in each jurisdiction and coordinate professional support within scope, without guaranteeing compliance, protection, or investment outcomes."
   - title: "Financial Planning"
     subTitle: "We advise you on structuring your investment financially, including selecting mortgages and optimizing capital flows."
   - title: "Investment Visa Consulting"

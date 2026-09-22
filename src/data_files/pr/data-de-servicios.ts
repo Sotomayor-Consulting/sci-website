@@ -342,7 +342,7 @@ export const dataLegales = {
       icono: "mingcute:seal-line",
       titulo: "APOSTILAMENTO",
       descripcion:
-        "Legalização de documentos para uso internacional por meio da Apostila de Haia, válida em mais de 100 países.",
+        "Orientamos e apoiamos você na preparação e apresentação da solicitação da Apostila de Haia ao órgão competente, que decide a emissão e o prazo.",
       pregunta: "Quais documentos preciso apostilar?",
       respuesta:
         "Geralmente é exigido para o Operating Agreement, certificados de good standing e documentos de constituição quando você precisa abrir contas bancárias ou realizar trâmites fora dos Estados Unidos.",
@@ -351,7 +351,7 @@ export const dataLegales = {
       icono: "mingcute:building-2-line",
       titulo: "DBA (DOING BUSINESS AS)",
       descripcion:
-        "Registro de nome comercial que permite à sua empresa operar com um nome diferente do nome legal registrado.",
+        "Ajudamos a preparar e apresentar a solicitação de registro de um nome comercial; o órgão competente decide sua aceitação.",
       pregunta: "Quando devo registrar um DBA?",
       respuesta:
         "Quando você quer operar com um nome diferente do nome legal da sua LLC, precisa abrir uma conta bancária com o nome comercial ou está criando uma linha de produtos com marca própria.",
@@ -360,7 +360,7 @@ export const dataLegales = {
       icono: "mingcute:paper-line",
       titulo: "RESELLER CERTIFICATE",
       descripcion:
-        "Certificado de isenção de impostos para compras no atacado destinadas à revenda comercial.",
+        "Orientamos você na preparação da solicitação do certificado aplicável a compras para revenda; a autoridade fiscal decide sua emissão e alcance.",
       pregunta: "Quanto posso economizar com o Reseller Certificate?",
       respuesta:
         "Você pode evitar pagar o sales tax nas suas compras de estoque, o que representa uma economia média de 6-10% em cada compra. É essencial para negócios de revenda ou dropshipping.",

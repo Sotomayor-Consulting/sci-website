@@ -32,7 +32,7 @@ specificationsLeft:
   - title: "Análise de Mercado Estratégica"
     subTitle: "Realizamos uma análise detalhada do mercado para identificar as oportunidades de investimento mais rentáveis em locais-chave como a Flórida e Madri."
   - title: "Estruturação Legal da Propriedade"
-    subTitle: "Garantimos o correto cumprimento das normativas de propriedade em cada jurisdição, asegurando que seu investimento seja seguro e protegido."
+    subTitle: "Orientamos você sobre requisitos de propriedade identificados em cada jurisdição e coordenamos apoio profissional conforme o escopo, sem garantir conformidade, proteção ou resultados do investimento."
   - title: "Planejamento Financeiro"
     subTitle: "Assessoramos você na estruturação financeira do seu investimento, incluindo a seleção de hipotecas e a otimização dos fluxos de capital."
   - title: "Assessoria em Vistos de Investimento"

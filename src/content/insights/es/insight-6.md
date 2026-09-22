@@ -280,7 +280,7 @@ En **Sotomayor Consulting International** ayudamos a empresarios y emprendedores
 Le ayudamos con:
 
 - Incorporación de LLC.
-- Obtención de EIN.
+- Apoyo para solicitar el EIN ante el IRS.
 - Estrategia bancaria.
 - Compliance inicial.
 - Análisis tributario.

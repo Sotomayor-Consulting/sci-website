@@ -240,6 +240,15 @@ Se añadió a `crea-tu-llc-en-usa/gracias-por-tu-registro` el mismo popup por in
 - Los scripts de arranque de GTM en `MainLayout.astro` y `GoogleTagManager.astro` llevan `data-cfasync="false"` porque Cloudflare Rocket Loader estaba reescribiendo su `type` y demorando su ejecución. Si Cloudflare ignora esa exclusión, desactivar Rocket Loader para las rutas afectadas mediante una Configuration Rule.
 - El resolvedor DNS local `ifibramax.local` (`200.63.105.194`) devolvía NXDOMAIN para `www.googletagmanager.com`, mientras los DNS públicos sí resolvían. Si GTM sigue sin cargar tras el despliegue, separar este bloqueo de red local del comportamiento del sitio y probar con `1.1.1.1` o `8.8.8.8`.
 
+### 3.10 Revisión de copy regulatorio para publicidad (2026-09-22)
+
+- Se auditó el contenido público en español, inglés y portugués para evitar atribuir a SCI la emisión, aprobación u obtención directa de documentos, registros, identificadores, visas o cuentas decididos por autoridades y proveedores externos.
+- Se actualizaron las páginas de LLC para profesionales, holdings internacionales, Stripe, servicios legales, visas, tributación, contabilidad, mantenimiento anual, el timeline y los datos estructurados. El patrón vigente es: SCI orienta, prepara documentación, apoya la presentación y da seguimiento; el Estado, IRS, autoridad migratoria, Stripe, banco u otro tercero decide aceptación, emisión, aprobación y plazos.
+- Se corrigieron datos estructurados en español que apuntaban por error a `/contact/`, declaraban `pt-BR` y usaban el texto "abra sua LLC conosco".
+- Se retiró `public/wp-content/uploads/2026/07/El-Escudo-Americano-Sotomayor-Consulting-International.pdf`: no estaba enlazado, no tenía fuente editable y seguía accesible con afirmaciones como "constituimos una LLC", "obtuvimos su EIN en tiempo récord" y aprobación de Stripe en 48 horas.
+- `COPY_REGULATORIO_I18N.md` contiene el inventario Antes/Después y las labels camelCase propuestas en los tres idiomas. No se creó un catálogo runtime nuevo porque el proyecto localiza contenido mediante archivos TypeScript, JSON, Markdown y páginas Astro/HTML separados.
+- El cierre de la auditoría también ajustó artículos educativos en ES/EN/PT: se sustituyeron "obtener el EIN" y plazos rígidos por "solicitar el EIN ante el IRS", reservando al IRS la emisión y el tiempo de procesamiento.
+
 ---
 
 ## 4. Infraestructura fuera de git (la parte crítica)

@@ -1,10 +1,10 @@
 ---
-title: "Criação de Contas Stripe para seu Negócio"
-description: "Criação de Contas Stripe para seu Negócio"
+title: "Acompanhamento para Solicitar e Configurar o Stripe"
+description: "Orientação documental e suporte técnico para solicitar e configurar uma conta Stripe"
 main:
   id: 48
   content: |
-    Acessar um processador de pagamentos global é fundamental para o crescimento de seu negócio digital. Nosso serviço de criação de contas Stripe permite processar pagamentos com cartão de crédito de maneira segura, não importa em que país você se encontre, e projetar uma imagem profissional e global.
+    Acessar um processador de pagamentos global pode apoiar seu negócio digital. Orientamos você na preparação da solicitação e na configuração técnica do Stripe; o Stripe avalia de forma independente a disponibilidade, a verificação e a ativação de cada conta.
   imgCard: "@/images/stripe-servicios.png"
   imgMain: "@/images/stripe-servicios.png"
   imgAlt: "Profissional independente em uma videochamada"
@@ -22,15 +22,15 @@ longDescription:
   btnTitle: "Obter mais informações"
   btnURL: "https://wa.link/j0r7zw"
 descriptionList:
-  - title: "Ativação Rápida e Garantida"
-    subTitle: "Cuidamos de todo o processo de criação de sua conta Stripe, desde a configuração inicial até a verificação, para que você possa começar a receber pagamentos o mais rápido possível."
+  - title: "Acompanhamento na Solicitação"
+    subTitle: "Orientamos você na preparação das informações e na configuração inicial. O Stripe determina a verificação, a ativação e os prazos da conta."
   - title: "Suporte para Pagamentos Internacionais"
     subTitle: "Permita que seu negócio aceite pagamentos com cartão de crédito de clientes em qualquer parte do mundo, ampliando seu alcance de mercado sem fronteiras."
   - title: "Integração com seu Negócio"
     subTitle: "Ajudamos você a conectar sua conta Stripe com seu site ou plataforma de e-commerce, garantindo uma experiência de compra fluida para seus clientes."
 specificationsLeft:
   - title: "Configuração e Verificação"
-    subTitle: "Cuidamos dos trámites de configuração e verificação do Stripe, que requerem documentos específicos dos EUA, para garantir que sua conta seja aprovada sem problemas."
+    subTitle: "Apoiamos a preparação e a configuração da solicitação conforme os requisitos identificados. O Stripe decide de forma independente a verificação e a aprovação da conta."
   - title: "Assessoria em Documentação"
     subTitle: "Guiamos você para preparar os documentos necessários, como seu EIN e um endereço nos EUA (se necessário), para cumprir com os requisitos do Stripe."
   - title: "Suporte Técnico Especializado"

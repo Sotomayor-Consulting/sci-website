@@ -280,7 +280,7 @@ At **Sotomayor Consulting International**, we help Latin American entrepreneurs 
 We help you with:
 
 - LLC incorporation.
-- EIN obtainment.
+- Support applying for an EIN with the IRS.
 - Banking strategy.
 - Initial compliance.
 - Tax analysis.

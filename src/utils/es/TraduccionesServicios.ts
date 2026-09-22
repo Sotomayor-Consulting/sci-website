@@ -1,11 +1,11 @@
 export const traducionEsempresas = {
   pageTitle: "Servicios Empresariales",
   pageSubTitle:
-    "Esta sección se enfoca en las necesidades corporativas, desde la constitución hasta la gestión contable y tecnológica.",
+    "Esta sección se enfoca en las necesidades corporativas, desde el acompañamiento para solicitar una constitución hasta la gestión contable y tecnológica.",
   metaDescription:
-    "Soluciones corporativas completas para constituir y gestionar tu empresa en EE.UU.",
+    "Orientación y apoyo documental para solicitar la constitución y gestionar tu empresa en EE. UU.",
   siteDescription:
-    "Consultoría internacional para constitución de empresas en EE.UU.",
+    "Consultoría internacional y acompañamiento para solicitudes de constitución de empresas en EE. UU.",
   backButton: "Volver",
   testimonialsTitle: "Lo Que Dicen Nuestros Clientes",
   testimonials: [

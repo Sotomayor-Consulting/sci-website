@@ -26,7 +26,7 @@ descriptionList:
     subTitle: "Un especialista evalúa tu proyecto y te orienta sobre el tipo de empresa, estado de incorporación y plan más conveniente."
   - title: "Paso 2: Selecciona tu Plan"
     subTitle: "Elige entre los planes Básico, Estándar o Business según tus objetivos. Nosotros te acompañamos en todo el proceso."
-  - title: "Paso 3: Incorporación, cuenta bancaria y entrega de documentos"
+  - title: "Paso 3: Presentación y seguimiento de solicitudes"
     subTitle: "Preparamos y presentamos la documentación de registro de tu LLC ante el Estado, te acompañamos en la solicitud del EIN ante el IRS y, cuando el plan lo incluye, prestamos el servicio de agente residente. También ofrecemos servicios adicionales según el plan."
 specificationsLeft:
   - title: "Cumplimiento Tributario Anual IRS"

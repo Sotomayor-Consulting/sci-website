@@ -4,7 +4,7 @@ description: "International Tax Consulting"
 main:
   id: 31
   content: |
-    As an independent professional, managing your income across multiple countries can be a tax challenge. Our international tax consulting service is designed to offer you a clear and strategic vision that allows you to optimize your tax burden and ensure compliance in each jurisdiction where you operate.
+    As an independent professional, managing income across countries can be a tax challenge. We guide you in identifying obligations and permitted planning options based on your facts and the jurisdictions where you operate.
   imgCard: "@/images/tributaria-profesional-servicios.avif"
   imgMain: "@/images/tributaria-profesional-servicios.avif"
   imgAlt: "Professional on laptop"
@@ -18,25 +18,25 @@ tabs:
 longDescription:
   title: "Your Global Taxation with Confidence"
   subTitle: |
-    The complexity of international tax laws no longer has to be a concern. We offer strategic consulting that simplifies your tax situation, allowing you to optimize your taxes and ensure compliance in all jurisdictions where you work. With our help, you'll have the control and peace of mind you need to focus on your career.
+    We help you understand identified tax requirements and evaluate planning alternatives based on your situation. Outcomes and compliance depend on the facts, information provided, and decisions by the relevant authorities.
   btnTitle: "Schedule a consultation"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
   - title: "Income Structuring"
     subTitle: "We design efficient strategies for managing your income globally, optimizing your tax structure as a consultant or independent professional."
   - title: "Regulatory Compliance"
-    subTitle: "We guide you through tax regulations in each country where you have clients or income, avoiding penalties and audits."
+    subTitle: "We guide you in identifying and addressing applicable tax rules, without guaranteeing the absence of penalties or audits."
   - title: "Deductible Expenses Optimization"
     subTitle: "We advise you on managing your professional expenses in the most tax-efficient way to maximize your benefits."
 specificationsLeft:
   - title: "International Strategic Planning"
     subTitle: "We design and optimize your tax structure, including selecting jurisdictions and configuring entities (like LLCs) to legally and efficiently reduce your tax burden."
   - title: "Multinational Regulatory Compliance"
-    subTitle: "We guarantee proper compliance with tax regulations in all jurisdictions where you provide services, avoiding penalties and legal risks."
+    subTitle: "We support identifying obligations, preparing documents, and coordinating filings in the jurisdictions reviewed, without guaranteeing outcomes or the absence of penalties."
   - title: "Tax Treaty Analysis"
-    subTitle: "We advise you on the strategic use of double taxation treaties, ensuring you don't pay taxes twice on the same income in different countries."
+    subTitle: "We guide you on the potential application of double taxation treaties based on your facts; final treatment depends on applicable rules and authorities."
   - title: "Transfer Pricing Consulting"
-    subTitle: "We help you establish pricing policies for transactions between your entities or related companies, complying with international regulations to avoid audits."
+    subTitle: "We help document pricing policies for related-entity transactions under identified requirements, without guaranteeing that reviews or audits will not occur."
 specificationsRight:
   - title: "Personal Wealth Management"
     subTitle: "We offer specific consulting for independent professionals with assets abroad, optimizing asset management and declaration of international income and inheritance taxes."

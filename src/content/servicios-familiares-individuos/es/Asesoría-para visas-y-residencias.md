@@ -18,32 +18,32 @@ tabs:
 longDescription:
   title: "Tu Nuevo Hogar en el Mundo"
   subTitle: |
-    La complejidad de los trámites migratorios ya no tiene que ser una preocupación. Te ofrecemos una asesoría estratégica para simplificar tu camino hacia la residencia en España y Estados Unidos, permitiéndote cumplir con todos los requisitos y asegurar la tranquilidad que necesitas para empezar una nueva vida. Con nuestra ayuda, tendrás el control y la confianza para tomar esta importante decisión. 
+    Te ofrecemos orientación estratégica y preparación documental para solicitudes de residencia en España y Estados Unidos. La autoridad migratoria determina la elegibilidad, aprobación y plazos de cada caso.
   
     Para evaluar tu caso individual, te ofrecemos una consulta con un especialista por un costo de 300 dólares, que te brindará una guía precisa y personalizada para tus objetivos migratorios.
   btnTitle: "Solicitar cita"
   btnURL: "/formularios/formulario-visa" 
 descriptionList:
   - title: "Asesoría para Visas de Inversión"
-    subTitle: "Te ayudamos a estructurar tu inversión de forma que te califique para visas que te permitan obtener la residencia en países como EE.UU. o España."
+    subTitle: "Te orientamos sobre opciones de visa vinculadas a inversión y sobre la documentación de la solicitud. La autoridad migratoria decide si cumples los requisitos y si aprueba la residencia."
   - title: "Planificación Migratoria Familiar"
-    subTitle: "Te guiamos en el proceso de solicitud de visas para ti y tu familia, asegurando que todos cumplan con los requisitos y que la transición sea fluida."
+    subTitle: "Te guiamos en la preparación de solicitudes de visa para ti y tu familia conforme a los requisitos identificados, sin garantizar aprobación ni plazos."
   - title: "Gestión de Residencia"
-    subTitle: "Te asistimos en la gestión de la residencia permanente, incluyendo la preparación de documentos, la presentación de solicitudes y el seguimiento de tu caso."
+    subTitle: "Te asistimos con la preparación documental, presentación y seguimiento de solicitudes de residencia permanente; la autoridad decide el resultado."
 specificationsLeft:
   - title: "Diseño de Estrategia de Migración"
     subTitle: "Diseñamos un plan de migración que se adapte a tus objetivos familiares, desde la selección del tipo de visa hasta la elección del país de destino."
   - title: "Integración con Inversiones"
-    subTitle: "Coordinamos tu solicitud de visa con tus inversiones en bienes raíces o la creación de una empresa para maximizar tus oportunidades de éxito."
+    subTitle: "Coordinamos la documentación de tu solicitud con las inversiones o estructuras empresariales pertinentes, sin garantizar elegibilidad ni aprobación."
   - title: "Optimización de Documentos"
-    subTitle: "Analizamos y optimizamos tu documentación para asegurar que cumpla con todos los requisitos migratorios, logrando una mayor eficiencia en tu proceso."
+    subTitle: "Revisamos tu documentación frente a los requisitos migratorios identificados para reducir errores previsibles; la autoridad determina si es suficiente."
   - title: "Soporte Legal Continuo"
     subTitle: "Te ofrecemos soporte legal y acompañamiento durante todo el proceso, sin que tengas que preocuparte por el aspecto técnico de la migración."
 specificationsRight:
   - title: "Asesoría en Selección de Jurisdicción"
-    subTitle: "Te asesoramos en la elección del país más adecuado para tu familia, garantizando que el entorno legal y fiscal se alinee con tus objetivos a largo plazo."
+    subTitle: "Te orientamos para comparar el entorno legal y fiscal de las jurisdicciones analizadas según tus objetivos; la decisión requiere evaluar tu situación particular."
   - title: "Preparación para Entrevistas"
-    subTitle: "Brindamos capacitación y apoyo para las entrevistas con las autoridades migratorias, aumentando tus posibilidades de aprobación."
+    subTitle: "Brindamos preparación y apoyo para entrevistas con autoridades migratorias, sin garantizar su decisión."
   - title: "Monitoreo del Proceso"
     subTitle: "Implementamos un sistema de monitoreo para que puedas seguir el estado de tu solicitud en tiempo real, lo que te permite evaluar el progreso y tomar decisiones basadas en datos."
   - title: "Visibilidad a Largo Plazo"

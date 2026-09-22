@@ -26,7 +26,7 @@ descriptionList:
     subTitle: "A specialist evaluates your project and guides you on the type of company, state of incorporation, and most suitable plan."
   - title: "Step 2: Select Your Plan"
     subTitle: "Choose between the Basic, Standard, or Business plans according to your goals. We support you throughout the entire process."
-  - title: "Step 3: Incorporation, bank account, and document delivery"
+  - title: "Step 3: Application filing and follow-up"
     subTitle: "We prepare and submit your LLC registration documents to the state, support your EIN application to the IRS, and, when included in your plan, provide registered agent service. Additional services vary by plan."
 specificationsLeft:
   - title: "Annual IRS Tax Compliance"

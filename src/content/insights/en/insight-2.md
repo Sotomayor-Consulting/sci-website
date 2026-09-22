@@ -31,7 +31,7 @@ An LLC is a flexible and easy-to-manage legal entity in the U.S. that **protects
     * **Wyoming** – No state taxes, privacy, and low renewal cost.
     * **Delaware** – Ideal for tech startups and businesses with partners.
     * **Florida** – Recommended if you plan to invest in Real Estate in the U.S.
-2.  **Register the company and obtain EIN:** The incorporation process with the state is completed. The **EIN (Employer Identification Number)** is requested to operate legally.
+2.  **File the company registration and apply for the EIN:** The formation application is filed with the state, and the **EIN (Employer Identification Number)** is requested from the IRS. Each authority decides approval, issuance, and timing.
 3.  **Open a U.S. bank account:** Banks like **Mercury, Relay, or Wise** allow foreigners to open accounts online. An LLC facilitates the process and avoids bank blocks.
 4.  **Set up Stripe, PayPal, and payment gateways:** With your LLC and bank account, you can activate Stripe or PayPal Business without restrictions. This improves international payment reception and reduces blocks.
 5.  **Meet annual obligations:** Submit compliance reports (BE-13, tax reports if applicable). Maintain a registered agent in the U.S. (usually included in incorporation packages).

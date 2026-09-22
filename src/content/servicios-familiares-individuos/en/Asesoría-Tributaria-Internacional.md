@@ -4,7 +4,7 @@ description: "International Tax Consulting"
 main:
   id: 23
   content: |
-    Protecting family wealth across borders can be a challenge. Our international tax consulting service is designed to offer you a clear and strategic vision that allows you to optimize your tax burden and ensure compliance across multiple jurisdictions, securing your family's peace of mind and future.
+    Protecting family wealth across borders can be challenging. We guide you in identifying obligations and permitted planning options based on your facts and the applicable jurisdictions.
   imgCard: "@/images/tributaria-familia-servicios.avif"
   imgMain: "@/images/tributaria-familia-servicios.avif"
   imgAlt: "Families and individuals with a lawyer"
@@ -18,7 +18,7 @@ tabs:
 longDescription:
   title: "Your Global Taxation with Confidence"
   subTitle: |
-    The complexity of international tax laws no longer has to be a concern. We offer strategic consulting that simplifies your tax situation, allowing you to optimize your taxes and ensure compliance in all jurisdictions where you have assets. With our help, you'll have the control and peace of mind you need to protect your legacy.
+    We help you understand identified tax requirements and evaluate planning alternatives based on your situation. Outcomes and compliance depend on the facts, information provided, and decisions by the relevant authorities.
   btnTitle: "Schedule a consultation"
   btnURL: "https://zcal.co/t/agendar-asesoria-llc/60min"
 descriptionList:
@@ -32,7 +32,7 @@ specificationsLeft:
   - title: "Strategic Wealth Planning"
     subTitle: "We design and optimize your tax structure globally, including selecting jurisdictions and configuring entities to legally and efficiently reduce your tax burden."
   - title: "Multinational Regulatory Compliance"
-    subTitle: "We guarantee proper compliance with tax regulations in all jurisdictions where you have investments, avoiding penalties and legal risks."
+    subTitle: "We support identifying obligations, preparing documents, and coordinating filings in the jurisdictions reviewed, without guaranteeing outcomes or the absence of penalties."
   - title: "Tax Treaty Analysis"
     subTitle: "We advise you on the strategic use of double taxation treaties, ensuring your wealth doesn't pay taxes twice on the same income in different countries."
   - title: "Investment Returns Consulting"
