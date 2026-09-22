@@ -295,6 +295,21 @@
     font-size:.98rem;line-height:1.2;letter-spacing:.01em;box-shadow:0 8px 20px rgba(0,0,0,.16);
   }
   .hero .btn svg{width:16px;height:16px}
+  /* CTA principal: dorado con un brillo horizontal (mismo recurso que el CTA del diagnóstico) para que sea lo primero que se ve.
+     Texto navy sobre dorado (contraste ≈ 6:1); el brillo cruza en el primer 22 % del ciclo y descansa el resto. */
+  .hero .btn{
+    position:relative;overflow:hidden;color:var(--navy-900);font-weight:700;border-color:transparent;
+    background:linear-gradient(135deg,#c0872e 0%,#d6a144 55%,#e4c078 100%);
+    box-shadow:0 8px 22px rgba(192,135,46,.35);
+  }
+  .hero .btn:hover{background:linear-gradient(135deg,#d6a144 0%,#e4c078 60%,#e4c078 100%);box-shadow:0 12px 28px rgba(192,135,46,.42)}
+  .hero .btn::after{
+    content:"";position:absolute;top:0;left:0;width:45%;height:100%;pointer-events:none;
+    background:linear-gradient(115deg,transparent,rgba(255,255,255,.6),transparent);
+    transform:translateX(-130%) skewX(-20deg);animation:cta-sheen 3.4s ease-in-out infinite;
+  }
+  @keyframes cta-sheen{0%{transform:translateX(-130%) skewX(-20deg)}22%,100%{transform:translateX(330%) skewX(-20deg)}}
+  @media (prefers-reduced-motion:reduce){ .hero .btn::after{animation:none;display:none} }
   .hero-trust{margin-top:clamp(22px,2.6vw,30px);font-size:.86rem;letter-spacing:.02em;color:rgba(255,255,255,.66)}
   .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   @media (prefers-reduced-motion:no-preference){
