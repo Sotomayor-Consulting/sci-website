@@ -249,6 +249,14 @@ Se añadió a `crea-tu-llc-en-usa/gracias-por-tu-registro` el mismo popup por in
 - `COPY_REGULATORIO_I18N.md` contiene el inventario Antes/Después y las labels camelCase propuestas en los tres idiomas. No se creó un catálogo runtime nuevo porque el proyecto localiza contenido mediante archivos TypeScript, JSON, Markdown y páginas Astro/HTML separados.
 - El cierre de la auditoría también ajustó artículos educativos en ES/EN/PT: se sustituyeron "obtener el EIN" y plazos rígidos por "solicitar el EIN ante el IRS", reservando al IRS la emisión y el tiempo de procesamiento.
 
+### 3.11 Bloque frontend de calendario Starwind (2026-09-22)
+
+- Se creó `src/components/ui/blocks/calendario.astro` como calendario reutilizable de reserva de citas. Compone `Card`, `Button` y `Badge` de Starwind UI, ofrece navegación mensual, selección accesible de fecha y horario, zona horaria automática, resumen responsive y datos de demostración cuando no puede cargar disponibilidad.
+- El bloque consulta por defecto `/api/slots` para el tipo de evento Calnode `test-SCI`. La nueva Cloudflare Pages Function `functions/api/slots.ts` valida `from`, `to` y `slug`, limita la consulta a 62 días y actúa como proxy hacia `https://calnode.sotomayorconsulting.com/v1/event-types/{slug}/slots`, con timeout de 10 segundos y sin caché. `CALNODE_API_KEY` permanece como secreto exclusivo de Cloudflare y nunca se entrega al navegador.
+- Todavía no existe creación de reservas ni formulario de contacto en este bloque. Al confirmar solo emite el evento frontend `appointment:selected` con `date`, `time`, `startAt`, `timeZone` y `eventTypeSlug`; la integración posterior debe escuchar ese evento. Si falla la disponibilidad, el estado identifica de forma explícita que se está mostrando la vista de demostración.
+- El rediseño toma únicamente la tarjeta de reserva de la referencia Vanguard (sin header, hero, formulario, testimonios ni footer). Usa `container-type: inline-size` en vez de depender del viewport: se apila en contenedores estrechos, pasa a información superior + calendario/horarios en dos columnas desde 736 px y adopta la composición 3/5/4 desde 1088 px. Así puede insertarse a ancho completo o dentro de columnas sin romper su layout.
+- Verificación local: `pnpm astro check` terminó con 0 errores y `pnpm build` generó las 155 páginas. La respuesta real de Calnode queda pendiente de validar end-to-end con `CALNODE_API_KEY` en Cloudflare/Wrangler antes de conectar la creación de reservas.
+
 ---
 
 ## 4. Infraestructura fuera de git (la parte crítica)
