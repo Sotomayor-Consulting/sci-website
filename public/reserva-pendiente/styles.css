@@ -305,8 +305,10 @@ html {
   }
 }
 
-/* CTA: 48 px de alto, radio 8 px y flecha fina */
+/* CTA principal: dorado con un brillo horizontal (mismo recurso que el CTA del diagnóstico). 48 px de alto, radio 8 px y flecha fina */
 .hero-cta {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -315,25 +317,57 @@ html {
   margin-top: clamp(36px, 4.2vw, 50px);
   padding: 12px clamp(22px, 4vw, 28px);
   border-radius: 8px;
-  background: #fff;
+  background: linear-gradient(135deg, #c0872e 0%, #d6a144 55%, #e4c078 100%);
   color: #0a1a2a;
   font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
   font-size: 0.98rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1.2;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 8px 22px rgba(192, 135, 46, 0.35);
   transition: background-color 200ms ease, transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 250ms ease;
 }
 
 .hero-cta:hover {
-  background: #f3f6fa;
+  background: linear-gradient(135deg, #d6a144 0%, #e4c078 60%, #e4c078 100%);
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 12px 28px rgba(192, 135, 46, 0.42);
 }
 
 .hero-cta:active {
   transform: none;
+}
+
+/* Brillo horizontal: cruza en el primer 22 % del ciclo de 3,4 s y descansa el resto */
+.hero-cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transform: translateX(-130%) skewX(-20deg);
+  animation: cta-sheen 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cta-sheen {
+  0% {
+    transform: translateX(-130%) skewX(-20deg);
+  }
+
+  22%,
+  100% {
+    transform: translateX(330%) skewX(-20deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta::after {
+    animation: none;
+    display: none;
+  }
 }
 
 /* Línea de confianza bajo el CTA: texto corto separado por un punto dorado */
