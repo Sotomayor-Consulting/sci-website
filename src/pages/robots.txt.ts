@@ -29,6 +29,21 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: Claude-User
+Disallow:
+Allow: /
+
+User-agent: Claude-SearchBot
+Disallow:
+Allow: /
+
+User-agent: ClaudeBot
+Disallow:
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: ${new URL('sitemap-index.xml', import.meta.env.SITE).href}
 `.trim();
 
