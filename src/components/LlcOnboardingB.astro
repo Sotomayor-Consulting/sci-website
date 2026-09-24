@@ -1,28 +1,11 @@
 ---
-import Check from "@tabler/icons/outline/check.svg";
-import Lock from "@tabler/icons/outline/lock.svg";
-import { Badge } from "@/components/starwind/badge";
-import { Button } from "@/components/starwind/button";
-import { Icon } from "astro-icon/components";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/starwind/card";
-import {
-  Field,
-  FieldControl,
-  FieldError,
-  FieldLabel,
-} from "@/components/starwind/field";
-import { Form } from "@/components/starwind/form";
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from "@/components/starwind/native-select";
-import { Textarea } from "@/components/starwind/textarea";
+
+import HeroB from "@/components/ui/blocks/HeroB.astro";
+import Form from "@components/ui/blocks/FormB.astro";
+import Insight1 from "@components/ui/blocks/Insights_4.astro";
+import Insight2 from "@components/ui/blocks/Insights_5.astro"
+import Pricing, { type PricingPlan } from "@components/ui/blocks/PricingB.astro";
+import Faq from "@components/ui/blocks/FaqB.astro";
 // import Icon from "node_modules/astro-icon/components/Icon.astro";
 
 const activityGroups = [
@@ -52,7 +35,170 @@ const benefits = [
   ["100% remoto", "Atención en español"],
 ];
 
+const steps1 = [
+  {
+    titulo: "Cuéntanos tu caso",
+    descripcion:
+      "Comparte tus datos y el objetivo principal de tu proyecto.",
+  },
+
+  {
+    titulo: "Habla con un experto.",
+    descripcion: "Revisamos actividad, socios, residencia y planes de crecimiento.",
+  },
+  {
+    titulo: "Recibe una ruta clara",
+    descripcion:
+      "Sales con estado recomendado, costos y próximos pasos.",
+  },
+];
+
+const steps2 = [
+  {
+    titulo: "Delaware",
+    descripcion:
+      "Prestigio corporativo. La opción cuando hay inversionistas de por medio.",
+  },
+
+  {
+    titulo: "Wyoming",
+    descripcion: "Menor costo operativo y confidencialidad total.",
+  },
+  {
+    titulo: "Florida",
+    descripcion:
+      "Para expandirse con presencia física y para productos que llegan por barco desde cualquier parte del mundo.",
+  },
+  {
+    titulo: "Tu caso",
+    descripcion: "El estado correcto depende de tu actividad, tus socios y de cómo cobras. Lo definimos contigo en la asesoría inicial, antes de que inviertas."
+  }
+];
+
+const steps3 = [
+  {
+    titulo: "Tu actividad",
+    descripcion:
+      "Revisamos a qué te dedicas y cómo cobras hoy.",
+  },
+
+  {
+    titulo: "Tu estructura",
+    descripcion: "Socios, residencia fiscal y planes de crecimiento.",
+  },
+  {
+    titulo: "Tu estado",
+    descripcion:
+      "Comparamos las opciones y su encaje con tu operación.",
+  },
+  {
+    titulo: "Tu ruta",
+    descripcion: "Sales con una recomendación concreta y los costos asociados."
+  }
+];
+
 import HeromImage from "@images/Hero_Sotomayor_3.avif";
+
+const planes: PricingPlan[] = [
+  {
+    name: "Básico",
+    description: "Constituye tu LLC con lo esencial para operar legalmente.",
+    price: "$350",
+    period: "Una vez",
+    features: [
+      {
+        text: "Asesoría para incorporar tu LLC ante el estado que elijas.",
+        included: true,
+      },
+      {
+        text: "Acompañamiento con los documentos corporativos de tu LLC.",
+        included: true,
+      },
+      { text: "Agente Residente por un año.", included: true },
+    ],
+    buttonText: "Agenda un cita",
+    buttonHref: "/tu-llc-en-usa/#agendar",
+  },
+  {
+    name: "Business",
+    description:
+      "Estrategia fiscal y legal para la incorporación de tu LLC. Ideal para escalar y tener bien estructurado desde el inicio.",
+    price: "$950",
+    period: "Una vez",
+    features: [
+      {
+        text: "Incluye todo del Plan Básico + Estándar",
+        included: true,
+      },
+      { text: "Planificación y diseño legal - tributario.", included: true },
+      {
+        text: "Acompañamiento bancario (Mercury o Relay + Stripe).",
+        included: true,
+      },
+
+      {
+        text: "Acompañamiento prioritario con los documentos corporativos de tu LLC.",
+        included: true,
+      },
+    ],
+    buttonText: "Agenda un cita",
+    buttonHref: "/tu-llc-en-usa/#agendar",
+    highlighted: true,
+    badge: "Más Popular",
+  },
+  {
+    name: "Estándar",
+    description: "Incluye soporte legal y documentos clave para operar.",
+    price: "$600",
+    period: "Una vez",
+    features: [
+      {
+        text: "Incluye todo del Plan Básico",
+        included: true,
+      },
+      { text: "Elaboración del Acuerdo de Operación.", included: true },
+      { text: "Consultas ilimitadas por un año.", included: true },
+      {
+        text: "Asesoría sobre la exención BE-13",
+        included: true,
+      },
+    ],
+    buttonText: "Agenda un cita",
+    buttonHref: "/tu-llc-en-usa/#agendar",
+  },
+];
+
+const faqs = [
+  {
+    question: "¿Sotomayor Consulting es una entidad del Gobierno?",
+    answer:
+      "No. Somos una firma privada de asesoría legal, fiscal y tecnológica. El registro de la LLC lo emite el Estado y el EIN lo emite el IRS; nosotros te asesoramos y acompañamos en el proceso.",
+  },
+  {
+    question: "¿La asesoría realmente es gratuita?",
+    answer:
+      "Sí. La reunión inicial no tiene costo ni compromiso. Primero evaluamos si una LLC encaja con tu situación.",
+  },
+  {
+    question: "¿Puedo abrir una LLC sin vivir en Estados Unidos?",
+    answer:
+      "Sí. Una persona no residente puede constituir una LLC. La estructura y obligaciones adecuadas dependen de su actividad y país de residencia.",
+  },
+  {
+    question: "¿Cuánto tarda el proceso de incorporación de LLC?",
+    answer: "El proceso de incorporación dura aproximadamente: hasta 15 días",
+  },
+  {
+    question: "¿Qué documentos necesito?",
+    answer:
+      "Normalmente necesitarás pasaporte vigente y comprobante de domicilio reciente de cada socio.",
+  },
+  {
+    question: "¿Qué incluye el costo?",
+    answer:
+      "Cada plan incluye servicios distintos. La tasa estatal se paga por separado y varía según la jurisdicción.",
+  },
+];
 ---
 
 <main
@@ -72,404 +218,76 @@ import HeromImage from "@images/Hero_Sotomayor_3.avif";
   <div
     class="relative z-10 grid min-h-screen xl:grid-cols-[minmax(0,1fr)_36.625rem]"
   >
-    <section
-      class="flex min-h-[40rem] flex-col px-6 py-8 sm:px-10 lg:px-15 lg:py-10 xl:min-h-screen"
-      aria-labelledby="llc-b-title"
-    >
-      <Icon
-        name="logo-sotomayor-consulting-black"
-        class="h-auto w-46 sm:w-54"
-      />
+    <HeroB
+      badge="Asesoría estratégica gratuita"
+      title="Tu LLC en Estados Unidos, "
+      titleSpan="bien hecha"
+      description="Te guiamos para evaluar el estado adecuado para tu LLC y estructurarla
+          con criterios legales, fiscales y bancarios, reduciendo riesgos."
+      buttonLink="#agendar-b"
+      button="Agendar "
+      advice="SCI es una consultora privada e independiente: no es una agencia gubernamental ni está afiliada o respaldada por una. Brindamos orientación, preparación documental y acompañamiento; la autoridad competente decide la emisión y los plazos. "
+      benefits={benefits}
+    />
 
-      <!-- <nav
-        class="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm font-medium text-white/65"
-        aria-label="Información del servicio"
-      >
-        <a class="transition-colors hover:text-white" href="#agendar-b"
-          >¿Qué incluye?</a
-        >
-        <a class="transition-colors hover:text-white" href="#agendar-b"
-          >Planes</a
-        >
-        <a class="transition-colors hover:text-white" href="#agendar-b"
-          >Bancos y aliados</a
-        >
-        <a class="border-b border-primary pb-1 text-primary" href="#agendar-b"
-          >Respaldo legal</a
-        >
-      </nav> -->
-
-      <div class="my-auto max-w-3xl py-14 lg:py-20">
-        <Badge
-          tone="primary"
-          appearance="outline"
-          eyebrow
-          class="border-primary/55 text-primary mb-5"
-        >
-          Asesoría estratégica gratuita
-        </Badge>
-        <h1
-          id="llc-b-title"
-          class="font-display text-4xl leading-[1.04] font-bold tracking-[-.04em] sm:text-6xl lg:text-7xl"
-        >
-          Tu LLC en Estados Unidos,
-          <span class="text-primary mt-2 block">bien hecha</span>
-        </h1>
-        <p
-          class="mt-7 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg"
-        >
-          Te guiamos para evaluar el estado adecuado para tu LLC y estructurarla
-          con criterios legales, fiscales y bancarios, reduciendo riesgos.
-        </p>
-        <Button
-          variant="primary"
-          class="mt-4 inline-flex md:hidden"
-          href="#agendar-b"
-        >
-          Agendar
-        </Button>
-        <p class="mt-5 max-w-2xl text-xs leading-relaxed text-white/55">
-          SCI es una consultora privada e independiente: no es una agencia
-          gubernamental ni está afiliada o respaldada por una. Brindamos
-          orientación, preparación documental y acompañamiento; la autoridad
-          competente decide la emisión y los plazos.
-        </p>
-      </div>
-
-      <dl class="grid gap-5 border-t border-white/10 pt-7 md:grid-cols-3">
-        {
-          benefits.map(([title, description]) => (
-            <div class="border-primary/55 border-l-2 pl-4">
-              <dt class="text-sm font-semibold text-white">{title}</dt>
-              <dd class="mt-1 text-xs text-white/55">{description}</dd>
-            </div>
-          ))
-        }
-      </dl>
-    </section>
-
-    <Card
-      id="agendar-b"
-      size="md"
-      class="min-h-screen rounded-none border-0 bg-[#0d2537] p-0 text-white shadow-[-24px_0_60px_-30px_rgba(0,0,0,.8)]"
-    >
-      <CardHeader class="bg-white px-6 py-7 text-center sm:px-11">
-        <CardTitle class="font-display text-xl font-bold text-[#0d2537]">
-          Agendar Asesoría Gratis
-        </CardTitle>
-        <CardDescription class="text-sm text-slate-500">
-          Tres pasos y queda reservada
-        </CardDescription>
-      </CardHeader>
-
-      <Form id="onboarding-form-b" novalidate class="gap-0">
-        <CardContent class="px-6 py-7 sm:px-11 sm:py-8">
-          <ol
-            class="mb-7 flex items-center"
-            aria-label="Progreso de la reserva"
-          >
-            {
-              ["Tu caso", "Tus datos", "Tu horario"].map((label, index) => (
-                <li class="contents">
-                  {index > 0 && (
-                    <span
-                      class="step-line-b mx-2 h-px flex-1 bg-white/15 transition-colors"
-                      data-line={index}
-                      aria-hidden="true"
-                    />
-                  )}
-                  <span
-                    class="step-b flex shrink-0 items-center gap-2"
-                    data-step-indicator={index + 1}
-                  >
-                    <span class="step-number-b grid size-6 place-items-center rounded-full border border-white/15 bg-white/8 text-[.7rem] font-semibold text-white/55">
-                      <span class="step-value-b">{index + 1}</span>
-                      <Check
-                        class="step-check-b hidden size-3.5"
-                        aria-hidden="true"
-                      />
-                    </span>
-                    <span class="step-label-b text-xs font-medium text-white/45">
-                      {label}
-                    </span>
-                  </span>
-                </li>
-              ))
-            }
-          </ol>
-
-          <section class="onboarding-step-b" data-step="1">
-            <h2 class="font-display text-xl font-semibold">
-              ¿Para qué quieres tu LLC?
-            </h2>
-            <p class="mt-1.5 text-sm leading-relaxed text-white/55">
-              Elige la actividad principal. Con eso preparamos tu asesoría antes
-              de la llamada.
-            </p>
-
-            <input
-              id="activity-b"
-              type="hidden"
-              name="activity"
-              value=""
-              required
-            />
-            <input
-              type="hidden"
-              name="advice"
-              value="Sí, quiero revisar mi caso con un experto"
-            />
-            <div class="absolute -left-[9999px]" aria-hidden="true">
-              <label for="onboarding-website-b">Sitio web</label>
-              <input
-                id="onboarding-website-b"
-                name="website"
-                type="text"
-                tabindex="-1"
-                autocomplete="off"
-              />
-            </div>
-
-            <div class="mt-5 space-y-5">
-              {
-                activityGroups.map((group) => (
-                  <fieldset class="space-y-2.5">
-                    <legend class="text-primary text-xs font-bold tracking-[.1em] uppercase">
-                      {group.label}
-                    </legend>
-                    <div class="grid gap-2 sm:grid-cols-2">
-                      {group.activities.map((activity) => (
-                        <Button
-                          type="button"
-                          variant="outline"
-                          class="activity-button-b aria-pressed:border-primary aria-pressed:bg-primary/15 h-auto min-h-13 justify-between rounded-xl border-white/15 bg-white/5 px-4 py-3 text-left text-sm whitespace-normal text-white hover:border-white/35 hover:bg-white/10 hover:text-white"
-                          data-value={activity}
-                          aria-pressed="false"
-                        >
-                          <span>{activity}</span>
-                          <span class="activity-check-wrap-b grid size-4.5 shrink-0 place-items-center rounded-full border border-white/25">
-                            <Check
-                              class="activity-check-b hidden size-3"
-                              aria-hidden="true"
-                            />
-                          </span>
-                        </Button>
-                      ))}
-                    </div>
-                  </fieldset>
-                ))
-              }
-            </div>
-
-            <div class="mt-6">
-              <p
-                id="activity-hint-b"
-                class="mb-2 text-center text-xs text-white/40"
-                aria-live="polite"
-              >
-                Elige una actividad para continuar
-              </p>
-              <Button
-                id="continue-to-contact-b"
-                type="button"
-                variant="primary"
-                size="lg"
-                class="w-full rounded-xl font-semibold"
-              >
-                Continuar
-              </Button>
-            </div>
-          </section>
-
-          <section class="onboarding-step-b hidden" data-step="2">
-            <h2
-              id="contact-title-b"
-              class="font-display text-xl font-semibold"
-              tabindex="-1"
-            >
-              ¿A dónde te enviamos la cita?
-            </h2>
-            <p class="mt-1.5 text-sm leading-relaxed text-white/55">
-              Te llega el enlace de Zoom y un recordatorio antes de la llamada.
-            </p>
-
-            <div class="mt-5 space-y-4">
-              <div class="grid gap-4 sm:grid-cols-2">
-                <Field name="name" class="gap-2">
-                  <FieldLabel for="full-name-b" class="text-white/85">
-                    Nombre completo
-                  </FieldLabel>
-                  <FieldControl
-                    id="full-name-b"
-                    name="name"
-                    type="text"
-                    autocomplete="name"
-                    minlength="3"
-                    required
-                    placeholder="Tu nombre y apellido"
-                    class="border-white/15 bg-white/5 text-white placeholder:text-white/35"
-                  />
-                  <FieldError match="valueMissing"
-                    >Escribe tu nombre completo.</FieldError
-                  >
-                  <FieldError match="tooShort"
-                    >Escribe al menos tres caracteres.</FieldError
-                  >
-                </Field>
-                <Field name="email" class="gap-2">
-                  <FieldLabel for="email-b" class="text-white/85">
-                    Correo electrónico
-                  </FieldLabel>
-                  <FieldControl
-                    id="email-b"
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    required
-                    placeholder="nombre@empresa.com"
-                    class="border-white/15 bg-white/5 text-white placeholder:text-white/35"
-                  />
-                  <FieldError match="valueMissing"
-                    >Escribe tu correo.</FieldError
-                  >
-                  <FieldError match="typeMismatch"
-                    >Escribe un correo válido.</FieldError
-                  >
-                </Field>
-              </div>
-
-              <div class="grid grid-cols-[7rem_1fr] items-start gap-2">
-                <Field class="gap-2">
-                  <FieldLabel for="country-code-b" class="text-white/85">
-                    País
-                  </FieldLabel>
-                  <NativeSelect
-                    id="country-code-b"
-                    name="countryCode"
-                    class="border-white/15 bg-white/5 text-white"
-                  >
-                    <NativeSelectOption value="+593">EC +593</NativeSelectOption
-                    >
-                    <NativeSelectOption value="+52">MX +52</NativeSelectOption>
-                    <NativeSelectOption value="+57">CO +57</NativeSelectOption>
-                    <NativeSelectOption value="+54">AR +54</NativeSelectOption>
-                    <NativeSelectOption value="+34">ES +34</NativeSelectOption>
-                    <NativeSelectOption value="+1">US +1</NativeSelectOption>
-                  </NativeSelect>
-                </Field>
-                <Field name="phone" class="gap-2">
-                  <FieldLabel for="phone-b" class="text-white/85">
-                    Teléfono / WhatsApp
-                  </FieldLabel>
-                  <FieldControl
-                    id="phone-b"
-                    name="phone"
-                    type="tel"
-                    inputmode="tel"
-                    autocomplete="tel"
-                    minlength="7"
-                    maxlength="15"
-                    pattern="[0-9+\-().\s]+"
-                    required
-                    placeholder="099 123 4567"
-                    class="border-white/15 bg-white/5 text-white placeholder:text-white/35"
-                  />
-                  <FieldError match="valueMissing"
-                    >Escribe tu número.</FieldError
-                  >
-                  <FieldError match="tooShort"
-                    >Escribe un teléfono válido.</FieldError
-                  >
-                  <FieldError match="patternMismatch"
-                    >Revisa el formato del teléfono.</FieldError
-                  >
-                </Field>
-              </div>
-
-              <Field class="gap-2">
-                <FieldLabel for="question-b" class="text-white/85">
-                  ¿Qué duda principal quieres resolver?
-                  <span class="font-normal text-white/40"> Opcional</span>
-                </FieldLabel>
-                <Textarea
-                  id="question-b"
-                  name="question"
-                  rows={3}
-                  placeholder="Ej.: no sé si me conviene Wyoming o Florida, ni qué pasa con mis impuestos aquí."
-                  class="min-h-20 resize-none border-white/15 bg-white/5 text-white placeholder:text-white/35"
-                />
-              </Field>
-            </div>
-
-            <div class="mt-6 grid grid-cols-[minmax(7rem,32%)_1fr] gap-2.5">
-              <Button
-                type="button"
-                variant="outline"
-                class="back-button-b border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
-                data-target="1"
-              >
-                Volver
-              </Button>
-              <Button
-                id="continue-to-schedule-b"
-                type="button"
-                variant="primary"
-                class="rounded-xl font-semibold"
-              >
-                Elegir horario
-              </Button>
-            </div>
-            <p
-              id="form-status-b"
-              class="mt-3 flex items-center justify-center gap-1.5 text-center text-xs text-white/40"
-              aria-live="polite"
-            >
-              <Lock class="size-3" aria-hidden="true" />
-              Tus datos se usan solo para gestionar esta asesoría.
-            </p>
-          </section>
-
-          <section class="onboarding-step-b hidden" data-step="3">
-            <h2
-              id="schedule-title-b"
-              class="font-display text-xl font-semibold"
-              tabindex="-1"
-            >
-              Elige tu horario
-            </h2>
-            <p class="mt-1.5 text-sm leading-relaxed text-white/55">
-              Selecciona directamente en Zcal el día y la hora que mejor te
-              convengan.
-            </p>
-
-            <div
-              class="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-white"
-            >
-              <iframe
-                id="zcal-frame-b"
-                title="Calendario de reserva — Sotomayor Consulting"
-                src="about:blank"
-                loading="eager"
-                allow="clipboard-write; fullscreen"
-                class="h-[760px] w-full border-0"></iframe>
-            </div>
-            <p class="mt-4 text-center text-xs text-white/50">
-              ¿No carga el calendario?
-              <a
-                id="zcal-open-b"
-                href="https://zcal.co/t/agendar-asesoria-llc/60-USA"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-primary font-semibold underline underline-offset-4"
-              >
-                Ábrelo en una pestaña nueva
-              </a>.
-            </p>
-          </section>
-        </CardContent>
-      </Form>
-    </Card>
+    <Form activityGroups={activityGroups} />
   </div>
+  <div class="relative z-10 my-10 bg-black/10 py-20">
+    <Insight1
+      label="Cómo funciona"
+      title="De la duda a un plan concreto en tres pasos."
+      Cta="Agendar mi asesoría"
+      CtaLink="#agendar"
+      CtaLabels="30 min · por Zoom · sin compromiso"
+      steps={steps1}
+    />
+  </div>
+
+  <div class="relative z-10 my-10 py-20">
+    <Insight2
+      label="Elige tu estado ideal"
+      title="Delaware, Wyoming o Florida. No todos los estados son iguales para una incorporación."
+      description="Recibe la consultoría de un equipo experto y define el estado que corresponde a tu operación antes de incorporar tu LLC, sin errores. Diez años estructurando compañías en Estados Unidos para clientes de toda América Latina."
+      Cta="Evalúa tu estado sin costo"
+      CtaLink="#agendar"
+      CtaLabels="30 min · por Zoom · sin compromiso"
+      CtaAdvice="Las tasas estatales las cobra cada estado y se pagan por separado."
+      steps={steps2}
+    />
+  </div>
+
+  <div class="relative z-10 my-10 py-20 bg-black/10">
+    <Insight2
+      label="Consultoría para tu LLC"
+      title="Analizamos tu caso y tu actividad antes de recomendarte una estructura."
+      description="Una sesión de 30 minutos por Zoom, sin costo y sin compromiso, con un asesor del estudio. Diez años de experiencia en estructuras internacionales."
+      Cta="Agenda una llamada sin costo"
+      CtaLink="#agendar"
+      CtaLabels="100% remoto y en español"
+      steps={steps3}
+    />
+  </div>
+
+  <div class="relative z-10 my-10 py-20">
+    <Pricing
+      heading="Valores únicos. Las tasas del Estado se pagan aparte y las cobra el Estado."
+      description="El plan ideal según tu caso lo definimos en la primera asesoría."
+      plans={planes}
+    />
+  </div>
+
+  <div class="relative z-10 my-10 py-20">
+    <Faq
+      label="Preguntas frecuentes"
+      title="Lo que debes saber antes de empezar."
+      description="Si tu duda no aparece, la resolvemos durante la asesoría."
+      faqs={faqs}
+      Cta="Resuleve tus dudas en la asesoría"
+      CtaLink="#agendar"
+      CtaLabels="30 min · por Zoom · sin compromiso"
+    />
+  </div>
+
 </main>
 
 <script>
@@ -721,7 +539,7 @@ import HeromImage from "@images/Hero_Sotomayor_3.avif";
   // Asegura que dataLayer exista antes de hacer el push
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
-    'event': 'lead_datos_completados'
+    event: "lead_datos_completados",
   });
 </script>
 

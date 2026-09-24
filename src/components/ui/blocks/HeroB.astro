@@ -1,0 +1,72 @@
+---
+import { Icon } from "astro-icon/components";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+
+interface Props {
+    badge: string;
+    title: string;
+    titleSpan: string;
+    description: string;
+    button: string;
+    buttonLink: string;
+    advice: string;
+    benefits: string [][];
+}
+
+const { badge, title, titleSpan, description, button, buttonLink, advice, benefits } = Astro.props
+---
+
+<section
+      class="flex min-h-[40rem] flex-col px-6 py-8 sm:px-10 lg:px-15 lg:py-10 xl:min-h-screen"
+      aria-labelledby="llc-b-title"
+    >
+      <Icon
+        name="logo-sotomayor-consulting-black"
+        class="h-auto w-46 sm:w-54"
+      />
+
+      <div class="my-auto max-w-3xl py-14 lg:py-20">
+        <Badge
+          tone="primary"
+          appearance="outline"
+          eyebrow
+          class="border-primary/55 text-primary mb-5"
+        >
+           {badge}
+        </Badge>
+        <h1
+          id="llc-b-title"
+          class="font-display text-4xl leading-[1.04] font-bold tracking-[-.04em] sm:text-6xl lg:text-7xl"
+        >
+          {title}
+          <span class="text-primary mt-2 block">{titleSpan}</span>
+        </h1>
+        <p
+          class="mt-7 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg"
+        >
+         {description}
+        </p>
+        <Button
+          variant="primary"
+          class="mt-4 inline-flex md:hidden"
+          href={buttonLink}
+        >
+          {button}
+        </Button>
+        <p class="mt-5 max-w-2xl text-xs leading-relaxed text-white/55">
+          {advice}
+        </p>
+      </div>
+
+      <dl class="grid gap-5 border-t border-white/10 pt-7 md:grid-cols-3">
+        {
+          benefits.map(([title, description]) => (
+            <div class="border-primary/55 border-l-2 pl-4">
+              <dt class="text-sm font-semibold text-white">{title}</dt>
+              <dd class="mt-1 text-xs text-white/55">{description}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>

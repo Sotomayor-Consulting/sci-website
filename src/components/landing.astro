@@ -3,6 +3,7 @@ import Herolabels from "@components/ui/blocks/Herolabels.astro";
 import Formulario from "@components/ui/blocks/Formulario.astro";
 import Insights from "@components/ui/blocks/Insights.astro";
 import Insight_1 from "@components/ui/blocks/Insights_1.astro";
+import Insight_3 from "@components/ui/blocks/Insights_3.astro";
 import Insight_2 from "@components/ui/blocks/insights_2.astro";
 import Experience from "@components/ui/blocks/Experience.astro";
 import FixedBtn from "@components/ui/blocks/FixedBtn.astro";
@@ -65,24 +66,73 @@ const adviceOptions = [
 ];
 const steps = [
   {
+    titulo: "Delaware",
+    descripcion:
+      "Prestigio corporativo. La opción cuando hay inversionistas de por medio.",
+  },
+
+  {
+    titulo: "Wyoming",
+    descripcion: "Menor costo operativo y confidencialidad total.",
+  },
+  {
+    titulo: "Florida",
+    descripcion:
+      "Para expandirse con presencia física y para productos que llegan por barco desde cualquier parte del mundo.",
+  },
+  {
+    titulo: "Tu caso",
+    descripcion:
+      "El estado correcto depende de tu actividad, tus socios y de cómo cobras. Lo definimos contigo en la asesoría inicial, antes de que inviertas.",
+  },
+];
+
+const steps2 = [
+  {
+    titulo: "Tu actividad",
+    descripcion:
+      "Revisamos a qué te dedicas y cómo cobras hoy.",
+  },
+
+  {
+    titulo: "Tu estructura",
+    descripcion: "Socios, residencia fiscal y planes de crecimiento.",
+  },
+  {
+    titulo: "Tu estado",
+    descripcion:
+      "Comparamos las opciones y su encaje con tu operación.",
+  },
+  {
+    titulo: "Tu ruta",
+    descripcion:
+      "Sales con una recomendación concreta y los costos asociados.",
+  },
+];
+
+const steps3 = [
+  {
     titulo: "Cuéntanos tu caso",
-    descripcion: "Comparte tus datos y el objetivo principal de tu proyecto.",
+    descripcion:
+      "Comparte tus datos y el objetivo principal de tu proyecto.",
   },
 
   {
     titulo: "Habla con un experto.",
-    descripcion:
-      "Revisamos actividad, socios, residencia y planes de crecimiento.",
+    descripcion: "Revisamos actividad, socios, residencia y planes de crecimiento.",
   },
   {
     titulo: "Recibe una ruta clara",
-    descripcion: "Sales con estado recomendado, costos y próximos pasos.",
+    descripcion:
+      "Sales con estado recomendado, costos y próximos pasos.",
   },
 ];
+
 const faqs = [
   {
     question: "¿Sotomayor Consulting es una entidad del Gobierno?",
-    answer: "No. Somos una firma privada de asesoría legal, fiscal y tecnológica. El registro de la LLC lo emite el Estado y el EIN lo emite el IRS; nosotros te asesoramos y acompañamos en el proceso."
+    answer:
+      "No. Somos una firma privada de asesoría legal, fiscal y tecnológica. El registro de la LLC lo emite el Estado y el EIN lo emite el IRS; nosotros te asesoramos y acompañamos en el proceso.",
   },
   {
     question: "¿La asesoría realmente es gratuita?",
@@ -96,8 +146,7 @@ const faqs = [
   },
   {
     question: "¿Cuánto tarda el proceso de incorporación de LLC?",
-    answer:
-      "El proceso de incorporación dura aproximadamente: hasta 15 días",
+    answer: "El proceso de incorporación dura aproximadamente: hasta 15 días",
   },
   {
     question: "¿Qué documentos necesito?",
@@ -132,9 +181,12 @@ const planes: PricingPlan[] = [
     price: "$350",
     period: "Una vez",
     features: [
-      { text: "Gestión del registro de tu LLC ante el Estado.", included: true },
       {
-        text: "Acompañamiento en la solicitud del EIN ante el IRS.",
+        text: "Asesoría para incorporar tu LLC ante el estado que elijas.",
+        included: true,
+      },
+      {
+        text: "Acompañamiento con los documentos corporativos de tu LLC.",
         included: true,
       },
       { text: "Agente Residente por un año.", included: true },
@@ -159,7 +211,10 @@ const planes: PricingPlan[] = [
         included: true,
       },
 
-      { text: "Acompañamiento prioritario en la solicitud del EIN ante el IRS.", included: true },
+      {
+        text: "Acompañamiento prioritario con los documentos corporativos de tu LLC.",
+        included: true,
+      },
     ],
     buttonText: "Agenda un cita",
     buttonHref: "/tu-llc-en-usa/#agendar",
@@ -178,7 +233,10 @@ const planes: PricingPlan[] = [
       },
       { text: "Elaboración del Acuerdo de Operación.", included: true },
       { text: "Consultas ilimitadas por un año.", included: true },
-      { text: "Acompañamiento para la solicitud de exención BE-13", included: true },
+      {
+        text: "Asesoría sobre la exención BE-13",
+        included: true,
+      },
     ],
     buttonText: "Agenda un cita",
     buttonHref: "/tu-llc-en-usa/#agendar",
@@ -261,10 +319,35 @@ const experience = [
   </section>
 
   <section id="proceso" class="bg-muted scroll-mt-24 py-20 sm:py-24">
-    <Insight_2
-      label="Cómo funciona"
-      title="De la duda a un plan concreto en tres pasos."
+    <Insight_3
+      label="Elige tu estado ideal"
+      title="Delaware, Wyoming o Florida. No todos los estados son iguales para una incorporación."
+      description="Recibe la consultoría de un equipo experto y define el estado que corresponde a tu operación antes de incorporar tu LLC, sin errores. Diez años estructurando compañías en Estados Unidos para clientes de toda América Latina."
+      Cta="Evalúa tu estado sin costo"
+      CtaLink="#agendar"
+      CtaLabels="30 min · por Zoom · sin compromiso"
+      CtaAdvice="Las tasas estatales las cobra cada estado y se pagan por separado."
       steps={steps}
+    />
+  </section>
+
+  <section id="estructura" class="bg-muted scroll-mt-24 py-20 sm:py-24">
+    <Insight_3
+      label="Consultoría para tu LLC"
+      title="Analizamos tu caso y tu actividad antes de recomendarte una estructura."
+      description="Una sesión de 30 minutos por Zoom, sin costo y sin compromiso, con un asesor del estudio. Diez años de experiencia en estructuras internacionales."
+      Cta="Evalúa tu estado sin costo"
+      CtaLink="#agendar"
+      CtaLabels="100% remoto y en español"
+      steps={steps2}
+    />
+  </section>
+
+  <section id="estructura" class="bg-muted scroll-mt-24 py-20 sm:py-24">
+    <Insight_2
+      label="Consultoría para tu LLC"
+      title="Analizamos tu caso y tu actividad antes de recomendarte una estructura."
+      steps={steps3}
     />
   </section>
 

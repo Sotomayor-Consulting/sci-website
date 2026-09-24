@@ -1,0 +1,78 @@
+---
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/starwind/card";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+
+interface Props {
+  label: string;
+  title: string;
+  description?: string;
+  Cta: string;
+  CtaLink: string;
+  CtaLabels: string;
+  CtaAdvice?: string;
+  steps: {
+    titulo: string;
+    descripcion: string;
+  }[];
+}
+
+const { steps, label, title, description, Cta, CtaLabels, CtaLink, CtaAdvice } =
+  Astro.props;
+---
+
+<div class="mx-auto max-w-7xl px-5 lg:px-8">
+  <div class="max-w-2xl">
+    <p class="section-kicker">{label}</p>
+    <h2 class="text-white section-title">
+      {title}
+    </h2>
+    {
+      description ? (
+        <p class="text-muted-foreground mt-5">{description}</p>
+      ) : null
+    }
+  </div>
+  <div class="relative mt-14 grid gap-5 lg:grid-cols-3">
+    
+    {
+      steps.map((step, index) => (
+        <Card class="relative rounded-2xl transition-all delay-120 hover:-translate-y-3 hover:shadow-2xl bg-white/10 hover:bg-white/15 border-white/10">
+          <CardHeader>
+            <Badge
+              tone="primary-accent"
+              appearance="text"
+              size="lg"
+              class="font-display relative z-10 size-10 justify-center rounded-full bg-yellow-600/20 p-0 text-xs text-amber-300"
+            >
+              0{index + 1}
+            </Badge>
+            <CardTitle>
+              <h3 class="font-display text-xl font-semibold text-white">{step.titulo}</h3>
+            </CardTitle>
+            <CardDescription class="leading-6 text-neutral-300">
+              {step.descripcion}
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      ))
+    }
+  </div>
+  <div class="mt-10">
+    <Button variant="primary" class="rounded-3xl" href={CtaLink}>
+      {Cta}
+    </Button>
+    <p class="text-muted-foreground/70 mt-5 text-xs">{CtaLabels}</p>
+
+    {
+      CtaAdvice ? (
+        <p class="text-muted-foreground/70 mt-5 text-xs"> {CtaAdvice}</p>
+      ) : null
+    }
+  </div>
+</div>

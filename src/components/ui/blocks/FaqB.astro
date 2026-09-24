@@ -1,0 +1,53 @@
+---
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/starwind/accordion";
+import { Button } from "@/components/starwind/button";
+
+interface Props {
+  label: string;
+  title: string;
+  description: string;
+  Cta: string;
+  CtaLink: string;
+  CtaLabels: string;
+  faqs: {
+    question: string;
+    answer: string;
+  }[];
+}
+
+const { faqs, label, title, description, Cta, CtaLink, CtaLabels } =
+  Astro.props as Props;
+---
+
+<div class="mx-auto grid max-w-7xl gap-12 px-5 lg:px-8">
+  <div>
+    <p class="section-kicker">{label}</p>
+    <h2 class="section-title text-white">
+      {title}
+    </h2>
+    <p class="mt-5 text-sm leading-6 text-slate-300">
+      {description}
+    </p>
+  </div>
+  <Accordion defaultValue="faq-1">
+    {
+      faqs.map((faqs, index) => (
+        <AccordionItem value={`faq-${index + 1}`}>
+          <AccordionTrigger>{faqs.question}</AccordionTrigger>
+          <AccordionContent>{faqs.answer}</AccordionContent>
+        </AccordionItem>
+      ))
+    }
+  </Accordion>
+  <div>
+    <Button variant="primary" class="rounded-3xl" href={CtaLink}>
+      {Cta}
+    </Button>
+    <p class="text-muted-foreground/70 mt-5 text-xs">{CtaLabels}</p>
+  </div>
+</div>
