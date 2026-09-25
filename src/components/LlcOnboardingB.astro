@@ -3,6 +3,7 @@ import HeroB from "@/components/ui/blocks/HeroB.astro";
 import Form from "@components/ui/blocks/FormB.astro";
 import Insight1 from "@components/ui/blocks/Insights_4.astro";
 import Insight2 from "@components/ui/blocks/Insights_5.astro";
+import Timeline from "@/components/ui/timeline/timeline.astro"
 import Pricing, {
   type PricingPlan,
 } from "@components/ui/blocks/PricingB.astro";
@@ -241,6 +242,8 @@ const faqs = [
       steps={steps1}
     />
   </div>
+
+  <Timeline />
 
   <div class="relative z-10 my-10 py-20">
     <Insight2

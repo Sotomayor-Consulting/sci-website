@@ -5,6 +5,7 @@ import Insights from "@components/ui/blocks/Insights.astro";
 import Insight_1 from "@components/ui/blocks/Insights_1.astro";
 import Insight_3 from "@components/ui/blocks/Insights_3.astro";
 import Insight_2 from "@components/ui/blocks/insights_2.astro";
+import Timeline from "@/components/ui/timeline/timeline.astro";
 import Experience from "@components/ui/blocks/Experience.astro";
 import FixedBtn from "@components/ui/blocks/FixedBtn.astro";
 import Cta from "@components/ui/blocks/Cta.astro";
@@ -281,7 +282,7 @@ const experience = [
         titleLine1="Tu LLC en Estados Unidos,"
         highlighted="bien hecha"
         description=" Una asesoría estratégica para definir si una LLC es lo que necesitas, en qué
-    estado conviene abrirla y cómo evitar errores legales, fiscales y bancarios."
+        estado conviene abrirla y cómo evitar errores legales, fiscales y bancarios."
         note="30 min · por Zoom · sin compromiso"
         labelBtn="Agendar mi asesoría"
         infolabels="+5.000"
@@ -330,6 +331,8 @@ const experience = [
       steps={steps}
     />
   </section>
+
+  <Timeline />
 
   <section id="estructura" class="bg-muted scroll-mt-24 py-20 sm:py-24">
     <Insight_3

@@ -2,6 +2,7 @@
 import Header from "@components/ui/blocks/HeaderLanding.astro";
 import Insight1 from "@components/ui/blocks/Insights_4.astro";
 import Insight2 from "@components/ui/blocks/Insights_5.astro";
+import Timeline from "@/components/ui/timeline/timeline.astro"
 import Faq from "@components/ui/blocks/FaqB.astro";
 import Pricing, {
   type PricingPlan,
@@ -198,7 +199,7 @@ const faqs = [
   <Header />
 
   <Form activityGroups={activityGroups} />
-  <div class="relative z-10 my-10 bg-black/10 py-20">
+  <div class="relative z-10 bg-black/10 py-20">
     <Insight1
       label="Cómo funciona"
       title="De la duda a un plan concreto en tres pasos."
@@ -208,6 +209,8 @@ const faqs = [
       steps={steps1}
     />
   </div>
+
+  <Timeline />
 
   <div class="relative z-10 my-10 py-20">
     <Insight2
