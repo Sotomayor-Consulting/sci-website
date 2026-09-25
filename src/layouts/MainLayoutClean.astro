@@ -1,0 +1,225 @@
+---
+// Importing necessary components
+import Meta from "@components/Meta.astro";
+import Navbar from "@components/sections/navbar&footer/NavbarMegaMenu.astro";
+import FooterSection from "@components/sections/navbar&footer/FooterSection.astro";
+import { SITE } from "@data/constants";
+import "@styles/global.css";
+import BotonWhatsapp from "@components/ui/buttons/BtnWhatsapp.astro";
+import VideoBubble from "@components/ui/buttons/VideoBubble.astro";
+import Schemajson from "@components/sections/SEO/json-enriquesido.astro";
+
+const pathname = Astro.url.pathname;
+const isEnglish = pathname.startsWith("/en");
+const isPortuguese = pathname.startsWith("/pr");
+const lenguaje = isEnglish ? "en-US" : isPortuguese ? "pt-BR" : "es-EC";
+
+// Setting expected props
+const {
+  title = SITE.title,
+  meta,
+  structuredData,
+  lang = lenguaje,
+  customDescription = null,
+  customOgTitle = null,
+} = Astro.props;
+
+// Interface to type-check the properties
+interface Props {
+  title?: string;
+  meta?: string;
+  structuredData?: object;
+  lang?: string;
+  customDescription?: string | null;
+  customOgTitle?: string | null;
+}
+---
+
+<html lang={lang} class="scrollbar-hide lenis lenis-smooth scroll-pt-16">
+  <head>
+    {/* Adding metadata to the HTML document */}
+    <Schemajson />
+    <Meta
+      meta={meta}
+      structuredData={structuredData}
+      customDescription={customDescription}
+      customOgTitle={customOgTitle}
+    />
+    {/* Define the title of the page */}
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Blinker:wght@100;200;300;400;600;700;800;900&display=swap"
+    />
+    <script is:inline>
+      // Script to handle dark mode. It will check if the theme is stored in localStorage or if dark theme is preferred by system settings
+      if (
+        localStorage.getItem("hs_theme") === "dark" ||
+        (!("hs_theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <!-- TrustBox script -->
+    <script
+      type="text/javascript"
+      src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
+      async></script>
+    <!-- End TrustBox script -->
+    <script>
+      import "@scripts/lenisSmoothScroll.js";
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+    <!-- Google Tag Manager -->
+    <script is:inline data-cfasync="false">
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-TNRQGDM");
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- TikTok Pixel Code Start -->
+    <script type="text/javascript">
+      !(function (w, d, t) {
+        w.TiktokAnalyticsObject = t;
+        var ttq = (w[t] = w[t] || []);
+        ((ttq.methods = [
+          "page",
+          "track",
+          "identify",
+          "instances",
+          "debug",
+          "on",
+          "off",
+          "once",
+          "ready",
+          "alias",
+          "group",
+          "enableCookie",
+          "disableCookie",
+          "holdConsent",
+          "revokeConsent",
+          "grantConsent",
+        ]),
+          (ttq.setAndDefer = function (t, e) {
+            t[e] = function () {
+              t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+            };
+          }));
+        for (var i = 0; i < ttq.methods.length; i++)
+          ttq.setAndDefer(ttq, ttq.methods[i]);
+        ((ttq.instance = function (t) {
+          for (var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++)
+            ttq.setAndDefer(e, ttq.methods[n]);
+          return e;
+        }),
+          (ttq.load = function (e, n) {
+            var r = "https://analytics.tiktok.com/i18n/pixel/events.js",
+              o = n && n.partner;
+            ((ttq._i = ttq._i || {}),
+              (ttq._i[e] = []),
+              (ttq._i[e]._u = r),
+              (ttq._t = ttq._t || {}),
+              (ttq._t[e] = +new Date()),
+              (ttq._o = ttq._o || {}),
+              (ttq._o[e] = n || {}));
+            n = document.createElement("script");
+            ((n.type = "text/javascript"),
+              (n.async = !0),
+              (n.src = r + "?sdkid=" + e + "&lib=" + t));
+            e = document.getElementsByTagName("script")[0];
+            e.parentNode.insertBefore(n, e);
+          }));
+
+        ttq.load("D5KFDEBC77U6BL6T7LDG");
+        ttq.page();
+      })(window, document, "ttq");
+    </script>
+    <!-- TikTok Pixel Code End -->
+
+    <!--Microsoft Clarity end-->
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "xcmtd5y9el");
+    </script>
+    <!--Microsoft Clarity end -->
+  </head>
+  <body
+    class="selection:bg-primario-black dark:selection:bg-secundario dark:selection:text-primario-black flex min-h-screen flex-col bg-neutral-200 selection:text-neutral-200 dark:bg-[#171717]"
+  >
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-TNRQGDM"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe></noscript
+    >
+    <!-- End Google Tag Manager (noscript) -->
+    <div>
+      <slot name="hero" />
+    </div>
+    <div class="scrollbar-hide mx-auto w-full grow">
+      <BotonWhatsapp />
+      <!-- <VideoBubble /> -->
+      <main>
+        <slot />
+      </main>
+    </div>
+    <script>
+      import { HSStaticMethods } from "preline";
+
+      const initPreline = () => {
+        HSStaticMethods.autoInit();
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initPreline, {
+          once: true,
+        });
+      } else {
+        initPreline();
+      }
+
+      document.addEventListener("astro:page-load", initPreline);
+    </script>
+    <style>
+      /* CSS rules for the page scrollbar */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </body>
+</html>

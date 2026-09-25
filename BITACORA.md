@@ -3,7 +3,7 @@
 **Lectura obligatoria para cualquier agente (Claude u otro) que trabaje en este repo.**
 Antes de tocar código del embudo `diagnostico-llc` (landings, `functions/api/diagnostico-*`, Supabase, Odoo o n8n), leer completo este documento. Ignorarlo lleva a repetir bugs ya corregidos o a romper piezas que viven fuera de git (Supabase, Odoo, n8n) y que este documento es la única fuente que las describe.
 
-Última actualización: 2026-09-20.
+Última actualización: 2026-09-25.
 
 ---
 
@@ -290,6 +290,14 @@ El usuario pasó una pieza publicitaria (imagen) con el mensaje que quiere en el
 - `styles.css` idéntico en `src/pages/reserva-pendiente/` y `public/reserva-pendiente/`; no se tocó `tailwind.css` (no se añadieron clases de Tailwind nuevas). Se subió el `?v=` de `styles.css` a `20260925a` (el contenido cambió; ver el problema de caché de 4 h documentado en la sección 5).
 
 **Nota sobre el estado del repo (2026-09-25):** al empezar este cambio, el árbol de trabajo compartido en `G:\...\sci-website` tenía una cantidad grande de archivos en stage sin relación con esta tarea (componentes `.astro`, funciones de Cloudflare, migraciones de Supabase borradas), aparentemente de una operación de git a medias de otra sesión/persona sobre la misma carpeta de Google Drive. Este PR se preparó en un `git worktree` aislado (`git worktree add`) partiendo de `origin/main`, tocando solo los 3 archivos de `reserva-pendiente`, sin usar ni modificar ese árbol de trabajo. Queda pendiente que alguien revise esos cambios en stage del árbol compartido.
+
+### 3.13 Timeline de consultoría con Starwind (2026-09-25)
+
+- Se reemplazó `src/components/ui/timeline/timeline.astro` por una ruta de siete pasos compuesta con los componentes instalados `Card`, `Badge` y `Button` de Starwind UI y los iconos Tabler existentes. No se añadió ninguna dependencia.
+- El componente ya no usa GSAP ni `ScrollTrigger`: en móvil presenta una línea vertical con tarjetas y en escritorio una cinta SVG serpenteante con tarjetas alternadas. La estructura usa un `<ol>`, conserva el aviso regulatorio y respeta `prefers-reduced-motion`.
+- El tema azul/dorado está encapsulado mediante tokens semánticos dentro del bloque para que las piezas Starwind mantengan sus variantes sin depender del tema claro u oscuro de la página contenedora.
+- El componente sigue siendo compartido por `/start`, `/en/start` y `/pr/start`; su contenido continúa en español, igual que antes de este rediseño. Si esas dos rutas localizadas se publican, queda pendiente suministrar copy en inglés y portugués o parametrizar el componente.
+- Verificación local: `pnpm astro check` terminó con 0 errores y `pnpm build` generó las 156 páginas. Persisten únicamente los hints y warnings preexistentes del repositorio (colecciones ausentes, rutas duplicadas y dos SVG incompatibles con `astro-icon`).
 
 ---
 
