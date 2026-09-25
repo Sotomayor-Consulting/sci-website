@@ -1,0 +1,64 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+
+import HeromImage from "@images/landing3-A.avif";
+---
+
+<section class="relative isolate border-b border-white/10">
+    <div
+      class="pointer-events-none absolute inset-0 -z-20 [background-image:linear-gradient(to_right,rgba(13,37,55,1),transparent),var(--hero-image)] [background-size:cover,cover] [background-position:center,center] [background-repeat:no-repeat,no-repeat]"
+      style={`--hero-image: url('${HeromImage.src}');`}
+    >
+    </div>
+
+    <div
+      class="mx-auto flex max-w-7xl flex-col justify-between gap-7 px-5 py-10 sm:px-8 md:flex-row md:items-center lg:py-14"
+    >
+      <div>
+        <Badge
+          tone="primary"
+          appearance="outline"
+          eyebrow
+          size="sm"
+          class="border-primary/60 text-primary mb-4"
+        >
+          Asesoría estratégica gratuita
+        </Badge>
+        <h1
+          class="font-display max-w-3xl text-3xl leading-tight font-bold tracking-[-.035em] sm:text-5xl"
+        >
+          Tu LLC en Estados Unidos,
+          <span class="text-primary mt-2 block">bien hecha</span>
+        </h1>
+      </div>
+      <div class="flex max-w-sm flex-col gap-3 md:items-end">
+        <Button
+          as="a"
+          href="#agendar"
+          variant="outline"
+          size="lg"
+          class="bg-primary/90 text-foreground hover:bg-primary hover:text-[#0d2537] md:min-w-52 border-0 hover:-translate-y-0.5 transition-all delay-110"
+        >
+          Agendar asesoría gratis
+        </Button>
+        <p class="text-xs leading-relaxed text-white/60 md:text-right">
+          SCI es una consultora privada e independiente: no es una agencia
+          gubernamental ni está afiliada o respaldada por una. Brindamos
+          orientación, preparación documental y acompañamiento; la autoridad
+          competente decide la emisión y los plazos.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="border-y border-white/10 bg-white/90 py-5 text-[#0d2537] backdrop-blur"
+    >
+      <p
+        class="mx-auto max-w-7xl px-5 text-sm leading-relaxed font-semibold sm:px-8 sm:text-base"
+      >
+        Te guiamos para evaluar el estado adecuado para tu LLC y estructurarla
+        con criterios legales, fiscales y bancarios, reduciendo riesgos.
+      </p>
+    </div>
+  </section>

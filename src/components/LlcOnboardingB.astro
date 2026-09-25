@@ -1,10 +1,11 @@
 ---
-
 import HeroB from "@/components/ui/blocks/HeroB.astro";
 import Form from "@components/ui/blocks/FormB.astro";
 import Insight1 from "@components/ui/blocks/Insights_4.astro";
-import Insight2 from "@components/ui/blocks/Insights_5.astro"
-import Pricing, { type PricingPlan } from "@components/ui/blocks/PricingB.astro";
+import Insight2 from "@components/ui/blocks/Insights_5.astro";
+import Pricing, {
+  type PricingPlan,
+} from "@components/ui/blocks/PricingB.astro";
 import Faq from "@components/ui/blocks/FaqB.astro";
 // import Icon from "node_modules/astro-icon/components/Icon.astro";
 
@@ -38,18 +39,17 @@ const benefits = [
 const steps1 = [
   {
     titulo: "Cuéntanos tu caso",
-    descripcion:
-      "Comparte tus datos y el objetivo principal de tu proyecto.",
+    descripcion: "Comparte tus datos y el objetivo principal de tu proyecto.",
   },
 
   {
     titulo: "Habla con un experto.",
-    descripcion: "Revisamos actividad, socios, residencia y planes de crecimiento.",
+    descripcion:
+      "Revisamos actividad, socios, residencia y planes de crecimiento.",
   },
   {
     titulo: "Recibe una ruta clara",
-    descripcion:
-      "Sales con estado recomendado, costos y próximos pasos.",
+    descripcion: "Sales con estado recomendado, costos y próximos pasos.",
   },
 ];
 
@@ -71,15 +71,15 @@ const steps2 = [
   },
   {
     titulo: "Tu caso",
-    descripcion: "El estado correcto depende de tu actividad, tus socios y de cómo cobras. Lo definimos contigo en la asesoría inicial, antes de que inviertas."
-  }
+    descripcion:
+      "El estado correcto depende de tu actividad, tus socios y de cómo cobras. Lo definimos contigo en la asesoría inicial, antes de que inviertas.",
+  },
 ];
 
 const steps3 = [
   {
     titulo: "Tu actividad",
-    descripcion:
-      "Revisamos a qué te dedicas y cómo cobras hoy.",
+    descripcion: "Revisamos a qué te dedicas y cómo cobras hoy.",
   },
 
   {
@@ -88,13 +88,12 @@ const steps3 = [
   },
   {
     titulo: "Tu estado",
-    descripcion:
-      "Comparamos las opciones y su encaje con tu operación.",
+    descripcion: "Comparamos las opciones y su encaje con tu operación.",
   },
   {
     titulo: "Tu ruta",
-    descripcion: "Sales con una recomendación concreta y los costos asociados."
-  }
+    descripcion: "Sales con una recomendación concreta y los costos asociados.",
+  },
 ];
 
 import HeromImage from "@images/Hero_Sotomayor_3.avif";
@@ -256,7 +255,7 @@ const faqs = [
     />
   </div>
 
-  <div class="relative z-10 my-10 py-20 bg-black/10">
+  <div class="relative z-10 my-10 bg-black/10 py-20">
     <Insight2
       label="Consultoría para tu LLC"
       title="Analizamos tu caso y tu actividad antes de recomendarte una estructura."
@@ -287,7 +286,6 @@ const faqs = [
       CtaLabels="30 min · por Zoom · sin compromiso"
     />
   </div>
-
 </main>
 
 <script>

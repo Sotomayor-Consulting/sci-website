@@ -1,0 +1,357 @@
+---
+import Check from "@tabler/icons/outline/check.svg";
+import Lock from "@tabler/icons/outline/lock.svg";
+
+import { Button } from "@/components/starwind/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/starwind/card";
+import {
+  Field,
+  FieldControl,
+  FieldError,
+  FieldLabel,
+} from "@/components/starwind/field";
+import { Form } from "@/components/starwind/form";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/starwind/native-select";
+import { Textarea } from "@/components/starwind/textarea";
+
+
+
+export interface ActivityGroup {
+  label: string;
+  activities: string[];
+}
+
+interface Props {
+  activityGroups: ActivityGroup[];
+}
+
+const { activityGroups } = Astro.props as Props;
+---
+
+
+<section class="relative px-4 py-8 sm:px-8 sm:py-12 lg:py-16">
+    <div
+      class="bg-primary/10 pointer-events-none absolute top-1/2 left-1/2 -z-0 size-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+    >
+    </div>
+    <Card
+      id="agendar"
+      size="md"
+      class="relative z-10 mx-auto max-w-5xl scroll-mt-24 rounded-[1.75rem] border-white/10 bg-[#102d42]/90 text-white shadow-2xl shadow-black/35 backdrop-blur-xl sm:rounded-[2rem]"
+    >
+      <Form id="onboarding-form" novalidate class="gap-0">
+        <CardHeader class="border-b border-white/10 px-5 py-5 sm:px-10 sm:py-6">
+          <ol class="flex items-center" aria-label="Progreso de la reserva">
+            {
+              ["Tu caso", "Tus datos", "Tu horario"].map((label, index) => (
+                <li class="contents">
+                  {index > 0 && (
+                    <span
+                      class="step-line mx-2 h-px flex-1 bg-white/15 transition-colors sm:mx-4"
+                      data-line={index}
+                      aria-hidden="true"
+                    />
+                  )}
+                  <span
+                    class="step flex shrink-0 items-center gap-2"
+                    data-step-indicator={index + 1}
+                  >
+                    <span class="step-number grid size-6 place-items-center rounded-full border border-white/20 bg-white/10 text-[.7rem] font-semibold text-white/55">
+                      <span class="step-value">{index + 1}</span>
+                      <Check
+                        class="step-check hidden size-3.5"
+                        aria-hidden="true"
+                      />
+                    </span>
+                    <span class="step-label hidden text-xs font-medium text-white/45 sm:inline">
+                      {label}
+                    </span>
+                  </span>
+                </li>
+              ))
+            }
+          </ol>
+        </CardHeader>
+
+        <div class="onboarding-step" data-step="1">
+          <CardHeader class="px-5 pt-7 sm:px-10 sm:pt-9">
+            <CardTitle class="font-display text-2xl text-white sm:text-3xl">
+              ¿Para qué quieres tu LLC?
+            </CardTitle>
+            <CardDescription class="max-w-2xl text-white/60">
+              Elige la actividad principal. Con eso preparamos tu asesoría antes
+              de la llamada.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-6 px-5 sm:px-10">
+            <input
+              id="activity"
+              type="hidden"
+              name="activity"
+              value=""
+              required
+            />
+            <input
+              type="hidden"
+              name="advice"
+              value="Sí, quiero revisar mi caso con un experto"
+            />
+            <div class="absolute -left-[9999px]" aria-hidden="true">
+              <label for="onboarding-website">Sitio web</label>
+              <input
+                id="onboarding-website"
+                name="website"
+                type="text"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+            {
+              activityGroups.map((group) => (
+                <fieldset class="space-y-3">
+                  <legend class="text-primary text-xs font-bold tracking-[.12em] uppercase">
+                    {group.label}
+                  </legend>
+                  <div class="flex flex-wrap gap-2">
+                    {group.activities.map((activity) => (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        class="activity-button aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground h-auto rounded-full border-white/20 bg-white/7 px-4 py-2.5 text-left whitespace-normal text-white hover:border-white/40 hover:bg-white/15 hover:text-white"
+                        data-value={activity}
+                        aria-pressed="false"
+                      >
+                        <Check
+                          class="activity-check hidden size-3.5"
+                          aria-hidden="true"
+                        />
+                        {activity}
+                      </Button>
+                    ))}
+                  </div>
+                </fieldset>
+              ))
+            }
+          </CardContent>
+          <CardFooter
+            class="mt-5 gap-4 border-white/10 bg-transparent px-5 sm:px-10"
+          >
+            <p
+              id="activity-hint"
+              class="text-xs text-white/45"
+              aria-live="polite"
+            >
+              Elige una actividad para continuar
+            </p>
+            <Button
+              id="continue-to-contact"
+              type="button"
+              variant="primary"
+              size="md"
+              class="ml-auto rounded-xl font-semibold"
+            >
+              Continuar
+            </Button>
+          </CardFooter>
+        </div>
+
+        <div class="onboarding-step hidden" data-step="2">
+          <CardHeader class="px-5 pt-7 sm:px-10 sm:pt-9">
+            <CardTitle
+              id="contact-title"
+              class="font-display text-2xl text-white sm:text-3xl"
+              tabindex="-1"
+            >
+              ¿A dónde te enviamos la cita?
+            </CardTitle>
+            <CardDescription class="text-white/60">
+              Te llega el enlace de Zoom y un recordatorio antes de la llamada.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-5 px-5 sm:px-10">
+            <div class="grid gap-5 lg:grid-cols-3">
+              <Field name="name" class="gap-2">
+                <FieldLabel for="full-name" class="text-white/85"
+                  >Nombre completo</FieldLabel
+                >
+                <FieldControl
+                  id="full-name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  minlength="3"
+                  required
+                  placeholder="Tu nombre y apellido"
+                  class="border-white/15 bg-white/7 text-white placeholder:text-white/35"
+                />
+                <FieldError match="valueMissing"
+                  >Escribe tu nombre completo.</FieldError
+                >
+                <FieldError match="tooShort"
+                  >Escribe al menos tres caracteres.</FieldError
+                >
+              </Field>
+              <Field name="email" class="gap-2">
+                <FieldLabel for="email" class="text-white/85"
+                  >Correo electrónico</FieldLabel
+                >
+                <FieldControl
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  placeholder="nombre@empresa.com"
+                  class="border-white/15 bg-white/7 text-white placeholder:text-white/35"
+                />
+                <FieldError match="valueMissing">Escribe tu correo.</FieldError>
+                <FieldError match="typeMismatch"
+                  >Escribe un correo válido.</FieldError
+                >
+              </Field>
+              <div class="grid grid-cols-[7rem_1fr] items-start gap-2">
+                <Field class="gap-2">
+                  <FieldLabel for="country-code" class="text-white/85"
+                    >País</FieldLabel
+                  >
+                  <NativeSelect
+                    id="country-code"
+                    name="countryCode"
+                    class="border-white/15 bg-white/7 text-white"
+                  >
+                    <NativeSelectOption value="+593">EC +593</NativeSelectOption
+                    >
+                    <NativeSelectOption value="+52">MX +52</NativeSelectOption>
+                    <NativeSelectOption value="+57">CO +57</NativeSelectOption>
+                    <NativeSelectOption value="+54">AR +54</NativeSelectOption>
+                    <NativeSelectOption value="+34">ES +34</NativeSelectOption>
+                    <NativeSelectOption value="+1">US +1</NativeSelectOption>
+                  </NativeSelect>
+                </Field>
+                <Field name="phone" class="gap-2">
+                  <FieldLabel for="phone" class="text-white/85"
+                    >Teléfono / WhatsApp</FieldLabel
+                  >
+                  <FieldControl
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    minlength="7"
+                    maxlength="15"
+                    pattern="[0-9+\-().\s]+"
+                    required
+                    placeholder="099 123 4567"
+                    class="border-white/15 bg-white/7 text-white placeholder:text-white/35"
+                  />
+                  <FieldError match="valueMissing"
+                    >Escribe tu número.</FieldError
+                  >
+                  <FieldError match="tooShort"
+                    >Escribe un teléfono válido.</FieldError
+                  >
+                  <FieldError match="patternMismatch"
+                    >Revisa el formato del teléfono.</FieldError
+                  >
+                </Field>
+              </div>
+            </div>
+            <Field class="gap-2">
+              <FieldLabel for="question" class="text-white/85">
+                ¿Qué duda principal quieres resolver?
+                <span class="font-normal text-white/40">Opcional</span>
+              </FieldLabel>
+              <Textarea
+                id="question"
+                name="question"
+                rows={3}
+                placeholder="Ej.: no sé si me conviene Wyoming o Florida, ni qué pasa con mis impuestos aquí."
+                class="min-h-20 resize-none border-white/15 bg-white/7 text-white placeholder:text-white/35"
+              />
+            </Field>
+          </CardContent>
+          <CardFooter
+            class="mt-5 flex-wrap gap-3 border-white/10 bg-transparent px-5 sm:px-10"
+          >
+            <Button
+              type="button"
+              variant="outline"
+              class="back-button border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
+              data-target="1"
+            >
+              Volver
+            </Button>
+            <Button
+              id="continue-to-schedule"
+              type="button"
+              variant="primary"
+              class="ml-auto rounded-xl"
+            >
+              Elegir horario
+            </Button>
+            <p
+              id="form-status"
+              class="flex w-full items-center justify-center gap-1.5 text-center text-[.7rem] text-white/40"
+              aria-live="polite"
+            >
+              <Lock class="size-3" aria-hidden="true" />
+              Tus datos se usan solo para gestionar esta asesoría.
+            </p>
+          </CardFooter>
+        </div>
+
+        <div class="onboarding-step hidden" data-step="3">
+          <CardHeader class="px-5 pt-7 sm:px-10 sm:pt-9">
+            <CardTitle
+              id="schedule-title"
+              class="font-display text-2xl text-white sm:text-3xl"
+              tabindex="-1"
+            >
+              Elige tu horario
+            </CardTitle>
+            <CardDescription class="text-white/60">
+              Selecciona directamente en Zcal el día y la hora que mejor te
+              convengan.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="px-3 sm:px-6">
+            <div
+              class="overflow-hidden rounded-2xl border border-white/10 bg-white"
+            >
+              <iframe
+                id="zcal-frame"
+                title="Calendario de reserva — Sotomayor Consulting"
+                src="about:blank"
+                loading="eager"
+                allow="clipboard-write; fullscreen"
+                class="h-[760px] w-full border-0 sm:h-[800px]"></iframe>
+            </div>
+            <p class="mt-4 text-center text-xs text-white/50">
+              ¿No carga el calendario?
+              <a
+                id="zcal-open"
+                href="https://zcal.co/t/agendar-asesoria-llc/60-USA"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary font-semibold underline underline-offset-4"
+              >
+                Ábrelo en una pestaña nueva
+              </a>.
+            </p>
+          </CardContent>
+        </div>
+      </Form>
+    </Card>
+  </section>

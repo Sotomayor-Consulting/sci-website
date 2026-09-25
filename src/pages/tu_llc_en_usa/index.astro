@@ -1,33 +1,12 @@
 ---
 import LayoutMkt from "@/layouts/LayoutMkt.astro";
-import LlcOnboarding, {
-  type ActivityGroup,
-} from "@/components/LlcOnboarding.astro";
+import LlcOnboarding from "@/components/LlcOnboarding.astro";
 
-const activityGroups: ActivityGroup[] = [
-  {
-    label: "Operar un negocio",
-    activities: [
-      "Exportación de servicios profesionales",
-      "E-commerce",
-      "Trader / compra-venta de productos",
-      "Fintech",
-    ],
-  },
-  {
-    label: "Invertir o proteger",
-    activities: [
-      "Invertir en Bolsa de Valores",
-      "Trader de Stocks",
-      "Negocios en bienes raíces",
-      "Proteger mi patrimonio",
-    ],
-  },
-];
+
 ---
 
 <LayoutMkt
   title="Agenda tu asesoría para crear una LLC en Estados Unidos | Sotomayor Consulting International"
 >
-  <LlcOnboarding activityGroups={activityGroups} />
+  <LlcOnboarding />
 </LayoutMkt>
