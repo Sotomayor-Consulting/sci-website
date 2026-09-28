@@ -7,6 +7,7 @@ import EmailContactInput from "@components/ui/forms/input/EmailContactInput.astr
 import PhoneInput from "@components/ui/forms/input/PhoneInput.astro";
 import TextAreaInput from "@components/ui/forms/input/TextAreaInput.astro";
 import Icon from "@components/ui/icons/Icon.astro";
+import Calendario from "@components/ui/blocks/Calendariolite.astro";
 
 interface ListaItem {
   heading: string;
@@ -36,7 +37,7 @@ interface Props {
   formSubTitle: string;
   dataContact: DataContact;
 }
-const { title, subTitle, formTitle, formSubTitle, dataContact} = Astro.props
+const { title, subTitle, formTitle, formSubTitle, dataContact } = Astro.props;
 ---
 
 <!-- Contact Us -->
@@ -44,58 +45,18 @@ const { title, subTitle, formTitle, formSubTitle, dataContact} = Astro.props
   <div class="mx-auto max-w-2xl lg:max-w-5xl">
     <div class="text-center">
       <h1
-        class="text-balance text-2xl font-bold tracking-tight text-primario-black dark:text-neutral-200 md:text-4xl md:leading-tight"
+        class="text-primario-black text-2xl font-bold tracking-tight text-balance md:text-4xl md:leading-tight dark:text-neutral-200"
       >
         {title}
       </h1>
-      <p class="mt-1 text-pretty text-primario-black dark:text-neutral-400">
+      <p class="text-primario-black mt-1 text-pretty dark:text-neutral-400">
         {subTitle}
       </p>
     </div>
 
     <div class="mt-12 grid items-center gap-6 lg:grid-cols-2 lg:gap-16">
-      <div class="flex flex-col rounded-xl p-4 sm:p-6 lg:p-8">
-        <h2
-          class="mb-8 text-xl font-bold text-primario-black dark:text-neutral-300"
-        >
-          {formTitle}
-        </h2>
-        <!-- Form for user input with various input fields.-->
-        <!-- Each field utilizes a different input component for the specific type of input (text, email, phone, and textarea)-->
-        <form action="https://api.web3forms.com/submit" method="POST">
-          <div class="grid gap-4">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <input type="hidden" name="access_key" value="a3a0ec9c-e3a4-4000-a7e0-8d6709e5701c">
-              <TextInput
-                id="hs-firstname-contacts"
-                label={dataContact.labelname}
-                name="hs-firstname-contacts"
-              />
-              <TextInput
-                id="hs-lastname-contacts"
-                label={dataContact.labellastname}
-                name="hs-firstname-contacts"
-              />
-            </div>
-            <EmailContactInput id="hs-email-contacts" />
-            <PhoneInput id="hs-phone-number" label={dataContact.labelphone} />
-            <TextAreaInput
-              id="hs-about-contacts"
-              label={dataContact.labeltext}
-              name="hs-about-contacts"
-            />
-          </div>
-
-          <div class="mt-4 grid">
-            <AuthBtn title={dataContact.btnenv} />
-          </div>
-
-          <div class="mt-3 text-center">
-            <p class="text-sm text-primario-black dark:text-neutral-400">
-              {formSubTitle}
-            </p>
-          </div>
-        </form>
+      <div class="h-full w-full">
+        <Calendario />
       </div>
 
       <!--ContactIconBlocks are used to display different methods of contacting, including visiting office, email, browsing knowledgebase, and FAQ.-->
@@ -111,13 +72,11 @@ const { title, subTitle, formTitle, formSubTitle, dataContact} = Astro.props
               isArrowVisible={li.isArrowVisible}
               isAddressVisible={li.isAddressVisible}
               addressContent={li.addressContent}
-            
             >
               <Icon name={li.icono} />
             </ContactIconBlock>
           ))
         }
-        
       </div>
     </div>
   </div>

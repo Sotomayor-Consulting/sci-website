@@ -23,3 +23,4 @@ pnpm-debug.log*
 
 # Cloudflare Pages local dev
 .dev.vars
+.wrangler/
