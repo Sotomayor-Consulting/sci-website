@@ -305,6 +305,7 @@ El usuario pasó una pieza publicitaria (imagen) con el mensaje que quiere en el
 - `functions/api/slots.ts`, `questions.ts` y `booking.ts` son Cloudflare Pages Functions nativas (`onRequestGet`/`onRequestPost`). No deben convertirse en rutas `APIRoute` de Astro ni importar `cloudflare:workers`: este proyecto tiene salida estática y Cloudflare ejecuta por separado los archivos de `functions/`.
 - Variables requeridas en Cloudflare Pages: secreto `CALNODE_API_KEY` y variable opcional `CALNODE_EVENT_TYPE_SLUG`; si esta última falta se conserva el tipo de evento `test-SCI`. Los tres endpoints fallan de forma explícita con 503 cuando falta la clave.
 - `slots.ts` valida fechas calendario reales y limita el rango a 62 días. `booking.ts` limita el cuerpo a 64 KiB, valida origen same-origin, tipo JSON, nombre, correo, fecha futura y respuestas antes de enviar la reserva a Calnode. Las respuestas llevan `Cache-Control: no-store`.
+- `CalendarioB.astro` muestra 42 celdas `Skeleton` de Starwind durante la carga inicial y cada cambio de mes, conserva las dimensiones de la cuadrícula, marca el grid con `aria-busy` y bloquea temporalmente la navegación mensual mientras espera `/api/slots`.
 - Verificación sin crear citas reales: los handlers de disponibilidad y preguntas devolvieron datos reales de `test-SCI`; el handler de reserva se probó con `fetch` simulado, validando el guard de origen y el payload hacia Calnode. `pnpm astro check` terminó con 0 errores y `pnpm build` generó 156 páginas.
 
 ---

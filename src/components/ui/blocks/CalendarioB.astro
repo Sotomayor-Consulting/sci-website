@@ -15,6 +15,7 @@ import {
   FieldLabel,
 } from "@/components/starwind/field";
 import { Form } from "@/components/starwind/form";
+import { Skeleton } from "@/components/starwind/skeleton";
 
 interface Props extends HTMLAttributes<"section"> {
   variant?: "standar" | "extended";
@@ -96,8 +97,29 @@ const {
           { "min-h-0 flex-1 auto-rows-fr": variant === "extended" },
         ]}
         role="grid"
+        aria-busy="true"
       >
+        {
+          Array.from({ length: 42 }, (_, index) => (
+            <Skeleton
+              class="size-9 place-self-center rounded-lg sm:size-10"
+              aria-hidden="true"
+              data-calendar-skeleton={index}
+            />
+          ))
+        }
       </div>
+      <template data-calendar-skeleton-template>
+        {
+          Array.from({ length: 42 }, (_, index) => (
+            <Skeleton
+              class="size-9 place-self-center rounded-lg sm:size-10"
+              aria-hidden="true"
+              data-calendar-skeleton={index}
+            />
+          ))
+        }
+      </template>
 
       <p class="mt-3 flex items-center gap-1.5 text-[0.6875rem] text-muted-foreground">
         <IconWorld class="size-3" />
@@ -380,6 +402,9 @@ const {
         root.querySelector<T>(selector);
       const monthLabel = get<HTMLElement>("[data-month-label]");
       const calendarGrid = get<HTMLElement>("[data-calendar-grid]");
+      const calendarSkeletonTemplate = get<HTMLTemplateElement>(
+        "[data-calendar-skeleton-template]",
+      );
       const previousButton = get<HTMLButtonElement>("[data-previous-month]");
       const nextButton = get<HTMLButtonElement>("[data-next-month]");
       const calendarPanel = get<HTMLElement>("[data-calendar-panel]");
@@ -406,6 +431,7 @@ const {
       if (
         !monthLabel ||
         !calendarGrid ||
+        !calendarSkeletonTemplate ||
         !previousButton ||
         !nextButton ||
         !calendarPanel ||
@@ -671,6 +697,7 @@ const {
       const renderCalendar = () => {
         monthLabel.textContent = monthFormatterB.format(visibleMonth);
         calendarGrid.replaceChildren();
+        calendarGrid.setAttribute("aria-busy", "false");
         const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
         previousButton.disabled = visibleMonth <= currentMonth;
         nextButton.disabled = false;
@@ -725,6 +752,14 @@ const {
         }
       };
 
+      const renderCalendarSkeleton = () => {
+        monthLabel.textContent = monthFormatterB.format(visibleMonth);
+        calendarGrid.setAttribute("aria-busy", "true");
+        calendarGrid.replaceChildren(
+          calendarSkeletonTemplate.content.cloneNode(true),
+        );
+      };
+
       const loadMonth = async () => {
         const requestId = ++activeRequest;
         const year = visibleMonth.getFullYear();
@@ -738,6 +773,7 @@ const {
         slotsList.replaceChildren();
         previousButton.disabled = true;
         nextButton.disabled = true;
+        renderCalendarSkeleton();
 
         try {
           const response = await fetch(`/api/slots?from=${from}&to=${to}`, {
