@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/starwind/button";
 
 interface Props {
+  id: string;
   label: string;
   title: string;
   description: string;
@@ -20,11 +21,11 @@ interface Props {
   }[];
 }
 
-const { faqs, label, title, description, Cta, CtaLink, CtaLabels } =
+const { faqs, label, title, description, Cta, CtaLink, CtaLabels, id } =
   Astro.props as Props;
 ---
 
-<div class="mx-auto grid max-w-7xl gap-12 px-5 lg:px-8">
+<div class="mx-auto grid max-w-7xl gap-12 px-5 lg:px-8" id={id}>
   <div>
     <p class="section-kicker">{label}</p>
     <h2 class="section-title text-white">

@@ -3,7 +3,7 @@ import HeroB from "@/components/ui/blocks/HeroB.astro";
 import Form from "@components/ui/blocks/FormB.astro";
 import Insight1 from "@components/ui/blocks/Insights_4.astro";
 import Insight2 from "@components/ui/blocks/Insights_5.astro";
-import Timeline from "@/components/ui/timeline/timeline.astro"
+import Timeline from "@/components/ui/timeline/timeline.astro";
 import Pricing, {
   type PricingPlan,
 } from "@components/ui/blocks/PricingB.astro";
@@ -247,6 +247,7 @@ const faqs = [
 
   <div class="relative z-10 my-10 py-20">
     <Insight2
+      id="estados"
       label="Elige tu estado ideal"
       title="Delaware, Wyoming o Florida. No todos los estados son iguales para una incorporación."
       description="Recibe la consultoría de un equipo experto y define el estado que corresponde a tu operación antes de incorporar tu LLC, sin errores. Diez años estructurando compañías en Estados Unidos para clientes de toda América Latina."
@@ -260,6 +261,7 @@ const faqs = [
 
   <div class="relative z-10 my-10 bg-black/10 py-20">
     <Insight2
+      id="servicio"
       label="Consultoría para tu LLC"
       title="Analizamos tu caso y tu actividad antes de recomendarte una estructura."
       description="Una sesión de 30 minutos por Zoom, sin costo y sin compromiso, con un asesor del estudio. Diez años de experiencia en estructuras internacionales."
@@ -272,6 +274,7 @@ const faqs = [
 
   <div class="relative z-10 my-10 py-20">
     <Pricing
+      id="precios"
       heading="Valores únicos. Las tasas del Estado se pagan aparte y las cobra el Estado."
       description="El plan ideal según tu caso lo definimos en la primera asesoría."
       plans={planes}
@@ -280,6 +283,7 @@ const faqs = [
 
   <div class="relative z-10 my-10 py-20">
     <Faq
+      id="preguntas"
       label="Preguntas frecuentes"
       title="Lo que debes saber antes de empezar."
       description="Si tu duda no aparece, la resolvemos durante la asesoría."

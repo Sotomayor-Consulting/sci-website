@@ -2,7 +2,7 @@
 import Header from "@components/ui/blocks/HeaderLanding.astro";
 import Insight1 from "@components/ui/blocks/Insights_4.astro";
 import Insight2 from "@components/ui/blocks/Insights_5.astro";
-import Timeline from "@/components/ui/timeline/timeline.astro"
+import Timeline from "@/components/ui/timeline/timeline.astro";
 import Faq from "@components/ui/blocks/FaqB.astro";
 import Pricing, {
   type PricingPlan,
@@ -111,7 +111,7 @@ const planes: PricingPlan[] = [
       { text: "Agente Residente por un año.", included: true },
     ],
     buttonText: "Agenda un cita",
-    buttonHref: "/tu-llc-en-usa/#agendar",
+    buttonHref: "/tu_llc_en_usa/#agendar",
   },
   {
     name: "Business",
@@ -129,14 +129,13 @@ const planes: PricingPlan[] = [
         text: "Acompañamiento bancario (Mercury o Relay + Stripe).",
         included: true,
       },
-
       {
         text: "Acompañamiento prioritario con los documentos corporativos de tu LLC.",
         included: true,
       },
     ],
     buttonText: "Agenda un cita",
-    buttonHref: "/tu-llc-en-usa/#agendar",
+    buttonHref: "/tu_llc_en_usa/#agendar",
     highlighted: true,
     badge: "Más Popular",
   },
@@ -158,7 +157,7 @@ const planes: PricingPlan[] = [
       },
     ],
     buttonText: "Agenda un cita",
-    buttonHref: "/tu-llc-en-usa/#agendar",
+    buttonHref: "/tu_llc_en_usa/#agendar",
   },
 ];
 
@@ -212,7 +211,7 @@ const faqs = [
 
   <Timeline />
 
-  <div class="relative z-10 my-10 py-20">
+  <div class="relative z-10 my-10 py-20" id="estados">
     <Insight2
       label="Elige tu estado ideal"
       title="Delaware, Wyoming o Florida. No todos los estados son iguales para una incorporación."
@@ -226,7 +225,7 @@ const faqs = [
   </div>
 
   <div
-    class="relative z-10 overflow-hidden py-20 before:absolute before:inset-0 before:-z-10 before:[background-image:var(--hero-image)] before:[background-size:cover] before:[background-position:center] before:[background-repeat:no-repeat] before:opacity-20 before:content-['']"
+    class="relative z-10 overflow-hidden py-20 before:absolute before:inset-0 before:-z-10 before:[background-image:var(--hero-image)] before:[background-size:cover] before:[background-position:center] before:[background-repeat:no-repeat] before:opacity-20 before:content-['']" id="servicio"
     style={`--hero-image: url('${FondoDiv.src}');`}
   >
     <Insight2
@@ -242,6 +241,7 @@ const faqs = [
 
   <div class="relative z-10 my-10 py-20">
     <Pricing
+      id="precios"
       heading="Valores únicos. Las tasas del Estado se pagan aparte y las cobra el Estado."
       description="El plan ideal según tu caso lo definimos en la primera asesoría."
       plans={planes}
@@ -250,6 +250,7 @@ const faqs = [
 
   <div class="relative z-10 bg-black/10 py-20">
     <Faq
+      id="preguntas"
       label="Preguntas frecuentes"
       title="Lo que debes saber antes de empezar."
       description="Si tu duda no aparece, la resolvemos durante la asesoría."

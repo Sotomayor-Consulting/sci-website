@@ -9,6 +9,7 @@ import { Badge } from "@/components/starwind/badge";
 import { Button } from "@/components/starwind/button";
 
 interface Props {
+  id: string;
   label: string;
   title: string;
   description: string;
@@ -22,11 +23,11 @@ interface Props {
   }[];
 }
 
-const { steps, label, title, description, Cta, CtaLabels, CtaLink, CtaAdvice } =
+const { steps, label, title, description, Cta, CtaLabels, CtaLink, CtaAdvice,id } =
   Astro.props;
 ---
 
-<div class="mx-auto max-w-7xl px-5 lg:px-8">
+<div class="mx-auto max-w-7xl px-5 lg:px-8" id={id}>
   <div class="max-w-2xl">
     <p class="section-kicker">{label}</p><h2 class="section-title">
       {title}
