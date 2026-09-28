@@ -1,3 +1,4 @@
+
 interface Env {
   CALNODE_API_KEY?: string;
   CALNODE_EVENT_TYPE_SLUG?: string;
