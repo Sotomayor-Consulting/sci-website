@@ -24,6 +24,7 @@ const CALNODE_BOOKINGS_URL =
   "https://calnode.sotomayorconsulting.com/v1/bookings";
 const MAX_BODY_SIZE = 64 * 1024;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const SLUG_PATTERN = /^[A-Za-z0-9_-]{1,100}$/;
 
 function json(body: unknown, status = 200): Response {
   return Response.json(body, {
@@ -115,6 +116,12 @@ export async function onRequestPost({
     return json({ error: "El cuerpo debe ser un JSON válido." }, 400);
   }
 
+  const requestedSlug =
+    isRecord(body) && typeof body.slug === "string" ? body.slug.trim() : "";
+  if (requestedSlug && !SLUG_PATTERN.test(requestedSlug)) {
+    return json({ error: 'El campo "slug" no es válido.' }, 400);
+  }
+
   const booking = parseBooking(body);
   if (!booking) {
     return json(
@@ -130,7 +137,8 @@ export async function onRequestPost({
   }
 
   const apiKey = env.CALNODE_API_KEY?.trim();
-  const eventTypeSlug = env.CALNODE_EVENT_TYPE_SLUG?.trim() || "test-SCI";
+  const eventTypeSlug =
+    requestedSlug || env.CALNODE_EVENT_TYPE_SLUG?.trim() || "test-SCI";
   if (!apiKey) {
     console.error("CALNODE_API_KEY is not configured");
     return json(

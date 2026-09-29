@@ -3,7 +3,7 @@
 **Lectura obligatoria para cualquier agente (Claude u otro) que trabaje en este repo.**
 Antes de tocar código del embudo `diagnostico-llc` (landings, `functions/api/diagnostico-*`, Supabase, Odoo o n8n), leer completo este documento. Ignorarlo lleva a repetir bugs ya corregidos o a romper piezas que viven fuera de git (Supabase, Odoo, n8n) y que este documento es la única fuente que las describe.
 
-Última actualización: 2026-09-28.
+Última actualización: 2026-09-29.
 
 ---
 
@@ -307,6 +307,7 @@ El usuario pasó una pieza publicitaria (imagen) con el mensaje que quiere en el
 - `slots.ts` valida fechas calendario reales y limita el rango a 62 días. `booking.ts` limita el cuerpo a 64 KiB, valida origen same-origin, tipo JSON, nombre, correo, fecha futura y respuestas antes de enviar la reserva a Calnode. Las respuestas llevan `Cache-Control: no-store`.
 - `CalendarioB.astro` muestra 42 celdas `Skeleton` de Starwind durante la carga inicial y cada cambio de mes, conserva las dimensiones de la cuadrícula, marca el grid con `aria-busy` y bloquea temporalmente la navegación mensual mientras espera `/api/slots`.
 - Verificación sin crear citas reales: los handlers de disponibilidad y preguntas devolvieron datos reales de `test-SCI`; el handler de reserva se probó con `fetch` simulado, validando el guard de origen y el payload hacia Calnode. `pnpm astro check` terminó con 0 errores y `pnpm build` generó 156 páginas.
+- Actualización 2026-09-29: `CalendarioB.astro` acepta el prop opcional `slug` y lo envía a las tres Functions. La prioridad vigente es `slug` del componente → `CALNODE_EVENT_TYPE_SLUG` de Cloudflare → `test-SCI`; los slugs recibidos por HTTP se validan antes de consultar Calnode. Los usos existentes que no pasan el prop conservan el comportamiento anterior.
 
 ---
 

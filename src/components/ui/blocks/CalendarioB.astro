@@ -19,10 +19,12 @@ import { Skeleton } from "@/components/starwind/skeleton";
 
 interface Props extends HTMLAttributes<"section"> {
   variant?: "standar" | "extended";
+  slug?: string;
 }
 
 const {
   variant = "standar",
+  slug,
   class: className,
   ...rest
 } = Astro.props;
@@ -38,6 +40,7 @@ const {
 >
   <Card
     data-calendar-b-root
+    data-event-type-slug={slug?.trim() || undefined}
     class:list={[
       "mx-auto grid w-full gap-0 overflow-hidden rounded-2xl bg-card py-0 shadow-2xl md:grid-cols-[minmax(0,1.1fr)_minmax(17rem,0.9fr)]",
       variant === "standar" ? "max-w-3xl" : "h-full min-h-0 max-w-none",
@@ -391,6 +394,7 @@ const {
     .querySelectorAll<HTMLElement>("[data-calendar-b-root]")
     .forEach((root) => {
       const today = startOfDayB(new Date());
+      const eventTypeSlug = root.dataset.eventTypeSlug?.trim() ?? "";
       let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
       let selectedDate: Date | null = null;
       let selectedSlot: AvailableSlot | null = null;
@@ -598,7 +602,10 @@ const {
 
       const loadQuestions = async () => {
         try {
-          const response = await fetch("/api/questions", {
+          const params = new URLSearchParams();
+          if (eventTypeSlug) params.set("slug", eventTypeSlug);
+          const query = params.size > 0 ? `?${params}` : "";
+          const response = await fetch(`/api/questions${query}`, {
             headers: { Accept: "application/json" },
           });
           const payload: unknown = await response.json().catch(() => null);
@@ -776,7 +783,9 @@ const {
         renderCalendarSkeleton();
 
         try {
-          const response = await fetch(`/api/slots?from=${from}&to=${to}`, {
+          const params = new URLSearchParams({ from, to });
+          if (eventTypeSlug) params.set("slug", eventTypeSlug);
+          const response = await fetch(`/api/slots?${params}`, {
             headers: { Accept: "application/json" },
           });
           const payload: unknown = await response.json().catch(() => null);
@@ -862,6 +871,7 @@ const {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
+              ...(eventTypeSlug ? { slug: eventTypeSlug } : {}),
               start_at: selectedSlot.startAt,
               name: nameInput.value.trim(),
               email: emailInput.value.trim(),

@@ -4,10 +4,12 @@ interface Env {
 }
 
 interface FunctionContext {
+  request: Request;
   env: Env;
 }
 
 const CALNODE_ORIGIN = "https://calnode.sotomayorconsulting.com";
+const SLUG_PATTERN = /^[A-Za-z0-9_-]{1,100}$/;
 
 function json(body: unknown, status = 200): Response {
   return Response.json(body, {
@@ -17,10 +19,18 @@ function json(body: unknown, status = 200): Response {
 }
 
 export async function onRequestGet({
+  request,
   env,
 }: FunctionContext): Promise<Response> {
+  const requestedSlug =
+    new URL(request.url).searchParams.get("slug")?.trim() ?? "";
+  if (requestedSlug && !SLUG_PATTERN.test(requestedSlug)) {
+    return json({ error: 'El parámetro "slug" no es válido.' }, 400);
+  }
+
   const apiKey = env.CALNODE_API_KEY?.trim();
-  const eventTypeSlug = env.CALNODE_EVENT_TYPE_SLUG?.trim() || "test-SCI";
+  const eventTypeSlug =
+    requestedSlug || env.CALNODE_EVENT_TYPE_SLUG?.trim() || "test-SCI";
 
   if (!apiKey) {
     console.error("CALNODE_API_KEY is not configured");

@@ -12,7 +12,9 @@
       "@styles/*": ["src/assets/styles/*"],
       "@utils/*": ["src/utils/*"],
       "@public/*": ["public/*"],
-      "@assets/*": ["src/assets/*"]
+      "@assets/*": ["src/assets/*"],
+      "@pages/*": ["src/pages/*"],
+      "@styles2/*": ["src/styles/*"]
     }
   },
   "include": [".astro/types.d.ts", "**/*"],

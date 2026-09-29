@@ -11,6 +11,7 @@ interface FunctionContext {
 
 const CALNODE_ORIGIN = "https://calnode.sotomayorconsulting.com";
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const SLUG_PATTERN = /^[A-Za-z0-9_-]{1,100}$/;
 const MAX_RANGE_DAYS = 62;
 
 function json(body: unknown, status = 200): Response {
@@ -36,8 +37,13 @@ export async function onRequestGet({
   const requestUrl = new URL(request.url);
   const from = requestUrl.searchParams.get("from") ?? "";
   const to = requestUrl.searchParams.get("to") ?? "";
+  const requestedSlug = requestUrl.searchParams.get("slug")?.trim() ?? "";
   const fromDate = parseDate(from);
   const toDate = parseDate(to);
+
+  if (requestedSlug && !SLUG_PATTERN.test(requestedSlug)) {
+    return json({ error: 'El parámetro "slug" no es válido.' }, 400);
+  }
 
   if (!fromDate || !toDate || toDate < fromDate) {
     return json(
@@ -58,7 +64,8 @@ export async function onRequestGet({
   }
 
   const apiKey = env.CALNODE_API_KEY?.trim();
-  const eventTypeSlug = env.CALNODE_EVENT_TYPE_SLUG?.trim() || "test-SCI";
+  const eventTypeSlug =
+    requestedSlug || env.CALNODE_EVENT_TYPE_SLUG?.trim() || "test-SCI";
 
   if (!apiKey) {
     console.error("CALNODE_API_KEY is not configured");
