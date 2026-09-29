@@ -53,14 +53,21 @@
     "purchaseLink": "https://app.sotomayorconsulting.com/start"
   },
 
-  "planUpgrade":{
-    "title": "Design Plan - upgrade",
-    "description": "Strategic planning and LLC design, ideal for those who want to go step by step.",
-    "price" : "350",
+  "planUpgrade": {
+    "title": "LLC Planning and Design - Upgrade",
+    "description": "Plan your LLC before forming it - Comprehensive consulting. Not every LLC should be structured the same way.",
+    "price": "350",
     "cents": ".00",
     "billing": "USD",
-    "lista": [ "LLC planning and design" ],
+    "lista": [
+      "We determine which U.S. state is most suitable for forming your LLC based on your business activity, location, customers, costs, and obligations.",
+      "We analyze how your LLC should be taxed and which tax classification may be best suited to your structure and business model."
+    ],
     "button": "Get the Design Plan",
-    "link": "https://app.sotomayorconsulting.com/start"
+    "button2": "Learn more",
+    "link": "https://app.sotomayorconsulting.com/start",
+    "link2": "/en/plan_upgrade",
+    "popoverTitle": "LLC Planning and Design",
+    "popoverDescription": "Our LLC Planning and Design service is intended to help you properly define your structure before forming it. Before forming a company in the United States, there are legal, tax, administrative, and accounting decisions that can directly affect how it operates, its annual obligations, and the way you will be able to conduct business."
   }
 }

@@ -1,0 +1,256 @@
+---
+import BaseLayout from "@/layouts/MainLayout.astro";
+
+const designAreas = [
+  {
+    title: "1. State of formation",
+    description:
+      "We determine which U.S. state is most suitable for forming your LLC based on your business activity, location, customers, costs, and obligations.",
+  },
+  {
+    title: "2. Tax treatment",
+    description:
+      "We analyze how your LLC should be taxed and which tax classification may be best suited to your structure and business model.",
+  },
+  {
+    title: "3. Management structure",
+    description:
+      "We determine whether your LLC should operate under a Member-Managed or Manager-Managed model, depending on who will manage and represent the company.",
+  },
+  {
+    title: "4. Accounting method",
+    description:
+      "We review whether your records should be maintained on a Cash Basis or Accrual Basis, according to the characteristics of your operations.",
+  },
+  {
+    title: "5. Level of confidentiality",
+    description:
+      "We evaluate the level of privacy your structure may offer and what owner or manager information could be disclosed depending on the state and applicable obligations.",
+  },
+  {
+    title: "6. Business activity code",
+    description:
+      "We identify the code that best represents your business activity so it can be used correctly in the corresponding registrations and forms.",
+  },
+];
+
+const meetingTopics = [
+  "Business activity",
+  "Owners’ place of residence",
+  "Countries from which the company will operate",
+  "Type of customers",
+  "Estimated revenue",
+  "Payment methods",
+  "Banking operations",
+  "Members and managers",
+  "Business outlook",
+];
+
+const recommendations = [
+  "State of formation",
+  "Tax treatment",
+  "Management structure",
+  "Accounting method",
+  "Level of confidentiality",
+  "Business activity code",
+];
+---
+
+<BaseLayout>
+  <main
+    class="mx-auto mt-10 max-w-6xl px-4 py-12 text-slate-700 sm:px-6 lg:px-8 dark:text-slate-200"
+  >
+    <header class="mx-auto max-w-4xl text-center">
+      <p
+        class="text-secundario mb-3 text-sm font-semibold tracking-[0.18em] uppercase"
+      >
+        Strategic planning
+      </p>
+      <h1
+        class="text-primario-black text-3xl font-bold sm:text-5xl dark:text-white"
+      >
+        LLC Planning and Design
+      </h1>
+      <p class="mt-5 text-lg leading-8">
+        Design first. Form later. Define how your LLC will operate before
+        starting the formation process.
+      </p>
+    </header>
+
+    <section class="mt-14" aria-labelledby="design-areas">
+      <h2
+        id="design-areas"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        Six decisions we analyze with you
+      </h2>
+      <div class="mt-7 grid gap-5 md:grid-cols-2">
+        {
+          designAreas.map((area) => (
+            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+              <h3 class="text-primario-black text-lg font-semibold dark:text-white">
+                {area.title}
+              </h3>
+              <p class="mt-3 leading-7">{area.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      class="bg-primario-black mt-14 rounded-3xl p-7 text-white sm:p-10"
+      aria-labelledby="design-first"
+    >
+      <h2 id="design-first" class="text-2xl font-bold sm:text-3xl">
+        Do not form first and resolve questions later
+      </h2>
+      <p class="mt-4 text-lg text-slate-200">
+        Our approach starts with a simple idea: <strong class="text-white"
+          >first we design the structure, and then we form it.</strong
+        >
+      </p>
+      <p class="mt-7">During a virtual meeting, we analyze factors such as:</p>
+      <ul class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          meetingTopics.map((topic) => (
+            <li class="rounded-xl border border-white/15 bg-white/5 px-4 py-3">
+              {topic}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-7 leading-7 text-slate-200">
+        With this information, we can explain and advise you on how an LLC would
+        work specifically for your situation.
+      </p>
+    </section>
+
+    <section class="mt-14" aria-labelledby="deliverables">
+      <h2
+        id="deliverables"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        What do you receive?
+      </h2>
+      <p class="mt-4 leading-7">
+        At the end of the service, you will receive an <strong
+          >LLC Planning and Design Report</strong
+        >, which includes:
+      </p>
+      <div class="mt-7 space-y-5">
+        <article class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+          <h3 class="text-primario-black text-xl font-semibold dark:text-white">
+            1. Summary of your situation
+          </h3>
+          <p class="mt-3 leading-7">
+            We compile the main elements analyzed during the consultation so you
+            have a clear view of your structure and operating model.
+          </p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+          <h3 class="text-primario-black text-xl font-semibold dark:text-white">
+            2. Recommended design for your LLC
+          </h3>
+          <p class="mt-3 leading-7">
+            We present our recommendations regarding:
+          </p>
+          <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+            {
+              recommendations.map((recommendation) => (
+                <li class="flex gap-2">
+                  <>
+                    <span class="text-secundario" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{recommendation}</span>
+                  </>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="mt-4">
+            Everything is tailored to your business activity and particular
+            circumstances.
+          </p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+          <h3 class="text-primario-black text-xl font-semibold dark:text-white">
+            3. Your main tax obligations
+          </h3>
+          <p class="mt-3 leading-7">
+            We include an explanation of the main forms and obligations that may
+            apply to your LLC before the IRS.
+          </p>
+          <p class="mt-3 leading-7">
+            Not all LLCs file the same forms or have the same obligations. These
+            may vary depending on who the owners are, where they reside, how the
+            company is taxed, and what type of operations it conducts.
+          </p>
+          <p class="mt-3 leading-7">
+            Our goal is for you to understand these obligations before you begin
+            operating.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section
+      class="mt-14 border-y border-slate-200 py-10 dark:border-slate-700"
+      aria-labelledby="informed-decision"
+    >
+      <h2
+        id="informed-decision"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        Make your decision with clarity
+      </h2>
+      <p class="mt-4 leading-7">
+        Once you receive your report, you will have a much more complete
+        understanding of how your LLC would operate from the following
+        perspectives:
+      </p>
+      <p
+        class="text-primario-black mt-5 text-center text-lg font-semibold tracking-wide dark:text-white"
+      >
+        Legal · Tax · Corporate · Accounting · Banking · Operational
+      </p>
+      <p class="mt-5 leading-7">
+        This will help you decide with greater confidence whether an LLC is
+        appropriate for your business and how it should be formed.
+      </p>
+    </section>
+
+    <section
+      class="border-secundario/30 bg-secundario/10 mt-14 rounded-3xl border p-7 sm:p-10"
+      aria-labelledby="continue-formation"
+    >
+      <h2
+        id="continue-formation"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        Would you like to continue with the formation?
+      </h2>
+      <p class="mt-4 leading-7">
+        If you decide to move forward with us after the planning stage, you can
+        upgrade to any of our formation plans.
+      </p>
+      <p class="mt-3 leading-7">
+        The amount paid for Planning and Design is credited toward the process,
+        so you will only need to pay the difference for the plan you select.
+      </p>
+      <h3 class="text-primario-black mt-8 text-xl font-bold dark:text-white">
+        Design first. Form later.
+      </h3>
+      <p class="mt-3 leading-7">
+        Avoid creating an LLC without first understanding how it will be taxed,
+        what obligations it will have, or whether the selected structure truly
+        fits your business.
+      </p>
+      <p class="text-primario-black mt-5 text-lg font-semibold dark:text-white">
+        Schedule your LLC Planning and Design consultation and build your
+        structure with greater clarity from the start.
+      </p>
+    </section>
+  </main>
+</BaseLayout>

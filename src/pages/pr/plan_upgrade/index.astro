@@ -1,0 +1,257 @@
+---
+import BaseLayout from "@/layouts/MainLayout.astro";
+
+const designAreas = [
+  {
+    title: "1. Estado de constituição",
+    description:
+      "Determinamos em qual estado dos Estados Unidos é mais conveniente constituir sua LLC, de acordo com sua atividade, localização, clientes, custos e obrigações.",
+  },
+  {
+    title: "2. Tratamento tributário",
+    description:
+      "Analisamos como sua LLC deve ser tributada e qual classificação fiscal pode ser mais adequada à sua estrutura e ao seu modelo de negócio.",
+  },
+  {
+    title: "3. Sistema de administração",
+    description:
+      "Definimos se sua LLC deve operar sob um modelo Member-Managed ou Manager-Managed, dependendo de quem administrará e representará a empresa.",
+  },
+  {
+    title: "4. Método contábil",
+    description:
+      "Analisamos se seus registros devem ser mantidos sob o regime Cash Basis ou Accrual Basis, de acordo com as características da sua operação.",
+  },
+  {
+    title: "5. Nível de confidencialidade",
+    description:
+      "Avaliamos o nível de privacidade que sua estrutura pode oferecer e quais informações de proprietários ou administradores podem ficar expostas, dependendo do estado e das obrigações aplicáveis.",
+  },
+  {
+    title: "6. Código de atividade econômica",
+    description:
+      "Identificamos o código que melhor representa sua atividade para utilizá-lo corretamente nos registros e formulários correspondentes.",
+  },
+];
+
+const meetingTopics = [
+  "Atividade econômica",
+  "Residência dos proprietários",
+  "Países de onde a empresa operará",
+  "Tipo de clientes",
+  "Faturamento estimado",
+  "Meios de pagamento",
+  "Operações bancárias",
+  "Sócios e administradores",
+  "Projeção do seu negócio",
+];
+
+const recommendations = [
+  "Estado de constituição",
+  "Tratamento tributário",
+  "Estrutura administrativa",
+  "Método contábil",
+  "Nível de confidencialidade",
+  "Código de atividade",
+];
+---
+
+<BaseLayout>
+  <main
+    class="mx-auto mt-10 max-w-6xl px-4 py-12 text-slate-700 sm:px-6 lg:px-8 dark:text-slate-200"
+  >
+    <header class="mx-auto max-w-4xl text-center">
+      <p
+        class="text-secundario mb-3 text-sm font-semibold tracking-[0.18em] uppercase"
+      >
+        Planejamento estratégico
+      </p>
+      <h1
+        class="text-primario-black text-3xl font-bold sm:text-5xl dark:text-white"
+      >
+        Planejamento e Estruturação da LLC
+      </h1>
+      <p class="mt-5 text-lg leading-8">
+        Planeje primeiro. Constitua depois. Defina como sua LLC funcionará antes
+        de iniciar o processo de constituição.
+      </p>
+    </header>
+
+    <section class="mt-14" aria-labelledby="areas-planejamento">
+      <h2
+        id="areas-planejamento"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        Seis decisões que analisamos com você
+      </h2>
+      <div class="mt-7 grid gap-5 md:grid-cols-2">
+        {
+          designAreas.map((area) => (
+            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+              <h3 class="text-primario-black text-lg font-semibold dark:text-white">
+                {area.title}
+              </h3>
+              <p class="mt-3 leading-7">{area.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      class="bg-primario-black mt-14 rounded-3xl p-7 text-white sm:p-10"
+      aria-labelledby="planejar-primeiro"
+    >
+      <h2 id="planejar-primeiro" class="text-2xl font-bold sm:text-3xl">
+        Não constitua primeiro para só depois esclarecer suas dúvidas
+      </h2>
+      <p class="mt-4 text-lg text-slate-200">
+        Nossa abordagem parte de uma ideia simples: <strong class="text-white"
+          >primeiro planejamos a estrutura e depois a constituímos.</strong
+        >
+      </p>
+      <p class="mt-7">
+        Durante uma reunião virtual, analisamos com você aspectos como:
+      </p>
+      <ul class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          meetingTopics.map((topic) => (
+            <li class="rounded-xl border border-white/15 bg-white/5 px-4 py-3">
+              {topic}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-7 leading-7 text-slate-200">
+        Com essas informações, podemos explicar e orientar você sobre como uma
+        LLC funcionaria especificamente para o seu caso.
+      </p>
+    </section>
+
+    <section class="mt-14" aria-labelledby="entregaveis">
+      <h2
+        id="entregaveis"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        O que você recebe?
+      </h2>
+      <p class="mt-4 leading-7">
+        Ao final do serviço, você receberá um <strong
+          >Relatório de Planejamento e Estruturação da LLC</strong
+        >, que inclui:
+      </p>
+      <div class="mt-7 space-y-5">
+        <article class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+          <h3 class="text-primario-black text-xl font-semibold dark:text-white">
+            1. Resumo do seu caso
+          </h3>
+          <p class="mt-3 leading-7">
+            Reunimos os principais elementos analisados durante a consultoria
+            para que você tenha uma visão clara da sua estrutura e do seu modelo
+            de operação.
+          </p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+          <h3 class="text-primario-black text-xl font-semibold dark:text-white">
+            2. Estrutura recomendada para sua LLC
+          </h3>
+          <p class="mt-3 leading-7">Apresentamos nossas recomendações sobre:</p>
+          <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+            {
+              recommendations.map((recommendation) => (
+                <li class="flex gap-2">
+                  <>
+                    <span class="text-secundario" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{recommendation}</span>
+                  </>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="mt-4">
+            Tudo adaptado à sua atividade e às suas circunstâncias específicas.
+          </p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+          <h3 class="text-primario-black text-xl font-semibold dark:text-white">
+            3. Suas principais obrigações tributárias
+          </h3>
+          <p class="mt-3 leading-7">
+            Incluímos uma explicação dos principais formulários e obrigações que
+            podem se aplicar à sua LLC perante o IRS.
+          </p>
+          <p class="mt-3 leading-7">
+            Nem todas as LLCs apresentam os mesmos formulários ou possuem as
+            mesmas obrigações. Elas podem variar dependendo de quem são os
+            proprietários, onde residem, como a empresa é tributada e que tipo
+            de operações realiza.
+          </p>
+          <p class="mt-3 leading-7">
+            Nosso objetivo é que você conheça essas obrigações antes de começar
+            a operar.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section
+      class="mt-14 border-y border-slate-200 py-10 dark:border-slate-700"
+      aria-labelledby="decisao-clara"
+    >
+      <h2
+        id="decisao-clara"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        Tome sua decisão com clareza
+      </h2>
+      <p class="mt-4 leading-7">
+        Depois de receber seu relatório, você terá uma compreensão muito mais
+        completa de como sua LLC funcionaria sob os seguintes aspectos:
+      </p>
+      <p
+        class="text-primario-black mt-5 text-center text-lg font-semibold tracking-wide dark:text-white"
+      >
+        Jurídico · Tributário · Societário · Contábil · Bancário · Operacional
+      </p>
+      <p class="mt-5 leading-7">
+        Assim, você poderá decidir com mais segurança se uma LLC é adequada para
+        o seu negócio e sob quais características ela deve ser constituída.
+      </p>
+    </section>
+
+    <section
+      class="border-secundario/30 bg-secundario/10 mt-14 rounded-3xl border p-7 sm:p-10"
+      aria-labelledby="continuar-constituicao"
+    >
+      <h2
+        id="continuar-constituicao"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        Quer continuar com a constituição?
+      </h2>
+      <p class="mt-4 leading-7">
+        Se, após o planejamento, você decidir avançar conosco, poderá fazer um
+        upgrade para qualquer um dos nossos planos de constituição.
+      </p>
+      <p class="mt-3 leading-7">
+        O valor pago pelo Planejamento e Estruturação será creditado no
+        processo, portanto você precisará pagar apenas a diferença
+        correspondente ao plano escolhido.
+      </p>
+      <h3 class="text-primario-black mt-8 text-xl font-bold dark:text-white">
+        Planeje primeiro. Constitua depois.
+      </h3>
+      <p class="mt-3 leading-7">
+        Evite criar uma LLC sem saber previamente como ela será tributada, quais
+        obrigações terá ou se a estrutura escolhida realmente se adapta ao seu
+        negócio.
+      </p>
+      <p class="text-primario-black mt-5 text-lg font-semibold dark:text-white">
+        Agende seu Planejamento e Estruturação da LLC e construa sua estrutura
+        desde o início com mais clareza.
+      </p>
+    </section>
+  </main>
+</BaseLayout>

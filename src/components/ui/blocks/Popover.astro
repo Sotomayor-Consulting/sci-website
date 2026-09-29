@@ -1,0 +1,33 @@
+---
+import "@styles2/starwind.css";
+import { Button } from "@/components/starwind/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/starwind/popover"; 
+
+interface Props {
+    title: string;
+    description: string;
+}
+
+const { title, description } = Astro.props
+---
+
+<Popover openOnHover closeDelay={120}>
+  <PopoverTrigger asChild class="place-self-end">
+    <Button variant="outline" class="h-5 w-5 rounded-full p-0">?</Button>
+  </PopoverTrigger>
+  <PopoverContent class="w-100">
+    <PopoverHeader>
+      <PopoverTitle>{title}</PopoverTitle>
+      <PopoverDescription>
+        {description}
+      </PopoverDescription>
+    </PopoverHeader>
+  </PopoverContent>
+</Popover>

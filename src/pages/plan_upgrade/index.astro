@@ -1,0 +1,259 @@
+---
+import BaseLayout from "@/layouts/MainLayout.astro";
+
+const designAreas = [
+  {
+    title: "1. Estado de incorporación",
+    description:
+      "Determinamos en qué estado de Estados Unidos resulta más conveniente incorporar tu LLC según tu actividad, ubicación, clientes, costos y obligaciones.",
+  },
+  {
+    title: "2. Tratamiento tributario",
+    description:
+      "Analizamos cómo debería tributar tu LLC y qué clasificación fiscal puede ser más adecuada para tu estructura y modelo de negocio.",
+  },
+  {
+    title: "3. Sistema de administración",
+    description:
+      "Definimos si tu LLC debe operar bajo un modelo Member-Managed o Manager-Managed, dependiendo de quién administrará y representará a la compañía.",
+  },
+  {
+    title: "4. Método contable",
+    description:
+      "Revisamos si tus registros deberían manejarse bajo Cash Basis o Accrual Basis, de acuerdo con las características de tu operación.",
+  },
+  {
+    title: "5. Nivel de confidencialidad",
+    description:
+      "Evaluamos qué nivel de privacidad puede ofrecer tu estructura y qué información de propietarios o administradores podría quedar expuesta dependiendo del estado y de las obligaciones aplicables.",
+  },
+  {
+    title: "6. Código de actividad económica",
+    description:
+      "Identificamos el código que mejor representa tu actividad para utilizarlo correctamente en los registros y formularios correspondientes.",
+  },
+];
+
+const meetingTopics = [
+  "Actividad económica",
+  "Residencia de los propietarios",
+  "Países desde donde operará la compañía",
+  "Tipo de clientes",
+  "Facturación estimada",
+  "Medios de pago",
+  "Operaciones bancarias",
+  "Socios y administradores",
+  "Proyección de tu negocio",
+];
+
+const recommendations = [
+  "Estado de incorporación",
+  "Tratamiento tributario",
+  "Estructura administrativa",
+  "Método contable",
+  "Nivel de confidencialidad",
+  "Código de actividad",
+];
+---
+
+<BaseLayout>
+  <main
+    class="mx-auto mt-10 max-w-6xl px-4 py-12 text-slate-700 sm:px-6 lg:px-8 dark:text-slate-200"
+  >
+    <header class="mx-auto max-w-4xl text-center">
+      <p
+        class="text-secundario mb-3 text-sm font-semibold tracking-[0.18em] uppercase"
+      >
+        Planificación estratégica
+      </p>
+      <h1
+        class="text-primario-black text-3xl font-bold sm:text-5xl dark:text-white"
+      >
+        Planificación y Diseño de LLC
+      </h1>
+      <p class="mt-5 text-lg leading-8">
+        Diseña primero. Incorpora después. Define cómo funcionará tu LLC antes
+        de iniciar el proceso de incorporación.
+      </p>
+    </header>
+
+    <section class="mt-14" aria-labelledby="areas-diseno">
+      <h2
+        id="areas-diseno"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        Seis decisiones que analizamos contigo
+      </h2>
+      <div class="mt-7 grid gap-5 md:grid-cols-2">
+        {
+          designAreas.map((area) => (
+            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+              <h3 class="text-primario-black text-lg font-semibold dark:text-white">
+                {area.title}
+              </h3>
+              <p class="mt-3 leading-7">{area.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      class="bg-primario-black mt-14 rounded-3xl p-7 text-white sm:p-10"
+      aria-labelledby="disenar-primero"
+    >
+      <h2 id="disenar-primero" class="text-2xl font-bold sm:text-3xl">
+        No incorpores primero y luego resuelvas dudas
+      </h2>
+      <p class="mt-4 text-lg text-slate-200">
+        Nuestro enfoque parte de una idea sencilla: <strong class="text-white"
+          >primero diseñamos la estructura y después la incorporamos.</strong
+        >
+      </p>
+      <p class="mt-7">
+        Durante una reunión virtual analizamos contigo aspectos como:
+      </p>
+      <ul class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          meetingTopics.map((topic) => (
+            <li class="rounded-xl border border-white/15 bg-white/5 px-4 py-3">
+              {topic}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-7 leading-7 text-slate-200">
+        Con esta información podemos explicarte y asesorarte cómo funcionaría
+        una LLC aplicada específicamente a tu caso.
+      </p>
+    </section>
+
+    <section class="mt-14" aria-labelledby="entregables">
+      <h2
+        id="entregables"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        ¿Qué recibes?
+      </h2>
+      <p class="mt-4 leading-7">
+        Al finalizar el servicio, recibirás un <strong
+          >Informe de Planificación y Diseño de LLC</strong
+        >, que incluye:
+      </p>
+      <div class="mt-7 space-y-5">
+        <article class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+          <h3 class="text-primario-black text-xl font-semibold dark:text-white">
+            1. Resumen de tu caso
+          </h3>
+          <p class="mt-3 leading-7">
+            Recopilamos los principales elementos analizados durante la asesoría
+            para que tengas una visión clara de tu estructura y modelo de
+            operación.
+          </p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+          <h3 class="text-primario-black text-xl font-semibold dark:text-white">
+            2. Diseño recomendado para tu LLC
+          </h3>
+          <p class="mt-3 leading-7">
+            Te presentamos nuestras recomendaciones respecto de:
+          </p>
+          <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+            {
+              recommendations.map((recommendation) => (
+                <li class="flex gap-2">
+                  <>
+                    <span class="text-secundario" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{recommendation}</span>
+                  </>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="mt-4">
+            Todo adaptado a tu actividad y circunstancias particulares.
+          </p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+          <h3 class="text-primario-black text-xl font-semibold dark:text-white">
+            3. Tus principales obligaciones tributarias
+          </h3>
+          <p class="mt-3 leading-7">
+            Incluimos una explicación de los principales formularios y
+            obligaciones que podrían corresponder a tu LLC ante el IRS.
+          </p>
+          <p class="mt-3 leading-7">
+            No todas las LLC presentan los mismos formularios ni tienen las
+            mismas obligaciones. Estas pueden cambiar dependiendo de quiénes
+            sean los propietarios, dónde residan, cómo tribute la compañía y qué
+            tipo de operaciones realice.
+          </p>
+          <p class="mt-3 leading-7">
+            Nuestro objetivo es que puedas conocer estas obligaciones antes de
+            empezar a operar.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section
+      class="mt-14 border-y border-slate-200 py-10 dark:border-slate-700"
+      aria-labelledby="decision-clara"
+    >
+      <h2
+        id="decision-clara"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        Toma la decisión con claridad
+      </h2>
+      <p class="mt-4 leading-7">
+        Una vez recibido tu informe, tendrás una comprensión mucho más completa
+        de cómo funcionaría tu LLC desde el punto de vista:
+      </p>
+      <p
+        class="text-primario-black mt-5 text-center text-lg font-semibold tracking-wide dark:text-white"
+      >
+        Legal · Tributario · Societario · Contable · Bancario · Operativo
+      </p>
+      <p class="mt-5 leading-7">
+        Así podrás decidir con mayor seguridad si una LLC es adecuada para tu
+        negocio y bajo qué características debería incorporarse.
+      </p>
+    </section>
+
+    <section
+      class="border-secundario/30 bg-secundario/10 mt-14 rounded-3xl border p-7 sm:p-10"
+      aria-labelledby="continuar-incorporacion"
+    >
+      <h2
+        id="continuar-incorporacion"
+        class="text-primario-black text-2xl font-bold sm:text-3xl dark:text-white"
+      >
+        ¿Quieres continuar con la incorporación?
+      </h2>
+      <p class="mt-4 leading-7">
+        Si después de la planificación decides avanzar con nosotros, puedes
+        realizar un upgrade a cualquiera de nuestros planes de incorporación.
+      </p>
+      <p class="mt-3 leading-7">
+        El valor pagado por la Planificación y Diseño se reconoce dentro del
+        proceso, por lo que únicamente deberás completar la diferencia
+        correspondiente al plan que elijas.
+      </p>
+      <h3 class="text-primario-black mt-8 text-xl font-bold dark:text-white">
+        Diseña primero. Incorpora después.
+      </h3>
+      <p class="mt-3 leading-7">
+        Evita crear una LLC sin conocer previamente cómo tributará, qué
+        obligaciones tendrá o si la estructura seleccionada realmente se adapta
+        a tu negocio.
+      </p>
+      <p class="text-primario-black mt-5 text-lg font-semibold dark:text-white">
+        Agenda tu Planificación y Diseño de LLC y construye tu estructura desde
+        el inicio con mayor claridad.
+      </p>
+    </section>
+  </main>
+</BaseLayout>

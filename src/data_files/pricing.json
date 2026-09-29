@@ -32,15 +32,17 @@
     ],
     "purchaseBtnTitle": "Obtén el plan Business",
     "purchaseLink": "https://app.sotomayorconsulting.com/start",
-    "bussines" : [
-      "Planificación y diseño legal - tributario.", "Acompañamiento para solicitudes con Mercury o Relay y configuración de Stripe.", "Acompañamiento prioritario en la solicitud del EIN ante el IRS"
+    "bussines": [
+      "Planificación y diseño legal - tributario.",
+      "Acompañamiento para solicitudes con Mercury o Relay y configuración de Stripe.",
+      "Acompañamiento prioritario en la solicitud del EIN ante el IRS"
     ]
   },
 
-  "planestandar":{
-    "name": "Plan Estándar",
+  "planestandar": {
+    "name": "Plan Standard",
     "description": "Incluye soporte legal y documentos clave para operar.",
-    "label" : "Los beneficios del Plan Básico más:",
+    "label": "Los beneficios del Plan Básico más:",
     "price": "600",
     "cents": ".00",
     "billingFrequency": "USD",
@@ -53,14 +55,21 @@
     "purchaseLink": "https://app.sotomayorconsulting.com/start"
   },
 
-  "planUpgrade":{
-    "title": "Plan Diseño - upgrade",
-    "description": "Planificación estratégica y de diseño de la LLC, ideal para aquellos que quieren ir paso a paso.",
-    "price" : "350",
+  "planUpgrade": {
+    "title": "Planificación y Diseño de LLC - Upgrade",
+    "description": "Planifica tu LLC antes de incorporarla - Consultoría integral. No todas las LLC deben estructurarse de la misma manera.",
+    "price": "350",
     "cents": ".00",
     "billing": "USD",
-    "lista": [ "Planificación y diseño de LLC" ],
+    "lista": [
+      "Determinamos en qué estado de Estados Unidos resulta más conveniente incorporar tu LLC según tu actividad, ubicación, clientes, costos y obligaciones.",
+      "Analizamos cómo debería tributar tu LLC y qué clasificación fiscal puede ser más adecuada para tu estructura y modelo de negocio."
+    ],
     "button": "Obtén el plan Diseño",
-    "link": "https://app.sotomayorconsulting.com/start"
+    "button2": "Saber más",
+    "link": "https://app.sotomayorconsulting.com/start",
+    "link2": "/plan_upgrade",
+    "popoverTitle": "Planificación y Diseño de LLC",
+    "popoverDescription": "Nuestro servicio de Planificación y Diseño de LLC está pensado para ayudarte a definir correctamente tu estructura antes de constituirla. Antes de incorporar una compañía en Estados Unidos, existen decisiones legales, tributarias, administrativas y contables que pueden afectar directamente su funcionamiento, sus obligaciones anuales y la forma en que podrás operar."
   }
 }

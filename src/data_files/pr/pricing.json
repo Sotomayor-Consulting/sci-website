@@ -53,14 +53,21 @@
     "purchaseLink": "https://app.sotomayorconsulting.com/start"
   },
 
-  "planUpgrade":{
-    "title": "Plano Design - upgrade",
-    "description": "Planejamento estratégico e design da LLC, ideal para quem quer ir passo a passo.",
-    "price" : "350",
+  "planUpgrade": {
+    "title": "Planejamento e Estruturação da LLC - Upgrade",
+    "description": "Planeje sua LLC antes de constituí-la - Consultoria completa. Nem todas as LLCs devem ser estruturadas da mesma forma.",
+    "price": "350",
     "cents": ".00",
     "billing": "USD",
-    "lista": [ "Planejamento e design de LLC" ],
-    "button": "Obtenha o plano Design",
-    "link": "https://app.sotomayorconsulting.com/start"
+    "lista": [
+      "Determinamos em qual estado dos Estados Unidos é mais conveniente constituir sua LLC, de acordo com sua atividade, localização, clientes, custos e obrigações.",
+      "Analisamos como sua LLC deve ser tributada e qual classificação fiscal pode ser mais adequada à sua estrutura e ao seu modelo de negócio."
+    ],
+    "button": "Obtenha o plano de Estruturação",
+    "button2": "Saiba mais",
+    "link": "https://app.sotomayorconsulting.com/start",
+    "link2": "/pr/plan_upgrade",
+    "popoverTitle": "Planejamento e Estruturação da LLC",
+    "popoverDescription": "Nosso serviço de Planejamento e Estruturação da LLC foi desenvolvido para ajudar você a definir corretamente sua estrutura antes de constituí-la. Antes de constituir uma empresa nos Estados Unidos, existem decisões jurídicas, tributárias, administrativas e contábeis que podem afetar diretamente seu funcionamento, suas obrigações anuais e a forma como você poderá operar."
   }
 }
