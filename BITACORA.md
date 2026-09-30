@@ -375,6 +375,13 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
+### 2026-09-30 — TikTok: GTM como emisor único en agendar y cita
+
+- **Cambio**: se quita el píxel de TikTok escrito a mano en `/agendar-asesoria-llc/` y en `/schedule-confirmed-v2/`, y el `ttq.track("Schedule")` de la confirmación. La portada ya se limpió el mismo día.
+- **Por qué**: GTM (`GTM-TNRQGDM` v19) ya carga el píxel (`TT-…-Pixel_Setup`) y envía `CompleteRegistration` en `/schedule-confirmed-v2/` por píxel + Events API (sGTM `GTM-KJNRFZVS` v7) con el mismo `event_id`. El `Schedule` del código duplicaba cada cita con otro nombre y sin deduplicar; el píxel doble duplicaba PageView.
+- **Sin cambios**: el `dataLayer.push` de la confirmación, las landings de `diagnostico-llc*` y `/api/tiktok-capi` (siguen con su propio emisor, ver sección 3).
+- **Meta**: la auditoría del 2026-09-20 ya avisaba que el Meta Pixel `687519373002559` está bloqueado por "traffic permission settings" en este dominio. Se corrige en Events Manager (Configuración → Permisos de tráfico → permitir `sotomayorconsulting.com`), no en el repo.
+
 ## 5. Pendientes conocidos al cierre de esta bitácora (2026-09-16)
 
 - **`gracias-por-tu-registro` — auditoría del 2026-09-20 (14/20), sin corregir en el PR #76**: (P1) `--gold-ink #a9741f` da 4.03:1 sobre blanco y 3.65:1 sobre `#faf3e4` en texto pequeño (`.eyebrow`, `.pa-badge` de 10.9 px, `.fav` de 9.9 px); la barra fija móvil `.stickybar` lleva `aria-hidden="true"` pero contiene enlaces enfocables; la consola de producción avisa que el **Meta Pixel `687519373002559` no está disponible en este dominio por sus "traffic permission settings"** (se arregla en Events Manager, no en el repo); TikTok Pixel rechaza eventos con "Invalid Event Name Format" y "Missing content_id". (P2) 10 de 24 elementos interactivos miden menos de 44 px (enlaces "Leer ↗", footer, logo del footer); textos de 9.9–13 px; el foco `#2a5580` casi no se ve sobre fondos oscuros; jerarquía h1/h2 plana en el resto de la página; la página mide ~9600 px en móvil. (P3) tres mosaicos de icono sobre h3, cuatro etiquetas distintas del mismo CTA en el resto de la página, "gratis" repetido en la barra fija y en CTAs de otras secciones, y el logo del footer sigue siendo `Recurso-7.png` de WordPress. Además esta página usa Open Sans/Poppins y `#0e2438`, mientras `reserva-pendiente` usa Inter y `#0d2636`: decidir qué identidad manda en todo el embudo.
