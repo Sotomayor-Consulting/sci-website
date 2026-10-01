@@ -45,7 +45,6 @@
 -->
 
 <link rel="preconnect" href="https://www.googletagmanager.com" />
-<link rel="preconnect" href="https://analytics.tiktok.com" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
@@ -60,7 +59,6 @@
   window.SCI_TRACKING_CONFIG = {
     page_name: "agendar_asesoria_llc_calendar",
     page_category: "llc_booking_page",
-    tiktok_pixel_id: "D5KFDEBC77U6BL6T7LDG",
     gtm_id: "GTM-TNRQGDM"
   };
 </script>
@@ -79,32 +77,6 @@
   })(window,document,'script','dataLayer','GTM-TNRQGDM');
 </script>
 <!-- End Google Tag Manager -->
-
-<!-- TikTok Pixel Code -->
-<script>
-  !function (w, d, t) {
-    var qa = new URLSearchParams(w.location.search || "");
-    if (qa.get("qa") === "1" && qa.get("no_pixels") === "1") return;
-    if (!/(^|\.)sotomayorconsulting\.com$/i.test(w.location.hostname)) return; // guard: pixeles solo en produccion
-    w.TiktokAnalyticsObject=t;
-    var ttq=w[t]=w[t]||[];
-    ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
-    ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)));};};
-    for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
-    ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e;};
-    ttq.load=function(e,n){
-      var i="https://analytics.tiktok.com/i18n/pixel/events.js";
-      ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=i;
-      ttq._t=ttq._t||{};ttq._t[e]=+new Date;
-      ttq._o=ttq._o||{};ttq._o[e]=n||{};
-      var o=document.createElement("script");o.type="text/javascript";o.async=true;o.src=i+"?sdkid="+e+"&lib="+t;
-      var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a);
-    };
-    ttq.load('D5KFDEBC77U6BL6T7LDG');
-    ttq.page();
-  }(window, document, 'ttq');
-</script>
-<!-- End TikTok Pixel Code -->
 
 <style>
   :root{
