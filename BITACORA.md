@@ -3,7 +3,7 @@
 **Lectura obligatoria para cualquier agente (Claude u otro) que trabaje en este repo.**
 Antes de tocar código del embudo `diagnostico-llc` (landings, `functions/api/diagnostico-*`, Supabase, Odoo o n8n), leer completo este documento. Ignorarlo lleva a repetir bugs ya corregidos o a romper piezas que viven fuera de git (Supabase, Odoo, n8n) y que este documento es la única fuente que las describe.
 
-Última actualización: 2026-09-29.
+Última actualización: 2026-10-01.
 
 ---
 
@@ -273,7 +273,7 @@ Página nueva, solo-calendario: nav + ticker + iframe de Zcal + footer, sin hero
 - **Chrome superior**: `.top-chrome` es un único contenedor `sticky top:0` con el header (logo 40/34 px, igual que el resto del embudo — **si se reduce pierde peso frente al mensaje de al lado, ya pasó una vez**) y, debajo, un mensaje "kicker" dorado (no blanco: el blanco compite con el logo) "Elige la fecha y la hora de tu reunión". Bajo el header va un ticker: cinta de texto en loop CSS (dos copias idénticas, la 2ª `aria-hidden`, `translateX(-50%)` en 32 s) con la propuesta de valor en 6 frases separadas por flechas; se pausa al hover y se apaga con `prefers-reduced-motion` (oculta la copia duplicada para no dejar texto repetido y estático).
 - **Sin recorte del encabezado de Zcal** (a diferencia de `gracias-por-tu-registro`/`reserva-pendiente`, ver 3.6/3.7): en vez de `overflow:hidden` + margen negativo, esta página hace un **scroll de la página completa, una sola vez al cargar**, para que la cuadrícula de fechas quede debajo del chrome fijo. No oculta nada de forma permanente (el usuario siempre puede volver arriba), así que es más seguro que el crop, a costa de ser aproximado: el alto real del encabezado de Zcal (avatar, equipo, título, duración — solo aparece en la vista inicial del calendario, ver 3.6) varía un poco entre cargas y no se puede medir desde fuera (iframe de otro dominio). Mitigaciones: `estimate` usa las mismas medidas que 3.6/3.7 (305/273/300 px según ancho), el scroll espera 2 s tras el `load` del iframe (1,2 s fue insuficiente: a veces se calculaba antes de que Zcal terminara de dibujar) y hay un límite (`Math.min(delta, frameBox.height - 420)`) para que nunca aterrice pasado el calendario, en blanco. **Si Zcal cambia su diseño hay que volver a medir**, igual que en 3.6/3.7.
 - **Iframe sin crop**: el alto crece solo según el paso (`data-step`, mismo detector por `history.length` que 3.6/3.7): sin atributo 850 px, `times` 820 px, `form` 1080/1240 px (contenedor query ≥600 px). No hay rama especial de móvil/táctil porque, al no recortar, no hay nada que se pueda quedar tapado.
-- **Tracking**: mismo GTM (`GTM-TNRQGDM`) y TikTok Pixel (`D5KFDEBC77U6BL6T7LDG`, con el mismo guard de producción que el resto), `page_name: "agendar_asesoria_llc_calendar"`. `noindex,nofollow`.
+- **Tracking**: GTM (`GTM-TNRQGDM`) como único cargador de etiquetas, con `page_name: "agendar_asesoria_llc_calendar"`. `noindex,nofollow`.
 - **Pendiente de confirmar con el negocio**: el ticker incluye "Devolución del importe si no podemos prestar el servicio acordado" — es una promesa de reembolso, copy dado tal cual por el usuario; falta que alguien del equipo confirme que es exacta (ver 3.4 sobre revisiones de cumplimiento ya hechas en otras páginas).
 
 ---
@@ -308,6 +308,11 @@ El usuario pasó una pieza publicitaria (imagen) con el mensaje que quiere en el
 - `CalendarioB.astro` muestra 42 celdas `Skeleton` de Starwind durante la carga inicial y cada cambio de mes, conserva las dimensiones de la cuadrícula, marca el grid con `aria-busy` y bloquea temporalmente la navegación mensual mientras espera `/api/slots`.
 - Verificación sin crear citas reales: los handlers de disponibilidad y preguntas devolvieron datos reales de `test-SCI`; el handler de reserva se probó con `fetch` simulado, validando el guard de origen y el payload hacia Calnode. `pnpm astro check` terminó con 0 errores y `pnpm build` generó 156 páginas.
 - Actualización 2026-09-29: `CalendarioB.astro` acepta el prop opcional `slug` y lo envía a las tres Functions. La prioridad vigente es `slug` del componente → `CALNODE_EVENT_TYPE_SLUG` de Cloudflare → `test-SCI`; los slugs recibidos por HTTP se validan antes de consultar Calnode. Los usos existentes que no pasan el prop conservan el comportamiento anterior.
+
+### 3.15 Tracking de las páginas de agenda y confirmación (2026-10-01, PR #86)
+
+- Se retiró el píxel TikTok escrito directamente en `src/pages/agendar-asesoria-llc/index.html` y `src/pages/schedule-confirmed-v2/index.html`, incluido `ttq.track("Schedule")` y todo cargador de `analytics.tiktok.com` de esas dos rutas.
+- Se conserva `GTM-TNRQGDM` como único cargador de etiquetas. En `schedule-confirmed-v2` se mantienen sin cambios el bloqueo por `sessionStorage`, el `dataLayer.push({ event: "Schedule", ... })` y la limpieza de parámetros de reserva mediante `history.replaceState`.
 
 ---
 
