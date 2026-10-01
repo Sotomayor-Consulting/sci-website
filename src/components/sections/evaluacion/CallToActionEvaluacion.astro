@@ -6,6 +6,7 @@ interface Props {
 }
 const { title, button } = Astro.props;
 const UrlImagen = "https://sotomayorconsultingecuador.com/images/336shots_so.avif";
+import Imagen from "@images/336shots_so.avif";
 ---
 
 <!-- Hero -->
@@ -26,7 +27,7 @@ const UrlImagen = "https://sotomayorconsultingecuador.com/images/336shots_so.avi
     <div class="relative mx-auto mt-10 max-w-5xl">
       <div
         class="h-96 w-full rounded-xl bg-cover bg-center bg-no-repeat object-cover sm:h-120"
-        style={`background-image: url('${UrlImagen}');`}
+        style={`background-image: url('${Imagen.src}');`}
       >
       </div>
 
