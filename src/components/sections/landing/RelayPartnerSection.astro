@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import tarjetaRelayOne from "@images/tarjeta.png";
-import tarjetaRelayTwo from "@images/tarjeta2.png";
+import tarjetaRelayOne from "@images/tarjeta.avif";
+import tarjetaRelayTwo from "@images/tarjeta2.avif";
 import tarjetaRelayThree from "@images/tarjeta3.avif";
 
 const pathname = Astro.url.pathname;
@@ -163,6 +163,7 @@ const content = isEnglish
                     alt={`${card.label} Relay card`}
                     class="h-auto w-full object-cover"
                     loading="lazy"
+                    format="avif"
                   />
                 </div>
               ) : (
