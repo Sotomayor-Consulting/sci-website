@@ -3,7 +3,7 @@
 **Lectura obligatoria para cualquier agente (Claude u otro) que trabaje en este repo.**
 Antes de tocar código del embudo `diagnostico-llc` (landings, `functions/api/diagnostico-*`, Supabase, Odoo o n8n), leer completo este documento. Ignorarlo lleva a repetir bugs ya corregidos o a romper piezas que viven fuera de git (Supabase, Odoo, n8n) y que este documento es la única fuente que las describe.
 
-Última actualización: 2026-09-29.
+Última actualización: 2026-10-01.
 
 ---
 
@@ -308,6 +308,14 @@ El usuario pasó una pieza publicitaria (imagen) con el mensaje que quiere en el
 - `CalendarioB.astro` muestra 42 celdas `Skeleton` de Starwind durante la carga inicial y cada cambio de mes, conserva las dimensiones de la cuadrícula, marca el grid con `aria-busy` y bloquea temporalmente la navegación mensual mientras espera `/api/slots`.
 - Verificación sin crear citas reales: los handlers de disponibilidad y preguntas devolvieron datos reales de `test-SCI`; el handler de reserva se probó con `fetch` simulado, validando el guard de origen y el payload hacia Calnode. `pnpm astro check` terminó con 0 errores y `pnpm build` generó 156 páginas.
 - Actualización 2026-09-29: `CalendarioB.astro` acepta el prop opcional `slug` y lo envía a las tres Functions. La prioridad vigente es `slug` del componente → `CALNODE_EVENT_TYPE_SLUG` de Cloudflare → `test-SCI`; los slugs recibidos por HTTP se validan antes de consultar Calnode. Los usos existentes que no pasan el prop conservan el comportamiento anterior.
+
+### 3.15 Rendimiento de la portada (2026-10-01)
+
+- Se corrigieron los recursos que PageSpeed Insights identificaba como bloqueantes en `/`: Blinker dejó de importarse desde `global.css` y ahora su hoja de Google Fonts carga de forma no bloqueante desde `MainLayout.astro`, limitada a los pesos 400, 600 y 700.
+- El widget de Trustpilot del footer ya estaba comentado, por lo que se retiró su script global. La ayuda del plan Upgrade dejó de importar Starwind completo y usa un `details` nativo accesible; así la portada ya no referencia la hoja `starwind.*.css` de aproximadamente 29 KiB transferidos.
+- La imagen principal de `Hero_animation_v2.astro` ahora tiene `fetchpriority="high"` y `srcset` WebP de 640, 960, 1280 y 1920 px. En el build, las tres variantes menores pesan aproximadamente 29, 59 y 96 KiB frente al PNG fuente de 2,18 MB. Las dos miniaturas de laptop pasaron de carga eager a lazy.
+- Se añadió `public/_headers` con caché de un año e `immutable` exclusivamente para `/_astro/*`, cuyos nombres contienen hash. Los TTL de Facebook, Clarity, Cloudflare Insights, Trustpilot y el bundle CAPI de AWS son de terceros y no pueden corregirse desde este repositorio; deben reducirse/eliminarse desde GTM o desde la configuración del proveedor si siguen penalizando PageSpeed.
+- Verificación: `pnpm astro check` terminó con 0 errores y `pnpm build` generó 160 páginas. Persisten los hints y warnings preexistentes del repositorio (colecciones ausentes, rutas duplicadas y dos SVG incompatibles con `astro-icon`).
 
 ---
 

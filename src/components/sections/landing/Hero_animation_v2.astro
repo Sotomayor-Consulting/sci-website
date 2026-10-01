@@ -27,7 +27,11 @@ const {spam, title, description, Btnlabel} = Astro.props
         alt="Imagen de fondo del escritorio"
         class="h-full w-full rounded-2xl object-cover object-center"
         loading="eager"
+        fetchpriority="high"
         decoding="async"
+        widths={[640, 960, 1280, 1920]}
+        sizes="100vw"
+        format="webp"
       />
       <div
         class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(2,6,23,0.08)_44%,rgba(2,6,23,0.68)_100%)]"
@@ -92,7 +96,7 @@ const {spam, title, description, Btnlabel} = Astro.props
         alt="Laptop con la vista previa del sitio web"
         data-hero-laptop
         class="absolute top-[61%] left-[50.2%] hidden w-[clamp(5rem,7vw,7rem)] -translate-x-1/2 -translate-y-1/2 object-contain will-change-transform dark:block"
-        loading="eager"
+        loading="lazy"
         decoding="async"
       />
       <Image
@@ -100,7 +104,7 @@ const {spam, title, description, Btnlabel} = Astro.props
         alt="Laptop con la vista previa del sitio web"
         data-hero-laptop
         class="absolute top-[61%] left-[50.2%] block w-[clamp(5rem,7vw,7rem)] -translate-x-1/2 -translate-y-1/2 object-contain will-change-transform dark:hidden"
-        loading="eager"
+        loading="lazy"
         decoding="async"
       />
     </div>
