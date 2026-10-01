@@ -8,6 +8,7 @@ import "@styles/global.css";
 import BotonWhatsapp from "@components/ui/buttons/BtnWhatsapp.astro";
 import VideoBubble from "@components/ui/buttons/VideoBubble.astro";
 import Schemajson from "@components/sections/SEO/json-enriquesido.astro";
+import GoogleTagManager from "@components/ui/blocks/GoogleTagManager.astro";
 
 const pathname = Astro.url.pathname;
 const isEnglish = pathname.startsWith("/en");
@@ -80,20 +81,7 @@ interface Props {
         scroll-behavior: smooth;
       }
     </style>
-    <!-- Google Tag Manager -->
-    <script is:inline data-cfasync="false">
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-TNRQGDM");
-    </script>
-    <!-- End Google Tag Manager -->
+    <GoogleTagManager />
 
 
     

@@ -5,8 +5,6 @@ import compressor from "astro-compressor";
 import starlight from "@astrojs/starlight";
 import pagefind from "astro-pagefind";
 import mdx from "@astrojs/mdx";
-
-
 import icon from "astro-icon";
 
 // https://astro.build/config
