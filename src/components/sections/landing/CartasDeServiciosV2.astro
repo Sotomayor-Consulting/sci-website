@@ -5,11 +5,26 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import ImagenOdoo from "@images/odoo_imagen.avif";
 
-const datacardsEs = [
+import Edificios from "@images/Edificios-servicio.avif";
+import Bancos from "@images/Banco_servicios.avif";
+import Contabilidad from "@images/Finanzas_servisios.avif";
+import Itin from "@images/ITIN_servicios.avif";
+import Abogados from "@images/Abogados_servicios.avif";
+import Web from "@images/web_servicios.avif";
+
+type ServiceCard = {
+  titulo: string;
+  tituloIcon: string;
+  descripcion: string;
+  link: string;
+  icono: ImageMetadata;
+};
+
+const datacardsEs: ServiceCard[] = [
   {
     titulo: "Asesoría para tu empresa en EE. UU.",
     icono:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Edificios,
     tituloIcon: "Incorporación",
     descripcion: "LLC o Corporation, en el estado que te convenga",
     link: "/servicios/LLC",
@@ -17,7 +32,7 @@ const datacardsEs = [
   {
     titulo: "Banking & Cobros",
     icono:
-      "https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Bancos,
     tituloIcon: "Banking",
     descripcion: "Cuenta bancaria y pasarela de pagos",
     link: "/servicios/banking",
@@ -26,7 +41,7 @@ const datacardsEs = [
     titulo: "Contabilidad",
 
     icono:
-      "https://images.unsplash.com/photo-1738566061961-4e20e3bf470d?q=80&w=1700&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Contabilidad,
     tituloIcon: "Finanzas",
     descripcion: "Declaraciones y cumplimiento fiscal",
     link: "/servicios/contabilidad",
@@ -34,7 +49,7 @@ const datacardsEs = [
   {
     titulo: "Asesoría ITIN",
     icono:
-      "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Itin,
     tituloIcon: "Documentos",
     descripcion: "Acompañamiento en tu solicitud ante el IRS",
     link: "/servicios/itin",
@@ -42,7 +57,7 @@ const datacardsEs = [
   {
     titulo: "Servicios Legales",
     icono:
-      "https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Abogados,
     tituloIcon: "Legal",
     descripcion: "Operating Agreement y documentos corporativos",
     link: "/servicios/legales/",
@@ -50,14 +65,14 @@ const datacardsEs = [
   {
     titulo: "Desarrollo Web",
     icono:
-      "https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Web,
     tituloIcon: "Desarrollo",
     descripcion: "Sitios web y aplicaciones profesionales",
     link: "/servicios/paginas-web",
   },
   {
     titulo: "Odoo - Software empresarial",
-    icono: "odoo_logo_inverted",
+    icono: ImagenOdoo,
     tituloIcon: "Software",
     descripcion: "Gestiona todo tu negocio desde un solo software.",
     link: "/servicios/Odoo-Partners",
@@ -68,7 +83,7 @@ const datacardsEn = [
   {
     titulo: "Company Formation in the USA",
     icono:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Edificios,
     tituloIcon: "Incorporation",
     descripcion: "LLC or Corporation in any state",
     link: "/en/servicios/LLC",
@@ -76,7 +91,7 @@ const datacardsEn = [
   {
     titulo: "Banking & Payments",
     icono:
-      "https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Bancos,
     tituloIcon: "Banking",
     descripcion: "Bank account and payment gateway",
     link: "/en/servicios/banking",
@@ -84,7 +99,7 @@ const datacardsEn = [
   {
     titulo: "Accounting",
     icono:
-      "https://images.unsplash.com/photo-1738566061961-4e20e3bf470d?q=80&w=1700&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Contabilidad,
     tituloIcon: "Finance",
     descripcion: "Tax returns and compliance",
     link: "/en/servicios/contabilidad",
@@ -92,28 +107,28 @@ const datacardsEn = [
   {
     titulo: "ITIN Taxpayer",
     icono:
-      "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Itin,
     tituloIcon: "Documents",
     descripcion: "Tax identification number",
     link: "/en/servicios/itin",
   },
   {
     titulo: "Legal Services",
-    icono: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    icono: Abogados,
     tituloIcon: "Legal",
     descripcion: "Operating Agreement, EIN and more",
     link: "/en/servicios/legales/",
   },
   {
     titulo: "Web Development",
-    icono: "https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    icono: Web,
     tituloIcon: "Development",
     descripcion: "Professional websites and applications",
     link: "/en/servicios/paginas-web",
   },
   {
     titulo: "Odoo - Business Software",
-    icono: "odoo_logo_inverted",
+    icono: ImagenOdoo,
     tituloIcon: "Software",
     descripcion: "Manage your entire business from one software.",
     link: "/en/servicios/Odoo-Partners",
@@ -124,7 +139,7 @@ const datacardsPr = [
   {
     titulo: "Abertura de Empresa nos EUA",
     icono:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Edificios,
     tituloIcon: "Incorporação",
     descripcion: "LLC ou Corporation em qualquer estado",
     link: "/pr/servicios/LLC",
@@ -132,7 +147,7 @@ const datacardsPr = [
   {
     titulo: "Banking & Pagamentos",
     icono:
-      "https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Bancos,
     tituloIcon: "Banking",
     descripcion: "Conta bancária e gateway de pagamento",
     link: "/pr/servicios/banking",
@@ -140,7 +155,7 @@ const datacardsPr = [
   {
     titulo: "Contabilidade",
     icono:
-      "https://images.unsplash.com/photo-1738566061961-4e20e3bf470d?q=80&w=1700&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Contabilidad,
     tituloIcon: "Finanças",
     descripcion: "Declarações e conformidade fiscal",
     link: "/pr/servicios/contabilidad",
@@ -148,28 +163,28 @@ const datacardsPr = [
   {
     titulo: "ITIN (Identificação Fiscal)",
     icono:
-      "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      Itin,
     tituloIcon: "Documentos",
     descripcion: "Número de identificação fiscal",
     link: "/pr/servicios/itin",
   },
   {
     titulo: "Serviços Jurídicos",
-    icono: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    icono: Abogados,
     tituloIcon: "Jurídico",
     descripcion: "Operating Agreement, EIN e mais",
     link: "/pr/servicios/legales/",
   },
   {
     titulo: "Desenvolvimento Web",
-    icono: "https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    icono: Web,
     tituloIcon: "Desenvolvimento",
     descripcion: "Sites e aplicativos profissionais",
     link: "/pr/servicios/paginas-web",
   },
   {
     titulo: "Odoo - Software Empresarial",
-    icono: "odoo_logo_inverted",
+    icono: ImagenOdoo,
     tituloIcon: "Software",
     descripcion: "Gerencie todo o seu negócio a partir de um único software.",
     link: "/pr/servicios/Odoo-Partners",
@@ -237,11 +252,12 @@ const datacards = isEnglish
                     href={data.link}
                   >
                     <Image
-                      src={ImagenOdoo}
+                      src={data.icono}
                       alt="Imagen de ejemplo"
                       class="rounded-xl"
                       height={500}
                       width={1000}
+                      layout='constrained'
                     />
                     <div class="dark:text-white text-black group-hover:text-[#714B67] dark:group-hover:text-[#714B67] transition-all duration-300 h-20">
                       <h4 class="lg:text-3xl text-xl">{data.titulo}</h4>
@@ -265,11 +281,11 @@ const datacards = isEnglish
                   >
                     <Image
                       src={data.icono}
-                      alt="Imagen de ejemplo"
+                      alt={`Imagen de ${data.tituloIcon}`}
                       class="rounded-xl"
                       height={500}
                       width={1000}
-                      inferSize={true}
+                      layout='constrained'
                     />
                     <div class="dark:text-white text-black group-hover:text-secundario dark:group-hover:text-secundario transition-all duration-300 h-20">
                       <h4 class="lg:text-3xl text-xl">{data.titulo}</h4>
