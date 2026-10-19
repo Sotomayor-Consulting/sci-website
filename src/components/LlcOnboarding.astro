@@ -393,6 +393,40 @@ const faqs = [
       return url.toString();
     }
 
+    function trackScheduleSelection(currentSubmissionId: string) {
+      try {
+        const uuidPattern =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+        if (!uuidPattern.test(currentSubmissionId)) return;
+
+        const trackingWindow = window as Window & {
+          dataLayer?: Array<Record<string, unknown>>;
+          SCITikTokRUKarlaQueue?: Array<{
+            type: string;
+            id: string;
+          }>;
+        };
+
+        trackingWindow.dataLayer = trackingWindow.dataLayer || [];
+        trackingWindow.dataLayer.push({
+          event: "elegir_horario",
+          submission_id: currentSubmissionId,
+        });
+
+        trackingWindow.SCITikTokRUKarlaQueue =
+          trackingWindow.SCITikTokRUKarlaQueue || [];
+        trackingWindow.SCITikTokRUKarlaQueue.push({
+          type: "lead",
+          id: currentSubmissionId,
+        });
+
+        window.dispatchEvent(new CustomEvent("sci:tiktok:ru:karla:flush"));
+      } catch {
+        // Un fallo de medición no debe interrumpir el formulario.
+      }
+    }
+
     form
       .querySelectorAll<HTMLButtonElement>(".activity-button")
       .forEach((button) => {
@@ -472,6 +506,7 @@ const faqs = [
         } catch {
           // Storage is optional; the successful lead submission must continue.
         }
+        trackScheduleSelection(currentSubmissionId);
 
         const zcalUrl = buildZcalUrl(values);
         if (zcalFrame) zcalFrame.src = zcalUrl;
@@ -490,14 +525,6 @@ const faqs = [
 
     showStep(1);
   }
-</script>
-
-<script is:inline>
-  // Asegura que dataLayer exista antes de hacer el push
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: "lead_datos_completados",
-  });
 </script>
 
 <style>

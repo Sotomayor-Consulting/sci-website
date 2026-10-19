@@ -259,6 +259,28 @@ import "@/styles/starwind.css";
         /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
       if (submissionId && uuidPattern.test(submissionId)) {
+        try {
+          const trackingWindow = window as Window & {
+            SCITikTokRUKarlaQueue?: Array<{
+              type: string;
+              id: string;
+            }>;
+          };
+
+          trackingWindow.SCITikTokRUKarlaQueue =
+            trackingWindow.SCITikTokRUKarlaQueue || [];
+          trackingWindow.SCITikTokRUKarlaQueue.push({
+            type: "appointment",
+            id: submissionId,
+          });
+
+          window.dispatchEvent(
+            new CustomEvent("sci:tiktok:ru:karla:flush"),
+          );
+        } catch {
+          // Un fallo de medición no debe interrumpir la confirmación.
+        }
+
         fetch("/api/calendar-confirmation", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

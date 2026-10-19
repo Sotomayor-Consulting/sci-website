@@ -13,10 +13,5 @@ const gtmScriptUrl = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComp
   window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
   window.__SCI_GTM_MODE__ = "direct";
 </script>
-<script
-  is:inline
-  data-cfasync="false"
-  async
-  src={gtmScriptUrl}
-></script>
+<script is:inline data-cfasync="false" async src={gtmScriptUrl}></script>
 <!-- End Google Tag Manager -->
