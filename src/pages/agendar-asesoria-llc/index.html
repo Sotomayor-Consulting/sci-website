@@ -278,6 +278,14 @@
         calCrop.setAttribute('data-step', step);
       };
 
+      // Avances de historial hasta el formulario. Con el iframe ancho (medido 2026-10-23: 600 y 640 px) Zcal pone
+      // las horas al lado del calendario: elegir la fecha no suma historial y el primer avance ya es el formulario.
+      // Con 560 px o menos las horas son una vista aparte (fecha → horas → formulario = 2 avances). El corte real de
+      // Zcal está entre 561 y 599 px; si ahí todavía apila, el paso de horas solo queda más alto, sin ocultar nada.
+      var advancesToForm = function () {
+        return zcalFrameEl.getBoundingClientRect().width > 560 ? 1 : 2;
+      };
+
       var startZcalStepWatch = function () {
         if (stepWatchStarted) return;
         stepWatchStarted = true;
@@ -291,7 +299,7 @@
           if (hash !== lastHash) { lastHash = hash; lastLen = len; return; }
           if (len > lastLen) {
             advances += len - lastLen;
-            var done = advances >= 2 || len >= HISTORY_CAP;
+            var done = advances >= advancesToForm() || len >= HISTORY_CAP;
             setCalStep(done ? 'form' : 'times');
             if (done) window.clearInterval(stepTimer);
           }
