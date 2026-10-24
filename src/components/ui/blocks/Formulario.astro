@@ -29,13 +29,19 @@ import { Form } from "@/components/starwind/form";
 import { Textarea } from "@/components/starwind/textarea";
 import { Alert, AlertDescription } from "@/components/starwind/alert";
 import { Button } from "@/components/starwind/button";
+import CalendarioPaso from "@/components/ui/blocks/CalendarioPaso.astro";
 
 interface Props {
   activities: string[];
   adviceOptions: string[];
+  eventTypeSlug?: string;
 }
 
-const { activities, adviceOptions } = Astro.props as Props;
+const {
+  activities,
+  adviceOptions,
+  eventTypeSlug,
+} = Astro.props as Props;
 ---
 
 <Card
@@ -125,11 +131,13 @@ const { activities, adviceOptions } = Astro.props as Props;
         <div class="flex flex-col gap-2">
           <p class="text-sm font-medium text-white/75">
             ¿Qué duda principal quieres resolver en la asesoría?
+            <span class="text-white/50">*</span>
           </p>
           <Textarea
             id="question"
             name="question"
             rows={4}
+            required
             placeholder="Cuéntanos tu duda principal..."
             class="border-white/15 bg-white/7 text-white placeholder:text-white/35"
           />
@@ -139,7 +147,7 @@ const { activities, adviceOptions } = Astro.props as Props;
           id="form-error-1"
           variant="error"
           class="hidden py-3 text-red-100"
-          ><AlertDescription class="text-xs"
+          ><AlertDescription id="form-error-1-description" class="text-xs"
             >Revisa los campos indicados antes de continuar.</AlertDescription
           ></Alert
         >
@@ -274,17 +282,6 @@ const { activities, adviceOptions } = Astro.props as Props;
           </Field>
         </div>
 
-        <div class="absolute -left-[9999px]" aria-hidden="true">
-          <label for="website">Sitio web</label>
-          <input
-            id="website"
-            name="website"
-            type="text"
-            tabindex="-1"
-            autocomplete="off"
-          />
-        </div>
-
         <Alert
           id="form-error-2"
           variant="error"
@@ -337,7 +334,7 @@ const { activities, adviceOptions } = Astro.props as Props;
           tabindex="-1"
           class="font-display text-2xl font-semibold text-white outline-none"
         >
-          Elige tu horario
+          Elige el día y la hora
         </h2></CardTitle
       ><CardDescription
         id="calendar-greeting"
@@ -345,16 +342,23 @@ const { activities, adviceOptions } = Astro.props as Props;
         class="text-white/65"
       /></CardHeader
     >
-    <CardContent
-      ><div
-        class="bg-background -mx-10 mt-5 w-[calc(100%+5rem)] overflow-hidden rounded-b-xl"
+    <CardContent>
+      <div
+        class="bg-background text-foreground -mx-10 mt-5 w-[calc(100%+5rem)] overflow-hidden rounded-b-xl p-4 sm:p-6"
       >
-        <iframe
-          id="calendar-frame"
-          title="Calendario de reservas"
-          class="h-[540px] w-full border-0"></iframe>
-      </div></CardContent
-    >
+        <CalendarioPaso slug={eventTypeSlug} />
+      </div>
+      <div id="calendar-back-wrap" class="mt-4 flex justify-center">
+        <Button
+          id="calendar-back-btn"
+          type="button"
+          variant="ghost"
+          size="sm"
+          class="text-white/65 hover:bg-white/10 hover:text-white"
+          >Volver a mis datos</Button
+        >
+      </div>
+    </CardContent>
   </div>
 </Card>
 

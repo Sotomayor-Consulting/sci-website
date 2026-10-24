@@ -14,9 +14,15 @@ interface BookingAnswer {
 }
 
 interface BookingInput {
+  rawStartAt: string;
   startAt: Date;
   name: string;
   email: string;
+  attendeePhone?: string;
+  attendeePhoneCountry?: string;
+  timeZone?: string;
+  language?: string;
+  idempotencyKey?: string;
   answers: BookingAnswer[];
 }
 
@@ -25,6 +31,10 @@ const CALNODE_BOOKINGS_URL =
 const MAX_BODY_SIZE = 64 * 1024;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SLUG_PATTERN = /^[A-Za-z0-9_-]{1,100}$/;
+const PHONE_PATTERN = /^\+[1-9]\d{6,14}$/;
+const COUNTRY_PATTERN = /^[A-Z]{2}$/;
+const LANGUAGE_PATTERN = /^[a-z]{2}(?:-[A-Za-z]{2})?$/;
+const IDEMPOTENCY_PATTERN = /^[A-Za-z0-9:_.+-]{1,120}$/;
 
 function json(body: unknown, status = 200): Response {
   return Response.json(body, {
@@ -40,16 +50,16 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 function parseBooking(value: unknown): BookingInput | null {
   if (!isRecord(value)) return null;
 
-  const startAtValue =
+  const rawStartAt =
     typeof value.start_at === "string" ? value.start_at.trim() : "";
-  const startAt = new Date(startAtValue);
+  const startAt = new Date(rawStartAt);
   const name = typeof value.name === "string" ? value.name.trim() : "";
   const email =
     typeof value.email === "string" ? value.email.trim().toLowerCase() : "";
   const rawAnswers = value.answers ?? [];
 
   if (
-    !startAtValue ||
+    !rawStartAt ||
     Number.isNaN(startAt.getTime()) ||
     name.length < 2 ||
     name.length > 120 ||
@@ -58,6 +68,52 @@ function parseBooking(value: unknown): BookingInput | null {
     !Array.isArray(rawAnswers) ||
     rawAnswers.length > 100
   ) {
+    return null;
+  }
+
+  const attendeePhone =
+    typeof value.attendee_phone === "string"
+      ? value.attendee_phone.trim()
+      : "";
+  if (attendeePhone && !PHONE_PATTERN.test(attendeePhone)) {
+    return null;
+  }
+
+  const attendeePhoneCountry =
+    typeof value.attendee_phone_country === "string"
+      ? value.attendee_phone_country.trim().toUpperCase()
+      : "";
+  if (
+    attendeePhoneCountry &&
+    !COUNTRY_PATTERN.test(attendeePhoneCountry)
+  ) {
+    return null;
+  }
+
+  const timeZone =
+    typeof value.timezone === "string" ? value.timezone.trim() : "";
+  if (timeZone) {
+    if (timeZone.length > 64) return null;
+    try {
+      new Intl.DateTimeFormat("en-US", { timeZone });
+    } catch {
+      return null;
+    }
+  }
+
+  const language =
+    typeof value.language === "string" ? value.language.trim() : "";
+  if (language && !LANGUAGE_PATTERN.test(language)) {
+    return null;
+  }
+
+  const idempotencyKey =
+    typeof value.idempotencyKey === "string"
+      ? value.idempotencyKey.trim()
+      : typeof value.idempotency_key === "string"
+        ? value.idempotency_key.trim()
+        : "";
+  if (idempotencyKey && !IDEMPOTENCY_PATTERN.test(idempotencyKey)) {
     return null;
   }
 
@@ -74,7 +130,18 @@ function parseBooking(value: unknown): BookingInput | null {
     answers.push({ question_id: questionId, value: answerValue });
   }
 
-  return { startAt, name, email, answers };
+  return {
+    rawStartAt,
+    startAt,
+    name,
+    email,
+    attendeePhone: attendeePhone || undefined,
+    attendeePhoneCountry: attendeePhoneCountry || undefined,
+    timeZone: timeZone || undefined,
+    language: language || undefined,
+    idempotencyKey: idempotencyKey || undefined,
+    answers,
+  };
 }
 
 export async function onRequestPost({
@@ -148,18 +215,31 @@ export async function onRequestPost({
   }
 
   try {
+    const requestHeaders: Record<string, string> = {
+      Accept: "application/json",
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    };
+    if (booking.idempotencyKey) {
+      requestHeaders["Idempotency-Key"] = booking.idempotencyKey;
+    }
+
     const response = await fetch(CALNODE_BOOKINGS_URL, {
       method: "POST",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
+      headers: requestHeaders,
       body: JSON.stringify({
         event_type_slug: eventTypeSlug,
-        start_at: booking.startAt.toISOString(),
+        start_at: booking.rawStartAt,
         name: booking.name,
         email: booking.email,
+        ...(booking.attendeePhone
+          ? { attendee_phone: booking.attendeePhone }
+          : {}),
+        ...(booking.attendeePhoneCountry
+          ? { attendee_phone_country: booking.attendeePhoneCountry }
+          : {}),
+        ...(booking.timeZone ? { timezone: booking.timeZone } : {}),
+        ...(booking.language ? { language: booking.language } : {}),
         answers: booking.answers,
       }),
       signal: AbortSignal.timeout(10_000),

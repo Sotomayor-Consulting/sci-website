@@ -1,0 +1,887 @@
+---
+import IconArrowRight from "@tabler/icons/outline/arrow-right.svg";
+import IconCheck from "@tabler/icons/outline/check.svg";
+import IconChevronLeft from "@tabler/icons/outline/chevron-left.svg";
+import IconChevronRight from "@tabler/icons/outline/chevron-right.svg";
+import IconWorld from "@tabler/icons/outline/world.svg";
+import type { HTMLAttributes } from "astro/types";
+
+import { Button } from "@/components/starwind/button";
+import { Skeleton } from "@/components/starwind/skeleton";
+
+interface Props extends HTMLAttributes<"div"> {
+  slug?: string;
+}
+
+const { slug, class: className, ...rest } = Astro.props;
+---
+
+<div
+  data-calendar-paso
+  data-event-type-slug={slug?.trim() || undefined}
+  class:list={[
+    "flex w-full flex-col gap-4 text-foreground",
+    className,
+  ]}
+  aria-label="Selector de fecha y hora"
+  {...rest}
+>
+  <div data-calendar-main class="flex flex-col gap-4">
+    <section
+      class="rounded-xl border border-border bg-card p-4 sm:p-5"
+      aria-label="Selector de fecha"
+    >
+      <div class="mb-4 flex items-center gap-2">
+        <h3
+          data-month-label
+          class="min-w-0 flex-1 text-[0.9375rem] font-semibold text-foreground"
+          aria-live="polite"
+        >
+        </h3>
+        <Button
+          data-previous-month
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          class="size-8 rounded-md"
+          aria-label="Mostrar mes anterior"
+          disabled
+        >
+          <IconChevronLeft class="size-3" />
+        </Button>
+        <Button
+          data-next-month
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          class="size-8 rounded-md"
+          aria-label="Mostrar mes siguiente"
+          disabled
+        >
+          <IconChevronRight class="size-3" />
+        </Button>
+      </div>
+
+      <div
+        class="grid grid-cols-7 gap-1 text-center text-[0.6875rem] font-medium text-muted-foreground"
+        aria-hidden="true"
+      >
+        {
+          ["lu", "ma", "mi", "ju", "vi", "sá", "do"].map((day) => (
+            <span class="flex h-7 items-center justify-center">{day}</span>
+          ))
+        }
+      </div>
+      <div
+        data-calendar-grid
+        class="grid grid-cols-7 gap-1"
+        role="group"
+        aria-busy="true"
+      >
+        {
+          Array.from({ length: 42 }, (_, index) => (
+            <Skeleton
+              class="aspect-square w-full rounded-lg"
+              aria-hidden="true"
+              data-calendar-skeleton={index}
+            />
+          ))
+        }
+      </div>
+
+      <p class="mt-3 flex items-center gap-1.5 text-[0.6875rem] text-muted-foreground">
+        <IconWorld class="size-3" />
+        <span>Zona horaria:</span>
+        <strong data-timezone class="truncate font-medium">Hora local</strong>
+      </p>
+      <p
+        data-degraded-note
+        class="mt-2 hidden text-[0.6875rem] leading-relaxed text-amber-700"
+        role="status"
+      >
+        La disponibilidad puede no estar actualizada. Confirmaremos tu horario al
+        reservar.
+      </p>
+    </section>
+
+    <section
+      class="rounded-xl border border-border bg-card p-4 sm:p-5"
+      aria-label="Horarios disponibles"
+    >
+      <p data-slots-date class="text-sm font-semibold text-foreground">
+        Selecciona un día
+      </p>
+      <p class="mt-1 text-xs text-muted-foreground">
+        Elige el horario que mejor te convenga.
+      </p>
+      <div
+        data-slots-list
+        class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3"
+      >
+        {
+          Array.from({ length: 6 }, () => (
+            <Skeleton class="h-10 w-full rounded-lg" aria-hidden="true" />
+          ))
+        }
+      </div>
+      <p
+        data-calendar-status
+        class="mt-3 min-h-5 text-xs text-muted-foreground"
+        role="status"
+        aria-live="polite"
+      >
+      </p>
+      <Button
+        data-retry
+        type="button"
+        variant="outline"
+        size="sm"
+        class="hidden w-fit"
+      >
+        Reintentar
+      </Button>
+    </section>
+  </div>
+
+  <div
+    data-selection-summary
+    class="flex flex-col gap-3 rounded-xl border border-border bg-muted/60 p-4 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <div class="min-w-0">
+      <p class="text-[0.6875rem] font-semibold tracking-wide text-muted-foreground uppercase">
+        Tu cita
+      </p>
+      <p
+        data-selection-date
+        class="mt-0.5 text-sm font-semibold text-foreground"
+      >
+        Selecciona un día y una hora
+      </p>
+      <p data-selection-time class="mt-0.5 text-xs text-muted-foreground">
+        Aún no has elegido un horario.
+      </p>
+    </div>
+    <Button
+      data-confirm
+      type="button"
+      variant="default"
+      size="sm"
+      class="w-full rounded-lg py-5 sm:w-auto"
+      disabled
+    >
+      <span data-confirm-label>Confirmar reserva</span>
+      <IconArrowRight class="size-3.5" />
+    </Button>
+  </div>
+
+  <div
+    data-calendar-success
+    class="hidden flex-col items-start rounded-xl border border-green-200 bg-green-50 p-5 text-left outline-none"
+    role="status"
+    tabindex="-1"
+  >
+    <div
+      class="flex size-10 items-center justify-center rounded-full bg-green-100 text-green-700"
+    >
+      <IconCheck class="size-5" />
+    </div>
+    <h3 class="mt-3 text-base font-bold text-foreground">Reserva confirmada</h3>
+    <p data-success-date class="mt-2 text-sm font-semibold text-foreground"></p>
+    <p data-success-time class="mt-1 text-xs text-muted-foreground"></p>
+    <p class="mt-3 text-xs leading-relaxed text-muted-foreground">
+      Te hemos enviado un correo de confirmación.
+    </p>
+    <a
+      data-success-meeting
+      class="mt-3 hidden text-sm font-semibold text-foreground underline underline-offset-4"
+      href="#"
+      target="_blank"
+      rel="noopener"
+    >
+      Entrar a la reunión
+    </a>
+  </div>
+</div>
+
+<script>
+  type JsonRecord = Record<string, unknown>;
+  type CalendarSlot = {
+    startAt: string;
+    endAt?: string;
+    date: Date;
+    durationMinutes: number;
+  };
+  type EventTypeConfig = {
+    durationMinutes: number;
+    maxFutureDays: number;
+    requireAttendeePhone: boolean;
+  };
+  type ConfirmDetail = {
+    startAt: string;
+    endAt?: string;
+    dateLabel?: string;
+    timeLabel?: string;
+    durationMinutes?: number;
+  };
+
+  const isRecord = (value: unknown): value is JsonRecord =>
+    typeof value === "object" && value !== null && !Array.isArray(value);
+
+  const getTimeZone = () => {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    } catch {
+      return "UTC";
+    }
+  };
+
+  const findMeetingUrl = (value: unknown, depth = 0): string | null => {
+    if (depth > 6 || !isRecord(value)) return null;
+
+    for (const [key, nested] of Object.entries(value)) {
+      if (
+        typeof nested === "string" &&
+        /^https?:\/\//i.test(nested) &&
+        /meeting|join|zoom|meet|location|video/i.test(key)
+      ) {
+        return nested;
+      }
+    }
+
+    for (const nested of Object.values(value)) {
+      const found = findMeetingUrl(nested, depth + 1);
+      if (found) return found;
+    }
+
+    return null;
+  };
+
+  document
+    .querySelectorAll<HTMLElement>("[data-calendar-paso]")
+    .forEach((root) => {
+      const eventTypeSlug = root.dataset.eventTypeSlug?.trim() ?? "";
+      const timeZone = getTimeZone();
+      const dateKeyFormatter = new Intl.DateTimeFormat("en-US", {
+        timeZone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+      const monthFormatter = new Intl.DateTimeFormat("es", {
+        month: "long",
+        year: "numeric",
+        timeZone,
+      });
+      const dateFormatter = new Intl.DateTimeFormat("es", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        timeZone,
+      });
+      const timeFormatter = new Intl.DateTimeFormat("es", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone,
+      });
+
+      const capitalizeFirst = (value: string) =>
+        value.charAt(0).toUpperCase() + value.slice(1);
+
+      const formatDateKey = (date: Date) => {
+        const parts = dateKeyFormatter.formatToParts(date);
+        const value = (type: string) =>
+          parts.find((part) => part.type === type)?.value ?? "";
+        return `${value("year")}-${value("month")}-${value("day")}`;
+      };
+
+      const parseDateKey = (key: string) => {
+        const [year, month, day] = key.split("-").map(Number);
+        return new Date(year, month - 1, day, 12, 0, 0, 0);
+      };
+
+      const get = <T extends Element>(selector: string) =>
+        root.querySelector<T>(selector);
+
+      const monthLabel = get<HTMLElement>("[data-month-label]");
+      const calendarGrid = get<HTMLElement>("[data-calendar-grid]");
+      const previousButton = get<HTMLButtonElement>("[data-previous-month]");
+      const nextButton = get<HTMLButtonElement>("[data-next-month]");
+      const timezone = get<HTMLElement>("[data-timezone]");
+      const degradedNote = get<HTMLElement>("[data-degraded-note]");
+      const slotsDate = get<HTMLElement>("[data-slots-date]");
+      const slotsList = get<HTMLElement>("[data-slots-list]");
+      const calendarStatus = get<HTMLElement>("[data-calendar-status]");
+      const retryButton = get<HTMLButtonElement>("[data-retry]");
+      const selectionSummary = get<HTMLElement>("[data-selection-summary]");
+      const selectionDate = get<HTMLElement>("[data-selection-date]");
+      const selectionTime = get<HTMLElement>("[data-selection-time]");
+      const confirmButton = get<HTMLButtonElement>("[data-confirm]");
+      const confirmLabel = get<HTMLElement>("[data-confirm-label]");
+      const successView = get<HTMLElement>("[data-calendar-success]");
+      const successDate = get<HTMLElement>("[data-success-date]");
+      const successTime = get<HTMLElement>("[data-success-time]");
+      const successMeeting = get<HTMLAnchorElement>("[data-success-meeting]");
+      const calendarMain = get<HTMLElement>("[data-calendar-main]");
+
+      if (
+        !monthLabel ||
+        !calendarGrid ||
+        !previousButton ||
+        !nextButton ||
+        !timezone ||
+        !degradedNote ||
+        !slotsDate ||
+        !slotsList ||
+        !calendarStatus ||
+        !retryButton ||
+        !selectionSummary ||
+        !selectionDate ||
+        !selectionTime ||
+        !confirmButton ||
+        !confirmLabel ||
+        !successView ||
+        !successDate ||
+        !successTime ||
+        !successMeeting ||
+        !calendarMain
+      )
+        return;
+
+      const calendarSkeletonNodes = Array.from(calendarGrid.children).map(
+        (node) => node.cloneNode(true),
+      );
+      const slotSkeletonNodes = Array.from(slotsList.children).map((node) =>
+        node.cloneNode(true),
+      );
+
+      const today = new Date();
+      const todayKey = formatDateKey(today);
+      let visibleMonth = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        1,
+        12,
+      );
+      let selectedDateKey: string | null = null;
+      let selectedSlot: CalendarSlot | null = null;
+      let slotsByDate = new Map<string, CalendarSlot[]>();
+      let eventType: EventTypeConfig | null = null;
+      let eventTypeLoaded = false;
+      let loading = false;
+      let busy = false;
+      let activated = false;
+      let activeRequest = 0;
+
+      timezone.textContent = timeZone.replaceAll("_", " ");
+      monthLabel.textContent = capitalizeFirst(
+        monthFormatter.format(visibleMonth),
+      );
+
+      const setBusy = (value: boolean) => {
+        busy = value;
+        confirmLabel.textContent = value
+          ? "Confirmando..."
+          : "Confirmar reserva";
+        confirmButton.setAttribute("aria-busy", String(value));
+        updateSummary();
+      };
+
+      const setButtonDisabled = (
+        button: HTMLButtonElement,
+        disabled: boolean,
+      ) => {
+        button.disabled = disabled;
+        button.toggleAttribute("data-disabled", disabled);
+      };
+
+      const formatSlotRange = (slot: CalendarSlot) => {
+        const start = timeFormatter.format(slot.date);
+        const end = slot.endAt
+          ? timeFormatter.format(new Date(slot.endAt))
+          : "";
+        const duration =
+          slot.durationMinutes || eventType?.durationMinutes || 0;
+        return [
+          end ? `${start} – ${end}` : start,
+          duration > 0 ? `${duration} minutos` : "",
+        ]
+          .filter(Boolean)
+          .join(" · ");
+      };
+
+      const updateSummary = () => {
+        if (selectedSlot && selectedDateKey) {
+          selectionDate.textContent = dateFormatter.format(
+            parseDateKey(selectedDateKey),
+          );
+          selectionTime.textContent = formatSlotRange(selectedSlot);
+        } else {
+          selectionDate.textContent = "Selecciona un día y una hora";
+          selectionTime.textContent = "Aún no has elegido un horario.";
+        }
+
+        setButtonDisabled(
+          confirmButton,
+          !selectedSlot || loading || busy,
+        );
+      };
+
+      const renderCalendarSkeleton = () => {
+        calendarGrid.setAttribute("aria-busy", "true");
+        calendarGrid.replaceChildren(
+          ...calendarSkeletonNodes.map((node) => node.cloneNode(true)),
+        );
+      };
+
+      const renderSlotsSkeleton = () => {
+        slotsList.replaceChildren(
+          ...slotSkeletonNodes.map((node) => node.cloneNode(true)),
+        );
+      };
+
+      const renderSlots = () => {
+        slotsList.replaceChildren();
+
+        if (!selectedDateKey) {
+          slotsDate.textContent = "Selecciona un día";
+          calendarStatus.textContent =
+            "Elige un día disponible en el calendario para ver los horarios.";
+          updateSummary();
+          return;
+        }
+
+        const slots = slotsByDate.get(selectedDateKey) ?? [];
+        slotsDate.textContent = dateFormatter.format(
+          parseDateKey(selectedDateKey),
+        );
+
+        if (slots.length === 0) {
+          calendarStatus.textContent =
+            "Ya no quedan horarios disponibles para este día.";
+          updateSummary();
+          return;
+        }
+
+        calendarStatus.textContent = "";
+        slots.forEach((slot) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          const selected = selectedSlot?.startAt === slot.startAt;
+          button.textContent = timeFormatter.format(slot.date);
+          button.setAttribute("aria-pressed", String(selected));
+          button.className = [
+            "w-full rounded-lg border-[1.5px] px-3 py-2.5 text-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-outline/50",
+            selected
+              ? "border-foreground bg-foreground text-background"
+              : "border-border bg-background text-foreground hover:border-foreground hover:bg-muted",
+          ].join(" ");
+          button.addEventListener("click", () => {
+            selectedSlot = slot;
+            renderSlots();
+            updateSummary();
+          });
+          slotsList.append(button);
+        });
+
+        updateSummary();
+      };
+
+      const renderCalendar = () => {
+        monthLabel.textContent = capitalizeFirst(
+          monthFormatter.format(visibleMonth),
+        );
+        calendarGrid.replaceChildren();
+        calendarGrid.setAttribute("aria-busy", "false");
+
+        const currentMonth = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          1,
+          12,
+        );
+        setButtonDisabled(
+          previousButton,
+          loading || visibleMonth.getTime() <= currentMonth.getTime(),
+        );
+
+        const maxFutureDays = eventType?.maxFutureDays ?? 60;
+        const maxDate = new Date(today);
+        maxDate.setDate(maxDate.getDate() + maxFutureDays);
+        const nextMonth = new Date(visibleMonth);
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        setButtonDisabled(nextButton, loading || nextMonth > maxDate);
+
+        const year = visibleMonth.getFullYear();
+        const month = visibleMonth.getMonth();
+        const firstWeekday = new Date(year, month, 1).getDay();
+        const leadingDays = firstWeekday === 0 ? 6 : firstWeekday - 1;
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const totalCells = 42;
+
+        for (let index = 0; index < leadingDays; index += 1) {
+          const spacer = document.createElement("span");
+          spacer.className = "aspect-square w-full";
+          spacer.setAttribute("aria-hidden", "true");
+          calendarGrid.append(spacer);
+        }
+
+        for (let day = 1; day <= daysInMonth; day += 1) {
+          const date = new Date(year, month, day, 12);
+          const key = formatDateKey(date);
+          const available =
+            key >= todayKey &&
+            (slotsByDate.get(key)?.length ?? 0) > 0;
+          const selected = key === selectedDateKey;
+          const isToday = key === todayKey;
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = String(day);
+          button.disabled = !available;
+          button.setAttribute("aria-label", dateFormatter.format(date));
+          button.setAttribute("aria-pressed", String(selected));
+          if (isToday) button.setAttribute("aria-current", "date");
+          button.className = [
+            "relative flex aspect-square w-full items-center justify-center rounded-lg border-0 text-sm transition-colors",
+            selected
+              ? "bg-foreground font-semibold text-background"
+              : available
+                ? "bg-muted text-foreground hover:bg-border"
+                : "cursor-default bg-transparent text-muted-foreground/35",
+          ].join(" ");
+
+          if (isToday) {
+            const dot = document.createElement("span");
+            dot.className = [
+              "absolute bottom-1 size-1 rounded-full",
+              selected ? "bg-background" : "bg-current",
+            ].join(" ");
+            button.append(dot);
+          }
+
+          if (available) {
+            button.addEventListener("click", () => {
+              selectedDateKey = key;
+              selectedSlot = null;
+              renderCalendar();
+              renderSlots();
+            });
+          }
+
+          calendarGrid.append(button);
+        }
+
+        const trailingDays =
+          totalCells - leadingDays - daysInMonth;
+        for (let index = 0; index < trailingDays; index += 1) {
+          const spacer = document.createElement("span");
+          spacer.className = "aspect-square w-full";
+          spacer.setAttribute("aria-hidden", "true");
+          calendarGrid.append(spacer);
+        }
+      };
+
+      const normalizeSlots = (payload: unknown): CalendarSlot[] => {
+        const rawSlots =
+          isRecord(payload) && Array.isArray(payload.slots)
+            ? payload.slots
+            : isRecord(payload) &&
+                isRecord(payload.data) &&
+                Array.isArray(payload.data.slots)
+              ? payload.data.slots
+              : [];
+        const slots: CalendarSlot[] = [];
+        const seen = new Set<string>();
+
+        rawSlots.forEach((raw) => {
+          if (!isRecord(raw)) return;
+          const start =
+            typeof raw.start === "string"
+              ? raw.start
+              : typeof raw.start_at === "string"
+                ? raw.start_at
+                : "";
+          if (!start || seen.has(start)) return;
+          const date = new Date(start);
+          if (Number.isNaN(date.getTime())) return;
+          const end =
+            typeof raw.end === "string"
+              ? raw.end
+              : typeof raw.end_at === "string"
+                ? raw.end_at
+                : "";
+          const endDate = end ? new Date(end) : null;
+          const durationMinutes =
+            endDate && !Number.isNaN(endDate.getTime())
+              ? Math.max(
+                  1,
+                  Math.round(
+                    (endDate.getTime() - date.getTime()) / 60_000,
+                  ),
+                )
+              : 0;
+          seen.add(start);
+          slots.push({
+            startAt: start,
+            endAt: end || undefined,
+            date,
+            durationMinutes,
+          });
+        });
+
+        return slots.sort(
+          (a, b) => a.date.getTime() - b.date.getTime(),
+        );
+      };
+
+      const loadEventType = async () => {
+        if (eventTypeLoaded) return;
+
+        try {
+          const params = new URLSearchParams({ lang: "es" });
+          if (eventTypeSlug) params.set("slug", eventTypeSlug);
+          const response = await fetch(`/api/event-type?${params}`, {
+            headers: { Accept: "application/json" },
+          });
+          if (!response.ok) return;
+          const payload: unknown = await response.json().catch(() => null);
+          if (!isRecord(payload)) return;
+
+          eventType = {
+            durationMinutes:
+              typeof payload.duration_minutes === "number"
+                ? payload.duration_minutes
+                : 0,
+            maxFutureDays:
+              typeof payload.max_future_days === "number"
+                ? payload.max_future_days
+                : 60,
+            requireAttendeePhone:
+              payload.require_attendee_phone === true,
+          };
+          eventTypeLoaded = true;
+          if (!loading) renderCalendar();
+          updateSummary();
+        } catch {
+          // La configuración del Event Type es opcional para pintar la agenda.
+        }
+      };
+
+      const loadMonth = async () => {
+        const requestId = ++activeRequest;
+        const year = visibleMonth.getFullYear();
+        const month = visibleMonth.getMonth();
+        const from = formatDateKey(new Date(year, month, 1, 12));
+        const to = formatDateKey(new Date(year, month + 1, 0, 12));
+
+        loading = true;
+        selectedDateKey = null;
+        selectedSlot = null;
+        slotsByDate = new Map();
+        calendarStatus.textContent = "";
+        retryButton.classList.add("hidden");
+        degradedNote.classList.add("hidden");
+        slotsDate.textContent = "Consultando disponibilidad...";
+        renderSlotsSkeleton();
+        renderCalendarSkeleton();
+        setButtonDisabled(previousButton, true);
+        setButtonDisabled(nextButton, true);
+        updateSummary();
+
+        const params = new URLSearchParams({ from, to, tz: timeZone });
+        if (eventTypeSlug) params.set("slug", eventTypeSlug);
+
+        try {
+          const response = await fetch(`/api/slots?${params}`, {
+            headers: { Accept: "application/json" },
+          });
+          const payload: unknown = await response.json().catch(() => null);
+          if (!response.ok) {
+            throw new Error(
+              isRecord(payload) && typeof payload.error === "string"
+                ? payload.error
+                : "No fue posible consultar los horarios disponibles.",
+            );
+          }
+          if (requestId !== activeRequest) return;
+
+          if (isRecord(payload) && payload.degraded === true) {
+            degradedNote.classList.remove("hidden");
+          }
+
+          const slots = normalizeSlots(payload);
+          slots.forEach((slot) => {
+            const key = formatDateKey(slot.date);
+            const current = slotsByDate.get(key) ?? [];
+            current.push(slot);
+            slotsByDate.set(key, current);
+          });
+          slotsByDate.forEach((daySlots) =>
+            daySlots.sort(
+              (a, b) => a.date.getTime() - b.date.getTime(),
+            ),
+          );
+
+          const availableKeys = Array.from(slotsByDate.keys())
+            .filter((key) => key >= todayKey)
+            .sort();
+          selectedDateKey = availableKeys[0] ?? null;
+
+          if (!selectedDateKey) {
+            slotsDate.textContent = "Sin cupos este mes";
+            calendarStatus.textContent =
+              "No hay cupos disponibles este mes. Prueba con el siguiente.";
+          }
+        } catch (error) {
+          if (requestId !== activeRequest) return;
+          slotsDate.textContent = "No fue posible cargar la agenda";
+          calendarStatus.textContent =
+            error instanceof Error
+              ? error.message
+              : "Intenta nuevamente más tarde.";
+          retryButton.classList.remove("hidden");
+        } finally {
+          if (requestId === activeRequest) {
+            loading = false;
+            renderCalendar();
+            if (selectedDateKey) {
+              renderSlots();
+            } else {
+              slotsList.replaceChildren();
+              updateSummary();
+            }
+          }
+        }
+      };
+
+      const activate = () => {
+        if (activated) return;
+        activated = true;
+        void loadMonth();
+        void loadEventType();
+      };
+
+      previousButton.addEventListener("click", () => {
+        visibleMonth = new Date(
+          visibleMonth.getFullYear(),
+          visibleMonth.getMonth() - 1,
+          1,
+          12,
+        );
+        void loadMonth();
+      });
+
+      nextButton.addEventListener("click", () => {
+        visibleMonth = new Date(
+          visibleMonth.getFullYear(),
+          visibleMonth.getMonth() + 1,
+          1,
+          12,
+        );
+        void loadMonth();
+      });
+
+      retryButton.addEventListener("click", () => {
+        void loadMonth();
+      });
+
+      confirmButton.addEventListener("click", () => {
+        if (!selectedSlot || busy) return;
+        setBusy(true);
+        root.dispatchEvent(
+          new CustomEvent<ConfirmDetail>("calendar:confirm", {
+            bubbles: true,
+            detail: {
+              startAt: selectedSlot.startAt,
+              endAt: selectedSlot.endAt,
+              dateLabel: selectedDateKey
+                ? dateFormatter.format(parseDateKey(selectedDateKey))
+                : "",
+              timeLabel: formatSlotRange(selectedSlot),
+              durationMinutes:
+                selectedSlot.durationMinutes ||
+                eventType?.durationMinutes ||
+                0,
+            },
+          }),
+        );
+      });
+
+      root.addEventListener("calendar:activate", activate);
+
+      root.addEventListener(
+        "calendar:booking-success",
+        (event) => {
+          setBusy(false);
+          const detail = isRecord(
+            (event as CustomEvent).detail,
+          )
+            ? ((event as CustomEvent).detail as JsonRecord)
+            : {};
+          const dateLabel =
+            typeof detail.dateLabel === "string"
+              ? detail.dateLabel
+              : selectionDate.textContent ?? "";
+          const timeLabel =
+            typeof detail.timeLabel === "string"
+              ? detail.timeLabel
+              : selectionTime.textContent ?? "";
+          const payload = detail.payload;
+          const meetingUrl = findMeetingUrl(payload);
+
+          successDate.textContent = dateLabel;
+          successTime.textContent = timeLabel;
+          if (meetingUrl) {
+            successMeeting.href = meetingUrl;
+            successMeeting.classList.remove("hidden");
+          } else {
+            successMeeting.classList.add("hidden");
+          }
+
+          calendarMain.classList.add("hidden");
+          calendarMain.classList.remove("flex");
+          selectionSummary.classList.add("hidden");
+          selectionSummary.classList.remove("flex");
+          successView.classList.remove("hidden");
+          successView.classList.add("flex");
+          calendarStatus.textContent = "";
+          retryButton.classList.add("hidden");
+          successView.focus({ preventScroll: true });
+          successView.scrollIntoView({
+            block: "nearest",
+            behavior: window.matchMedia(
+              "(prefers-reduced-motion: reduce)",
+            ).matches
+              ? "auto"
+              : "smooth",
+          });
+        },
+      );
+
+      root.addEventListener(
+        "calendar:booking-error",
+        (event) => {
+          setBusy(false);
+          const detail = isRecord(
+            (event as CustomEvent).detail,
+          )
+            ? ((event as CustomEvent).detail as JsonRecord)
+            : {};
+          const message =
+            typeof detail.message === "string"
+              ? detail.message
+              : "No fue posible confirmar la reserva.";
+          calendarStatus.textContent = message;
+
+          if (detail.slotUnavailable === true) {
+            void loadMonth().then(() => {
+              calendarStatus.textContent = message;
+            });
+          }
+        },
+      );
+
+      updateSummary();
+      if (!root.closest(".hidden")) activate();
+    });
+</script>

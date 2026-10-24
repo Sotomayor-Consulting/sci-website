@@ -3,7 +3,7 @@
 **Lectura obligatoria para cualquier agente (Claude u otro) que trabaje en este repo.**
 Antes de tocar código del embudo `diagnostico-llc` (landings, `functions/api/diagnostico-*`, Supabase, Odoo o n8n), leer completo este documento. Ignorarlo lleva a repetir bugs ya corregidos o a romper piezas que viven fuera de git (Supabase, Odoo, n8n) y que este documento es la única fuente que las describe.
 
-Última actualización: 2026-10-01.
+Última actualización: 2026-10-24.
 
 ---
 
@@ -327,6 +327,18 @@ El usuario pasó una pieza publicitaria (imagen) con el mensaje que quiere en el
 - Verificación local: `pnpm astro check` terminó con 0 errores; `pnpm astro build` generó 160 páginas; la salida incluye Partytown 0.14.4, todos los forwards/exclusiones y GTM con `type="text/partytown"`. El proxy de desarrollo devolvió `fbevents.js` con HTTP 200 y 428348 bytes. Falta validar Tag Assistant y los eventos reales en navegador después de borrar el service worker/caché de la prueba anterior.
 - Corrección posterior: la exclusión individual no alcanza a los scripts creados dinámicamente dentro del GTM que ya se está ejecutando en el worker. TikTok fallaba al definir `_env`, Clarity accedía a un estado inexistente y los módulos dinámicos de Meta/CAPI quedaban incompletos. Se conservó Partytown y el marcador `type="text/partytown"`, pero `loadScriptsOnMainThread` ahora deriva el propio `googletagmanager.com/gtm.js` al hilo principal. Así GTM y todo lo que inyecta comparten un único `window`. Se retiraron los forwards de `fbq`/`ttq` y el proxy de Meta, ya innecesarios y capaces de interferir con los stubs oficiales de los píxeles. `window.__SCI_GTM_MODE__` identifica este modo como `partytown-main-thread`.
 - Resolución final tras prueba real: aunque `loadScriptsOnMainThread` derivaba el archivo inicial de GTM, Partytown seguía interceptando los elementos `script` que el contenedor creaba dinámicamente. Meta volvió a fallar por CORS y `fbq` inexistente, mientras Clarity continuó accediendo al DOM virtual del worker. Por incompatibilidad demostrada del conjunto de tags actual, `GoogleTagManager.astro` carga ahora `gtm.js` directamente con `async` y `data-cfasync="false"`; se retiró la integración global de Astro para que no registre sandbox/service worker en esas páginas. La dependencia `@astrojs/partytown` permanece instalada, pero no participa en GTM. `window.__SCI_GTM_MODE__` devuelve `direct`.
+
+### 3.17 Calendario nativo en el paso 3 de la landing (2026-10-24)
+
+- Se reemplazó el iframe de Zcal del paso 3 de `src/components/ui/blocks/Formulario.astro` por `src/components/ui/blocks/CalendarioPaso.astro`, un calendario Starwind que solo elige día y hora. Los pasos 1 y 2 y sus preguntas siguen viviendo en `Formulario.astro`; la landing conserva el flujo de lead.
+- `CalendarioPaso.astro` consulta `GET /api/slots` con `from`, `to`, `tz` y `slug` opcional, y muestra el resumen con rango y duración. Emite `calendar:activate` al entrar al paso 3, `calendar:confirm` al pulsar "Confirmar reserva", `calendar:booking-success` y `calendar:booking-error`. El éxito reemplaza el calendario y el resumen dentro de la misma tarjeta.
+- `src/components/landing.astro` ya no arma la URL de Zcal ni escribe `#calendar-frame`. Tampoco guarda el lead en Supabase: el paso 2 solo valida los datos y activa el calendario. Carga las preguntas reales de Calnode desde `/api/questions`, mapea las respuestas por posición (`activity`, `advice`, `question`) a los `question_id` del Event Type y crea la reserva en `/api/booking`. Si falta una pregunta requerida o un `select` no coincide con las opciones de Calnode, se muestra el error y no se inventan respuestas.
+- El evento se resuelve con prioridad `slug` del componente → `CALNODE_EVENT_TYPE_SLUG` → `test-SCI`. El prop `eventTypeSlug` de `Formulario.astro` queda disponible para landings futuras.
+- `functions/api/event-type.ts` es un proxy público nuevo (`GET /api/event-type?slug=...&lang=es`) que solo devuelve campos whitelisteados del Event Type (duración, `max_future_days`, si exige teléfono, etc.) y nunca la API key.
+- `functions/api/slots.ts` acepta `tz`, valida que sea una zona IANA y la reenvía a Calnode. `functions/api/booking.ts` acepta `attendee_phone`, `attendee_phone_country`, `timezone`, `language` e `idempotencyKey`, valida cada campo, reenvía `Idempotency-Key` y conserva el `start_at` original con su offset.
+- Se corrigió el copy de la landing a 60 minutos y se marcó como requerida la pregunta "¿Qué duda principal quieres resolver en la asesoría?". El paso 1 ahora valida en cliente las dos preguntas de selección y el texto antes de avanzar.
+- El botón "Volver a mis datos" regresa al paso 2 y se oculta al confirmar la reserva. Los botones de mes y de confirmación sincronizan `disabled` y `data-disabled`, porque el runtime de Starwind usa `data-disabled` para `pointer-events`.
+- Verificación: `pnpm astro check` con 0 errores y `pnpm build` con 160 páginas. Prueba E2E con Chrome headless y Playwright sobre `/tu-llc-en-usa/` interceptando `/api/*`: flujo completo sin llamar a `/api/leads`, mapeo de `question_id`, teléfono E.164, éxito, 409 con recarga de disponibilidad, reintento tras error de `/api/slots`, navegación de meses y layout móvil sin overflow horizontal. Falta probar con `CALNODE_API_KEY` real en Cloudflare y validar una reserva controlada de extremo a extremo.
 
 ---
 
