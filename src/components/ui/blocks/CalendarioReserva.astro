@@ -1,0 +1,386 @@
+---
+import IconArrowLeft from "@tabler/icons/outline/arrow-left.svg";
+
+import { Button } from "@/components/starwind/button";
+import CalendarioPaso from "@/components/ui/blocks/CalendarioPaso.astro";
+
+interface Props {
+  /** Slug del Event Type de Calnode. Si se omite, la Function usa su valor por defecto. */
+  slug?: string;
+  /** Tema visual del calendario para integrarlo en formularios claros u oscuros. */
+  theme?: "light" | "dark";
+  /** Campos del formulario que se envían como respuestas, en el orden de las preguntas. */
+  answerFields?: string[];
+  class?: string;
+}
+
+const {
+  slug,
+  theme = "light",
+  answerFields = ["activity", "advice", "question"],
+  class: className,
+} = Astro.props;
+---
+
+<div
+  data-calendar-reserva
+  data-theme={theme}
+  data-answer-fields={answerFields.join(",")}
+  class:list={["flex w-full flex-col gap-3", className]}
+>
+  <div class="flex justify-end">
+    <Button
+      data-booking-back
+      type="button"
+      variant="ghost"
+      size="sm"
+      class="-mt-1 -mr-2 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground"
+    >
+      <IconArrowLeft class="size-3.5" />
+      Volver a mis datos
+    </Button>
+  </div>
+
+  <CalendarioPaso slug={slug} />
+</div>
+
+<script>
+  type JsonRecord = Record<string, unknown>;
+
+  type BookingQuestion = {
+    id: string;
+    label: string;
+    type: string;
+    required: boolean;
+    position: number;
+    options: string[];
+  };
+
+  type ConfirmDetail = {
+    startAt?: string;
+    dateLabel?: string;
+    timeLabel?: string;
+  };
+
+  const isRecord = (value: unknown): value is JsonRecord =>
+    typeof value === "object" && value !== null && !Array.isArray(value);
+
+  const getTimeZone = () => {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    } catch {
+      return "UTC";
+    }
+  };
+
+  const DIAL_TO_ISO: Record<string, string> = {
+    "+593": "EC",
+    "+52": "MX",
+    "+57": "CO",
+    "+54": "AR",
+    "+34": "ES",
+    "+1": "US",
+  };
+
+  const createSessionId = () => {
+    if (typeof globalThis.crypto?.randomUUID === "function") {
+      return globalThis.crypto.randomUUID();
+    }
+    return `session-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  };
+
+  const bookingSessionId = createSessionId();
+
+  document
+    .querySelectorAll<HTMLElement>("[data-calendar-reserva]")
+    .forEach((wrapper) => {
+      const calendarRoot = wrapper.querySelector<HTMLElement>(
+        "[data-calendar-paso]",
+      );
+      const form = wrapper.closest("form");
+      const backButton = wrapper.querySelector<HTMLButtonElement>(
+        "[data-booking-back]",
+      );
+
+      if (!calendarRoot || !form) return;
+
+      const slug = calendarRoot.dataset.eventTypeSlug?.trim() ?? "";
+      const answerFields = (wrapper.dataset.answerFields ?? "")
+        .split(",")
+        .map((field) => field.trim())
+        .filter(Boolean);
+
+      let questionsPromise: Promise<BookingQuestion[]> | null = null;
+      let bookingInFlight = false;
+
+      const loadQuestions = () => {
+        if (!questionsPromise) {
+          questionsPromise = (async () => {
+            const params = new URLSearchParams();
+            if (slug) params.set("slug", slug);
+            const query = params.size > 0 ? `?${params}` : "";
+            const response = await fetch(`/api/questions${query}`, {
+              headers: { Accept: "application/json" },
+            });
+            const payload: unknown = await response.json().catch(() => null);
+
+            if (!response.ok) {
+              throw new Error(
+                isRecord(payload) && typeof payload.error === "string"
+                  ? payload.error
+                  : "No fue posible cargar las preguntas del agendamiento.",
+              );
+            }
+            if (!isRecord(payload) || !Array.isArray(payload.items)) {
+              throw new Error("Calnode devolvió preguntas inválidas.");
+            }
+
+            return payload.items
+              .filter(isRecord)
+              .map((item, index) => ({
+                id: typeof item.id === "string" ? item.id : String(index),
+                label:
+                  typeof item.label === "string" ? item.label.trim() : "",
+                type:
+                  typeof item.type === "string"
+                    ? item.type.toLowerCase()
+                    : "text",
+                required: item.required === true,
+                position:
+                  typeof item.position === "number" ? item.position : index,
+                options: Array.isArray(item.options)
+                  ? item.options.filter(
+                      (option): option is string =>
+                        typeof option === "string",
+                    )
+                  : [],
+              }))
+              .filter((question) => question.label.length > 0)
+              .sort((a, b) => a.position - b.position);
+          })().catch((error) => {
+            questionsPromise = null;
+            throw error;
+          });
+        }
+
+        return questionsPromise;
+      };
+
+      const buildAnswers = (questions: BookingQuestion[], data: FormData) => {
+        const answers: { question_id: string; value: string }[] = [];
+
+        questions.forEach((question, index) => {
+          const field = answerFields[index];
+          let value = field ? String(data.get(field) ?? "").trim() : "";
+
+          if (question.type === "checkbox") {
+            value = value ? "yes" : "no";
+          }
+
+          if (question.required && !value) {
+            throw new Error(
+              `Falta responder «${question.label}». Usa «Volver a mis datos» para completarla.`,
+            );
+          }
+
+          if (
+            question.type === "select" &&
+            value &&
+            question.options.length > 0 &&
+            !question.options.includes(value)
+          ) {
+            throw new Error(
+              `La respuesta de «${question.label}» no coincide con las opciones configuradas en Calnode.`,
+            );
+          }
+
+          answers.push({ question_id: question.id, value });
+        });
+
+        return answers;
+      };
+
+      const buildPhonePayload = (data: FormData) => {
+        const country = String(data.get("countryCode") ?? "").trim();
+        const raw = String(data.get("phone") ?? "").trim();
+        if (!raw) return {};
+
+        const digits = raw.replace(/\D/g, "");
+        const normalized =
+          raw.startsWith("+") || raw.startsWith("00")
+            ? `+${raw.replace(/^00/, "").replace(/\D/g, "")}`
+            : `${country}${digits.replace(/^0+/, "")}`;
+
+        if (!/^\+[1-9]\d{6,14}$/.test(normalized)) {
+          throw new Error(
+            "Revisa el teléfono: usa un número válido con su código de país.",
+          );
+        }
+
+        return {
+          attendee_phone: normalized,
+          attendee_phone_country: DIAL_TO_ISO[country] ?? "EC",
+        };
+      };
+
+      const dispatchError = (message: string, slotUnavailable = false) => {
+        calendarRoot.dispatchEvent(
+          new CustomEvent("calendar:booking-error", {
+            bubbles: true,
+            detail: { message, slotUnavailable },
+          }),
+        );
+      };
+
+      const handleConfirm = async (event: Event) => {
+        if (bookingInFlight) return;
+
+        const detail = (event as CustomEvent<ConfirmDetail>).detail;
+        if (!detail || typeof detail.startAt !== "string") return;
+
+        bookingInFlight = true;
+
+        try {
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            dispatchError("Revisa tus datos antes de confirmar la reserva.");
+            wrapper.dispatchEvent(
+              new CustomEvent("calendar:back", { bubbles: true }),
+            );
+            return;
+          }
+
+          const data = new FormData(form);
+          const questions = await loadQuestions();
+          const answers = buildAnswers(questions, data);
+          const phonePayload = buildPhonePayload(data);
+
+          const response = await fetch("/api/booking", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...(slug ? { slug } : {}),
+              start_at: detail.startAt,
+              name: String(data.get("name") ?? "").trim(),
+              email: String(data.get("email") ?? "").trim(),
+              ...phonePayload,
+              timezone: getTimeZone(),
+              language: (document.documentElement.lang || "es").split("-")[0],
+              idempotencyKey: `${bookingSessionId}:${detail.startAt}`,
+              answers,
+            }),
+          });
+          const payload: unknown = await response.json().catch(() => null);
+
+          if (!response.ok) {
+            const message =
+              response.status === 409
+                ? "Ese horario acaba de ocuparse. Actualizamos la disponibilidad; elige otro horario."
+                : isRecord(payload) && typeof payload.error === "string"
+                  ? payload.error
+                  : isRecord(payload) && typeof payload.message === "string"
+                    ? payload.message
+                    : "No fue posible confirmar la reserva.";
+            dispatchError(message, response.status === 409);
+            return;
+          }
+
+          calendarRoot.dispatchEvent(
+            new CustomEvent("calendar:booking-success", {
+              bubbles: true,
+              detail: {
+                payload,
+                dateLabel: detail.dateLabel ?? "",
+                timeLabel: detail.timeLabel ?? "",
+              },
+            }),
+          );
+
+          const trackingWindow = window as Window & {
+            dataLayer?: Array<Record<string, unknown>>;
+          };
+          trackingWindow.dataLayer = trackingWindow.dataLayer || [];
+          trackingWindow.dataLayer.push({
+            event: "lead_reserva_confirmada",
+            event_type: slug || "test-SCI",
+          });
+        } catch (error) {
+          dispatchError(
+            error instanceof Error
+              ? error.message
+              : "No fue posible confirmar la reserva.",
+          );
+        } finally {
+          bookingInFlight = false;
+        }
+      };
+
+      calendarRoot.addEventListener("calendar:confirm", (event) => {
+        void handleConfirm(event);
+      });
+
+      calendarRoot.addEventListener(
+        "calendar:activate",
+        () => {
+          void loadQuestions().catch(() => {
+            // El error se muestra al confirmar; aquí solo precargamos.
+          });
+        },
+        { once: true },
+      );
+
+      calendarRoot.addEventListener("calendar:booking-success", () => {
+        backButton?.classList.add("hidden");
+      });
+
+      backButton?.addEventListener("click", () => {
+        wrapper.dispatchEvent(
+          new CustomEvent("calendar:back", { bubbles: true }),
+        );
+      });
+    });
+</script>
+
+<style>
+  [data-calendar-reserva][data-theme="dark"] {
+    --background: #0b2133;
+    --foreground: #f8fafc;
+    --card: rgb(255 255 255 / 0.055);
+    --card-foreground: #f8fafc;
+    --muted: rgb(255 255 255 / 0.08);
+    --muted-foreground: rgb(255 255 255 / 0.62);
+    --border: rgb(255 255 255 / 0.14);
+    --input: rgb(255 255 255 / 0.22);
+    --outline: rgb(255 255 255 / 0.45);
+    --primary: #d9a84e;
+    --primary-foreground: #0a2030;
+  }
+
+  [data-calendar-reserva][data-theme="dark"]
+    :global([data-calendar-success]) {
+    border-color: rgb(74 222 128 / 0.35);
+    background-color: rgb(22 101 52 / 0.18);
+  }
+
+  [data-calendar-reserva][data-theme="dark"]
+    :global([data-calendar-success] > div:first-child) {
+    background-color: rgb(34 197 94 / 0.18);
+    color: rgb(134 239 172);
+  }
+
+  [data-calendar-reserva][data-theme="dark"] :global([data-degraded-note]) {
+    color: rgb(252 211 77);
+  }
+
+  [data-calendar-reserva][data-theme="dark"] :global([data-confirm]) {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  [data-calendar-reserva][data-theme="dark"] :global([data-confirm]:hover) {
+    background-color: color-mix(in oklch, var(--primary), black 8%);
+  }
+</style>

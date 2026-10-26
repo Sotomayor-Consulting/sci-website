@@ -26,121 +26,151 @@ const { slug, class: className, ...rest } = Astro.props;
   aria-label="Selector de fecha y hora"
   {...rest}
 >
-  <div data-calendar-main class="flex flex-col gap-4">
-    <section
-      class="rounded-xl border border-border bg-card p-4 sm:p-5"
-      aria-label="Selector de fecha"
-    >
-      <div class="mb-4 flex items-center gap-2">
-        <h3
-          data-month-label
-          class="min-w-0 flex-1 text-[0.9375rem] font-semibold text-foreground"
-          aria-live="polite"
-        >
-        </h3>
-        <Button
-          data-previous-month
-          type="button"
-          variant="outline"
-          size="icon-sm"
-          class="size-8 rounded-md"
-          aria-label="Mostrar mes anterior"
-          disabled
-        >
-          <IconChevronLeft class="size-3" />
-        </Button>
-        <Button
-          data-next-month
-          type="button"
-          variant="outline"
-          size="icon-sm"
-          class="size-8 rounded-md"
-          aria-label="Mostrar mes siguiente"
-          disabled
-        >
-          <IconChevronRight class="size-3" />
-        </Button>
-      </div>
-
-      <div
-        class="grid grid-cols-7 gap-1 text-center text-[0.6875rem] font-medium text-muted-foreground"
-        aria-hidden="true"
+  <div data-calendar-main class="flex flex-col gap-3">
+    <div data-days-view class="flex flex-col gap-3">
+      <section
+        class="rounded-xl border border-border bg-card p-4 sm:p-5"
+        aria-label="Selector de fecha"
       >
-        {
-          ["lu", "ma", "mi", "ju", "vi", "sá", "do"].map((day) => (
-            <span class="flex h-7 items-center justify-center">{day}</span>
-          ))
-        }
-      </div>
-      <div
-        data-calendar-grid
-        class="grid grid-cols-7 gap-1"
-        role="group"
-        aria-busy="true"
-      >
-        {
-          Array.from({ length: 42 }, (_, index) => (
-            <Skeleton
-              class="aspect-square w-full rounded-lg"
-              aria-hidden="true"
-              data-calendar-skeleton={index}
-            />
-          ))
-        }
-      </div>
+        <div class="mb-4 flex items-center gap-2">
+          <h3
+            data-month-label
+            tabindex="-1"
+            class="min-w-0 flex-1 text-[0.9375rem] font-semibold text-foreground outline-none"
+            aria-live="polite"
+          >
+          </h3>
+          <Button
+            data-previous-month
+            type="button"
+            variant="outline"
+            size="icon-sm"
+            class="size-8 rounded-md"
+            aria-label="Mostrar mes anterior"
+            disabled
+          >
+            <IconChevronLeft class="size-3" />
+          </Button>
+          <Button
+            data-next-month
+            type="button"
+            variant="outline"
+            size="icon-sm"
+            class="size-8 rounded-md"
+            aria-label="Mostrar mes siguiente"
+            disabled
+          >
+            <IconChevronRight class="size-3" />
+          </Button>
+        </div>
 
-      <p class="mt-3 flex items-center gap-1.5 text-[0.6875rem] text-muted-foreground">
-        <IconWorld class="size-3" />
-        <span>Zona horaria:</span>
-        <strong data-timezone class="truncate font-medium">Hora local</strong>
-      </p>
+        <div
+          class="grid grid-cols-7 gap-1 text-center text-[0.6875rem] font-medium text-muted-foreground"
+          aria-hidden="true"
+        >
+          {
+            ["lu", "ma", "mi", "ju", "vi", "sá", "do"].map((day) => (
+              <span class="flex h-7 items-center justify-center">{day}</span>
+            ))
+          }
+        </div>
+        <div
+          data-calendar-grid
+          class="grid grid-cols-7 gap-1"
+          role="group"
+          aria-busy="true"
+        >
+          {
+            Array.from({ length: 42 }, (_, index) => (
+              <Skeleton
+                class="aspect-square w-full rounded-lg"
+                aria-hidden="true"
+                data-calendar-skeleton={index}
+              />
+            ))
+          }
+        </div>
+      </section>
+
       <p
-        data-degraded-note
-        class="mt-2 hidden text-[0.6875rem] leading-relaxed text-amber-700"
-        role="status"
-      >
-        La disponibilidad puede no estar actualizada. Confirmaremos tu horario al
-        reservar.
-      </p>
-    </section>
-
-    <section
-      class="rounded-xl border border-border bg-card p-4 sm:p-5"
-      aria-label="Horarios disponibles"
-    >
-      <p data-slots-date class="text-sm font-semibold text-foreground">
-        Selecciona un día
-      </p>
-      <p class="mt-1 text-xs text-muted-foreground">
-        Elige el horario que mejor te convenga.
-      </p>
-      <div
-        data-slots-list
-        class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3"
-      >
-        {
-          Array.from({ length: 6 }, () => (
-            <Skeleton class="h-10 w-full rounded-lg" aria-hidden="true" />
-          ))
-        }
-      </div>
-      <p
-        data-calendar-status
-        class="mt-3 min-h-5 text-xs text-muted-foreground"
+        data-days-hint
+        class="px-1 text-xs leading-relaxed text-muted-foreground"
         role="status"
         aria-live="polite"
       >
+        Selecciona un día disponible para ver los horarios.
       </p>
-      <Button
-        data-retry
-        type="button"
-        variant="outline"
-        size="sm"
-        class="hidden w-fit"
+    </div>
+
+    <div data-times-view class="hidden flex-col gap-3">
+      <section
+        class="rounded-xl border border-border bg-card p-4 sm:p-5"
+        aria-label="Horarios disponibles"
       >
-        Reintentar
-      </Button>
-    </section>
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <h3
+              data-slots-date
+              tabindex="-1"
+              class="text-sm font-semibold text-foreground outline-none"
+            >
+              Selecciona un día
+            </h3>
+            <p
+              data-slots-subtitle
+              class="mt-1 text-xs leading-relaxed text-muted-foreground"
+            >
+              Elige el horario que mejor te convenga.
+            </p>
+          </div>
+          <Button
+            data-change-day
+            type="button"
+            variant="ghost"
+            size="sm"
+            class="-mt-1.5 shrink-0 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground"
+          >
+            <IconChevronLeft class="size-3.5" />
+            Cambiar día
+          </Button>
+        </div>
+        <div
+          data-slots-list
+          class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3"
+        >
+        </div>
+      </section>
+    </div>
+
+    <p class="flex items-center gap-1.5 px-1 text-[0.6875rem] text-muted-foreground">
+      <IconWorld class="size-3" />
+      <span>Zona horaria:</span>
+      <strong data-timezone class="truncate font-medium">Hora local</strong>
+    </p>
+    <p
+      data-degraded-note
+      class="hidden px-1 text-[0.6875rem] leading-relaxed text-amber-700"
+      role="status"
+    >
+      La disponibilidad puede no estar actualizada. Confirmaremos tu horario al
+      reservar.
+    </p>
+    <p
+      data-calendar-status
+      class="min-h-5 px-1 text-xs leading-relaxed text-muted-foreground"
+      role="status"
+      aria-live="polite"
+    >
+    </p>
+    <Button
+      data-retry
+      type="button"
+      variant="outline"
+      size="sm"
+      class="hidden w-fit"
+    >
+      Reintentar
+    </Button>
   </div>
 
   <div
@@ -155,7 +185,7 @@ const { slug, class: className, ...rest } = Astro.props;
         data-selection-date
         class="mt-0.5 text-sm font-semibold text-foreground"
       >
-        Selecciona un día y una hora
+        Selecciona un día
       </p>
       <p data-selection-time class="mt-0.5 text-xs text-muted-foreground">
         Aún no has elegido un horario.
@@ -278,6 +308,12 @@ const { slug, class: className, ...rest } = Astro.props;
         month: "short",
         timeZone,
       });
+      const longDateFormatter = new Intl.DateTimeFormat("es", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        timeZone,
+      });
       const timeFormatter = new Intl.DateTimeFormat("es", {
         hour: "2-digit",
         minute: "2-digit",
@@ -309,7 +345,12 @@ const { slug, class: className, ...rest } = Astro.props;
       const nextButton = get<HTMLButtonElement>("[data-next-month]");
       const timezone = get<HTMLElement>("[data-timezone]");
       const degradedNote = get<HTMLElement>("[data-degraded-note]");
+      const daysView = get<HTMLElement>("[data-days-view]");
+      const timesView = get<HTMLElement>("[data-times-view]");
+      const daysHint = get<HTMLElement>("[data-days-hint]");
+      const changeDayButton = get<HTMLButtonElement>("[data-change-day]");
       const slotsDate = get<HTMLElement>("[data-slots-date]");
+      const slotsSubtitle = get<HTMLElement>("[data-slots-subtitle]");
       const slotsList = get<HTMLElement>("[data-slots-list]");
       const calendarStatus = get<HTMLElement>("[data-calendar-status]");
       const retryButton = get<HTMLButtonElement>("[data-retry]");
@@ -331,7 +372,12 @@ const { slug, class: className, ...rest } = Astro.props;
         !nextButton ||
         !timezone ||
         !degradedNote ||
+        !daysView ||
+        !timesView ||
+        !daysHint ||
+        !changeDayButton ||
         !slotsDate ||
+        !slotsSubtitle ||
         !slotsList ||
         !calendarStatus ||
         !retryButton ||
@@ -351,9 +397,6 @@ const { slug, class: className, ...rest } = Astro.props;
       const calendarSkeletonNodes = Array.from(calendarGrid.children).map(
         (node) => node.cloneNode(true),
       );
-      const slotSkeletonNodes = Array.from(slotsList.children).map((node) =>
-        node.cloneNode(true),
-      );
 
       const today = new Date();
       const todayKey = formatDateKey(today);
@@ -372,6 +415,11 @@ const { slug, class: className, ...rest } = Astro.props;
       let busy = false;
       let activated = false;
       let activeRequest = 0;
+
+      const defaultDaysHint =
+        "Selecciona un día disponible para ver los horarios.";
+      const noSlotsHint =
+        "No hay cupos disponibles este mes. Prueba con el siguiente.";
 
       timezone.textContent = timeZone.replaceAll("_", " ");
       monthLabel.textContent = capitalizeFirst(
@@ -412,12 +460,17 @@ const { slug, class: className, ...rest } = Astro.props;
 
       const updateSummary = () => {
         if (selectedSlot && selectedDateKey) {
-          selectionDate.textContent = dateFormatter.format(
-            parseDateKey(selectedDateKey),
+          selectionDate.textContent = capitalizeFirst(
+            longDateFormatter.format(parseDateKey(selectedDateKey)),
           );
           selectionTime.textContent = formatSlotRange(selectedSlot);
+        } else if (selectedDateKey) {
+          selectionDate.textContent = capitalizeFirst(
+            longDateFormatter.format(parseDateKey(selectedDateKey)),
+          );
+          selectionTime.textContent = "Elige una hora para continuar.";
         } else {
-          selectionDate.textContent = "Selecciona un día y una hora";
+          selectionDate.textContent = "Selecciona un día";
           selectionTime.textContent = "Aún no has elegido un horario.";
         }
 
@@ -427,16 +480,45 @@ const { slug, class: className, ...rest } = Astro.props;
         );
       };
 
+      const prefersReducedMotion = () =>
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const scrollIntoNearest = (element: HTMLElement) => {
+        element.scrollIntoView({
+          block: "nearest",
+          behavior: prefersReducedMotion() ? "auto" : "smooth",
+        });
+      };
+
+      const setView = (view: "days" | "times") => {
+        const showTimes = view === "times";
+        daysView.classList.toggle("hidden", showTimes);
+        daysView.classList.toggle("flex", !showTimes);
+        timesView.classList.toggle("hidden", !showTimes);
+        timesView.classList.toggle("flex", showTimes);
+      };
+
+      const showTimesView = () => {
+        setView("times");
+        slotsDate.focus({ preventScroll: true });
+        scrollIntoNearest(timesView);
+      };
+
+      const showDaysView = (focusDateKey?: string | null) => {
+        setView("days");
+        const target = focusDateKey
+          ? calendarGrid.querySelector<HTMLButtonElement>(
+              `[data-date-key="${focusDateKey}"]`,
+            )
+          : null;
+        (target ?? monthLabel).focus({ preventScroll: true });
+        scrollIntoNearest(daysView);
+      };
+
       const renderCalendarSkeleton = () => {
         calendarGrid.setAttribute("aria-busy", "true");
         calendarGrid.replaceChildren(
           ...calendarSkeletonNodes.map((node) => node.cloneNode(true)),
-        );
-      };
-
-      const renderSlotsSkeleton = () => {
-        slotsList.replaceChildren(
-          ...slotSkeletonNodes.map((node) => node.cloneNode(true)),
         );
       };
 
@@ -445,25 +527,25 @@ const { slug, class: className, ...rest } = Astro.props;
 
         if (!selectedDateKey) {
           slotsDate.textContent = "Selecciona un día";
-          calendarStatus.textContent =
-            "Elige un día disponible en el calendario para ver los horarios.";
+          slotsSubtitle.textContent =
+            "Elige el horario que mejor te convenga.";
           updateSummary();
           return;
         }
 
         const slots = slotsByDate.get(selectedDateKey) ?? [];
-        slotsDate.textContent = dateFormatter.format(
-          parseDateKey(selectedDateKey),
+        slotsDate.textContent = capitalizeFirst(
+          longDateFormatter.format(parseDateKey(selectedDateKey)),
         );
 
         if (slots.length === 0) {
-          calendarStatus.textContent =
-            "Ya no quedan horarios disponibles para este día.";
+          slotsSubtitle.textContent =
+            "Ya no quedan horarios disponibles para este día. Elige otro día.";
           updateSummary();
           return;
         }
 
-        calendarStatus.textContent = "";
+        slotsSubtitle.textContent = "Elige el horario que mejor te convenga.";
         slots.forEach((slot) => {
           const button = document.createElement("button");
           button.type = "button";
@@ -538,6 +620,7 @@ const { slug, class: className, ...rest } = Astro.props;
           button.type = "button";
           button.textContent = String(day);
           button.disabled = !available;
+          button.dataset.dateKey = key;
           button.setAttribute("aria-label", dateFormatter.format(date));
           button.setAttribute("aria-pressed", String(selected));
           if (isToday) button.setAttribute("aria-current", "date");
@@ -563,8 +646,10 @@ const { slug, class: className, ...rest } = Astro.props;
             button.addEventListener("click", () => {
               selectedDateKey = key;
               selectedSlot = null;
+              calendarStatus.textContent = "";
               renderCalendar();
               renderSlots();
+              showTimesView();
             });
           }
 
@@ -678,12 +763,13 @@ const { slug, class: className, ...rest } = Astro.props;
         selectedDateKey = null;
         selectedSlot = null;
         slotsByDate = new Map();
-        calendarStatus.textContent = "";
         retryButton.classList.add("hidden");
         degradedNote.classList.add("hidden");
-        slotsDate.textContent = "Consultando disponibilidad...";
-        renderSlotsSkeleton();
+        setView("days");
+        renderSlots();
         renderCalendarSkeleton();
+        calendarStatus.textContent = "";
+        daysHint.textContent = "Consultando disponibilidad...";
         setButtonDisabled(previousButton, true);
         setButtonDisabled(nextButton, true);
         updateSummary();
@@ -722,19 +808,15 @@ const { slug, class: className, ...rest } = Astro.props;
             ),
           );
 
-          const availableKeys = Array.from(slotsByDate.keys())
-            .filter((key) => key >= todayKey)
-            .sort();
-          selectedDateKey = availableKeys[0] ?? null;
-
-          if (!selectedDateKey) {
-            slotsDate.textContent = "Sin cupos este mes";
-            calendarStatus.textContent =
-              "No hay cupos disponibles este mes. Prueba con el siguiente.";
-          }
+          const hasAvailableDays = Array.from(slotsByDate.keys()).some(
+            (key) => key >= todayKey,
+          );
+          daysHint.textContent = hasAvailableDays
+            ? defaultDaysHint
+            : noSlotsHint;
         } catch (error) {
           if (requestId !== activeRequest) return;
-          slotsDate.textContent = "No fue posible cargar la agenda";
+          daysHint.textContent = defaultDaysHint;
           calendarStatus.textContent =
             error instanceof Error
               ? error.message
@@ -744,12 +826,7 @@ const { slug, class: className, ...rest } = Astro.props;
           if (requestId === activeRequest) {
             loading = false;
             renderCalendar();
-            if (selectedDateKey) {
-              renderSlots();
-            } else {
-              slotsList.replaceChildren();
-              updateSummary();
-            }
+            renderSlots();
           }
         }
       };
@@ -785,6 +862,16 @@ const { slug, class: className, ...rest } = Astro.props;
         void loadMonth();
       });
 
+      changeDayButton.addEventListener("click", () => {
+        const previousDateKey = selectedDateKey;
+        selectedDateKey = null;
+        selectedSlot = null;
+        calendarStatus.textContent = "";
+        renderCalendar();
+        renderSlots();
+        showDaysView(previousDateKey);
+      });
+
       confirmButton.addEventListener("click", () => {
         if (!selectedSlot || busy) return;
         setBusy(true);
@@ -795,7 +882,9 @@ const { slug, class: className, ...rest } = Astro.props;
               startAt: selectedSlot.startAt,
               endAt: selectedSlot.endAt,
               dateLabel: selectedDateKey
-                ? dateFormatter.format(parseDateKey(selectedDateKey))
+                ? capitalizeFirst(
+                    longDateFormatter.format(parseDateKey(selectedDateKey)),
+                  )
                 : "",
               timeLabel: formatSlotRange(selectedSlot),
               durationMinutes:
@@ -847,14 +936,7 @@ const { slug, class: className, ...rest } = Astro.props;
           calendarStatus.textContent = "";
           retryButton.classList.add("hidden");
           successView.focus({ preventScroll: true });
-          successView.scrollIntoView({
-            block: "nearest",
-            behavior: window.matchMedia(
-              "(prefers-reduced-motion: reduce)",
-            ).matches
-              ? "auto"
-              : "smooth",
-          });
+          scrollIntoNearest(successView);
         },
       );
 
@@ -874,8 +956,20 @@ const { slug, class: className, ...rest } = Astro.props;
           calendarStatus.textContent = message;
 
           if (detail.slotUnavailable === true) {
+            const previousDateKey = selectedDateKey;
             void loadMonth().then(() => {
               calendarStatus.textContent = message;
+              if (
+                previousDateKey &&
+                (slotsByDate.get(previousDateKey)?.length ?? 0) > 0
+              ) {
+                selectedDateKey = previousDateKey;
+                selectedSlot = null;
+                renderCalendar();
+                renderSlots();
+                showTimesView();
+                calendarStatus.textContent = message;
+              }
             });
           }
         },
@@ -885,3 +979,24 @@ const { slug, class: className, ...rest } = Astro.props;
       if (!root.closest(".hidden")) activate();
     });
 </script>
+
+<style>
+  [data-days-view]:not(.hidden),
+  [data-times-view]:not(.hidden) {
+    animation: calendar-view-enter 180ms ease-out both;
+  }
+
+  @keyframes calendar-view-enter {
+    from {
+      opacity: 0;
+      transform: translateY(0.25rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-days-view]:not(.hidden),
+    [data-times-view]:not(.hidden) {
+      animation: none;
+    }
+  }
+</style>

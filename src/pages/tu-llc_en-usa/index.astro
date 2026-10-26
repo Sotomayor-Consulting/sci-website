@@ -1,6 +1,7 @@
 ---
 import GoogleTagManager from "@components/ui/blocks/GoogleTagManager.astro";
 import LlcOnboardingB from "@/components/LlcOnboardingB.astro";
+import { LLC_EVENT_TYPE_SLUG } from "@/data_files/llc-booking";
 import starwindStyles from "@/styles/starwind.css?inline";
 
 const gtm = "GTM-TNRQGDM";
@@ -46,6 +47,6 @@ const gtm = "GTM-TNRQGDM";
         width="0"
         style="display:none;visibility:hidden"></iframe>
     </noscript>
-    <LlcOnboardingB />
+    <LlcOnboardingB eventTypeSlug={LLC_EVENT_TYPE_SLUG} />
   </body>
 </html>

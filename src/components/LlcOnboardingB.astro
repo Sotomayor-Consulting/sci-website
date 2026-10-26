@@ -10,6 +10,12 @@ import Pricing, {
 import Faq from "@components/ui/blocks/FaqB.astro";
 // import Icon from "node_modules/astro-icon/components/Icon.astro";
 
+interface Props {
+  eventTypeSlug?: string;
+}
+
+const { eventTypeSlug } = Astro.props;
+
 const activityGroups = [
   {
     label: "Operar un negocio",
@@ -32,7 +38,7 @@ const activityGroups = [
 ];
 
 const benefits = [
-  ["30 minutos", "Por Zoom, sin compromiso"],
+  ["60 minutos", "Por Zoom, sin compromiso"],
   ["Sin visa ni residencia", "Sin SSN ni ITIN"],
   ["100% remoto", "Atención en español"],
 ];
@@ -230,7 +236,7 @@ const faqs = [
       benefits={benefits}
     />
 
-    <Form activityGroups={activityGroups} />
+    <Form activityGroups={activityGroups} eventTypeSlug={eventTypeSlug} />
   </div>
   <div class="relative z-10 my-10 bg-black/10 py-20">
     <Insight1
@@ -238,7 +244,7 @@ const faqs = [
       title="De la duda a un plan concreto en tres pasos."
       Cta="Agendar mi asesoría"
       CtaLink="#agendar"
-      CtaLabels="30 min · por Zoom · sin compromiso"
+      CtaLabels="60 min · por Zoom · sin compromiso"
       steps={steps1}
     />
   </div>
@@ -253,7 +259,7 @@ const faqs = [
       description="Recibe la consultoría de un equipo experto y define el estado que corresponde a tu operación antes de incorporar tu LLC, sin errores. Diez años estructurando compañías en Estados Unidos para clientes de toda América Latina."
       Cta="Evalúa tu estado sin costo"
       CtaLink="#agendar"
-      CtaLabels="30 min · por Zoom · sin compromiso"
+      CtaLabels="60 min · por Zoom · sin compromiso"
       CtaAdvice="Las tasas estatales las cobra cada estado y se pagan por separado."
       steps={steps2}
     />
@@ -264,7 +270,7 @@ const faqs = [
       id="servicio"
       label="Consultoría para tu LLC"
       title="Analizamos tu caso y tu actividad antes de recomendarte una estructura."
-      description="Una sesión de 30 minutos por Zoom, sin costo y sin compromiso, con un asesor del estudio. Diez años de experiencia en estructuras internacionales."
+      description="Una sesión de 60 minutos por Zoom, sin costo y sin compromiso, con un asesor del estudio. Diez años de experiencia en estructuras internacionales."
       Cta="Agenda una llamada sin costo"
       CtaLink="#agendar"
       CtaLabels="100% remoto y en español"
@@ -290,7 +296,7 @@ const faqs = [
       faqs={faqs}
       Cta="Resuleve tus dudas en la asesoría"
       CtaLink="#agendar"
-      CtaLabels="30 min · por Zoom · sin compromiso"
+      CtaLabels="60 min · por Zoom · sin compromiso"
     />
   </div>
 </main>
@@ -309,11 +315,12 @@ const faqs = [
     const continueToSchedule = form.querySelector<HTMLButtonElement>(
       "#continue-to-schedule-b",
     );
-    const status = form.querySelector<HTMLElement>("#form-status-b");
-    const zcalFrame = form.querySelector<HTMLIFrameElement>("#zcal-frame-b");
-    const zcalOpen = form.querySelector<HTMLAnchorElement>("#zcal-open-b");
-    let submissionId = "";
-    let isSubmitting = false;
+    const contactTitle = form.querySelector<HTMLElement>("#contact-title-b");
+    const calendarRoot = form.querySelector<HTMLElement>(
+      "[data-calendar-paso]",
+    );
+    let trackingId = "";
+    let trackingSent = false;
 
     if (continueToContact) continueToContact.disabled = true;
 
@@ -372,28 +379,17 @@ const faqs = [
       if (panel) panel.scrollTop = 0;
     }
 
-    function setSubmitting(submitting: boolean) {
-      isSubmitting = submitting;
-      if (!continueToSchedule) return;
-      continueToSchedule.disabled = submitting;
-      continueToSchedule.textContent = submitting
-        ? "Abriendo calendario..."
-        : "Elegir horario";
-      if (submitting) continueToSchedule.setAttribute("aria-busy", "true");
-      else continueToSchedule.removeAttribute("aria-busy");
-    }
-
-    function setStatus(message: string, error = false) {
-      if (!status) return;
-      status.textContent = message;
-      status.classList.toggle("text-red-300", error);
-      status.classList.toggle("text-white/40", !error);
-    }
-
     function validateContactFields() {
-      const fields = ["#full-name-b", "#email-b", "#phone-b"]
-        .map((selector) => activeForm.querySelector<HTMLInputElement>(selector))
-        .filter((field): field is HTMLInputElement => Boolean(field));
+      const fields = ["#full-name-b", "#email-b", "#phone-b", "#question-b"]
+        .map((selector) =>
+          activeForm.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+            selector,
+          ),
+        )
+        .filter(
+          (field): field is HTMLInputElement | HTMLTextAreaElement =>
+            Boolean(field),
+        );
       const invalidField = fields.find((field) => !field.checkValidity());
       if (!invalidField) return true;
       invalidField.reportValidity();
@@ -401,13 +397,13 @@ const faqs = [
       return false;
     }
 
-    function getSubmissionId() {
-      if (submissionId) return submissionId;
+    function getTrackingId() {
+      if (trackingId) return trackingId;
       if (typeof globalThis.crypto?.randomUUID === "function") {
-        submissionId = globalThis.crypto.randomUUID();
-        return submissionId;
+        trackingId = globalThis.crypto.randomUUID();
+        return trackingId;
       }
-      submissionId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      trackingId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
         /[xy]/g,
         (character) => {
           const random = Math.floor(Math.random() * 16);
@@ -415,32 +411,17 @@ const faqs = [
           return value.toString(16);
         },
       );
-      return submissionId;
+      return trackingId;
     }
 
-    function buildZcalUrl(values: FormData) {
-      const countryCode = String(values.get("countryCode") ?? "");
-      const localPhone = String(values.get("phone") ?? "")
-        .replace(/\D/g, "")
-        .replace(/^0+/, "");
-      const phone = `${countryCode}${localPhone}`;
-      const url = new URL("https://zcal.co/t/agendar-asesoria-llc/60-USA");
-      url.searchParams.set("name", String(values.get("name") ?? ""));
-      url.searchParams.set("email", String(values.get("email") ?? ""));
-      url.searchParams.set("smsPhone", phone);
-      url.searchParams.set("a0", phone);
-      url.searchParams.set("a1", String(values.get("activity") ?? ""));
-      url.searchParams.set("a2", String(values.get("advice") ?? ""));
-      url.searchParams.set("a3", String(values.get("question") ?? ""));
-      return url.toString();
-    }
-
-    function trackScheduleSelection(currentSubmissionId: string) {
+    function trackScheduleSelection(currentTrackingId: string) {
+      if (trackingSent) return;
       try {
         const uuidPattern =
           /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-        if (!uuidPattern.test(currentSubmissionId)) return;
+        if (!uuidPattern.test(currentTrackingId)) return;
+        trackingSent = true;
 
         const trackingWindow = window as Window & {
           dataLayer?: Array<Record<string, unknown>>;
@@ -452,15 +433,19 @@ const faqs = [
 
         trackingWindow.dataLayer = trackingWindow.dataLayer || [];
         trackingWindow.dataLayer.push({
+          event: "lead_datos_completados",
+          submission_id: currentTrackingId,
+        });
+        trackingWindow.dataLayer.push({
           event: "elegir_horario",
-          submission_id: currentSubmissionId,
+          submission_id: currentTrackingId,
         });
 
         trackingWindow.SCITikTokRUKarlaQueue =
           trackingWindow.SCITikTokRUKarlaQueue || [];
         trackingWindow.SCITikTokRUKarlaQueue.push({
           type: "lead",
-          id: currentSubmissionId,
+          id: currentTrackingId,
         });
 
         window.dispatchEvent(new CustomEvent("sci:tiktok:ru:karla:flush"));
@@ -508,76 +493,28 @@ const faqs = [
         );
       });
 
-    activeForm.addEventListener("submit", async (event) => {
+    activeForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      if (isSubmitting) return;
 
       if (!validateContactFields()) {
         showStep(2);
         return;
       }
 
-      const values = new FormData(activeForm);
-      const currentSubmissionId = getSubmissionId();
-      setSubmitting(true);
-      setStatus("Guardando tu asesoría...");
+      const currentTrackingId = getTrackingId();
+      trackScheduleSelection(currentTrackingId);
 
-      try {
-        const response = await fetch("/api/leads", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            submissionId: currentSubmissionId,
-            name: String(values.get("name") ?? ""),
-            email: String(values.get("email") ?? ""),
-            countryCode: String(values.get("countryCode") ?? ""),
-            phone: String(values.get("phone") ?? ""),
-            activity: String(values.get("activity") ?? ""),
-            advice: String(values.get("advice") ?? ""),
-            question: String(values.get("question") ?? ""),
-            source: "tu-llc_en-usa-index-b",
-            website: String(values.get("website") ?? ""),
-          }),
-        });
+      showStep(3);
+      calendarRoot?.dispatchEvent(
+        new CustomEvent("calendar:activate", { bubbles: true }),
+      );
+      scope.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
 
-        if (response.status === 403) {
-          setStatus(
-            "No podemos habilitar la agenda para estos datos. Si consideras que se trata de un error, contáctanos.",
-            true,
-          );
-          setSubmitting(false);
-          return;
-        }
-
-        if (!response.ok) {
-          throw new Error(`Lead request failed with status ${response.status}`);
-        }
-
-        const trackingWindow = window as Window & {
-          dataLayer?: Array<Record<string, unknown>>;
-        };
-        trackingWindow.dataLayer = trackingWindow.dataLayer || [];
-        trackingWindow.dataLayer.push({ event: "lead_datos_completados" });
-        try {
-          localStorage.setItem("llcLeadSubmissionId", currentSubmissionId);
-        } catch {
-          // Storage is optional; the successful lead submission must continue.
-        }
-        trackScheduleSelection(currentSubmissionId);
-
-        const zcalUrl = buildZcalUrl(values);
-        if (zcalFrame) zcalFrame.src = zcalUrl;
-        if (zcalOpen) zcalOpen.href = zcalUrl;
-        setSubmitting(false);
-        showStep(3);
-        scope.scrollIntoView({ behavior: "smooth", block: "start" });
-      } catch {
-        setStatus(
-          "No pudimos guardar tu asesoría. Revisa tu conexión e inténtalo nuevamente.",
-          true,
-        );
-        setSubmitting(false);
-      }
+    activeForm.addEventListener("calendar:back", () => {
+      showStep(2);
+      contactTitle?.focus({ preventScroll: true });
+      scope.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
     showStep(1);
