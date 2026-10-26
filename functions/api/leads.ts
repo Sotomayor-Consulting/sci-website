@@ -37,6 +37,43 @@ function getSupabaseLeadsUrl(value: string): string {
   return url.endsWith("/rest/v1/leads") ? url : `${url}/rest/v1/leads`;
 }
 
+async function hasBlacklistedLead(
+  env: Env,
+  email: string,
+  phoneNormalized: string,
+): Promise<boolean> {
+  const leadsEndpoint = getSupabaseLeadsUrl(env.SUPABASE_URL);
+  const headers = {
+    apikey: env.SUPABASE_SERVICE_ROLE_KEY,
+    Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`,
+  };
+
+  const findMatch = async (field: "email" | "phone_normalized", value: string) => {
+    const url = new URL(leadsEndpoint);
+    url.searchParams.set("select", "id");
+    url.searchParams.set("blacklist", "eq.true");
+    url.searchParams.set(field, `eq.${value}`);
+    url.searchParams.set("limit", "1");
+
+    const response = await fetch(url, { headers });
+    if (!response.ok) {
+      throw new Error(
+        `Blacklist lookup failed with status ${response.status}: ${await response.text()}`,
+      );
+    }
+
+    const records = (await response.json()) as Array<{ id?: string }>;
+    return records.length > 0;
+  };
+
+  const [emailMatch, phoneMatch] = await Promise.all([
+    findMatch("email", email),
+    findMatch("phone_normalized", phoneNormalized),
+  ]);
+
+  return emailMatch || phoneMatch;
+}
+
 export async function onRequestPost({ request, env }: FunctionContext): Promise<Response> {
   if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
     console.error("Missing required Cloudflare environment variables", {
@@ -103,6 +140,15 @@ export async function onRequestPost({ request, env }: FunctionContext): Promise<
 
   if (website) {
     return json({ ok: true, submissionId }, 200);
+  }
+
+  try {
+    if (await hasBlacklistedLead(env, email, phoneNormalized)) {
+      return json({ error: "scheduling_blocked" }, 403);
+    }
+  } catch (error) {
+    console.error("Supabase blacklist lookup failed", error);
+    return json({ error: "lead_storage_unavailable" }, 503);
   }
 
   const leadsUrl = new URL(getSupabaseLeadsUrl(env.SUPABASE_URL));

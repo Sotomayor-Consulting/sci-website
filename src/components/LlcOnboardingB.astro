@@ -540,6 +540,15 @@ const faqs = [
           }),
         });
 
+        if (response.status === 403) {
+          setStatus(
+            "No podemos habilitar la agenda para estos datos. Si consideras que se trata de un error, contáctanos.",
+            true,
+          );
+          setSubmitting(false);
+          return;
+        }
+
         if (!response.ok) {
           throw new Error(`Lead request failed with status ${response.status}`);
         }

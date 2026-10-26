@@ -38,11 +38,23 @@ export async function onRequestGet({
   const from = requestUrl.searchParams.get("from") ?? "";
   const to = requestUrl.searchParams.get("to") ?? "";
   const requestedSlug = requestUrl.searchParams.get("slug")?.trim() ?? "";
+  const requestedTimeZone = requestUrl.searchParams.get("tz")?.trim() ?? "";
   const fromDate = parseDate(from);
   const toDate = parseDate(to);
 
   if (requestedSlug && !SLUG_PATTERN.test(requestedSlug)) {
     return json({ error: 'El parámetro "slug" no es válido.' }, 400);
+  }
+
+  if (requestedTimeZone) {
+    if (requestedTimeZone.length > 64) {
+      return json({ error: 'El parámetro "tz" no es válido.' }, 400);
+    }
+    try {
+      new Intl.DateTimeFormat("en-US", { timeZone: requestedTimeZone });
+    } catch {
+      return json({ error: 'El parámetro "tz" no es válido.' }, 400);
+    }
   }
 
   if (!fromDate || !toDate || toDate < fromDate) {
@@ -81,6 +93,9 @@ export async function onRequestGet({
   );
   calnodeUrl.searchParams.set("from", from);
   calnodeUrl.searchParams.set("to", to);
+  if (requestedTimeZone) {
+    calnodeUrl.searchParams.set("tz", requestedTimeZone);
+  }
 
   try {
     const response = await fetch(calnodeUrl, {
