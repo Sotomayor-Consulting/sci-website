@@ -406,6 +406,10 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
+### `leads-landing/abrir-llc-primera-vez`: sección del formulario recortada (2026-10-26)
+
+- Antes había 8 capas de texto (~85 palabras) sobre el primer campo, con "primer paso" ×3 y "gratis" ×4, y un titular "agenda tu asesoría" que no cuadraba con las rutas de guía. Ahora: titular "Averigua gratis si una LLC es para ti", una línea (asesor de la firma, Zoom, español, "si no te conviene no pagas nada"), insignia y una instrucción ("si quieres reunión, escoges día y hora al terminar"). ~50 palabras. Cifra de empresas a +500; línea de Trustpilot con colores de marca (#00B67A, #191919, #DCDCE6; logo aproximado, no el oficial).
+
 ### `leads-landing/abrir-llc-primera-vez`: lenguaje para público frío (2026-10-26)
 
 - El nombre interno **"Planificación y Diseño" no se usa en hero, hooks, reunión ni pasos**: el tráfico frío no lo entiende. Se describe como "diseñar tu LLC con un especialista (servicio con costo)" y el nombre aparece solo como referencia en la sección de planes. Se evitan también NAICS, Operating Agreement y "tributación" en el hero (se dice "impuestos", "socios", "datos públicos").

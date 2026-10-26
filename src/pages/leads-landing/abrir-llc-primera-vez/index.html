@@ -229,6 +229,16 @@
   .hero-trust{margin-top:16px;font-size:.83rem;color:var(--muted);line-height:1.7}
   .hero-trust b{color:var(--navy-800);font-family:var(--font-display);font-weight:600}
   .hero-trust .stars{color:var(--gold);letter-spacing:1px}
+  /* Trustpilot — colores de marca: verde #00B67A, texto #191919, estrella vacía #DCDCE6 */
+  .tp-stars{display:inline-flex;gap:2px;vertical-align:middle}
+  .tp-stars i{display:inline-grid;place-items:center;width:22px;height:22px;background:#00B67A}
+  .tp-stars i.off{background:#DCDCE6}
+  .tp-stars svg{width:16px;height:16px;fill:#fff}
+  .tp-logo{display:inline-flex;align-items:center;gap:4px;vertical-align:middle;color:#191919;font:700 1.1rem/1 var(--font-display);letter-spacing:-.01em}
+  .tp-logo svg{width:20px;height:20px;fill:#00B67A}
+  .hero-trust .tp-line{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin-top:6px}
+  .rating-line .tp-line{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px}
+  .rating-line .tp-stars i{width:26px;height:26px}.rating-line .tp-stars svg{width:18px;height:18px}
   .hero-jump{display:inline-flex;margin-top:20px}   /* CTA principal del hero → sección de agenda */
 
   /* ---- Booking card (form → Zcal) ---- */
@@ -245,6 +255,7 @@
   }
   .book h2{color:#fff;font-size:1.16rem;font-weight:600;letter-spacing:-.01em;position:relative}
   .book .book-sub{color:rgba(255,255,255,.72);font-size:.86rem;margin-top:5px;position:relative}
+  .book .book-sub--lead{font-size:.95rem;color:rgba(255,255,255,.88);margin-top:2px}
   .book .book-human{color:rgba(255,255,255,.82);font-size:.8rem;margin-top:9px;position:relative;padding-left:16px}
   .book .book-human::before{content:"";position:absolute;left:0;top:.42em;width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(15,122,75,.25)}
   .book form{margin-top:16px;display:grid;gap:11px;position:relative}
@@ -505,6 +516,7 @@
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TNRQGDM" height="0" width="0" style="display:none;visibility:hidden" title="gtm"></iframe></noscript>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="tp-star" viewBox="0 0 24 24"><path d="M12 1.5l3.1 7.3 7.9.7-6 5.2 1.8 7.8L12 18.2 5.2 22.5 7 14.7 1 9.5l7.9-.7z"/></symbol></svg>
 <header class="header">
   <div class="wrap">
     <a class="brand" href="#inicio" aria-label="Sotomayor Consulting International">
@@ -557,8 +569,8 @@
         </div>
 
         <p class="hero-trust reveal d3">
-          <b>+5.000 empresas</b> incorporadas · <b>10 años</b> · <b>Partner de Mercury &amp; Relay</b><br>
-          <span class="stars" aria-hidden="true">★★★★☆</span> 4,3/5 en Trustpilot con reseñas verificadas
+          <b>+500 empresas</b> incorporadas · <b>10 años</b> · <b>Partner de Mercury &amp; Relay</b><br>
+          <span class="tp-line"><span class="tp-stars" aria-hidden="true"><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i class="off"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i></span><span>4,3/5 en</span><span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg>Trustpilot</span><span>con reseñas verificadas</span></span>
         </p>
       </div>
     </div>
@@ -685,9 +697,8 @@
   <section class="agenda-final" id="agendar">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="kicker">Primer paso</span>
-        <h2>Tu primer paso es gratis: agenda tu asesoría</h2>
-        <p class="lede">En la asesoría inicial revisamos tu caso y te orientamos: si una LLC encaja con tu actividad y tu país, y cuál es el siguiente paso. Si no te conviene, te lo decimos y no pagas nada.</p>
+        <h2>Averigua gratis si una LLC es para ti</h2>
+        <p class="lede">Un asesor de la firma revisa tu caso por Zoom, en español. Si una LLC no te conviene, te lo decimos y no pagas nada.</p>
       </div>
 
       <div class="book reveal d1" aria-label="Agenda tu asesoría gratuita">
@@ -705,9 +716,7 @@
         <!-- PASO 1 -->
         <div id="book-step-form">
           <span class="book-badge">Asesoría gratuita · por Zoom</span>
-          <h2>Da el primer paso</h2>
-          <p class="book-sub">Déjanos tus datos y dinos cómo quieres seguir. Sin costo ni compromiso.</p>
-          <p class="book-human">Del otro lado hay una persona: un asesor de la firma revisa tu caso contigo, en español — no un bot.</p>
+          <p class="book-sub book-sub--lead">Déjanos tus datos y elige cómo seguir. Si quieres reunión, escoges día y hora al terminar.</p>
           <form id="lead-form" novalidate>
             <input type="text" name="contact_channel" id="f-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
             <div class="field">
@@ -746,7 +755,7 @@
             </fieldset>
             <button class="btn btn--primary" type="submit" id="lead-submit">Continuar</button>
           </form>
-          <p class="fineprint">Gratis y sin compromiso. Al enviar aceptas nuestra <a href="https://www.sotomayorconsulting.com/politicas" target="_blank" rel="noopener">política de privacidad</a>.</p>
+          <p class="fineprint">Al enviar aceptas nuestra <a href="https://www.sotomayorconsulting.com/politicas" target="_blank" rel="noopener">política de privacidad</a>.</p>
           <a class="wa-alt" href="https://wa.link/jx59a9" target="_blank" rel="noopener" data-cta="hero-wa">o escríbenos por WhatsApp →</a>
         </div>
 
@@ -970,12 +979,11 @@
         <h2>10 años estructurando negocios internacionales</h2>
       </div>
       <div class="stat-row stat-row--2 reveal">
-        <div class="stat"><div class="n">5.000</div><div class="l">empresas incorporadas</div></div>
+        <div class="stat"><div class="n">500</div><div class="l">empresas incorporadas</div></div>
         <div class="stat"><div class="n">10</div><div class="l">años estructurando negocios internacionales</div></div>
       </div>
       <div class="rating-line reveal">
-        <span class="stars" aria-hidden="true">★★★★☆</span>
-        <span>4,3 / 5 en Trustpilot · <a href="https://www.trustpilot.com/review/sotomayorconsulting.com" target="_blank" rel="noopener">reseñas verificadas ↗</a></span>
+        <span class="tp-line"><span class="tp-stars" aria-hidden="true"><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i class="off"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i></span><span>4,3 / 5 en</span><span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg>Trustpilot</span><span>· <a href="https://www.trustpilot.com/review/sotomayorconsulting.com" target="_blank" rel="noopener">reseñas verificadas ↗</a></span></span>
       </div>
       <div class="reviews reveal d1">
         <figure class="review">
