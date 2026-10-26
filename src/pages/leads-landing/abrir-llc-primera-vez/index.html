@@ -260,6 +260,7 @@
   .field input[aria-invalid="true"],.field select[aria-invalid="true"]{border-color:#ffb4a8;background:rgba(255,120,100,.1)}
   .field .err{display:none;color:#ffb4a8;font-size:.76rem;margin-top:4px}
   .field .err.show{display:block}
+  .meeting-paid{margin-top:18px;padding:14px 16px;border-left:3px solid var(--gold);background:var(--mist);border-radius:8px;font-size:.92rem;line-height:1.55;color:var(--ink)}
   .field.intent{border:0;padding:0;margin:0;min-width:0}
   .field.intent legend{display:block;font-size:.84rem;font-weight:600;color:rgba(255,255,255,.9);margin-bottom:8px;font-family:var(--font-display);padding:0}
   .intent-opt{display:flex!important;align-items:center;gap:10px;margin:0 0 7px!important;padding:12px 13px;border-radius:10px;border:1.5px solid var(--navy-600);background:rgba(255,255,255,.06);cursor:pointer;font-size:.92rem!important;font-weight:500!important;color:#fff!important;font-family:var(--font-body)!important;min-height:48px;transition:border-color .18s var(--e-out),background-color .18s var(--e-out)}
@@ -521,7 +522,7 @@
       <div>
         <span class="hero-eyebrow reveal" id="hero-pre">Para emprendedores y negocios fuera de EE.&nbsp;UU. que quieren abrir una LLC</span>
         <h1 class="reveal d1" id="hero-h1">Diseña tu LLC <span class="u">antes</span> de abrirla.</h1>
-        <p class="lede reveal d2" id="hero-sub">Asesoría inicial <strong>gratuita</strong> por Zoom, en español, con un asesor de la firma: revisamos tu caso y si una LLC encaja con tu actividad y tu país. Si encaja, el siguiente paso es <strong>Planificación y Diseño</strong>, donde se define cómo estructurarla.</p>
+        <p class="lede reveal d2" id="hero-sub">Asesoría inicial <strong>gratuita</strong> por Zoom, en español, con un asesor de la firma: revisamos tu caso y si una LLC encaja con tu actividad y tu país. Si encaja, te mostramos las decisiones que hay que tomar al diseñarla: en qué estado abrirla, cómo tributa, quiénes son socios, quién la administra y qué datos quedan públicos.</p>
         <div class="hero-obj reveal d2">
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Sin visa</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Sin SSN ni ITIN</span>
@@ -852,7 +853,7 @@
         <div class="why-item reveal d1">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
           <h3>Sales sabiendo qué sigue</h3>
-          <p>Sabes si una LLC encaja con tu caso y cuál es el siguiente paso: el diseño de tu LLC en Planificación y Diseño, que tiene costo.</p>
+          <p>Sabes si una LLC encaja con tu caso y cuál es el siguiente paso: diseñar tu LLC con un especialista, un servicio con costo.</p>
         </div>
         <div class="why-item reveal d2">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></span>
@@ -871,14 +872,15 @@
         <div class="reveal">
           <div class="section-head" style="margin-bottom:0">
             <span class="kicker">La reunión inicial</span>
-            <h2>Qué revisamos contigo</h2>
+            <h2>Qué ves en la asesoría gratuita</h2>
           </div>
           <ul class="meeting-list">
             <li><b>1</b><span>Tu país de residencia, tu actividad, tus socios y hacia dónde va el proyecto.</span></li>
             <li><b>2</b><span>Si una LLC es la estructura correcta — y si no, qué conviene en su lugar.</span></li>
             <li><b>3</b><span>Cómo funciona el trámite y qué costos intervienen: plan anual + tasa del estado (varía por jurisdicción).</span></li>
-            <li><b>4</b><span>Si encaja, el siguiente paso: Planificación y Diseño, donde se define el estado y la estructura.</span></li>
+            <li><b>4</b><span>Si encaja, el siguiente paso: diseñar tu LLC con un especialista (servicio con costo), donde se define el estado y la estructura.</span></li>
           </ul>
+          <p class="meeting-paid"><b>Lo que se diseña después (con costo):</b> el estado, los impuestos, quiénes son socios y quién administra, qué datos quedan públicos, cómo se llevan las cuentas y la clasificación de la actividad. El resultado es un diseño preliminar; el informe final se prepara tras validar antecedentes y normativa.</p>
         </div>
         <div class="meeting-card reveal d1">
           <h3>Detalles</h3>
@@ -909,7 +911,7 @@
           <p class="meta">Online · sin compromiso</p>
         </div>
         <div class="step reveal d1">
-          <h3>Planificación y Diseño, y eliges tu plan</h3>
+          <h3>Diseñas tu LLC y eliges tu plan</h3>
           <p>Defines con el equipo cómo estructurar tu LLC y eliges tu plan. Completas el formulario guiado en nuestra app. Pasaporte y comprobante de domicilio se piden de forma progresiva.</p>
           <p class="meta">Pago seguro con Stripe</p>
         </div>
@@ -928,13 +930,13 @@
       <div class="section-head reveal">
         <span class="kicker">Planes y costos</span>
         <h2>Planes y costos</h2>
-        <p class="plans-note">La asesoría inicial es gratuita. <b>Planificación y Diseño</b> (USD 350, pago único) es el plan para planificar y diseñar tu LLC; los planes de servicio son anuales (desde USD 350). Aparte, la empresa tiene un <b>mantenimiento anual de USD 399</b> —agente residente y reporte estatal—, más la <i>franchise tax</i> y el cumplimiento tributario del estado, montos que fija cada jurisdicción.</p>
+        <p class="plans-note">La asesoría inicial es gratuita. <b>Diseño de tu LLC</b> (plan Planificación y Diseño, USD 350 pago único) es el servicio para planificarla y diseñarla; los planes de servicio son anuales (desde USD 350). Aparte, la empresa tiene un <b>mantenimiento anual de USD 399</b> —agente residente y reporte estatal—, más la <i>franchise tax</i> y el cumplimiento tributario del estado, montos que fija cada jurisdicción.</p>
       </div>
       <div class="plans-grid reveal">
         <div class="pcard">
-          <h3>Planificación y Diseño</h3>
+          <h3>Diseño de tu LLC <small style="font-weight:600;color:var(--muted);font-size:.68rem">· Planificación y Diseño</small></h3>
           <div class="price">USD 350 <small>/ único</small></div>
-          <p>Planificación y diseño de la LLC para ir paso a paso.</p>
+          <p>Con un especialista defines estado, impuestos, socios y administración, datos públicos, método contable y clasificación de la actividad. Resultado: un diseño preliminar con alertas, sujeto a validación legal y tributaria.</p>
         </div>
         <div class="pcard">
           <h3>Básico</h3>
@@ -1328,12 +1330,12 @@
     dolares: {
       pre: 'Para quienes cobran a clientes del exterior y quieren una LLC',
       h1: 'Cobra en dólares desde tu país con tu propia LLC en EE.&nbsp;UU.',
-      sub: 'Asesoría inicial gratuita por Zoom, en español: revisamos si una LLC encaja con tu forma de cobrar y tu país. Si encaja, el siguiente paso es Planificación y Diseño. Si no es tu mejor opción, te lo decimos sin costo.'
+      sub: 'Asesoría inicial gratuita por Zoom, en español: revisamos si una LLC encaja con tu forma de cobrar y tu país. Si encaja, el siguiente paso es diseñar tu LLC con un especialista. Si no es tu mejor opción, te lo decimos sin costo.'
     },
     patrimonio: {
       pre: 'Para inversionistas y dueños de patrimonio fuera de EE. UU.',
       h1: 'Protege tu patrimonio con una <span class="u">estructura bien diseñada</span> en EE.&nbsp;UU.',
-      sub: 'Asesoría inicial gratuita por Zoom: revisamos si una LLC —o una estructura mayor— encaja con tu caso. El diseño de la estructura se trabaja después, en Planificación y Diseño. Sin costo y sin compromiso en esta primera reunión.'
+      sub: 'Asesoría inicial gratuita por Zoom: revisamos si una LLC —o una estructura mayor— encaja con tu caso. El diseño de la estructura se trabaja después, con un especialista y con costo. Sin costo y sin compromiso en esta primera reunión.'
     },
     ordenar: {
       pre: 'Para quienes ya tienen una LLC y quieren ordenarla',

@@ -406,6 +406,12 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
+### `leads-landing/abrir-llc-primera-vez`: lenguaje para público frío (2026-10-26)
+
+- El nombre interno **"Planificación y Diseño" no se usa en hero, hooks, reunión ni pasos**: el tráfico frío no lo entiende. Se describe como "diseñar tu LLC con un especialista (servicio con costo)" y el nombre aparece solo como referencia en la sección de planes. Se evitan también NAICS, Operating Agreement y "tributación" en el hero (se dice "impuestos", "socios", "datos públicos").
+- Contenido real de ese servicio (herramienta `blueprint.sotomayorconsulting.com`, revisada leyendo su bundle público, sin datos de clientes): estado, impuestos, socios y administración, confidencialidad registral, método contable y código NAICS; resultado "preliminar" que requiere validación legal y tributaria.
+- La asesoría gratuita es el único paso que la landing pide; Planificación y Diseño es "la mejor forma de iniciar" tras ella, no el destino del anuncio.
+
 ### `leads-landing/abrir-llc-primera-vez`: hero en tres capas + reencuadre tras análisis de competencia (2026-10-26)
 
 - **Corrección de oferta**: la asesoría gratuita NO es un diagnóstico completo; el estado, la estructura y el costo se trabajan en el plan de pago **Planificación y Diseño** (USD 350 único en la página). Se retiró del hero, del formulario, de "por qué empezar", de la agenda de la reunión, del FAQ y de la sección de planes cualquier promesa de "estado recomendado" o "costo exacto/real del primer año". La sección de planes volvió a "Planes y costos" y Planificación y Diseño pasó a la primera tarjeta (ya no "upgrade").
