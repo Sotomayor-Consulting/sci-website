@@ -1,8 +1,7 @@
 /**
  * Event Type de Calnode compartido por las landings LLC.
  *
- * `test-landing-api` es el Event Type de prueba con el que se valida el flujo
- * completo (preguntas, disponibilidad y reserva). Cuando exista el Event Type
- * definitivo de producción, cambiar solo este valor.
+ * Mantener este valor centralizado evita que las variantes de la landing usen
+ * distintos calendarios por error.
  */
-export const LLC_EVENT_TYPE_SLUG = "test-landing-api";
+export const LLC_EVENT_TYPE_SLUG = "landing-event";
