@@ -406,7 +406,12 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
-### Video de bienvenida movido a `schedule-confirmed-v2` (2026-10-26)
+### Video retirado de ambas landings (2026-10-26, decisión del dueño tras ver el preview)
+
+- `schedule-confirmed-v2` vuelve a ser idéntica a `origin/main` (sin el bloque del video ni los eventos `welcome_video_*`): "no se acopla el video". El cambio quedó revertido en un commit nuevo; el historial conserva el intento.
+- `leads-landing/abrir-llc-primera-vez`: se quitó también el loop silencioso del hero (HTML, CSS y script) y el hero de dos columnas que dependía de él; vuelve a una sola columna (máx. 720 px). Los archivos `public/form-landing-*` siguen en el repo (no se borraron; ya existían en `main`). Si se vuelve a usar un video, el que hay es de bienvenida y no de venta; ver la entrada siguiente para el desajuste de su final.
+
+### (Histórico, revertido arriba) Video de bienvenida movido a `schedule-confirmed-v2` (2026-10-26)
 
 - El video de Sebastián (27 s, 1080x1080, subtítulos grabados; `public/form-landing-sub.webm|mp4`, portada `form-landing-poster.jpg`) pasó del hero de `leads-landing/abrir-llc-primera-vez` a la página de confirmación `/schedule-confirmed-v2/`, que se muestra tras reservar. Motivo: es un video de bienvenida ("Gracias por tu interés… el siguiente paso es agendar una reunión gratuita"), que suena prematuro ante tráfico frío y repetía "gratuita" justo cuando se dejó de usar como reclamo.
 - En `schedule-confirmed-v2`: bloque `.welcome-video` entre la agenda y "Antes de nuestra reunión" (`preload="none"`, controles, sin autoplay con sonido), oculto en el estado `invalid`. Eventos `welcome_video_play` / `welcome_video_complete` en `dataLayer` desde un script aparte: **no se tocó** el script que dispara `Schedule` (verificado: sigue disparando una vez). El contrato `tests/schedule-confirmed-contract.test.mjs` aplica a `schedule-confirmed` (v1), no a v2.
