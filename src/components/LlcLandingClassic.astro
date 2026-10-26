@@ -30,7 +30,14 @@ import {
   NativeSelectOption,
 } from "@/components/starwind/native-select";
 import { Textarea } from "@/components/starwind/textarea";
+import CalendarioReserva from "@/components/ui/blocks/CalendarioReserva.astro";
 import HeroImage from "@images/Hero_Sotomayor.avif";
+
+interface Props {
+  eventTypeSlug?: string;
+}
+
+const { eventTypeSlug } = Astro.props;
 
 const activityGroups = [
   {
@@ -105,7 +112,7 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
         class="mx-auto mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/80"
       >
         <span class="h-px w-12 bg-white/25" aria-hidden="true"></span>
-        <span>30 min por Zoom</span>
+        <span>60 min por Zoom</span>
         <span class="text-primary" aria-hidden="true">•</span>
         <span>100% remoto y en español</span>
         <span class="h-px w-12 bg-white/25" aria-hidden="true"></span>
@@ -309,16 +316,6 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
               name="advice"
               value="Sí, quiero revisar mi caso con un experto"
             />
-            <div class="absolute -left-[9999px]" aria-hidden="true">
-              <label for="website-classic">Sitio web</label>
-              <input
-                id="website-classic"
-                name="website"
-                type="text"
-                tabindex="-1"
-                autocomplete="off"
-              />
-            </div>
             {
               activityGroups.map((group) => (
                 <fieldset class="space-y-3">
@@ -461,15 +458,18 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
             <Field class="gap-2">
               <FieldLabel for="question-classic">
                 ¿Qué duda principal quieres resolver?
-                <span class="font-normal text-muted-foreground"> Opcional</span>
               </FieldLabel>
               <Textarea
                 id="question-classic"
                 name="question"
                 rows={3}
+                required
                 placeholder="Ej.: no sé si me conviene Wyoming o Florida, ni qué pasa con mis impuestos aquí."
                 class="min-h-20 resize-none bg-muted/60"
               />
+              <FieldError match="valueMissing"
+                >Cuéntanos brevemente tu duda para preparar la asesoría.</FieldError
+              >
             </Field>
           </CardContent>
           <CardFooter class="flex-wrap gap-3 px-5 pt-3 pb-8 sm:px-10 sm:pb-10 mt-5">
@@ -500,44 +500,24 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
         </section>
 
         <section class="onboarding-step-classic hidden" data-step="3">
-          <CardHeader class="px-5 pt-8 sm:px-10 sm:pt-10">
-            <CardTitle
-              id="schedule-title-classic"
-              class="font-display text-2xl sm:text-3xl"
-              tabindex="-1"
-            >
-              Elige tu horario
-            </CardTitle>
-            <CardDescription>
-              Selecciona directamente en Zcal el día y la hora que mejor te
-              convengan.
-            </CardDescription>
-          </CardHeader>
-          <CardContent class="px-3 pb-8 sm:px-6 sm:pb-10">
-            <div
-              class="overflow-hidden rounded-2xl border border-border bg-white"
-            >
-              <iframe
-                id="zcal-frame-classic"
-                title="Calendario de reserva — Sotomayor Consulting"
-                src="about:blank"
-                loading="eager"
-                allow="clipboard-write; fullscreen"
-                class="h-[760px] w-full border-0 sm:h-[800px]"></iframe>
-            </div>
-            <p class="mt-4 text-center text-xs text-muted-foreground">
-              ¿No carga el calendario?
-              <a
-                id="zcal-open-classic"
-                href="https://zcal.co/t/agendar-asesoria-llc/60-USA"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="font-semibold text-primary-accent underline underline-offset-4"
+          <div class="mx-auto w-full md:w-[60%] lg:w-1/2">
+            <CardHeader class="px-5 pt-8 sm:px-10 sm:pt-10 lg:px-6">
+              <CardTitle
+                id="schedule-title-classic"
+                class="font-display text-2xl sm:text-3xl"
+                tabindex="-1"
               >
-                Ábrelo en una pestaña nueva
-              </a>.
-            </p>
-          </CardContent>
+                Elige tu horario
+              </CardTitle>
+              <CardDescription>
+                Elige el día y la hora que mejor te convengan. La reserva se
+                confirma al instante.
+              </CardDescription>
+            </CardHeader>
+            <CardContent class="px-3 pb-8 sm:px-6 sm:pb-10">
+              <CalendarioReserva slug={eventTypeSlug} theme="light" />
+            </CardContent>
+          </div>
         </section>
       </Form>
     </Card>
@@ -560,7 +540,7 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
           Qué incluye la asesoría
         </h2>
         <p class="mt-3 leading-relaxed text-muted-foreground">
-          Una conversación de 30 minutos para salir con una decisión tomada, no
+          Una conversación de 60 minutos para salir con una decisión tomada, no
           con más dudas.
         </p>
       </div>
@@ -612,7 +592,7 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
         </p>
       </div>
       <div class="px-7">
-        <dt class="font-display text-4xl font-bold text-primary">30 min</dt>
+        <dt class="font-display text-4xl font-bold text-primary">60 min</dt>
         <dd class="mt-2 font-semibold">de asesoría sin costo</dd>
         <p class="mt-2 text-xs leading-relaxed text-white/55">
           Por Zoom, en español y desde cualquier parte del mundo.
@@ -652,16 +632,14 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
     const continueToSchedule = activeForm.querySelector<HTMLButtonElement>(
       "#continue-to-schedule-classic",
     );
-    const status = activeForm.querySelector<HTMLElement>(
-      "#form-status-classic",
+    const contactTitle = activeForm.querySelector<HTMLElement>(
+      "#contact-title-classic",
     );
-    const zcalFrame = activeForm.querySelector<HTMLIFrameElement>(
-      "#zcal-frame-classic",
+    const calendarRoot = activeForm.querySelector<HTMLElement>(
+      "[data-calendar-paso]",
     );
-    const zcalOpen =
-      activeForm.querySelector<HTMLAnchorElement>("#zcal-open-classic");
-    let submissionId = "";
-    let isSubmitting = false;
+    let trackingId = "";
+    let trackingSent = false;
 
     if (continueToContact) continueToContact.disabled = true;
 
@@ -717,28 +695,22 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
       }
     }
 
-    function setSubmitting(submitting: boolean) {
-      isSubmitting = submitting;
-      if (!continueToSchedule) return;
-      continueToSchedule.disabled = submitting;
-      continueToSchedule.textContent = submitting
-        ? "Abriendo calendario..."
-        : "Elegir horario";
-      if (submitting) continueToSchedule.setAttribute("aria-busy", "true");
-      else continueToSchedule.removeAttribute("aria-busy");
-    }
-
-    function setStatus(message: string, error = false) {
-      if (!status) return;
-      status.textContent = message;
-      status.classList.toggle("text-error", error);
-      status.classList.toggle("text-muted-foreground", !error);
-    }
-
     function validateContactFields() {
-      const fields = ["#full-name-classic", "#email-classic", "#phone-classic"]
-        .map((selector) => activeForm.querySelector<HTMLInputElement>(selector))
-        .filter((field): field is HTMLInputElement => Boolean(field));
+      const fields = [
+        "#full-name-classic",
+        "#email-classic",
+        "#phone-classic",
+        "#question-classic",
+      ]
+        .map((selector) =>
+          activeForm.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+            selector,
+          ),
+        )
+        .filter(
+          (field): field is HTMLInputElement | HTMLTextAreaElement =>
+            Boolean(field),
+        );
       const invalidField = fields.find((field) => !field.checkValidity());
       if (!invalidField) return true;
       invalidField.reportValidity();
@@ -746,13 +718,13 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
       return false;
     }
 
-    function getSubmissionId() {
-      if (submissionId) return submissionId;
+    function getTrackingId() {
+      if (trackingId) return trackingId;
       if (typeof globalThis.crypto?.randomUUID === "function") {
-        submissionId = globalThis.crypto.randomUUID();
-        return submissionId;
+        trackingId = globalThis.crypto.randomUUID();
+        return trackingId;
       }
-      submissionId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      trackingId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
         /[xy]/g,
         (character) => {
           const random = Math.floor(Math.random() * 16);
@@ -760,24 +732,28 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
           return value.toString(16);
         },
       );
-      return submissionId;
+      return trackingId;
     }
 
-    function buildZcalUrl(values: FormData) {
-      const countryCode = String(values.get("countryCode") ?? "");
-      const localPhone = String(values.get("phone") ?? "")
-        .replace(/\D/g, "")
-        .replace(/^0+/, "");
-      const phone = `${countryCode}${localPhone}`;
-      const url = new URL("https://zcal.co/t/agendar-asesoria-llc/60-USA");
-      url.searchParams.set("name", String(values.get("name") ?? ""));
-      url.searchParams.set("email", String(values.get("email") ?? ""));
-      url.searchParams.set("smsPhone", phone);
-      url.searchParams.set("a0", phone);
-      url.searchParams.set("a1", String(values.get("activity") ?? ""));
-      url.searchParams.set("a2", String(values.get("advice") ?? ""));
-      url.searchParams.set("a3", String(values.get("question") ?? ""));
-      return url.toString();
+    function trackScheduleSelection(currentTrackingId: string) {
+      if (trackingSent) return;
+      trackingSent = true;
+      try {
+        const trackingWindow = window as Window & {
+          dataLayer?: Array<Record<string, unknown>>;
+        };
+        trackingWindow.dataLayer = trackingWindow.dataLayer || [];
+        trackingWindow.dataLayer.push({
+          event: "lead_datos_completados",
+          submission_id: currentTrackingId,
+        });
+        trackingWindow.dataLayer.push({
+          event: "elegir_horario",
+          submission_id: currentTrackingId,
+        });
+      } catch {
+        // Un fallo de medición no debe interrumpir el formulario.
+      }
     }
 
     activeForm
@@ -819,65 +795,25 @@ import Timeline from "@/components/ui/timeline/timeline.astro"
         );
       });
 
-    activeForm.addEventListener("submit", async (event) => {
+    activeForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      if (isSubmitting) return;
 
       if (!validateContactFields()) {
         showStep(2);
         return;
       }
 
-      const values = new FormData(activeForm);
-      const currentSubmissionId = getSubmissionId();
-      setSubmitting(true);
-      setStatus("Guardando tu asesoría...");
+      trackScheduleSelection(getTrackingId());
 
-      try {
-        const response = await fetch("/api/leads", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            submissionId: currentSubmissionId,
-            name: String(values.get("name") ?? ""),
-            email: String(values.get("email") ?? ""),
-            countryCode: String(values.get("countryCode") ?? ""),
-            phone: String(values.get("phone") ?? ""),
-            activity: String(values.get("activity") ?? ""),
-            advice: String(values.get("advice") ?? ""),
-            question: String(values.get("question") ?? ""),
-            source: "tu_llc-en_usa",
-            website: String(values.get("website") ?? ""),
-          }),
-        });
+      showStep(3);
+      calendarRoot?.dispatchEvent(
+        new CustomEvent("calendar:activate", { bubbles: true }),
+      );
+    });
 
-        if (!response.ok) {
-          throw new Error(`Lead request failed with status ${response.status}`);
-        }
-
-        const trackingWindow = window as Window & {
-          dataLayer?: Array<Record<string, unknown>>;
-        };
-        trackingWindow.dataLayer = trackingWindow.dataLayer || [];
-        trackingWindow.dataLayer.push({ event: "lead_datos_completados" });
-        try {
-          localStorage.setItem("llcLeadSubmissionId", currentSubmissionId);
-        } catch {
-          // Storage is optional; the successful lead submission must continue.
-        }
-
-        const zcalUrl = buildZcalUrl(values);
-        if (zcalFrame) zcalFrame.src = zcalUrl;
-        if (zcalOpen) zcalOpen.href = zcalUrl;
-        setSubmitting(false);
-        showStep(3);
-      } catch {
-        setStatus(
-          "No pudimos guardar tu asesoría. Revisa tu conexión e inténtalo nuevamente.",
-          true,
-        );
-        setSubmitting(false);
-      }
+    activeForm.addEventListener("calendar:back", () => {
+      showStep(2);
+      contactTitle?.focus({ preventScroll: true });
     });
 
     showStep(1);

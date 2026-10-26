@@ -21,15 +21,17 @@ import {
   NativeSelectOption,
 } from "@/components/starwind/native-select";
 import { Textarea } from "@/components/starwind/textarea";
+import CalendarioReserva from "@/components/ui/blocks/CalendarioReserva.astro";
 
 interface Props {
   activityGroups: {
     label: string;
     activities: string[];
   }[];
+  eventTypeSlug?: string;
 }
 
-const { activityGroups } = Astro.props;
+const { activityGroups, eventTypeSlug } = Astro.props;
 ---
 
 <Card
@@ -100,16 +102,6 @@ const { activityGroups } = Astro.props;
           name="advice"
           value="Sí, quiero revisar mi caso con un experto"
         />
-        <div class="absolute -left-[9999px]" aria-hidden="true">
-          <label for="onboarding-website-b">Sitio web</label>
-          <input
-            id="onboarding-website-b"
-            name="website"
-            type="text"
-            tabindex="-1"
-            autocomplete="off"
-          />
-        </div>
 
         <div class="mt-5 space-y-5">
           {
@@ -265,15 +257,18 @@ const { activityGroups } = Astro.props;
           <Field class="gap-2">
             <FieldLabel for="question-b" class="text-white/85">
               ¿Qué duda principal quieres resolver?
-              <span class="font-normal text-white/40"> Opcional</span>
             </FieldLabel>
             <Textarea
               id="question-b"
               name="question"
               rows={3}
+              required
               placeholder="Ej.: no sé si me conviene Wyoming o Florida, ni qué pasa con mis impuestos aquí."
               class="min-h-20 resize-none border-white/15 bg-white/5 text-white placeholder:text-white/35"
             />
+            <FieldError match="valueMissing"
+              >Cuéntanos brevemente tu duda para preparar la asesoría.</FieldError
+            >
           </Field>
         </div>
 
@@ -314,33 +309,17 @@ const { activityGroups } = Astro.props;
           Elige tu horario
         </h2>
         <p class="mt-1.5 text-sm leading-relaxed text-white/55">
-          Selecciona directamente en Zcal el día y la hora que mejor te
-          convengan.
+          Elige el día y la hora que mejor te convengan. La reserva se confirma
+          al instante.
         </p>
 
-        <div
-          class="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-white"
-        >
-          <iframe
-            id="zcal-frame-b"
-            title="Calendario de reserva — Sotomayor Consulting"
-            src="about:blank"
-            loading="eager"
-            allow="clipboard-write; fullscreen"
-            class="h-[760px] w-full border-0"></iframe>
+        <div class="mt-5">
+          <CalendarioReserva
+            slug={eventTypeSlug}
+            theme="dark"
+            class="text-white"
+          />
         </div>
-        <p class="mt-4 text-center text-xs text-white/50">
-          ¿No carga el calendario?
-          <a
-            id="zcal-open-b"
-            href="https://zcal.co/t/agendar-asesoria-llc/60-USA"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-primary font-semibold underline underline-offset-4"
-          >
-            Ábrelo en una pestaña nueva
-          </a>.
-        </p>
       </section>
     </CardContent>
   </Form>

@@ -1,12 +1,11 @@
 ---
 import LayoutMkt from "@/layouts/LayoutMkt.astro";
 import LlcOnboarding from "@/components/LlcOnboarding.astro";
-
-
+import { LLC_EVENT_TYPE_SLUG } from "@/data_files/llc-booking";
 ---
 
 <LayoutMkt
   title="Agenda tu asesoría para crear una LLC en Estados Unidos | Sotomayor Consulting International"
 >
-  <LlcOnboarding />
+  <LlcOnboarding eventTypeSlug={LLC_EVENT_TYPE_SLUG} />
 </LayoutMkt>
