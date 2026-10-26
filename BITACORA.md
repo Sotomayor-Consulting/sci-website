@@ -406,6 +406,13 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
+### `leads-landing/abrir-llc-primera-vez`: hero en tres capas + reencuadre tras análisis de competencia (2026-10-26)
+
+- **Corrección de oferta**: la asesoría gratuita NO es un diagnóstico completo; el estado, la estructura y el costo se trabajan en el plan de pago **Planificación y Diseño** (USD 350 único en la página). Se retiró del hero, del formulario, de "por qué empezar", de la agenda de la reunión, del FAQ y de la sección de planes cualquier promesa de "estado recomendado" o "costo exacto/real del primer año". La sección de planes volvió a "Planes y costos" y Planificación y Diseño pasó a la primera tarjeta (ya no "upgrade").
+- **Hero en tres capas** (`#hero-pre` a quién, `#hero-h1` gancho, `#hero-sub` hechos): "Para emprendedores y negocios fuera de EE. UU. que quieren abrir una LLC" / "Diseña tu LLC antes de abrirla." / subtítulo con reunión gratuita por Zoom y siguiente paso. Los hooks de `?utm_content=` (`dolares`, `patrimonio`, `ordenar`) ahora también definen `pre` y ya no prometen estado ni plan. "Primera LLC" se descartó como eje del hero (tema básico y saturado).
+- **Base**: `docs/competencia-llc-ganchos-2026-10-26.md` (matriz de 5 competidores, anuncios activos en Meta de MX/CO/EC/AR/PE/ES, patrones y hueco). Hueco elegido: nadie de los revisados vende "diseñar antes de abrir" como producto con nombre. Limitación: de los anuncios solo se vieron títulos.
+- **Pendiente del negocio**: qué entrega exactamente Planificación y Diseño y si va siempre antes del plan anual (el copy lo presenta como "el siguiente paso" sin afirmar orden contractual).
+
 ### `leads-landing/abrir-llc-primera-vez`: pregunta única + hero para tráfico frío (2026-10-26, rama `feat/llc-primera-vez-pregunta-unica`, sin commit ni PR)
 
 - **Formulario**: el desplegable `goal` ("¿Qué quieres resolver?") se reemplazó por UNA pregunta obligatoria, "¿Quieres una reunión de asesoría gratuita?", con tres radios que reutilizan los valores de `asesoria-llc-usa-diagnostico-agenda` en `wants_zoom_meeting`: `si_agendar`, `necesito_mas_info`, `no_por_ahora` (más `wants_zoom_meeting_label`). `goal`/`main_goal` ahora viajan vacíos (el backend ya los trataba como "sin especificar"). Antes el payload mandaba `wants_zoom_meeting: "si"` fijo.

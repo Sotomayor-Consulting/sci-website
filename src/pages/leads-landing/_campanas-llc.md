@@ -22,7 +22,7 @@ para que Astro no lo publique como ruta.
 - **Objetivo único:** cerrar la reunión de asesoría por Zoom. Un solo CTA repetido.
   El copy **no menciona duración** (ni "30 min" ni rango): posiciona la reunión como
   conversación consultiva, no llamada con cronómetro.
-- **Mecanismo:** formulario de 4 campos (nombre, WhatsApp con país+bandera, correo, `goal`)
+- **Mecanismo:** formulario de 4 campos (nombre, WhatsApp con país+bandera, correo y UNA pregunta de intención: `wants_zoom_meeting` = `si_agendar` | `necesito_mas_info` | `no_por_ahora`; las dos últimas redirigen a `/guia-llc-estados-unidos/`)
   → `POST` a `https://n8n.sotomayorconsulting.com/webhook/leads-directos-tiktok-landing`
   → n8n → Odoo (crm.lead). Luego se muestra el **calendario Zcal embebido** prellenado:
   `name`, `email`, `smsPhone` (recordatorio SMS) y **`a0`** (pregunta "Teléfono (WhatsApp)"
@@ -56,6 +56,8 @@ para que Astro no lo publique como ruta.
   el servicio no se concreta; sujeto a revisión y a `/terminos` y `/politicas`.
 
 ## Variantes de mensaje por `?utm_content=` / `?hook=`
+
+**Hero en tres capas** (2026-10-26): pre-título (`#hero-pre`, a quién apuntamos) + título (`#hero-h1`, el gancho) + subtítulo (`#hero-sub`, hechos objetivos). Cada hook define `pre`, `h1` y `sub`. La reunión gratuita es orientación inicial, NO un diagnóstico completo: el estado, la estructura y el costo se trabajan en el plan de pago Planificación y Diseño. No prometer "estado recomendado" ni "costo exacto" en la reunión.
 
 - **Landing A:** `dolares` · `patrimonio` · `ordenar`
 - **Landing B:** `atrasadas` (5472/1120) · `estado` (Delaware / franchise tax) · `proveedor`
