@@ -260,6 +260,15 @@
   .field input[aria-invalid="true"],.field select[aria-invalid="true"]{border-color:#ffb4a8;background:rgba(255,120,100,.1)}
   .field .err{display:none;color:#ffb4a8;font-size:.76rem;margin-top:4px}
   .field .err.show{display:block}
+  .field.intent{border:0;padding:0;margin:0;min-width:0}
+  .field.intent legend{display:block;font-size:.84rem;font-weight:600;color:rgba(255,255,255,.9);margin-bottom:8px;font-family:var(--font-display);padding:0}
+  .intent-opt{display:flex!important;align-items:center;gap:10px;margin:0 0 7px!important;padding:12px 13px;border-radius:10px;border:1.5px solid var(--navy-600);background:rgba(255,255,255,.06);cursor:pointer;font-size:.92rem!important;font-weight:500!important;color:#fff!important;font-family:var(--font-body)!important;min-height:48px;transition:border-color .18s var(--e-out),background-color .18s var(--e-out)}
+  .intent-opt:hover{border-color:var(--gold-300)}
+  .intent-opt input{width:18px;height:18px;flex:none;margin:0;padding:0;accent-color:var(--gold-cta)}
+  .intent-opt:has(input:checked){border-color:var(--gold-300);background:rgba(228,192,120,.14)}
+  .intent-opt:has(input:focus-visible){outline:2px solid var(--gold-300);outline-offset:2px}
+  .field.intent[aria-invalid="true"] .intent-opt{border-color:#ffb4a8}
+  .intent-hint{font-size:.78rem;color:rgba(255,255,255,.72);margin:2px 0 0;min-height:1.1em}
   .phone-row{display:grid;grid-template-columns:120px 1fr;gap:8px}
   .ccx{position:relative}
   .ccx-btn{width:100%;display:flex;align-items:center;gap:7px;padding:12px 9px 12px 11px;border-radius:10px;border:1.5px solid var(--navy-600);background:rgba(255,255,255,.06);color:#fff;font-size:.95rem;line-height:1;cursor:pointer;transition:border-color .18s var(--e-out),background-color .18s var(--e-out)}
@@ -511,8 +520,8 @@
     <div class="wrap">
       <div>
         <span class="hero-eyebrow reveal">Firma boutique legal, fiscal y tecnológica · 10 años</span>
-        <h1 class="reveal d1" id="hero-h1">Abre tu LLC en Estados Unidos <span class="u">con menos riesgos</span>, con una estructura pensada desde el inicio.</h1>
-        <p class="lede reveal d2" id="hero-sub">Asesoría <strong>gratuita</strong> por Zoom para <strong>e-commerce</strong>, <strong>agencias</strong>, <strong>SaaS</strong>, <strong>creadores</strong>, <strong>consultores</strong> e <strong>inversionistas</strong>: revisamos tu caso y te decimos si una LLC es lo que necesitas, en qué estado y con qué plan — <strong>antes de pagar nada</strong>.</p>
+        <h1 class="reveal d1" id="hero-h1">Abre tu <span class="u">primera LLC</span> en Estados Unidos sin visa ni viaje.</h1>
+        <p class="lede reveal d2" id="hero-sub">Agenda una asesoría <strong>gratuita</strong> por Zoom, en español, y sal con tu <strong>estado recomendado</strong>, tu <strong>plan</strong> y tu <strong>costo del primer año</strong> — <strong>antes de pagar nada</strong>. Si una LLC no te conviene, te lo decimos.</p>
         <div class="hero-obj reveal d2">
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Sin visa</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Sin SSN ni ITIN</span>
@@ -670,6 +679,88 @@
       });
     })();
   </script>
+
+  <!-- ============ AGENDA (form → Zcal) — justo bajo el hero (tráfico frío) ============ -->
+  <section class="agenda-final" id="agendar">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Primer paso</span>
+        <h2>Tu primer paso es gratis: agenda tu asesoría</h2>
+        <p class="lede">Sales con una recomendación clara: si la LLC te conviene, en qué estado, con qué plan y cuánto cuesta tu primer año. Si no te conviene, te lo decimos y no pagas nada.</p>
+      </div>
+
+      <div class="book reveal d1" aria-label="Agenda tu asesoría gratuita">
+        <svg class="globe" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+          <circle cx="100" cy="100" r="78" stroke="#fff" stroke-opacity=".35"/>
+          <ellipse cx="100" cy="100" rx="30" ry="78" stroke="#fff" stroke-opacity=".25"/>
+          <ellipse cx="100" cy="100" rx="58" ry="78" stroke="#fff" stroke-opacity=".18"/>
+          <path d="M24 78h152M30 122h140M22 100h156" stroke="#fff" stroke-opacity=".2"/>
+          <path d="M40 66c30 26 90 26 120 0" stroke="#e4c078" stroke-width="1.5"/>
+          <path d="M46 138c28-22 82-22 108 4" stroke="#e4c078" stroke-width="1.5"/>
+          <g fill="#e4c078"><circle cx="40" cy="66" r="3.4"/><circle cx="160" cy="66" r="3.4"/></g>
+          <g fill="#fff"><circle cx="100" cy="22" r="3"/><circle cx="22" cy="100" r="3"/><circle cx="178" cy="100" r="3"/></g>
+        </svg>
+
+        <!-- PASO 1 -->
+        <div id="book-step-form">
+          <span class="book-badge">Asesoría gratuita · por Zoom</span>
+          <h2>Da el primer paso</h2>
+          <p class="book-sub">Déjanos tus datos y dinos cómo quieres seguir. Sin costo ni compromiso.</p>
+          <p class="book-human">Del otro lado hay una persona: un asesor de la firma revisa tu caso contigo, en español — no un bot.</p>
+          <form id="lead-form" novalidate>
+            <input type="text" name="contact_channel" id="f-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
+            <div class="field">
+              <label for="f-name">Nombre completo</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre y apellido" required aria-describedby="e-name" />
+              <p class="err" id="e-name" role="status" aria-live="polite">Escribe tu nombre.</p>
+            </div>
+            <div class="field">
+              <label for="f-phone">WhatsApp</label>
+              <div class="phone-row">
+                <div class="ccx" id="f-cc">
+                  <button type="button" class="ccx-btn" id="f-cc-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="f-cc-list" aria-label="País del WhatsApp">
+                    <img class="ccx-flag" id="f-cc-flag" src="https://flagcdn.com/w40/us.png" srcset="https://flagcdn.com/w80/us.png 2x" alt="" width="22" height="16" />
+                    <span class="ccx-code" id="f-cc-code">+1</span>
+                    <svg class="ccx-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+                  <ul class="ccx-list" id="f-cc-list" role="listbox" tabindex="-1" aria-label="Elige el país" hidden></ul>
+                  <input type="hidden" name="country_code" id="f-cc-value" value="+1" data-iso="US" />
+                </div>
+                <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(305) 123 4567" required aria-describedby="e-phone" />
+              </div>
+              <p class="err" id="e-phone" role="status" aria-live="polite">Escribe un número válido.</p>
+            </div>
+            <div class="field">
+              <label for="f-email">Correo electrónico</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required aria-describedby="e-email" />
+              <p class="err" id="e-email" role="status" aria-live="polite">Escribe un correo válido.</p>
+            </div>
+            <fieldset class="field intent" id="f-intent" aria-describedby="e-intent intent-hint">
+              <legend>¿Quieres una reunión de asesoría gratuita?</legend>
+              <label class="intent-opt"><input type="radio" name="meeting_intent" value="si_agendar" /><span>Sí, quiero agendar mi asesoría gratis</span></label>
+              <label class="intent-opt"><input type="radio" name="meeting_intent" value="necesito_mas_info" /><span>Quiero más información</span></label>
+              <label class="intent-opt"><input type="radio" name="meeting_intent" value="no_por_ahora" /><span>No por el momento</span></label>
+              <p class="intent-hint" id="intent-hint" role="status" aria-live="polite"></p>
+              <p class="err" id="e-intent" role="status" aria-live="polite">Elige una opción.</p>
+            </fieldset>
+            <button class="btn btn--primary" type="submit" id="lead-submit">Continuar</button>
+          </form>
+          <p class="fineprint">Gratis y sin compromiso. Al enviar aceptas nuestra <a href="https://www.sotomayorconsulting.com/politicas" target="_blank" rel="noopener">política de privacidad</a>.</p>
+          <a class="wa-alt" href="https://wa.link/jx59a9" target="_blank" rel="noopener" data-cta="hero-wa">o escríbenos por WhatsApp →</a>
+        </div>
+
+        <!-- PASO 2 -->
+        <div id="book-step-cal" class="book-cal" hidden>
+          <span class="book-badge" id="cal-badge">Casi listo</span>
+          <h2 id="cal-title">Elige tu horario</h2>
+          <p class="book-sub" id="cal-greeting">Tus datos ya están cargados — solo elige el día y la hora.</p>
+          <div class="cal-frame" id="cal-frame"><!-- iframe Zcal se inyecta aquí --></div>
+          <p class="cal-fallback" id="cal-fallback"><a id="cal-open" href="#" target="_blank" rel="noopener">Abrir el calendario en una pestaña nueva</a> (tus datos van igual de precargados).</p>
+          <p class="book-devnote" id="book-devnote" hidden></p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ============ PARTNERS OFICIALES ============ -->
   <section class="partners-auth" aria-label="Partners de banca oficiales">
@@ -835,9 +926,9 @@
   <section class="plans" id="planes">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="kicker">Planes</span>
-        <h2>Planes con renovación anual</h2>
-        <p class="plans-note">Los planes de servicio son anuales (abajo). Aparte, la empresa tiene un <b>mantenimiento anual de USD 399</b> —agente residente y reporte estatal—, más la <i>franchise tax</i> y el cumplimiento tributario del estado, montos que fija cada jurisdicción. La estructura y el estado más adecuados para tu negocio los definimos juntos en la reunión, sin costo.</p>
+        <span class="kicker">Costo</span>
+        <h2>Cuánto cuesta tu primer año</h2>
+        <p class="plans-note">Tu primer año suma tres partes: <b>un plan de servicio</b> (desde USD 350), el <b>mantenimiento anual de USD 399</b> —agente residente y reporte estatal— y la <b>tasa del estado</b> (<i>franchise tax</i> y cumplimiento), que fija cada jurisdicción. Con el plan Básico, eso es <b>desde USD 749 + tasa del estado</b>. El estado y el plan exactos los definimos juntos en la asesoría, sin costo.</p>
       </div>
       <div class="plans-grid reveal">
         <div class="pcard">
@@ -864,7 +955,7 @@
       </div>
       <div class="why-cta reveal" style="margin-top:22px">
         <a class="btn btn--primary" href="#agendar" data-cta="plans">Agendar asesoría gratis</a>
-        <span class="cta-note">El plan exacto lo defines en la asesoría, según tu caso y tu estado — sin costo.</span>
+        <span class="cta-note">Sales de la asesoría con tu costo exacto del primer año — sin costo ni compromiso.</span>
       </div>
     </div>
   </section>
@@ -906,28 +997,6 @@
         </div>
         <span style="font-size:.82rem;color:rgba(255,255,255,.6)">No somos banco: preparamos y acompañamos tu onboarding.</span>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ SUITE ============ -->
-  <section class="suite" id="servicios">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="kicker">Una sola firma</span>
-        <h2>Cuando tu proyecto necesita más que una LLC</h2>
-        <p class="lede">Empiezas con la LLC y, si el caso lo pide, seguimos con el resto — con el mismo equipo y sin volver a explicar tu situación.</p>
-      </div>
-      <div class="suite-chips reveal d1">
-        <span>Holding y operativas en otras jurisdicciones</span>
-        <span>ITIN</span>
-        <span>Contabilidad y declaraciones (IRS)</span>
-        <span>Asesoría tributaria internacional</span>
-        <span>Registro y protección de marcas</span>
-        <span>Bienes raíces · Florida y Madrid</span>
-        <span>Servicios migratorios · EE. UU. y España</span>
-        <span>Web, Odoo y telefonía con número de EE. UU.</span>
-      </div>
-      <p class="suite-note reveal">Jurisdicciones: Reino Unido, Canadá, Panamá, Portugal, Chile, México, Belice, Islas Vírgenes Británicas, Islas Marshall.</p>
     </div>
   </section>
 
@@ -986,91 +1055,6 @@
       </div>
       <p class="lead-out reveal">¿Ya tienes una LLC y quieres corregirla? <a href="../corregir-llc-existente/" data-cta="cross-to-b">Ir a la revisión de LLC existente →</a><br>
         ¿Prefieres leer primero? Descarga la <a href="https://www.sotomayorconsulting.com/guia-llc-estados-unidos/" target="_blank" rel="noopener" data-cta="guide">guía de LLC para no residentes →</a></p>
-    </div>
-  </section>
-
-  <!-- ============ AGENDA (form → Zcal) — al final, tras la nutrición ============ -->
-  <section class="agenda-final" id="agendar">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="kicker">Último paso</span>
-        <h2>Tu primer paso es gratis: agenda tu asesoría</h2>
-        <p class="lede">Revisamos tu caso y sales con una recomendación clara: si la LLC te conviene, en qué estado y con qué plan. Sin costo ni compromiso.</p>
-      </div>
-
-      <div class="book reveal d1" aria-label="Agenda tu asesoría gratuita">
-        <svg class="globe" viewBox="0 0 200 200" fill="none" aria-hidden="true">
-          <circle cx="100" cy="100" r="78" stroke="#fff" stroke-opacity=".35"/>
-          <ellipse cx="100" cy="100" rx="30" ry="78" stroke="#fff" stroke-opacity=".25"/>
-          <ellipse cx="100" cy="100" rx="58" ry="78" stroke="#fff" stroke-opacity=".18"/>
-          <path d="M24 78h152M30 122h140M22 100h156" stroke="#fff" stroke-opacity=".2"/>
-          <path d="M40 66c30 26 90 26 120 0" stroke="#e4c078" stroke-width="1.5"/>
-          <path d="M46 138c28-22 82-22 108 4" stroke="#e4c078" stroke-width="1.5"/>
-          <g fill="#e4c078"><circle cx="40" cy="66" r="3.4"/><circle cx="160" cy="66" r="3.4"/></g>
-          <g fill="#fff"><circle cx="100" cy="22" r="3"/><circle cx="22" cy="100" r="3"/><circle cx="178" cy="100" r="3"/></g>
-        </svg>
-
-        <!-- PASO 1 -->
-        <div id="book-step-form">
-          <span class="book-badge">Asesoría gratuita · por Zoom</span>
-          <h2>Da el primer paso</h2>
-          <p class="book-sub">Déjanos tus datos y dinos cómo seguir. Sin costo ni compromiso.</p>
-          <p class="book-human">Del otro lado hay una persona: un asesor de la firma revisa tu caso contigo, en español — no un bot.</p>
-          <form id="lead-form" novalidate>
-            <input type="text" name="contact_channel" id="f-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
-            <div class="field">
-              <label for="f-name">Nombre completo</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre y apellido" required aria-describedby="e-name" />
-              <p class="err" id="e-name" role="status" aria-live="polite">Escribe tu nombre.</p>
-            </div>
-            <div class="field">
-              <label for="f-phone">WhatsApp</label>
-              <div class="phone-row">
-                <div class="ccx" id="f-cc">
-                  <button type="button" class="ccx-btn" id="f-cc-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="f-cc-list" aria-label="País del WhatsApp">
-                    <img class="ccx-flag" id="f-cc-flag" src="https://flagcdn.com/w40/us.png" srcset="https://flagcdn.com/w80/us.png 2x" alt="" width="22" height="16" />
-                    <span class="ccx-code" id="f-cc-code">+1</span>
-                    <svg class="ccx-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                  </button>
-                  <ul class="ccx-list" id="f-cc-list" role="listbox" tabindex="-1" aria-label="Elige el país" hidden></ul>
-                  <input type="hidden" name="country_code" id="f-cc-value" value="+1" data-iso="US" />
-                </div>
-                <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="099 123 4567" required aria-describedby="e-phone" />
-              </div>
-              <p class="err" id="e-phone" role="status" aria-live="polite">Escribe un número válido.</p>
-            </div>
-            <div class="field">
-              <label for="f-email">Correo electrónico</label>
-              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required aria-describedby="e-email" />
-              <p class="err" id="e-email" role="status" aria-live="polite">Escribe un correo válido.</p>
-            </div>
-            <div class="field">
-              <label for="f-goal">¿Qué quieres resolver?</label>
-              <select id="f-goal" name="goal" aria-describedby="e-goal">
-                <option value="" selected>Prefiero decirlo en la reunión</option>
-                <option value="llc_nueva">Crear una LLC nueva</option>
-                <option value="ordenar_llc">Ordenar o corregir mi LLC actual</option>
-                <option value="banca_pagos">Banca, pagos o tributación</option>
-                <option value="inversion_patrimonio">Inversión, bienes raíces o patrimonio</option>
-              </select>
-              <p class="err" id="e-goal" role="status" aria-live="polite">Elige una opción.</p>
-            </div>
-            <button class="btn btn--primary" type="submit" id="lead-submit">Agendar mi asesoría gratis</button>
-          </form>
-          <p class="fineprint">Gratis y sin compromiso. Al enviar aceptas nuestra <a href="https://www.sotomayorconsulting.com/politicas" target="_blank" rel="noopener">política de privacidad</a>.</p>
-          <a class="wa-alt" href="https://wa.link/jx59a9" target="_blank" rel="noopener" data-cta="hero-wa">o escríbenos por WhatsApp →</a>
-        </div>
-
-        <!-- PASO 2 -->
-        <div id="book-step-cal" class="book-cal" hidden>
-          <span class="book-badge" id="cal-badge">Casi listo</span>
-          <h2 id="cal-title">Elige tu horario</h2>
-          <p class="book-sub" id="cal-greeting">Tus datos ya están cargados — solo elige el día y la hora.</p>
-          <div class="cal-frame" id="cal-frame"><!-- iframe Zcal se inyecta aquí --></div>
-          <p class="cal-fallback" id="cal-fallback"><a id="cal-open" href="#" target="_blank" rel="noopener">Abrir el calendario en una pestaña nueva</a> (tus datos van igual de precargados).</p>
-          <p class="book-devnote" id="book-devnote" hidden></p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1598,6 +1582,26 @@
   var stepCal = document.getElementById("book-step-cal");
   var startedTracked = false;
 
+  // Mismas etiquetas/valores que asesoria-llc-usa-diagnostico-agenda (n8n los interpreta: si_agendar / necesito_mas_info / no_por_ahora)
+  var INTENT_LABELS = {
+    si_agendar: "Sí, quiero agendar una asesoría gratuita por Zoom",
+    necesito_mas_info: "Necesito más información antes de agendar",
+    no_por_ahora: "No por ahora"
+  };
+  (function initIntent() {
+    var hint = document.getElementById("intent-hint");
+    document.querySelectorAll('input[name="meeting_intent"]').forEach(function (r) {
+      r.addEventListener("change", function () {
+        var yes = r.value === "si_agendar";
+        submitBtn.textContent = yes ? "Elegir mi horario" : "Ver la guía gratuita";
+        if (hint) hint.textContent = yes ? "" : "Te llevaremos a la guía gratuita de LLC para no residentes.";
+        showErr("intent", false);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: "select_meeting_intent", intent: r.value, page_name: PAGE_NAME });
+      });
+    });
+  })();
+
   function showErr(id, show) {
     var el = document.getElementById("e-" + id);
     var input = document.getElementById("f-" + id);
@@ -1628,15 +1632,21 @@
       }
       phoneRaw = phoneRaw.replace(/^0+/, "");             // quita el 0 de troncal nacional para E.164
       var email = document.getElementById("f-email").value.trim();
-      var goal = document.getElementById("f-goal").value;
+      var intentEl = form.querySelector('input[name="meeting_intent"]:checked');
+      var intent = intentEl ? intentEl.value : "";
+      var goal = "";   // el desplegable "¿Qué quieres resolver?" ya no existe; el backend lo trata como "sin especificar"
 
       var ok = true;
-      showErr("name", false); showErr("phone", false); showErr("email", false);
+      showErr("name", false); showErr("phone", false); showErr("email", false); showErr("intent", false);
       if (name.length < 2) { showErr("name", true); ok = false; }
       if (phoneRaw.length < 7) { showErr("phone", true); ok = false; }
       if (!validEmail(email)) { showErr("email", true); ok = false; }
-      // goal es opcional: si viene vacío, el backend lo trata como "sin especificar"
-      if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
+      if (!intent) { showErr("intent", true); ok = false; }
+      if (!ok) {
+        var bad = form.querySelector('input[aria-invalid="true"]');
+        if (bad) bad.focus(); else { var r = form.querySelector('input[name="meeting_intent"]'); if (r) r.focus(); }
+        return;
+      }
 
       var phoneE164 = cc + phoneRaw;
       var nameParts = name.split(/\s+/);
@@ -1671,7 +1681,8 @@
         duplicate_policy: "upsert_by_email_or_whatsapp",
         main_goal: goal,
         goal: goal,
-        wants_zoom_meeting: "si",
+        wants_zoom_meeting: intent,
+        wants_zoom_meeting_label: INTENT_LABELS[intent] || intent,
         consent: true,
         source: CONFIG.source,
         landing_reference: CONFIG.landingReference,
@@ -1686,18 +1697,33 @@
       submitBtn.disabled = true;
       submitBtn.textContent = "Un momento…";
 
-      sendLeadToWebhook(payload).then(function (res) {
-        trackAdsEvent("CompleteRegistration", {
-          event_id: crmEventId,
+      var wantsMeeting = intent === "si_agendar";
+      var sent = sendLeadToWebhook(payload);
+      // Sin reunión → guía: no se deja al usuario esperando un webhook lento.
+      if (!wantsMeeting) sent = Promise.race([sent, new Promise(function (r) { setTimeout(function () { r({ ok: false, duplicate: false, status: "redirect_timeout" }); }, 3500); })]);
+      sent.then(function (res) {
+        var common = {
           crm_event_name: "CompleteRegistration",
           crm_event_id: crmEventId,
           lead_id: leadId,
           main_goal: goal,
+          wants_zoom_meeting: intent,
           conversion_path: "lead_registration",
           content_name: (window.SCI_TRACKING_CONFIG && window.SCI_TRACKING_CONFIG.service_content && window.SCI_TRACKING_CONFIG.service_content.content_name) || "",
           value: 0, currency: "USD"
-        });
-        goToStep2(payload, res);
+        };
+        if (wantsMeeting) {
+          // Solo quien pide reunión cuenta como conversión de optimización.
+          trackAdsEvent("CompleteRegistration", Object.assign({ event_id: crmEventId }, common));
+          goToStep2(payload, res);
+        } else {
+          // Lead de nurturing (guía): evento de contacto, no de registro con reunión.
+          trackAdsEvent("Contact", Object.assign({}, common, { event_id: buildEventId("Contact", { lead_id: leadId }), event_stage: "guide_lead_" + intent }));
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "lead_to_guide", intent: intent, page_name: PAGE_NAME, lead_id: leadId });
+          submitBtn.textContent = "Abriendo la guía…";
+          setTimeout(function () { location.assign(CONFIG.guideUrl); }, 450);   // deja salir los beacons de pixel/CAPI
+        }
       });
     });
   }
