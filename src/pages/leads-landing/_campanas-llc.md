@@ -64,6 +64,17 @@ para que Astro no lo publique como ruta.
 
 La campaña debe pasar el parámetro que coincide con el creativo.
 
+**La oferta se llama "Sesión Estratégica"** (gratuita, por Zoom); es el mismo nombre del evento de Zcal. El anuncio debe abrir con la misma promesa que el `h1` de su hook:
+
+| `utm_content` | `h1` de la landing (el anuncio debe abrir con esta idea) |
+|---|---|
+| (sin parámetro) | Diseña tu LLC antes de abrirla. |
+| `dolares` | Cobra en dólares desde tu país con tu propia LLC en EE. UU. |
+| `patrimonio` | Protege tu patrimonio con una estructura bien diseñada en EE. UU. |
+| `ordenar` | ¿Ya tienes una LLC? Ordénala antes de que un error te cueste caro. |
+
+Pendiente del dueño del producto (no publicar sin que sea real): garantía sobre el servicio de pago, plazo del primer horario y del diseño, cupos semanales.
+
 ## Antes de publicar (bloqueantes)
 
 1. **Evento Zcal** — ✅ verificado (2026-09). El evento vive en el slug

@@ -406,6 +406,13 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
+### `leads-landing/abrir-llc-primera-vez`: oferta con nombre y bono post-reserva (2026-10-26)
+
+- La oferta gratuita se llama **Sesión Estratégica** en toda la página (CTA "Reservar mi Sesión Estratégica gratis", insignia, leyenda y radio del formulario, FAQ, hooks), igual que el evento de Zcal. Las etiquetas enviadas a n8n (`INTENT_LABELS`) NO cambiaron: son contrato con la landing hermana.
+- Subtítulo del hero ahora en términos de resultado ("Sales de la Sesión Estratégica sabiendo si una LLC te conviene y qué decidir…").
+- Tras reservar (paso del calendario): línea "Recibirás un recordatorio por SMS al número que indicaste" **[verificar con una reserva real que Zcal envía ese SMS]** y enlace a la guía de LLC como bono (`data-cta="guide-after-booking"`).
+- Garantía: solo la parte verificable ("si en la sesión vemos que una LLC no te conviene, no pagas nada"). Quedan comentarios `PENDIENTE` en el HTML para garantía del servicio de pago, plazos y cupos: NO se inventaron. Tabla de hooks añadida a `_campanas-llc.md`.
+
 ### `leads-landing/abrir-llc-primera-vez`: textura en secciones blancas (2026-10-26)
 
 - Clase `.tex` (solo CSS, sin archivos) en hero, "por qué empezar" (blanco), reunión, cómo funciona, confianza y FAQ: cuadrícula tipo plano de 40 px (navy al 5,5 %) que se desvanece desde una esquina, brillo dorado suave y grano fino (SVG `feTurbulence` embebido, opacidad .26, `multiply`). `.tex--l` mueve el origen a la izquierda para alternar. Las secciones `mist` y navy no cambian. Trampa: `.tex` usa `::before/::after` con `z-index:-1`, así que la sección necesita `isolation:isolate` (ya incluido) o la textura queda detrás del fondo.
