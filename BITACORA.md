@@ -406,6 +406,12 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
+### `leads-landing/abrir-llc-primera-vez`: calificar al lead (dueños de negocio que pueden pagar) (2026-10-26)
+
+- Problema: "Averigua gratis…" atraía todo tipo de tráfico. Cambios: pre-título "Para dueños de negocios que ya generan ingresos y quieren operar en EE. UU." (también en todos los hooks); "gratis" deja de ser el reclamo (CTAs "Reservar mi Sesión Estratégica", encabezado y barra fija "Reservar sesión", insignia y formulario sin "gratuita"); el título de la agenda y del cierre pasó a "Reserva tu Sesión Estratégica".
+- Transparencia de precio como filtro: bajo el título de la agenda, "La reunión inicial es gratuita. El servicio que sigue —el diseño de tu LLC— tiene costo: desde USD 350 (pago único)" y un desvío para quien aún evalúa una idea hacia la guía gratuita (`data-cta="guide-qualify"`). El subtítulo del hero también dice que el diseño tiene costo.
+- Pendiente (dueño del producto): umbral de facturación o tipo de negocio a atraer (comentario `PENDIENTE` en el HTML); no se inventó ninguna cifra. Del lado del anuncio: mencionar en el video que el servicio tiene costo y a quién va dirigido, y optimizar por el evento de quien elige reservar.
+
 ### `leads-landing/abrir-llc-primera-vez`: hero ampliado para los cuatro guiones de video (2026-10-26)
 
 - No se usa landing B. El hero por defecto ahora cubre abrir, ponerla al día y operar: pre-título "Para negocios fuera de EE. UU. que van a abrir una LLC o ya tienen una", título "Tu LLC en EE. UU.: ábrela bien o ponla al día." y subtítulo con los tres casos (abrirla, ponerla al día, operar con bancos/Stripe/PayPal). Antes decía "antes de abrirla", que contradecía a los guiones 1 y 3 (LLC ya abierta).
