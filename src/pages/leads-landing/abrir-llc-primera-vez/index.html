@@ -164,6 +164,24 @@
   /* ============================ LAYOUT ============================ */
   .wrap{width:min(var(--container), 100% - (var(--gutter) * 2));margin-inline:auto}
   section{padding-block:clamp(42px, 4.4vw, 64px)}
+  /* ---- Textura profesional para secciones blancas: cuadrícula tipo plano (blueprint) que se desvanece + grano fino + brillo dorado. Solo CSS, sin archivos. ---- */
+  .tex{position:relative;isolation:isolate}
+  .tex::before,.tex::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .tex::before{
+    background-image:
+      radial-gradient(60% 70% at var(--tex-x,88%) 0%, rgba(214,161,68,.10), transparent 62%),
+      linear-gradient(rgba(14,36,56,.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,36,56,.055) 1px, transparent 1px);
+    background-size:auto, 40px 40px, 40px 40px;
+    -webkit-mask-image:radial-gradient(90% 85% at var(--tex-x,88%) 0%, #000 0, rgba(0,0,0,.55) 45%, transparent 85%);
+            mask-image:radial-gradient(90% 85% at var(--tex-x,88%) 0%, #000 0, rgba(0,0,0,.55) 45%, transparent 85%);
+  }
+  .tex::after{
+    opacity:.26;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .055 0 0 0 0 .14 0 0 0 0 .22 0 0 0 .30 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size:180px 180px;
+  }
+  .tex--l{--tex-x:12%}
   .section-head{max-width:56ch;margin-bottom:clamp(24px,3.2vw,40px)}
   .section-head .kicker{
     font-family:var(--font-display);font-weight:600;font-size:.8rem;color:var(--gold-ink);
@@ -529,7 +547,7 @@
 <main id="inicio">
 
   <!-- ============ HERO ============ -->
-  <section class="hero">
+  <section class="hero tex">
     <div class="wrap">
       <div>
         <span class="hero-eyebrow reveal" id="hero-pre">Para emprendedores y negocios fuera de EE.&nbsp;UU. que quieren abrir una LLC</span>
@@ -795,7 +813,7 @@
   </section>
 
   <!-- ============ PARA TI SI ============ -->
-  <section class="why-first" style="background:var(--paper)">
+  <section class="why-first tex tex--l" style="background:var(--paper)">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="kicker">Para quién es</span>
@@ -875,7 +893,7 @@
   </section>
 
   <!-- ============ QUÉ PASA EN LA REUNIÓN ============ -->
-  <section id="reunion">
+  <section id="reunion" class="tex">
     <div class="wrap">
       <div class="meeting-grid">
         <div class="reveal">
@@ -907,7 +925,7 @@
   </section>
 
   <!-- ============ CÓMO FUNCIONA ============ -->
-  <section id="como">
+  <section id="como" class="tex tex--l">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="kicker">Cómo funciona</span>
@@ -972,7 +990,7 @@
   </section>
 
   <!-- ============ CONFIANZA ============ -->
-  <section class="trust">
+  <section class="trust tex">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="kicker">Confianza</span>
@@ -1011,7 +1029,7 @@
   </section>
 
   <!-- ============ FAQ ============ -->
-  <section id="preguntas">
+  <section id="preguntas" class="tex tex--l">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="kicker">Preguntas frecuentes</span>

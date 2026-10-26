@@ -406,6 +406,10 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
+### `leads-landing/abrir-llc-primera-vez`: textura en secciones blancas (2026-10-26)
+
+- Clase `.tex` (solo CSS, sin archivos) en hero, "por qué empezar" (blanco), reunión, cómo funciona, confianza y FAQ: cuadrícula tipo plano de 40 px (navy al 5,5 %) que se desvanece desde una esquina, brillo dorado suave y grano fino (SVG `feTurbulence` embebido, opacidad .26, `multiply`). `.tex--l` mueve el origen a la izquierda para alternar. Las secciones `mist` y navy no cambian. Trampa: `.tex` usa `::before/::after` con `z-index:-1`, así que la sección necesita `isolation:isolate` (ya incluido) o la textura queda detrás del fondo.
+
 ### `leads-landing/abrir-llc-primera-vez`: sección del formulario recortada (2026-10-26)
 
 - Antes había 8 capas de texto (~85 palabras) sobre el primer campo, con "primer paso" ×3 y "gratis" ×4, y un titular "agenda tu asesoría" que no cuadraba con las rutas de guía. Ahora: titular "Averigua gratis si una LLC es para ti", una línea (asesor de la firma, Zoom, español, "si no te conviene no pagas nada"), insignia y una instrucción ("si quieres reunión, escoges día y hora al terminar"). ~50 palabras. Cifra de empresas a +500; línea de Trustpilot con colores de marca (#00B67A, #191919, #DCDCE6; logo aproximado, no el oficial).
