@@ -66,14 +66,19 @@ La campaña debe pasar el parámetro que coincide con el creativo.
 
 **La oferta se llama "Sesión Estratégica"** (gratuita, por Zoom); es el mismo nombre del evento de Zcal. El anuncio debe abrir con la misma promesa que el `h1` de su hook:
 
-| `utm_content` | `h1` de la landing (el anuncio debe abrir con esta idea) |
-|---|---|
-| (sin parámetro) | Diseña tu LLC antes de abrirla. |
-| `dolares` | Cobra en dólares desde tu país con tu propia LLC en EE. UU. |
-| `patrimonio` | Protege tu patrimonio con una estructura bien diseñada en EE. UU. |
-| `ordenar` | ¿Ya tienes una LLC? Ordénala antes de que un error te cueste caro. |
+| `utm_content` | Guion de video | `h1` de la landing (el anuncio debe abrir con esta idea) |
+|---|---|---|
+| (sin parámetro) | cualquiera | Tu LLC en EE. UU.: ábrela bien o ponla al día. (cubre abrir, ponerla al día y operar con bancos) |
+| `mantener` | "Tu LLC ya está abierta…" (guiones 1 y 3) | Tu LLC ya está abierta. ¿Sabes qué debes cumplir cada año? |
+| `banco` | "¿Necesitas una cuenta bancaria…?" (guion 2) | Una LLC para operar con bancos, Stripe y PayPal en EE. UU. |
+| `2027` | "Si vas a abrir una LLC en 2027…" (guion 4) | Empieza 2027 con tu LLC lista. |
+| `dolares` | — | Cobra en dólares desde tu país con tu propia LLC en EE. UU. |
+| `patrimonio` | — | Protege tu patrimonio con una estructura bien diseñada en EE. UU. |
+| `ordenar` | — | ¿Ya tienes una LLC? Ordénala antes de que un error te cueste caro. |
 
-Pendiente del dueño del producto (no publicar sin que sea real): garantía sobre el servicio de pago, plazo del primer horario y del diseño, cupos semanales.
+Solo existe la landing A: no hay landing B en uso. El hero por defecto sirve a los cuatro guiones y cada hook lo especializa. El parámetro se lee antes del primer `-`, `_` o `|` (`banco_video2` funciona como `banco`).
+
+Pendiente del dueño del producto (no publicar sin que sea real): confirmar que ciertos estados permiten iniciar en octubre con fecha efectiva 2027 (afirmación del guion 4; el hook `2027` NO lo afirma); garantía sobre el servicio de pago, plazo del primer horario y del diseño, cupos semanales.
 
 ## Antes de publicar (bloqueantes)
 

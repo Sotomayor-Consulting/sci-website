@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Asesoría para tu LLC en EE. UU. | Sotomayor Consulting International </title>
-<meta name="description" content="Sesión Estratégica gratuita por Zoom para negocios y emprendedores fuera de EE. UU. que quieren abrir una LLC: revisamos si encaja con tu caso. Firma boutique, 10 años, partner de Mercury y Relay." />
+<meta name="description" content="Sesión Estratégica gratuita por Zoom para negocios fuera de EE. UU. que van a abrir una LLC o ya tienen una: abrirla, ponerla al día y operar con bancos.  Firma boutique, 10 años, partner de Mercury y Relay." />
 <meta name="robots" content="noindex,nofollow" />
 
 <!--
@@ -57,7 +57,7 @@
     },
     service_content: {
       content_name: "Asesoría para LLC en EE. UU.",
-      description: "Sesión Estratégica gratuita para negocios y emprendedores fuera de EE. UU. que quieren abrir una LLC: revisamos si encaja con tu caso."
+      description: "Sesión Estratégica gratuita para negocios fuera de EE. UU. que van a abrir una LLC o ya tienen una: abrirla, ponerla al día y operar con bancos."
     },
     debug: false
   };
@@ -124,7 +124,7 @@
     color-scheme: light;
     --navy-900:#0a1a2a; --navy-800:#0e2438; --navy-700:#12314c; --navy-600:#1c3e5e;
     --blue-500:#2a5580;
-    --gold-ink:#a9741f; --gold:#c0872e; --gold-cta:#d6a144; --gold-300:#e4c078; --gold-050:#faf3e4;
+    --gold-ink:#946319; --gold:#c0872e; --gold-cta:#d6a144; --gold-300:#e4c078; --gold-050:#faf3e4;
     --paper:#ffffff; --mist:#f3f6fa;
     --ink:#20303f; --ink-2:#33475a; --muted:#586b7b; --line:#e2e8ef; --line-strong:#cdd8e2;
     --ok:#0f7a4b; --err:#b42318;
@@ -207,6 +207,18 @@
   }
   .header .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:66px}
   .header .brand img{height:40px;width:auto}
+  .nav{display:flex;gap:4px;margin-inline:auto 14px}
+  .nav a{font-family:var(--font-display);font-weight:600;font-size:.86rem;color:var(--ink-2);padding:8px 11px;border-radius:8px;white-space:nowrap;transition:background-color .18s var(--e-out),color .18s var(--e-out)}
+  .nav a:hover{background:var(--mist);color:var(--navy-800)}
+  .nav a[aria-current="true"]{color:var(--navy-800);background:var(--gold-050);box-shadow:inset 0 -2px 0 var(--gold)}
+  [id]{scroll-margin-top:80px}
+  @media (max-width:900px){
+    .header .wrap{flex-wrap:wrap;row-gap:0;padding-top:4px}
+    .nav{order:3;flex:0 0 100%;margin:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px 0 8px;gap:2px}
+    .nav::-webkit-scrollbar{display:none}
+    .nav a{font-size:.82rem;padding:7px 10px}
+    [id]{scroll-margin-top:108px}
+  }
   @media (max-width:430px){ .header .brand img{height:34px} }
 
   /* ============================ BUTTONS ============================ */
@@ -248,6 +260,8 @@
   .hero-trust b{color:var(--navy-800);font-family:var(--font-display);font-weight:600}
   .hero-trust .stars{color:var(--gold);letter-spacing:1px}
   /* Trustpilot — colores de marca: verde #00B67A, texto #191919, estrella vacía #DCDCE6 */
+  .t-short{display:none}
+  @media (max-width:520px){ .t-long{display:none} .t-short{display:inline} .hero-trust .tp-extra{display:none} }
   .tp-stars{display:inline-flex;gap:2px;vertical-align:middle}
   .tp-stars i{display:inline-grid;place-items:center;width:22px;height:22px;background:#00B67A}
   .tp-stars i.off{background:#DCDCE6}
@@ -268,7 +282,7 @@
   .book .globe{position:absolute;inset:auto -20% -34% auto;width:78%;opacity:.42;pointer-events:none}
   .book-badge{
     display:inline-flex;align-items:center;gap:7px;font-family:var(--font-display);font-weight:600;
-    font-size:.72rem;letter-spacing:.04em;color:var(--gold-300);
+    font-size:.75rem;letter-spacing:.04em;color:var(--gold-300);
     border:1px solid var(--navy-600);border-radius:999px;padding:5px 11px;margin-bottom:14px;position:relative;
   }
   .book h2{color:#fff;font-size:1.16rem;font-weight:600;letter-spacing:-.01em;position:relative}
@@ -330,6 +344,13 @@
   .book-cal .cal-guide:hover{text-decoration:underline}
   .book-devnote{margin-top:10px;font-size:.72rem;color:var(--gold-300);opacity:.8;text-align:center}
 
+  @media (min-width:1000px){
+    .hero .wrap{max-width:var(--container)}
+    .hero .wrap > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);grid-template-rows:repeat(6,auto) 1fr;column-gap:clamp(36px,5vw,72px);align-items:start}
+    .hero .wrap > div > *{grid-column:1}
+    .hero .wrap > div > .hero-vmsg{grid-column:2;grid-row:1 / span 7;margin:0;align-self:start}
+    .hero .vmsg-frame{width:100%}
+  }
   @media (max-width:900px){
     .hero h1{max-width:22ch}
     .book .globe{opacity:.3;width:60%}
@@ -388,12 +409,13 @@
   .plans-note{font-size:.9rem;color:var(--ink-2);margin-top:12px}
   .plans-note b{color:var(--navy-800)}
   .plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:24px}
-  .pcard{background:var(--paper);border:1px solid var(--line-strong);border-radius:14px;padding:18px 18px 20px}
-  .pcard--fav{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-050)}
-  .pcard .fav{font-family:var(--font-display);font-weight:700;font-size:.62rem;letter-spacing:.08em;color:var(--navy-900);background:var(--gold-cta);border-radius:5px;padding:3px 7px}
+  .pcard{display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line-strong);border-radius:14px;padding:18px 18px 20px}
+  .pcard--fav{border:2px solid var(--gold);background:var(--gold-050);box-shadow:var(--shadow-md)}
+  @media (min-width:900px){ .pcard--fav{transform:translateY(-8px)} }
+  .pcard .fav{font-family:var(--font-display);font-weight:700;font-size:.75rem;letter-spacing:.08em;color:var(--navy-900);background:var(--gold-cta);border-radius:5px;padding:3px 7px}
   .pcard h3{font-size:1rem;margin:8px 0 2px}
   .pcard .price{font-family:var(--font-display);font-weight:700;font-size:1.4rem;color:var(--navy-800);letter-spacing:-.02em}
-  .pcard .price small{font-size:.72rem;font-weight:600;color:var(--muted);letter-spacing:0}
+  .pcard .price small{font-size:.78rem;font-weight:600;color:var(--muted);letter-spacing:0}
   .pcard p{font-size:.82rem;color:var(--ink-2);line-height:1.45;margin-top:8px}
   .plans-cta{margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:14px}
   .plans-cta p{font-size:.9rem;color:var(--ink-2)}
@@ -416,6 +438,7 @@
   .rating-line .stars{color:var(--gold);letter-spacing:2px;font-size:1rem}
   .rating-line a{color:var(--blue-500);font-weight:600}
   .partner-line{margin-top:24px;font-size:.84rem;color:var(--muted)}
+  .partner-line.on-navy{background:var(--navy-800);padding:18px 24px;border-radius:14px}
   .partner-line b{color:var(--navy-800);font-family:var(--font-display);font-weight:600}
 
   /* ============================ SUITE ============================ */
@@ -487,6 +510,12 @@
   .why-item h3{font-size:1rem;margin-bottom:6px}
   .why-item p{font-size:.9rem;color:var(--ink-2);line-height:1.5}
   .why-kicker{margin-top:clamp(20px,3vw,30px);font-family:var(--font-display);font-weight:600;color:var(--navy-800);font-size:1.02rem}
+  .close-cta{background:var(--gold-050);border-top:1px solid var(--gold-300);text-align:center}
+  .close-cta h2{max-width:22ch;margin-inline:auto}
+  .close-cta .lede{margin:14px auto 22px}
+  .bridge{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-family:var(--font-display);font-weight:600;font-size:.92rem;color:var(--gold-ink);border-bottom:1.5px solid var(--gold);padding-bottom:2px;transition:gap .2s var(--e-out)}
+  .bridge:hover{gap:12px}
+  .pain .bridge{color:var(--gold-300);border-color:var(--gold-300)}
   .why-cta{margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px}
   @media (max-width:760px){ .why-grid{grid-template-columns:1fr} }
 
@@ -501,7 +530,7 @@
   .partners-auth{background:var(--mist);border-block:1px solid var(--line)}
   .partners-auth .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:clamp(24px,4vw,52px);align-items:center;padding-block:clamp(24px,3vw,34px)}
   .partners-auth .pa-logos{display:flex;flex-direction:column;gap:16px;align-items:flex-start;padding-right:clamp(20px,3vw,40px);border-right:1px solid var(--line-strong)}
-  .partners-auth .pa-badge{font-family:var(--font-display);font-weight:700;font-size:.68rem;letter-spacing:.08em;color:var(--gold-ink);background:var(--gold-050);border:1px solid var(--gold);border-radius:6px;padding:4px 9px}
+  .partners-auth .pa-badge{font-family:var(--font-display);font-weight:700;font-size:.75rem;letter-spacing:.08em;color:var(--gold-ink);background:var(--gold-050);border:1px solid var(--gold);border-radius:6px;padding:4px 9px}
   .partners-auth .pa-logos .partner-logos{gap:22px}
   .partners-auth .logo-mono{opacity:1}
   .partners-auth .logo-mono--mercury{height:24px}
@@ -543,6 +572,14 @@
     <a class="brand" href="#inicio" aria-label="Sotomayor Consulting International">
       <img src="https://www.sotomayorconsulting.com/wp-content/uploads/2026/06/Recurso-4.png" alt="Sotomayor Consulting International" width="200" height="40" />
     </a>
+    <nav class="nav" aria-label="Secciones de la página">
+      <a href="#para-quien">Para quién</a>
+      <a href="#reunion">La sesión</a>
+      <a href="#como">Cómo funciona</a>
+      <a href="#confianza">Confianza</a>
+      <a href="#planes">Costos</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
     <a class="btn btn--ghost btn--sm" href="#agendar" data-cta="header">Agendar gratis</a>
   </div>
 </header>
@@ -553,9 +590,9 @@
   <section class="hero tex">
     <div class="wrap">
       <div>
-        <span class="hero-eyebrow reveal" id="hero-pre">Para emprendedores y negocios fuera de EE.&nbsp;UU. que quieren abrir una LLC</span>
-        <h1 class="reveal d1" id="hero-h1">Diseña tu LLC <span class="u">antes</span> de abrirla.</h1>
-        <p class="lede reveal d2" id="hero-sub">Sales de la <strong>Sesión Estratégica</strong> sabiendo si una LLC te conviene y qué decidir antes de abrirla: estado, impuestos, socios y administración. <strong>Gratis</strong>, por Zoom, en español, con un asesor de la firma.</p>
+        <span class="hero-eyebrow reveal" id="hero-pre">Para negocios fuera de EE.&nbsp;UU. que van a abrir una LLC o ya tienen una</span>
+        <h1 class="reveal d1" id="hero-h1">Tu LLC en EE.&nbsp;UU.: <span class="u">ábrela bien</span> o ponla al día.</h1>
+        <p class="lede reveal d2" id="hero-sub">Una <strong>Sesión Estratégica</strong> gratuita, por Zoom y en español, para tres casos: <strong>abrirla</strong> (qué decidir antes), <strong>ponerla al día</strong> (qué obligaciones mantener y evitar multas) y <strong>operar</strong> (cuenta bancaria, Stripe y PayPal). Te atiende un asesor de la firma.</p>
         <div class="hero-obj reveal d2">
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Sin visa</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Sin SSN ni ITIN</span>
@@ -563,7 +600,7 @@
           <span class="hide-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>En español</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Acompañamiento durante el trámite</span>
         </div>
-        <a class="btn btn--primary hero-jump" href="#agendar" data-cta="hero-jump">Reservar mi Sesión Estratégica gratis ↓</a>
+        <a class="btn btn--primary hero-jump" href="#agendar" data-cta="hero-jump"><span class="t-long">Reservar mi Sesión Estratégica gratis ↓</span><span class="t-short">Reservar mi sesión gratis ↓</span></a>
         <p class="cta-note">SCI es una consultora privada e independiente, no una agencia gubernamental ni una entidad afiliada o respaldada por el gobierno. Brindamos orientación, preparación documental y acompañamiento; cada autoridad decide la emisión y los plazos.</p>
         <!-- VIDEO — mensaje del equipo (bajo el CTA principal, estilo VSL) -->
         <div class="hero-vmsg reveal d3">
@@ -591,7 +628,7 @@
 
         <p class="hero-trust reveal d3">
           <b>+500 empresas</b> incorporadas · <b>10 años</b> · <b>Partner de Mercury &amp; Relay</b><br>
-          <span class="tp-line"><span class="tp-stars" aria-hidden="true"><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i class="off"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i></span><span>4,3/5 en</span><span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg>Trustpilot</span><span>con reseñas verificadas</span></span>
+          <span class="tp-line"><span class="tp-stars" aria-hidden="true"><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i><i class="off"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg></i></span><span>4,3/5 en</span><span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tp-star"/></svg>Trustpilot</span><span class="tp-extra">con reseñas verificadas</span></span>
         </p>
       </div>
     </div>
@@ -718,7 +755,7 @@
   <section class="agenda-final" id="agendar">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Averigua gratis si una LLC es para ti</h2>
+        <h2>Averigua gratis qué necesita tu LLC</h2>
         <p class="lede">Un asesor de la firma revisa tu caso por Zoom, en español. <strong>Si en la sesión vemos que una LLC no te conviene, te lo decimos y no pagas nada.</strong></p>
         <!-- PENDIENTE (dueño del producto): garantía sobre el servicio de pago (condición y qué ocurre). Solo agregar si existe como política. -->
       </div>
@@ -820,7 +857,7 @@
   </section>
 
   <!-- ============ PARA TI SI ============ -->
-  <section class="why-first tex tex--l" style="background:var(--paper)">
+  <section class="why-first tex tex--l" id="para-quien" style="background:var(--paper)">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="kicker">Para quién es</span>
@@ -833,16 +870,18 @@
         <li>Tienes una <b>agencia</b>, un <b>SaaS</b> o vendes <b>infoproductos</b> y facturas afuera.</li>
         <li>Inviertes en <b>inmuebles</b> o <b>bolsa</b> en EE.&nbsp;UU. y quieres estructurarlo bien.</li>
         <li>Quieres abrir cuenta en <b>Mercury</b> o <b>Relay</b> sin que te la rechacen.</li>
+        <li>Ya tienes tu <b>LLC abierta</b> y no sabes qué obligaciones debes mantener al día.</li>
       </ul>
       <div class="why-cta reveal">
-        <a class="btn btn--primary" href="#agendar" data-cta="fit">Reservar mi Sesión Estratégica gratis</a>
+        <a class="btn btn--primary" href="#agendar" data-cta="fit"><span class="t-long">Reservar mi Sesión Estratégica gratis</span><span class="t-short">Reservar mi sesión gratis</span></a>
         <span class="cta-note">Gratis · sin compromiso · por Zoom</span>
       </div>
+      <a class="bridge" href="#problema">Por qué esto importa →</a>
     </div>
   </section>
 
   <!-- ============ PAIN ============ -->
-  <section class="pain">
+  <section class="pain" id="problema">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="kicker">Por qué una reunión primero</span>
@@ -864,14 +903,15 @@
         </div>
       </div>
       <div class="pain-cta reveal">
-        <a class="btn btn--primary" href="#agendar" data-cta="pain">Reservar mi Sesión Estratégica gratis</a>
+        <a class="btn btn--primary" href="#agendar" data-cta="pain"><span class="t-long">Reservar mi Sesión Estratégica gratis</span><span class="t-short">Reservar mi sesión gratis</span></a>
         <span class="cta-note on-navy-note">Gratis · sin compromiso · por Zoom</span>
       </div>
+      <a class="bridge" href="#por-que">Por eso conviene empezar con una sesión gratuita →</a>
     </div>
   </section>
 
   <!-- ============ POR QUÉ EMPEZAR POR LA ASESORÍA ============ -->
-  <section class="why-first">
+  <section class="why-first" id="por-que">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="kicker">El primer paso</span>
@@ -896,6 +936,7 @@
         </div>
       </div>
       <p class="why-kicker reveal">Otros te venden el plan primero. Nosotros revisamos tu caso primero — gratis.</p>
+      <a class="bridge" href="#reunion">Qué ves en la Sesión Estratégica →</a>
     </div>
   </section>
 
@@ -924,10 +965,11 @@
           <div class="row"><b>Costo</b><span>Gratuita, sin compromiso</span></div>
           <div class="row"><b>Con quién</b><span>Un asesor de la firma, en español</span></div>
           <div class="row"><b>Si no es tu caso</b><span>Te lo decimos en la reunión. Sin costo.</span></div>
-          <a class="btn btn--primary" href="#agendar" data-cta="meeting">Reservar mi Sesión Estratégica gratis</a>
+          <a class="btn btn--primary" href="#agendar" data-cta="meeting"><span class="t-long">Reservar mi Sesión Estratégica gratis</span><span class="t-short">Reservar mi sesión gratis</span></a>
           <span class="cta-note" style="text-align:center">Gratis · sin compromiso · por Zoom</span>
         </div>
       </div>
+      <a class="bridge" href="#como">Y después de la sesión, así sigue el proceso →</a>
     </div>
   </section>
 
@@ -955,49 +997,12 @@
           <p class="meta">Emisión y plazos sujetos al estado, al IRS y a terceros.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ PLANES (referencia) ============ -->
-  <section class="plans" id="planes">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="kicker">Planes y costos</span>
-        <h2>Planes y costos</h2>
-        <p class="plans-note">La Sesión Estratégica es gratuita. <b>Diseño de tu LLC</b> (plan Planificación y Diseño, USD 350 pago único) es el servicio para planificarla y diseñarla; los planes de servicio son anuales (desde USD 350). Aparte, la empresa tiene un <b>mantenimiento anual de USD 399</b> —agente residente y reporte estatal—, más la <i>franchise tax</i> y el cumplimiento tributario del estado, montos que fija cada jurisdicción.</p>
-      </div>
-      <div class="plans-grid reveal">
-        <div class="pcard">
-          <h3>Diseño de tu LLC <small style="font-weight:600;color:var(--muted);font-size:.68rem">· Planificación y Diseño</small></h3>
-          <div class="price">USD 350 <small>/ único</small></div>
-          <p>Con un especialista defines estado, impuestos, socios y administración, datos públicos, método contable y clasificación de la actividad. Resultado: un diseño preliminar con alertas, sujeto a validación legal y tributaria.</p>
-        </div>
-        <div class="pcard">
-          <h3>Básico</h3>
-          <div class="price">USD 350 <small>/ año</small></div>
-          <p>Preparación del registro estatal, solicitud del EIN y coordinación con el agente residente.</p>
-        </div>
-        <div class="pcard">
-          <h3>Estándar</h3>
-          <div class="price">USD 600 <small>/ año</small></div>
-          <p>Suma Operating Agreement, consultas ilimitadas y exención BE-13.</p>
-        </div>
-        <div class="pcard pcard--fav">
-          <span class="fav">FAVORITO</span>
-          <h3>Business</h3>
-          <div class="price">USD 950 <small>/ año</small></div>
-          <p>Planificación legal-tributaria, acompañamiento bancario y preparación prioritaria de la solicitud del EIN.</p>
-        </div>
-      </div>
-      <div class="why-cta reveal" style="margin-top:22px">
-        <a class="btn btn--primary" href="#agendar" data-cta="plans">Reservar mi Sesión Estratégica gratis</a>
-        <span class="cta-note">La Sesión Estratégica es gratuita y sin compromiso.</span>
-      </div>
+      <a class="bridge" href="#confianza">¿Puedes confiar en esto? Mira quién lo respalda →</a>
     </div>
   </section>
 
   <!-- ============ CONFIANZA ============ -->
-  <section class="trust tex">
+  <section class="trust tex" id="confianza">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="kicker">Confianza</span>
@@ -1032,6 +1037,46 @@
         </div>
         <span style="font-size:.82rem;color:rgba(255,255,255,.6)">No somos banco: preparamos y acompañamos tu onboarding.</span>
       </div>
+      <a class="bridge" href="#planes">Ahora sí: cuánto cuesta →</a>
+    </div>
+  </section>
+
+  <!-- ============ PLANES (referencia) ============ -->
+  <section class="plans" id="planes">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Planes y costos</span>
+        <h2>Planes y costos</h2>
+        <p class="plans-note">La Sesión Estratégica es gratuita. <b>Diseño de tu LLC</b> (plan Planificación y Diseño, USD 350 pago único) es el servicio para planificarla y diseñarla; los planes de servicio son anuales (desde USD 350). Aparte, la empresa tiene un <b>mantenimiento anual de USD 399</b> —agente residente y reporte estatal—, más la <i>franchise tax</i> y el cumplimiento tributario del estado, montos que fija cada jurisdicción.</p>
+      </div>
+      <div class="plans-grid reveal">
+        <div class="pcard">
+          <h3>Diseño de tu LLC <small style="font-weight:600;color:var(--muted);font-size:.75rem">· Planificación y Diseño</small></h3>
+          <div class="price">USD 350 <small>/ único</small></div>
+          <p>Con un especialista defines estado, impuestos, socios y administración. Resultado: un diseño preliminar, sujeto a validación legal y tributaria.</p>
+        </div>
+        <div class="pcard">
+          <h3>Básico</h3>
+          <div class="price">USD 350 <small>/ año</small></div>
+          <p>Preparación del registro estatal, solicitud del EIN y coordinación con el agente residente.</p>
+        </div>
+        <div class="pcard">
+          <h3>Estándar</h3>
+          <div class="price">USD 600 <small>/ año</small></div>
+          <p>Suma Operating Agreement, consultas ilimitadas y exención BE-13.</p>
+        </div>
+        <div class="pcard pcard--fav">
+          <span class="fav">FAVORITO</span>
+          <h3>Business</h3>
+          <div class="price">USD 950 <small>/ año</small></div>
+          <p>Planificación legal-tributaria, acompañamiento bancario y preparación prioritaria de la solicitud del EIN.</p>
+        </div>
+      </div>
+      <div class="why-cta reveal" style="margin-top:22px">
+        <a class="btn btn--primary" href="#agendar" data-cta="plans"><span class="t-long">Reservar mi Sesión Estratégica gratis</span><span class="t-short">Reservar mi sesión gratis</span></a>
+        <span class="cta-note">La Sesión Estratégica es gratuita y sin compromiso.</span>
+      </div>
+      <a class="bridge" href="#preguntas">Últimas dudas antes de reservar →</a>
     </div>
   </section>
 
@@ -1084,12 +1129,18 @@
           <div class="a">Puedes solicitar la devolución del pago cuando el servicio no se concreta. Es un proceso sujeto a revisión del caso y a nuestras políticas — puedes consultarlas en <a href="https://www.sotomayorconsulting.com/terminos" target="_blank" rel="noopener">Términos</a> y <a href="https://www.sotomayorconsulting.com/politicas" target="_blank" rel="noopener">Políticas</a>.</div>
         </details>
       </div>
-      <div class="why-cta reveal" style="justify-content:center;margin-top:28px">
-        <a class="btn btn--primary" href="#agendar" data-cta="faq">Reservar mi Sesión Estratégica gratis</a>
-        <span class="cta-note">Gratis · sin compromiso · por Zoom</span>
-      </div>
       <p class="lead-out reveal">¿Ya tienes una LLC y quieres corregirla? <a href="../corregir-llc-existente/" data-cta="cross-to-b">Ir a la revisión de LLC existente →</a><br>
         ¿Prefieres leer primero? Descarga la <a href="https://www.sotomayorconsulting.com/guia-llc-estados-unidos/" target="_blank" rel="noopener" data-cta="guide">guía de LLC para no residentes →</a></p>
+    </div>
+  </section>
+
+
+  <!-- ============ CIERRE ============ -->
+  <section class="close-cta" id="cierre">
+    <div class="wrap">
+      <h2>Averigua gratis qué necesita tu LLC</h2>
+      <p class="lede">Un asesor de la firma revisa tu caso por Zoom, en español. Si una LLC no te conviene, te lo decimos y no pagas nada.</p>
+      <a class="btn btn--primary" href="#agendar" data-cta="close"><span class="t-long">Reservar mi Sesión Estratégica gratis</span><span class="t-short">Reservar mi sesión gratis</span></a>
     </div>
   </section>
 
@@ -1369,6 +1420,21 @@
       pre: 'Para inversionistas y dueños de patrimonio fuera de EE. UU.',
       h1: 'Protege tu patrimonio con una <span class="u">estructura bien diseñada</span> en EE.&nbsp;UU.',
       sub: 'Sales de la Sesión Estratégica gratuita sabiendo si una LLC —o una estructura mayor— encaja con tu caso. El diseño de la estructura se trabaja después, con un especialista y con costo. Sin costo y sin compromiso en esta primera sesión.'
+    },
+    mantener: {
+      pre: 'Para quienes ya tienen su LLC abierta',
+      h1: 'Tu LLC ya está abierta. <span class="u">¿Sabes qué debes cumplir</span> cada año?',
+      sub: 'Sesión Estratégica gratuita por Zoom, en español: un asesor revisa tu LLC y te muestra qué obligaciones suelen aplicar según tus socios, tu residencia fiscal y tus ingresos. No cumplirlas a tiempo puede generar multas.'
+    },
+    banco: {
+      pre: 'Para quienes necesitan cobrar y pagar desde EE. UU.',
+      h1: 'Una LLC para operar con <span class="u">bancos, Stripe y PayPal</span> en EE.&nbsp;UU.',
+      sub: 'Sesión Estratégica gratuita por Zoom, en español: revisamos si una LLC encaja con tu caso y cómo prepararte para abrir tu cuenta. Los bancos evalúan cada solicitud; nosotros preparamos y acompañamos el proceso.'
+    },
+    '2027': {
+      pre: 'Para quienes quieren abrir su LLC antes de que acabe el año',
+      h1: 'Empieza <span class="u">2027</span> con tu LLC lista.',
+      sub: 'Sesión Estratégica gratuita por Zoom, en español: planificamos tu LLC desde ahora para que no pierdas semanas al empezar el año. Un asesor de la firma revisa tu caso contigo.'
     },
     ordenar: {
       pre: 'Para quienes ya tienen una LLC y quieren ordenarla',
@@ -1875,6 +1941,22 @@
 
     stepCal.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
   }
+})();
+</script>
+<script>
+(function () {
+  var links = [].slice.call(document.querySelectorAll(".nav a"));
+  if (!links.length || !("IntersectionObserver" in window)) return;
+  var map = {};
+  links.forEach(function (a) { var s = document.querySelector(a.getAttribute("href")); if (s) map[s.id] = a; });
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      links.forEach(function (a) { a.removeAttribute("aria-current"); });
+      var a = map[e.target.id]; if (a) { a.setAttribute("aria-current", "true"); try { a.scrollIntoView({ inline: "nearest", block: "nearest" }); } catch (x) {} }
+    });
+  }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
+  Object.keys(map).forEach(function (id) { io.observe(document.getElementById(id)); });
 })();
 </script>
 </body>

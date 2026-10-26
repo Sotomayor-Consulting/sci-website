@@ -406,6 +406,27 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
+### `leads-landing/abrir-llc-primera-vez`: hero ampliado para los cuatro guiones de video (2026-10-26)
+
+- No se usa landing B. El hero por defecto ahora cubre abrir, ponerla al día y operar: pre-título "Para negocios fuera de EE. UU. que van a abrir una LLC o ya tienen una", título "Tu LLC en EE. UU.: ábrela bien o ponla al día." y subtítulo con los tres casos (abrirla, ponerla al día, operar con bancos/Stripe/PayPal). Antes decía "antes de abrirla", que contradecía a los guiones 1 y 3 (LLC ya abierta).
+- Hooks nuevos por `utm_content`: `mantener` (guiones 1 y 3), `banco` (guion 2), `2027` (guion 4), con `pre`, `h1` y `sub`. El parámetro se lee hasta el primer `-`, `_` o `|`. Título de la agenda y del cierre: "Averigua gratis qué necesita tu LLC"; "Para quién es" suma el caso de LLC ya abierta.
+- Pendiente: el guion 4 afirma que algunos estados permiten iniciar en octubre con fecha efectiva 2027; el hook no lo afirma hasta que se confirme. Los guiones 1 y 3 son idénticos.
+
+### `leads-landing/abrir-llc-primera-vez`: orden de secciones, menú y puentes (2026-10-26)
+
+- **Orden nuevo**: hero → formulario (#agendar) → partners → Para quién (#para-quien) → Problema (#problema) → Por qué empezar (#por-que) → La sesión (#reunion) → Cómo funciona (#como) → **Confianza (#confianza) antes de Planes (#planes)** → Preguntas (#preguntas) → **Cierre (#cierre)**. Motivo: un público frío debe ver prueba antes que precio.
+- **Menú en el encabezado** (`.nav`): Para quién · La sesión · Cómo funciona · Confianza · Costos · Preguntas, con la sección visible resaltada (`aria-current`, IntersectionObserver). En ≤900 px pasa a una fila de enlaces deslizable bajo el logo (el encabezado mide 95 px; `[id]{scroll-margin-top}` 80/108 px compensa el encabezado fijo).
+- **Frases puente** (`.bridge`) al final de cada sección que enlazan con la siguiente. El CTA suelto del FAQ se reemplazó por la sección de cierre (`data-cta="close"`) con la promesa y la garantía verificable.
+- No se tocó la landing B (`corregir-llc-existente`): sigue con el formulario y la oferta anteriores.
+
+### `leads-landing/abrir-llc-primera-vez`: correcciones de diseño tras auditoría (2026-10-26)
+
+- **Bug corregido**: la franja "Partners de banca" (Mercury/Relay) de la sección de confianza era blanco sobre blanco (invisible, también en producción: `.on-navy` sin fondo navy). Ahora `.partner-line.on-navy` lleva fondo `--navy-800`.
+- `--gold-ink` pasó de `#a9741f` (4,03:1 sobre blanco) a `#946319` (≥4,68:1 sobre blanco, mist y gold-050). Ningún texto de la landing baja de 12 px (FAVORITO, PARTNERS OFICIALES, "/ año", insignia del formulario).
+- Planes: tarjetas de igual alto, la favorita (Business) sube 8 px en ≥900 px con fondo crema y borde de 2 px; texto de "Diseño de tu LLC" acortado.
+- CTAs: `<span class="t-long">`/`<span class="t-short">` ("Reservar mi sesión gratis" en ≤520 px) para que el botón no parta en dos líneas; en la línea de Trustpilot del hero, "con reseñas verificadas" se oculta en ≤520 px.
+- Hero en dos columnas desde 1000 px: texto a la izquierda y el video de Sebastián a la derecha (440 px), usando el mismo bloque `.hero-vmsg` (JS y modal intactos). Trampa: `grid-template-rows:repeat(6,auto) 1fr` evita que el video estire los huecos entre filas del texto.
+
 ### `leads-landing/abrir-llc-primera-vez`: oferta con nombre y bono post-reserva (2026-10-26)
 
 - La oferta gratuita se llama **Sesión Estratégica** en toda la página (CTA "Reservar mi Sesión Estratégica gratis", insignia, leyenda y radio del formulario, FAQ, hooks), igual que el evento de Zcal. Las etiquetas enviadas a n8n (`INTENT_LABELS`) NO cambiaron: son contrato con la landing hermana.
