@@ -406,6 +406,13 @@ Si un lead de diagnóstico no recibe el correo o el WhatsApp esperado, revisar e
 
 ---
 
+### Video de bienvenida movido a `schedule-confirmed-v2` (2026-10-26)
+
+- El video de Sebastián (27 s, 1080x1080, subtítulos grabados; `public/form-landing-sub.webm|mp4`, portada `form-landing-poster.jpg`) pasó del hero de `leads-landing/abrir-llc-primera-vez` a la página de confirmación `/schedule-confirmed-v2/`, que se muestra tras reservar. Motivo: es un video de bienvenida ("Gracias por tu interés… el siguiente paso es agendar una reunión gratuita"), que suena prematuro ante tráfico frío y repetía "gratuita" justo cuando se dejó de usar como reclamo.
+- En `schedule-confirmed-v2`: bloque `.welcome-video` entre la agenda y "Antes de nuestra reunión" (`preload="none"`, controles, sin autoplay con sonido), oculto en el estado `invalid`. Eventos `welcome_video_play` / `welcome_video_complete` en `dataLayer` desde un script aparte: **no se tocó** el script que dispara `Schedule` (verificado: sigue disparando una vez). El contrato `tests/schedule-confirmed-contract.test.mjs` aplica a `schedule-confirmed` (v1), no a v2.
+- En el hero queda solo el loop silencioso de 14 s (`form-landing-loop.mp4`), sin botón de reproducir ni modal, con el texto "Lo define un especialista, no una plantilla". Pendiente: grabar un video nuevo para el hero (~20 s, a quién va dirigido, reunión inicial gratuita y servicio con costo).
+- **Desajuste conocido**: el final del video dice "el siguiente paso es agendar una reunión gratuita", pero en la página de confirmación el visitante ya reservó. Conviene re-editar el cierre ("nos vemos en tu sesión") o recortar esa frase.
+
 ### `leads-landing/abrir-llc-primera-vez`: calificar al lead (dueños de negocio que pueden pagar) (2026-10-26)
 
 - Problema: "Averigua gratis…" atraía todo tipo de tráfico. Cambios: pre-título "Para dueños de negocios que ya generan ingresos y quieren operar en EE. UU." (también en todos los hooks); "gratis" deja de ser el reclamo (CTAs "Reservar mi Sesión Estratégica", encabezado y barra fija "Reservar sesión", insignia y formulario sin "gratuita"); el título de la agenda y del cierre pasó a "Reserva tu Sesión Estratégica".

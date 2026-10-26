@@ -111,6 +111,12 @@
     .invalid .success { color:#fff; }
     .invalid .agenda { display:none; }
     .invalid .calendar-action { display:none; }
+    .welcome-video { margin:28px 0 0; padding:20px; border-radius:var(--radius); background:var(--navy); color:#fff; }
+    .welcome-video h2 { margin:0 0 6px; color:#fff; font-size:16px; }
+    .welcome-video p { margin:0 0 14px; color:rgba(255,255,255,.78); font-size:13px; line-height:1.55; }
+    .welcome-video video { display:block; width:min(360px,100%); aspect-ratio:1/1; margin:0 auto; border-radius:12px; background:#000; }
+    .welcome-video .caption { margin:10px 0 0; text-align:center; font-size:12px; color:rgba(255,255,255,.7); }
+    .invalid .welcome-video { display:none; }
     @media (prefers-reduced-motion:no-preference) { .confirmation { animation:confirm-in .36s ease-out both; } @keyframes confirm-in { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } } }
     @media (max-width:620px) { .page { width:calc(100% - 24px); margin:12px auto 28px; } .brand { min-height:62px; margin-bottom:16px; border-radius:14px; } .confirmation { grid-template-columns:1fr; border-radius:14px; } .confirmation-side { display:grid; grid-template-columns:42px minmax(0,1fr); column-gap:14px; min-height:auto; padding:20px 22px; } .success { grid-row:span 2; width:42px; height:42px; margin:0; font-size:23px; } .status-label { align-self:end; margin:0 0 2px; } .side-copy { align-self:start; max-width:none; font-size:13px; line-height:1.45; } .side-rule { display:none; } .confirmation-body { padding:28px 22px 30px; } h1 { font-size:32px; } .agenda { padding:19px; } .agenda-meta { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 14px; } .agenda-meta span, .agenda-meta span:first-child { padding:0; border:0; } .agenda-meta span:last-child { grid-column:1 / -1; } .calendar-action { margin-top:18px; } .calendar-button { width:100%; min-height:48px; } }
     @media (max-width:360px) { h1 { font-size:29px; } .confirmation-body { padding:25px 19px 28px; } .agenda { padding:17px; } .agenda-date { font-size:19px; } }
@@ -147,6 +153,16 @@
           <div id="calendar-action" class="calendar-action" hidden>
             <button id="add-calendar" class="calendar-button" type="button">Añadir a mi calendario</button>
           </div>
+        </section>
+
+        <section class="welcome-video" aria-label="Mensaje de Sebastián Sotomayor">
+          <h2>Un mensaje de Sebastián antes de tu sesión</h2>
+          <p>Mira este video de menos de 30 segundos. Tiene subtítulos, así que puedes verlo sin sonido.</p>
+          <video id="welcome-video" controls playsinline preload="none" poster="/form-landing-poster.jpg">
+            <source src="/form-landing-sub.webm" type="video/webm">
+            <source src="/form-landing-sub.mp4" type="video/mp4">
+          </video>
+          <p class="caption">Sebastián Sotomayor · Managing Partner</p>
         </section>
 
         <section class="next" aria-label="Próximo paso">
@@ -308,6 +324,16 @@
         }
         return (hash >>> 0).toString(36);
       }
+    })();
+  </script>
+  <script data-cfasync="false">
+    (function () {
+      var v = document.getElementById("welcome-video");
+      if (!v) return;
+      function dl(name) { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: name, page_path: window.location.pathname, landing_variant: "schedule-confirmed-v2" }); }
+      var played = false;
+      v.addEventListener("play", function () { if (played) return; played = true; dl("welcome_video_play"); });
+      v.addEventListener("ended", function () { dl("welcome_video_complete"); });
     })();
   </script>
 </body>
