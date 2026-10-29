@@ -228,6 +228,41 @@ const {
             <FieldError match="typeMismatch">Ingresa un correo válido.</FieldError>
           </Field>
 
+          <Field name="phone">
+            <FieldLabel for="calendar-b-phone" class="text-xs text-muted-foreground">
+              Teléfono / WhatsApp
+            </FieldLabel>
+            <div class="grid grid-cols-[6.75rem_minmax(0,1fr)] gap-2">
+              <select
+                data-phone-country
+                name="countryCode"
+                aria-label="Código de país"
+                class="h-9 w-full rounded-lg border-[1.5px] border-input bg-transparent px-2 text-sm text-foreground shadow-xs outline-none focus:border-foreground focus:ring-3 focus:ring-foreground/5"
+              >
+                <option value="+593">EC +593</option>
+                <option value="+1">US +1</option>
+                <option value="+52">MX +52</option>
+                <option value="+57">CO +57</option>
+                <option value="+54">AR +54</option>
+                <option value="+34">ES +34</option>
+              </select>
+              <FieldControl
+                id="calendar-b-phone"
+                name="phone"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                minlength="7"
+                maxlength="24"
+                placeholder="98 123 4567"
+                required
+                class="h-9 min-w-0 rounded-lg border-[1.5px] text-sm text-foreground"
+              />
+            </div>
+            <FieldError match="valueMissing">Ingresa tu teléfono.</FieldError>
+            <FieldError match="tooShort">Ingresa un teléfono válido.</FieldError>
+          </Field>
+
           <div data-booking-questions class="flex flex-col gap-4"></div>
         </div>
 
@@ -285,6 +320,22 @@ const {
     required: boolean;
     position: number;
     options: string[];
+  };
+
+  const DIAL_TO_ISO_B: Record<string, string> = {
+    "+593": "EC",
+    "+52": "MX",
+    "+57": "CO",
+    "+54": "AR",
+    "+34": "ES",
+    "+1": "US",
+  };
+
+  const createBookingSessionIdB = () => {
+    if (typeof globalThis.crypto?.randomUUID === "function") {
+      return globalThis.crypto.randomUUID();
+    }
+    return `session-${Date.now()}-${Math.random().toString(36).slice(2)}`;
   };
 
   const monthFormatterB = new Intl.DateTimeFormat("es", {
@@ -431,6 +482,8 @@ const {
       const successTime = get<HTMLElement>("[data-success-time]");
       const nameInput = get<HTMLInputElement>('input[name="name"]');
       const emailInput = get<HTMLInputElement>('input[name="email"]');
+      const phoneInput = get<HTMLInputElement>('input[name="phone"]');
+      const phoneCountry = get<HTMLSelectElement>("[data-phone-country]");
 
       if (
         !monthLabel ||
@@ -457,8 +510,12 @@ const {
         !successDate ||
         !successTime ||
         !nameInput ||
-        !emailInput
+        !emailInput ||
+        !phoneInput ||
+        !phoneCountry
       ) return;
+
+      const bookingSessionId = createBookingSessionIdB();
 
       timezone.textContent = Intl.DateTimeFormat()
         .resolvedOptions()
@@ -492,6 +549,32 @@ const {
         submitButton.disabled = disabled;
         submitButton.toggleAttribute("data-disabled", disabled);
         submitButton.setAttribute("aria-disabled", String(disabled));
+      };
+
+      const getPhonePayload = () => {
+        const raw = phoneInput.value.trim();
+        const selectedDial = phoneCountry.value;
+        const digits = raw.replace(/\D/g, "");
+        const normalized =
+          raw.startsWith("+") || raw.startsWith("00")
+            ? `+${raw.replace(/^00/, "").replace(/\D/g, "")}`
+            : `${selectedDial}${digits.replace(/^0+/, "")}`;
+
+        if (!/^\+[1-9]\d{6,14}$/.test(normalized)) {
+          throw new Error(
+            "Revisa el teléfono: usa un número válido con su código de país.",
+          );
+        }
+
+        const detectedDial = Object.keys(DIAL_TO_ISO_B)
+          .sort((a, b) => b.length - a.length)
+          .find((dial) => normalized.startsWith(dial));
+
+        return {
+          attendee_phone: normalized,
+          attendee_phone_country:
+            DIAL_TO_ISO_B[detectedDial ?? selectedDial] ?? "EC",
+        };
       };
 
       const showSlots = () => {
@@ -864,6 +947,7 @@ const {
         bookingStatus.textContent = "Confirmando tu reserva...";
 
         try {
+          const phonePayload = getPhonePayload();
           const response = await fetch("/api/booking", {
             method: "POST",
             headers: {
@@ -875,6 +959,11 @@ const {
               start_at: selectedSlot.startAt,
               name: nameInput.value.trim(),
               email: emailInput.value.trim(),
+              ...phonePayload,
+              timezone:
+                Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
+              language: (document.documentElement.lang || "es").split("-")[0],
+              idempotencyKey: `${bookingSessionId}:${selectedSlot.startAt}`,
               answers: getQuestionAnswers(),
             }),
           });
