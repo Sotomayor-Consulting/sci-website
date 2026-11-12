@@ -1,0 +1,41 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import { Image } from "astro:assets";
+
+import backgroundImage from "@images/extract_BLACK_FRIDAY_BACKGROUND_GRUNGE_P_D.avif";
+import HeromImage from "@images/extract2_BLACK_FRIDAY_BACKGROUND_GRUNGE_P_D.avif";
+---
+
+<section class="isolate border-b border-white/10">
+  <div class="h-fit md:h-screen">
+    <div
+      class="pointer-events-none flex items-center justify-center [background-image:var(--hero-image)] [background-size:cover,cover] [background-position:center_-50px] [background-repeat:no-repeat,no-repeat] md:h-8/10"
+      style={`--hero-image: url('${backgroundImage.src}');`}
+    >
+      <Image src={HeromImage} alt="Hero Image" class="h-full w-auto" />
+    </div>
+
+    <div class="mx-auto flex flex-col items-center gap-7 bg-gradient-to-b py-6 [background-image:var(--hero-image)] [background-size:cover,cover] [background-position:center_-666px] [background-repeat:no-repeat,no-repeat]" style={`--hero-image: url('${backgroundImage.src}');`}>
+      <div>
+        <h1
+          class="font-display max-w-3xl text-center text-3xl leading-tight font-bold tracking-[-.035em] sm:text-3xl"
+        >
+          Este Black Friday, la Planificación y Diseño de tu LLC tiene hasta 50%
+          de descuento.
+        </h1>
+      </div>
+      <div class="flex max-w-sm flex-col gap-3 md:items-end">
+        <Button
+          as="a"
+          href="#agendar"
+          variant="outline"
+          size="lg"
+          class="bg-primary/90 text-foreground hover:bg-primary border-0 transition-all delay-110 hover:-translate-y-0.5 hover:text-[#0d2537] md:min-w-52"
+        >
+          Agenda tu reunión
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>

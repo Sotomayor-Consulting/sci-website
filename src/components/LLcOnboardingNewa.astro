@@ -1,0 +1,862 @@
+---
+import Check from "@tabler/icons/outline/check.svg";
+
+import Marquee from "@components/starwind/marquee/Marquee.astro";
+import { Button } from "@components/starwind/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@components/starwind/card";
+import Header from "@components/ui/blocks/HeroLandingNew.astro";
+import Insight1 from "@components/ui/blocks/Insights_4.astro";
+import Insight2 from "@components/ui/blocks/Insights_5.astro";
+import Timeline from "@/components/ui/timeline/timelineNew.astro";
+import Faq from "@components/ui/blocks/FaqB.astro";
+import Pricing, {
+  type PricingPlan,
+} from "@components/ui/blocks/PricingB.astro";
+import Form, {
+  type ActivityGroup,
+} from "@components/ui/blocks/FormLandingNew.astro";
+import FondoDiv from "@images/landing3-B.avif";
+
+interface Props {
+  eventTypeSlug?: string;
+}
+
+const { eventTypeSlug } = Astro.props;
+
+const planningDecisions = [
+  "Nivel de confidencialidad",
+  "Estado de incorporación",
+  "Tratamiento tributario",
+  "Estructura societaria",
+  "Sistema de administración",
+  "Método contable",
+  "Código de actividad económica",
+];
+
+const planningDeliverables = [
+  "Resumen de tu caso",
+  "Diseño recomendado para tu LLC",
+  "Tus principales obligaciones tributarias ante el IRS",
+];
+
+const activityGroups: ActivityGroup[] = [
+  {
+    label: "Operar un negocio",
+    activities: [
+      "Exportación de servicios profesionales",
+      "E-commerce",
+      "Trader / compra-venta de productos",
+      "Fintech",
+    ],
+  },
+  {
+    label: "Invertir o proteger",
+    activities: [
+      "Invertir en Bolsa de Valores",
+      "Trader de Stocks",
+      "Negocios en bienes raíces",
+      "Proteger mi patrimonio",
+    ],
+  },
+];
+
+const steps1 = [
+  {
+    titulo: "Cuéntanos tu caso",
+    descripcion: "Comparte tus datos y el objetivo principal de tu proyecto.",
+  },
+
+  {
+    titulo: "Habla con un experto",
+    descripcion:
+      "Revisamos actividad, socios, residencia y planes de crecimiento.",
+  },
+  {
+    titulo: "Recibe una ruta clara",
+    descripcion: "Sales con estado recomendado, costos y próximos pasos.",
+  },
+];
+
+const steps2 = [
+  {
+    titulo: "Delaware",
+    descripcion:
+      "Prestigio corporativo. La opción cuando hay inversionistas de por medio.",
+  },
+
+  {
+    titulo: "Wyoming",
+    descripcion: "Menor costo operativo y confidencialidad total.",
+  },
+  {
+    titulo: "Florida",
+    descripcion:
+      "Para expandirse con presencia física y para productos que llegan por barco desde cualquier parte del mundo.",
+  },
+  {
+    titulo: "Tu caso",
+    descripcion:
+      "El estado correcto depende de tu actividad, tus socios y de cómo cobras. Lo definimos contigo en la asesoría inicial, antes de que inviertas.",
+  },
+];
+
+const steps3 = [
+  {
+    titulo: "Tu actividad",
+    descripcion: "Revisamos a qué te dedicas y cómo cobras hoy.",
+  },
+
+  {
+    titulo: "Tu estructura",
+    descripcion: "Socios, residencia fiscal y planes de crecimiento.",
+  },
+  {
+    titulo: "Tu estado",
+    descripcion: "Comparamos las opciones y su encaje con tu operación.",
+  },
+  {
+    titulo: "Tu ruta",
+    descripcion: "Sales con una recomendación concreta y los costos asociados.",
+  },
+];
+
+const planes: PricingPlan[] = [
+  {
+    name: "Básico",
+    description: "Constituye tu LLC con lo esencial para operar legalmente.",
+    price: "$350",
+    period: "Una vez",
+    features: [
+      {
+        text: "Asesoría para incorporar tu LLC ante el estado que elijas.",
+        included: true,
+      },
+      {
+        text: "Acompañamiento con los documentos corporativos de tu LLC.",
+        included: true,
+      },
+      { text: "Agente Residente por un año.", included: true },
+    ],
+    buttonText: "Agenda un cita",
+    buttonHref: "/tu_llc_en_usa/#agendar",
+  },
+  {
+    name: "Business",
+    description:
+      "Estrategia fiscal y legal para la incorporación de tu LLC. Ideal para escalar y tener bien estructurado desde el inicio.",
+    price: "$950",
+    period: "Una vez",
+    features: [
+      {
+        text: "Incluye todo del Plan Básico + Estándar",
+        included: true,
+      },
+      { text: "Planificación y diseño legal - tributario.", included: true },
+      {
+        text: "Acompañamiento bancario (Mercury o Relay + Stripe).",
+        included: true,
+      },
+      {
+        text: "Acompañamiento prioritario con los documentos corporativos de tu LLC.",
+        included: true,
+      },
+    ],
+    buttonText: "Agenda un cita",
+    buttonHref: "/tu_llc_en_usa/#agendar",
+    highlighted: true,
+    badge: "Más Popular",
+  },
+  {
+    name: "Estándar",
+    description: "Incluye soporte legal y documentos clave para operar.",
+    price: "$600",
+    period: "Una vez",
+    features: [
+      {
+        text: "Incluye todo del Plan Básico",
+        included: true,
+      },
+      { text: "Elaboración del Acuerdo de Operación.", included: true },
+      { text: "Consultas ilimitadas por un año.", included: true },
+      {
+        text: "Asesoría sobre la exención BE-13",
+        included: true,
+      },
+    ],
+    buttonText: "Agenda un cita",
+    buttonHref: "/tu_llc_en_usa/#agendar",
+  },
+];
+
+const faqs = [
+  {
+    question: "¿Sotomayor Consulting es una entidad del Gobierno?",
+    answer:
+      "No. Somos una firma privada de asesoría legal, fiscal y tecnológica. El registro de la LLC lo emite el Estado y el EIN lo emite el IRS; nosotros te asesoramos y acompañamos en el proceso.",
+  },
+  {
+    question: "¿La asesoría realmente es gratuita?",
+    answer:
+      "Sí. La reunión inicial no tiene costo ni compromiso. Primero evaluamos si una LLC encaja con tu situación.",
+  },
+  {
+    question: "¿Puedo abrir una LLC sin vivir en Estados Unidos?",
+    answer:
+      "Sí. Una persona no residente puede constituir una LLC. La estructura y obligaciones adecuadas dependen de su actividad y país de residencia.",
+  },
+  {
+    question: "¿Cuánto tarda el proceso de incorporación de LLC?",
+    answer: "El proceso de incorporación dura aproximadamente: hasta 15 días",
+  },
+  {
+    question: "¿Qué documentos necesito?",
+    answer:
+      "Normalmente necesitarás pasaporte vigente y comprobante de domicilio reciente de cada socio.",
+  },
+  {
+    question: "¿Qué incluye el costo?",
+    answer:
+      "Cada plan incluye servicios distintos. La tasa estatal se paga por separado y varía según la jurisdicción.",
+  },
+];
+---
+
+<main class="overflow-hidden bg-[#191919] text-white" data-llc-onboarding>
+  <Marquee
+    direction="left"
+    duration={30}
+    gap="1rem"
+    repeat={10}
+    class="bg-black"
+    pauseOnHover={false}
+  >
+    <div
+      class="flex shrink-0 items-center py-2 font-bold text-[#ff2525] after:ml-4 after:text-white/50 after:content-['·']"
+    >
+      <span
+        data-fomo-counter
+        data-counter-key="planning"
+        data-count-start="50"
+        data-count-max="10000"
+        class="mr-1 inline-block tabular-nums">1</span
+      >
+      <span
+        data-fomo-label
+        data-counter-key="planning"
+        data-label-singular="empresario reservó"
+        data-label-plural="empresarios reservaron">empresarios reservaron</span
+      >{" "}su Planificación y Diseño esta semana.
+    </div>
+    <div
+      class="flex shrink-0 items-center py-2 font-bold text-[#ff2525] after:ml-4 after:text-white/50 after:content-['·']"
+    >
+      <span
+        data-fomo-counter
+        data-counter-key="incorporated"
+        data-count-start="10"
+        data-count-max="10000"
+        class="mr-1 inline-block tabular-nums">10</span
+      >empresarios ya incorporaron su LLC
+    </div>
+  </Marquee>
+
+  <Header />
+
+  <Form activityGroups={activityGroups} eventTypeSlug={eventTypeSlug} />
+
+  <section
+    id="incorporar-bien"
+    aria-labelledby="incorporar-bien-title"
+    class="relative z-10 px-4 py-16 sm:px-8 sm:py-20 lg:py-24"
+  >
+    <Card
+      class="mx-auto max-w-6xl overflow-hidden border-white/10 bg-white/5 text-white ring-white/10"
+    >
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr]">
+        <CardHeader
+          class="noise-surface relative isolate overflow-hidden border-b border-white/10 bg-[#ff2525] p-6 sm:p-10 lg:border-r lg:border-b-0"
+        >
+          <p class="text-xs font-bold tracking-[0.18em] text-white/75 uppercase">
+            El costo de improvisar
+          </p>
+          <CardTitle>
+            <h2
+              id="incorporar-bien-title"
+              class="font-display text-3xl leading-tight text-white sm:text-4xl lg:text-5xl"
+            >
+              Incorporar mal cuesta más que no incorporar.
+            </h2>
+          </CardTitle>
+        </CardHeader>
+        <CardContent
+          class="flex flex-col justify-center gap-5 px-6 py-8 text-base leading-8 text-white/70 sm:px-10 sm:py-12 sm:text-lg"
+        >
+          <p>
+            Eliges el estado a ciegas. Tu LLC tributa bajo un régimen que no va
+            con tu modelo de negocio. Aparecen costos operativos y obligaciones
+            ante el IRS que nadie te anticipó.
+          </p>
+          <p class="font-semibold text-white">
+            Y corregirlo después cuesta más que diseñarlo bien desde el inicio.
+          </p>
+        </CardContent>
+      </div>
+    </Card>
+  </section>
+
+  
+
+  <section
+    id="decisiones"
+    aria-labelledby="decisiones-title"
+    class="relative z-10 bg-black/20 px-4 py-16 sm:px-8 sm:py-20 lg:py-24"
+  >
+    <div class="mx-auto max-w-6xl">
+      <div class="mx-auto mb-10 max-w-4xl text-center sm:mb-14">
+        <p class="mb-3 text-xs font-bold tracking-[0.18em] text-[#ff2525] uppercase">
+          Planificación antes de incorporar
+        </p>
+        <h2
+          id="decisiones-title"
+          class="font-display text-3xl leading-tight text-white sm:text-4xl lg:text-5xl"
+        >
+          Siete decisiones que se toman antes de incorporar.
+        </h2>
+        <p class="mt-5 text-base leading-7 text-white/65 sm:text-lg">
+          En una reunión estratégica de planificación y diseño legal y
+          tributario analizamos tu modelo de negocio, la ubicación de tus
+          clientes y tus medios de pago. Con eso definimos contigo:
+        </p>
+      </div>
+
+      <ol
+        class="mx-auto max-w-3xl list-decimal space-y-4 pl-7 text-left marker:font-extrabold marker:text-[#ff2525]"
+      >
+        {
+          planningDecisions.map((decision) => (
+            <li class="border-b border-white/10 pb-4 pl-2 text-base font-semibold leading-7 text-white last:border-b-0 sm:text-lg">
+              {decision}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section
+    id="informe-planificacion"
+    aria-labelledby="informe-title"
+    class="relative z-10 px-4 py-16 sm:px-8 sm:py-20 lg:py-24"
+  >
+    <Card
+      class="mx-auto max-w-5xl border-[#ff2525]/35 bg-[#ff2525]/10 text-white ring-[#ff2525]/20"
+    >
+      <CardHeader class="px-6 pt-8 sm:px-10 sm:pt-10">
+        <p class="text-xs font-bold tracking-[0.18em] text-[#ff2525] uppercase">
+          Qué recibes
+        </p>
+        <CardTitle>
+          <h2
+            id="informe-title"
+            class="font-display text-3xl leading-tight text-white sm:text-4xl"
+          >
+            Tu Informe de Planificación y Diseño de LLC.
+          </h2>
+        </CardTitle>
+      </CardHeader>
+      <CardContent class="px-6 pb-8 sm:px-10 sm:pb-10">
+        <ul class="grid gap-4 md:grid-cols-3">
+          {
+            planningDeliverables.map((deliverable) => (
+              <li class="flex gap-3 rounded-xl border border-white/10 bg-black/20 p-4 text-sm leading-6 text-white/80 sm:text-base">
+                <span class="grid size-6 shrink-0 place-items-center rounded-full bg-[#ff2525] text-white">
+                  <Check class="size-3.5" aria-hidden="true" />
+                </span>
+                <span>{deliverable}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </CardContent>
+    </Card>
+  </section>
+
+  <section
+    id="experiencia"
+    aria-labelledby="experiencia-title"
+    class="relative z-10 bg-black/30 px-4 py-16 sm:px-8 sm:py-20"
+  >
+    <div class="mx-auto max-w-6xl text-center">
+      <p class="mb-3 text-xs font-bold tracking-[0.18em] text-[#ff2525] uppercase">
+        Experiencia comprobada
+      </p>
+      <h2
+        id="experiencia-title"
+        class="font-display mx-auto max-w-4xl text-3xl leading-tight text-white sm:text-4xl lg:text-5xl"
+      >
+        <span
+          data-fomo-counter
+          data-counter-key="black-friday"
+          data-count-start="60"
+          data-count-max="10000"
+          class="mr-2 inline-block tabular-nums"
+        >1</span>LLC planificadas e incorporadas por Black Friday.
+      </h2>
+      <p class="mt-6 text-lg font-semibold text-white/65 sm:text-xl">
+        +5.000 empresas acompañadas <span class="mx-2 text-[#ff2525]">·</span>
+        10 años de experiencia
+      </p>
+    </div>
+  </section>
+
+  <section
+    aria-labelledby="cierre-title"
+    class="relative z-10 px-4 py-16 sm:px-8 sm:py-20 lg:py-24"
+  >
+    <Card
+      class="mx-auto max-w-6xl overflow-hidden border-white/10 bg-black text-center text-white ring-white/10"
+    >
+      <CardContent class="flex flex-col items-center px-6 py-12 sm:px-10 sm:py-16">
+        <h2
+          id="cierre-title"
+          class="font-display max-w-4xl text-3xl leading-tight text-white sm:text-4xl lg:text-5xl"
+        >
+          Tu LLC empieza bien o empieza a costarte más.
+        </h2>
+        <h3 class="mt-4 text-xl font-semibold text-white/70 sm:text-2xl">
+          Diseña primero. Incorpora después.
+        </h3>
+        <Button
+          as="a"
+          href="#agendar"
+          variant="primary"
+          size="lg"
+          class="mt-8 rounded-xl bg-[#ff2525] px-7 font-bold text-white hover:bg-[#e51f1f]"
+        >
+          Agenda tu reunión
+        </Button>
+      </CardContent>
+    </Card>
+  </section>
+
+  <Timeline />
+
+  <div class="relative z-10 bg-black/10 py-20">
+    <Insight1
+      label="Cómo funciona"
+      title="De la duda a un plan concreto en tres pasos."
+      Cta="Agendar mi asesoría"
+      CtaLink="#agendar"
+      CtaLabels="60 min · por Zoom · sin compromiso"
+      steps={steps1}
+    />
+  </div>
+
+  <div class="relative z-10 my-10 py-20" id="estados">
+    <Insight2
+      label="Elige tu estado ideal"
+      title="Delaware, Wyoming o Florida. No todos los estados son iguales para una incorporación."
+      description="Recibe la consultoría de un equipo experto y define el estado que corresponde a tu operación antes de incorporar tu LLC, sin errores. Diez años estructurando compañías en Estados Unidos para clientes de toda América Latina."
+      Cta="Evalúa tu estado sin costo"
+      CtaLink="#agendar"
+      CtaLabels="60 min · por Zoom · sin compromiso"
+      CtaAdvice="Las tasas estatales las cobra cada estado y se pagan por separado."
+      steps={steps2}
+    />
+  </div>
+
+  <div
+    class="relative z-10 overflow-hidden py-20 before:absolute before:inset-0 before:-z-10 before:[background-image:var(--hero-image)] before:[background-size:cover] before:[background-position:center] before:[background-repeat:no-repeat] before:opacity-20 before:content-['']"
+    id="servicio"
+    style={`--hero-image: url('${FondoDiv.src}');`}
+  >
+    <Insight2
+      label="Consultoría para tu LLC"
+      title="Analizamos tu caso y tu actividad antes de recomendarte una estructura."
+      description="Una sesión de 60 minutos por Zoom, sin costo y sin compromiso, con un asesor del estudio. Diez años de experiencia en estructuras internacionales."
+      Cta="Agenda una llamada sin costo"
+      CtaLink="#agendar"
+      CtaLabels="100% remoto y en español"
+      steps={steps3}
+    />
+  </div>
+
+  <div class="relative z-10 my-10 py-20">
+    <Pricing
+      id="precios"
+      heading="Valores únicos. Las tasas del Estado se pagan aparte y las cobra el Estado."
+      description="El plan ideal según tu caso lo definimos en la primera asesoría."
+      plans={planes}
+    />
+  </div>
+
+  <div class="relative z-10 bg-black/10 py-20">
+    <Faq
+      id="preguntas"
+      label="Preguntas frecuentes"
+      title="Lo que debes saber antes de empezar."
+      description="Si tu duda no aparece, la resolvemos durante la asesoría."
+      faqs={faqs}
+      Cta="Resuleve tus dudas en la asesoría"
+      CtaLink="#agendar"
+      CtaLabels="60 min · por Zoom · sin compromiso"
+    />
+  </div>
+
+  
+</main>
+
+<script>
+  import { gsap } from "gsap";
+
+  const scope = document.querySelector<HTMLElement>("[data-llc-onboarding]");
+  const form = scope?.querySelector<HTMLFormElement>("#onboarding-form");
+
+  if (scope) {
+    const allCounters = Array.from(
+      scope.querySelectorAll<HTMLElement>("[data-fomo-counter]"),
+    );
+    const counterKeys = [
+      ...new Set(
+        allCounters
+          .map((counter) => counter.dataset.counterKey)
+          .filter((key): key is string => Boolean(key)),
+      ),
+    ];
+    const counterTimers = new Set<number>();
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    counterKeys.forEach((key) => {
+      const counters = allCounters.filter(
+        (counter) => counter.dataset.counterKey === key,
+      );
+      const labels = Array.from(
+        scope.querySelectorAll<HTMLElement>("[data-fomo-label]"),
+      ).filter((label) => label.dataset.counterKey === key);
+      const firstCounter = counters[0];
+      let counterValue = Number(firstCounter?.dataset.countStart ?? 0);
+      const counterMax = Number(firstCounter?.dataset.countMax ?? 10_000);
+
+      const renderCounter = () => {
+        const formattedValue = Math.max(0, counterValue).toLocaleString("es");
+        counters.forEach((counter) => {
+          counter.textContent = formattedValue;
+        });
+        labels.forEach((label) => {
+          label.textContent =
+            counterValue === 1
+              ? (label.dataset.labelSingular ?? "")
+              : (label.dataset.labelPlural ?? "");
+        });
+      };
+
+      const scheduleCounterIncrement = () => {
+        if (counterValue >= counterMax || counters.length === 0) return;
+
+        // DEMO: reemplazar este temporizador por el valor devuelto por la API.
+        const delay = gsap.utils.random(8_000, 15_000, 1);
+        const timer = window.setTimeout(() => {
+          counterTimers.delete(timer);
+          if (!document.hidden) {
+            counterValue = Math.min(counterValue + 1, counterMax);
+            renderCounter();
+
+            if (!reduceMotion.matches) {
+              gsap.fromTo(
+                counters,
+                { y: -3, autoAlpha: 0.65 },
+                {
+                  y: 0,
+                  autoAlpha: 1,
+                  duration: 0.35,
+                  ease: "power2.out",
+                  overwrite: "auto",
+                },
+              );
+            }
+          }
+
+          scheduleCounterIncrement();
+        }, delay);
+        counterTimers.add(timer);
+      };
+
+      if (
+        Number.isFinite(counterValue) &&
+        Number.isFinite(counterMax) &&
+        counterValue >= 0 &&
+        counterMax >= counterValue
+      ) {
+        renderCounter();
+        scheduleCounterIncrement();
+      }
+    });
+
+    window.addEventListener(
+      "pagehide",
+      () => counterTimers.forEach((timer) => window.clearTimeout(timer)),
+      { once: true },
+    );
+  }
+
+  if (scope && form) {
+    const activeForm = form;
+    const activityInput = form.querySelector<HTMLInputElement>("#activity");
+    const activityHint = form.querySelector<HTMLElement>("#activity-hint");
+    const continueToContact = form.querySelector<HTMLButtonElement>(
+      "#continue-to-contact",
+    );
+    const continueToSchedule = form.querySelector<HTMLButtonElement>(
+      "#continue-to-schedule",
+    );
+    const contactTitle = form.querySelector<HTMLElement>("#contact-title");
+    const calendarRoot = form.querySelector<HTMLElement>(
+      "[data-calendar-paso]",
+    );
+    let trackingId = "";
+    let trackingSent = false;
+
+    if (continueToContact) continueToContact.disabled = true;
+
+    function showStep(step: number) {
+      form
+        ?.querySelectorAll<HTMLElement>(".onboarding-step")
+        .forEach((panel) => {
+          panel.classList.toggle("hidden", Number(panel.dataset.step) !== step);
+        });
+
+      form
+        ?.querySelectorAll<HTMLElement>("[data-step-indicator]")
+        .forEach((indicator) => {
+          const indicatorStep = Number(indicator.dataset.stepIndicator);
+          const isCurrent = indicatorStep === step;
+          const isDone = indicatorStep < step;
+          indicator
+            .querySelector(".step-number")
+            ?.classList.toggle("step-active", isCurrent);
+          indicator
+            .querySelector(".step-label")
+            ?.classList.toggle("step-label-active", isCurrent);
+          indicator
+            .querySelector(".step-value")
+            ?.classList.toggle("hidden", isDone);
+          indicator
+            .querySelector(".step-check")
+            ?.classList.toggle("hidden", !isDone);
+          indicator
+            .querySelector(".step-number")
+            ?.classList.toggle("step-done", isDone);
+        });
+
+      form?.querySelectorAll<HTMLElement>("[data-line]").forEach((line) => {
+        line.classList.toggle(
+          "step-line-active",
+          Number(line.dataset.line) < step,
+        );
+      });
+
+      const headingSelector =
+        step === 2 ? "#contact-title" : step === 3 ? "#schedule-title" : null;
+      if (headingSelector) {
+        form
+          ?.querySelector<HTMLElement>(headingSelector)
+          ?.focus({ preventScroll: true });
+      }
+    }
+
+    function validateContactFields() {
+      const fields = ["#full-name", "#email", "#phone", "#question"]
+        .map((selector) =>
+          activeForm.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+            selector,
+          ),
+        )
+        .filter((field): field is HTMLInputElement | HTMLTextAreaElement =>
+          Boolean(field),
+        );
+      const invalidField = fields.find((field) => !field.checkValidity());
+      if (!invalidField) return true;
+      invalidField.reportValidity();
+      invalidField.focus();
+      return false;
+    }
+
+    function getTrackingId() {
+      if (trackingId) return trackingId;
+      if (typeof globalThis.crypto?.randomUUID === "function") {
+        trackingId = globalThis.crypto.randomUUID();
+        return trackingId;
+      }
+      trackingId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        (character) => {
+          const random = Math.floor(Math.random() * 16);
+          const value = character === "x" ? random : (random & 0x3) | 0x8;
+          return value.toString(16);
+        },
+      );
+      return trackingId;
+    }
+
+    function trackScheduleSelection(currentTrackingId: string) {
+      if (trackingSent) return;
+      try {
+        const uuidPattern =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+        if (!uuidPattern.test(currentTrackingId)) return;
+        trackingSent = true;
+
+        const trackingWindow = window as Window & {
+          dataLayer?: Array<Record<string, unknown>>;
+          SCITikTokRUKarlaQueue?: Array<{
+            type: string;
+            id: string;
+          }>;
+        };
+
+        trackingWindow.dataLayer = trackingWindow.dataLayer || [];
+        trackingWindow.dataLayer.push({
+          event: "lead_datos_completados",
+          submission_id: currentTrackingId,
+        });
+        trackingWindow.dataLayer.push({
+          event: "elegir_horario",
+          submission_id: currentTrackingId,
+        });
+
+        trackingWindow.SCITikTokRUKarlaQueue =
+          trackingWindow.SCITikTokRUKarlaQueue || [];
+        trackingWindow.SCITikTokRUKarlaQueue.push({
+          type: "lead",
+          id: currentTrackingId,
+        });
+
+        window.dispatchEvent(new CustomEvent("sci:tiktok:ru:karla:flush"));
+      } catch {
+        // Un fallo de medición no debe interrumpir el formulario.
+      }
+    }
+
+    form
+      .querySelectorAll<HTMLButtonElement>(".activity-button")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          form
+            .querySelectorAll<HTMLButtonElement>(".activity-button")
+            .forEach((option) => {
+              option.setAttribute("aria-pressed", String(option === button));
+              option
+                .querySelector(".activity-check")
+                ?.classList.toggle("hidden", option !== button);
+            });
+          if (activityInput) activityInput.value = button.dataset.value ?? "";
+          if (activityHint) activityHint.textContent = "Actividad seleccionada";
+          if (continueToContact) continueToContact.disabled = false;
+        });
+      });
+
+    continueToContact?.addEventListener("click", () => {
+      if (!activityInput?.value) return;
+      showStep(2);
+    });
+
+    continueToSchedule?.addEventListener("click", () => form.requestSubmit());
+
+    form
+      .querySelectorAll<HTMLButtonElement>(".back-button")
+      .forEach((button) => {
+        button.addEventListener("click", () =>
+          showStep(Number(button.dataset.target)),
+        );
+      });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!validateContactFields()) {
+        showStep(2);
+        return;
+      }
+
+      const currentTrackingId = getTrackingId();
+      trackScheduleSelection(currentTrackingId);
+
+      showStep(3);
+      calendarRoot?.dispatchEvent(
+        new CustomEvent("calendar:activate", { bubbles: true }),
+      );
+    });
+
+    form.addEventListener("calendar:back", () => {
+      showStep(2);
+      contactTitle?.focus({ preventScroll: true });
+      scope.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    showStep(1);
+  }
+</script>
+
+<style>
+  .noise-surface::after {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    content: "";
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 624.8 624.8' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='noiseFilterExport' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='.36' numOctaves='1' seed='35' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='saturate' values='0' in='noise' result='gray'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .333 .333 .333 0 0' in='gray'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='624.8' height='624.8' filter='url(%23noiseFilterExport)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 624.8px 624.8px;
+    mix-blend-mode: multiply;
+    opacity: 0.80;
+  }
+
+  .noise-surface > :global(*) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .onboarding-step:not(.hidden) {
+    animation: step-enter 220ms ease-out both;
+  }
+
+  :global(.step-active) {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  :global(.step-done) {
+    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+    background: color-mix(in srgb, var(--primary) 20%, transparent);
+    color: var(--primary);
+  }
+
+  :global(.step-label-active) {
+    color: white;
+    font-weight: 600;
+  }
+
+  :global(.step-line-active) {
+    background: color-mix(in srgb, var(--primary) 55%, transparent);
+  }
+
+  @keyframes step-enter {
+    from {
+      opacity: 0;
+      transform: translateX(0.5rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .onboarding-step:not(.hidden) {
+      animation: none;
+    }
+  }
+</style>

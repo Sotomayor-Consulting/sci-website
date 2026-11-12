@@ -34,7 +34,7 @@ const {
       type="button"
       variant="ghost"
       size="sm"
-      class="-mt-1 -mr-2 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground"
+      class="text-muted-foreground hover:text-foreground -mt-1 -mr-2 rounded-md px-2 text-xs"
     >
       <IconArrowLeft class="size-3.5" />
       Volver a mis datos
@@ -139,8 +139,7 @@ const {
               .filter(isRecord)
               .map((item, index) => ({
                 id: typeof item.id === "string" ? item.id : String(index),
-                label:
-                  typeof item.label === "string" ? item.label.trim() : "",
+                label: typeof item.label === "string" ? item.label.trim() : "",
                 type:
                   typeof item.type === "string"
                     ? item.type.toLowerCase()
@@ -150,8 +149,7 @@ const {
                   typeof item.position === "number" ? item.position : index,
                 options: Array.isArray(item.options)
                   ? item.options.filter(
-                      (option): option is string =>
-                        typeof option === "string",
+                      (option): option is string => typeof option === "string",
                     )
                   : [],
               }))
@@ -359,8 +357,7 @@ const {
     --primary-foreground: #0a2030;
   }
 
-  [data-calendar-reserva][data-theme="dark"]
-    :global([data-calendar-success]) {
+  [data-calendar-reserva][data-theme="dark"] :global([data-calendar-success]) {
     border-color: rgb(74 222 128 / 0.35);
     background-color: rgb(22 101 52 / 0.18);
   }

@@ -1,0 +1,11 @@
+---
+import LayoutMkt2 from "@/layouts/LayoutMktV2.astro";
+import LlcOnboarding from "@/components/LLcOnboardingNewa.astro";
+import { LLC_EVENT_TYPE_SLUG } from "@/data_files/llc-booking";
+---
+
+<LayoutMkt2
+  title="Agenda tu asesoría para crear una LLC en Estados Unidos | Sotomayor Consulting International"
+>
+  <LlcOnboarding eventTypeSlug={LLC_EVENT_TYPE_SLUG} />
+</LayoutMkt2>

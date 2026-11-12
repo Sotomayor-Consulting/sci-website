@@ -1,0 +1,116 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+import { marquee, marqueeGroup, marqueeTrack } from "./variants";
+
+type Direction = "left" | "right" | "up" | "down";
+
+interface Props extends Omit<HTMLAttributes<"div">, "style"> {
+  /** Sentido del desplazamiento. */
+  direction?: Direction;
+  /** Duración, en segundos, de una vuelta completa. */
+  duration?: number;
+  /** Espacio CSS entre los elementos, por ejemplo `1rem` o `var(--spacing)`. */
+  gap?: string;
+  /** Cantidad de copias usadas para crear el bucle continuo (2-10). */
+  repeat?: number;
+  /** Pausa la animación al colocar el cursor encima. */
+  pauseOnHover?: boolean;
+  /** Pausa la animación cuando un elemento interno recibe foco. */
+  pauseOnFocus?: boolean;
+  /** Aplica un degradado en los extremos del componente. */
+  fade?: boolean;
+  style?: string;
+}
+
+const {
+  direction = "left",
+  duration = 30,
+  gap = "1rem",
+  repeat = 2,
+  pauseOnHover = true,
+  pauseOnFocus = true,
+  fade = true,
+  class: className,
+  style,
+  ...rest
+} = Astro.props;
+
+const orientation =
+  direction === "up" || direction === "down" ? "vertical" : "horizontal";
+const safeDuration = Math.max(1, Number.isFinite(duration) ? duration : 30);
+const safeRepeat = Math.min(10, Math.max(2, Math.floor(repeat)));
+const slotContent = await Astro.slots.render("default");
+const customProperties = `--marquee-duration:${safeDuration}s;--marquee-gap:${gap};--marquee-repeat:${safeRepeat};`;
+---
+
+<div
+  data-sw-marquee
+  data-slot="marquee"
+  data-direction={direction}
+  data-orientation={orientation}
+  data-pause-hover={pauseOnHover ? "true" : "false"}
+  data-pause-focus={pauseOnFocus ? "true" : "false"}
+  class={marquee({ orientation, fade, class: className })}
+  style={`${customProperties}${style ?? ""}`}
+  {...rest}
+>
+  <div
+    data-sw-marquee-track
+    data-slot="marquee-track"
+    class={marqueeTrack({ orientation })}
+  >
+    {
+      Array.from({ length: safeRepeat }, (_, index) => (
+        <div
+          data-slot="marquee-group"
+          class={marqueeGroup({ orientation })}
+          aria-hidden={index === 0 ? undefined : "true"}
+          inert={index === 0 ? undefined : true}
+          set:html={slotContent}
+        />
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  [data-sw-marquee-track] {
+    animation: marquee-horizontal var(--marquee-duration) linear infinite;
+  }
+
+  [data-sw-marquee][data-orientation="vertical"] [data-sw-marquee-track] {
+    animation-name: marquee-vertical;
+  }
+
+  [data-sw-marquee][data-direction="right"] [data-sw-marquee-track],
+  [data-sw-marquee][data-direction="down"] [data-sw-marquee-track] {
+    animation-direction: reverse;
+  }
+
+  [data-sw-marquee][data-pause-hover="true"]:hover
+    [data-sw-marquee-track],
+  [data-sw-marquee][data-pause-focus="true"]:focus-within
+    [data-sw-marquee-track] {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-horizontal {
+    to {
+      transform: translate3d(calc(-100% / var(--marquee-repeat)), 0, 0);
+    }
+  }
+
+  @keyframes marquee-vertical {
+    to {
+      transform: translate3d(0, calc(-100% / var(--marquee-repeat)), 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sw-marquee-track] {
+      animation: none;
+      transform: none;
+    }
+  }
+</style>
