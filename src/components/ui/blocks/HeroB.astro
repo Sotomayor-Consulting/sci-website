@@ -1,72 +1,39 @@
 ---
-import { Icon } from "astro-icon/components";
-import { Badge } from "@/components/starwind/badge";
+import { Image } from "astro:assets";
 import { Button } from "@/components/starwind/button";
-
-interface Props {
-    badge: string;
-    title: string;
-    titleSpan: string;
-    description: string;
-    button: string;
-    buttonLink: string;
-    advice: string;
-    benefits: string [][];
-}
-
-const { badge, title, titleSpan, description, button, buttonLink, advice, benefits } = Astro.props
+import backgroundImage from "@images/extract_BLACK_FRIDAY_BACKGROUND_GRUNGE_P_D.avif";
+import HeromImage from "@images/BLACK_FRIDAY_BACKGROUND_GRUNGE_P_D_v2_TRANSPARENTE_TEXTO.avif";
 ---
 
-<section
-      class="flex min-h-[40rem] flex-col px-6 py-8 sm:px-10 lg:px-15 lg:py-10 xl:min-h-screen"
-      aria-labelledby="llc-b-title"
+<section class="isolate border-b border-white/10">
+  <div class="h-fit md:h-screen">
+    <div
+      class="pointer-events-none flex h-full items-center justify-center [background-image:var(--hero-image)] [background-position:center_top] [background-repeat:no-repeat] [background-size:auto_100%]"
+      style={`--hero-image: url('${backgroundImage.src}');`}
     >
-      <Icon
-        name="logo-sotomayor-consulting-black"
-        class="h-auto w-46 sm:w-54"
-      />
+      <Image src={HeromImage} alt="Hero Image" class="h-fit w-auto" />
+    </div>
 
-      <div class="my-auto max-w-3xl py-14 lg:py-20">
-        <Badge
-          tone="primary"
-          appearance="outline"
-          eyebrow
-          class="border-primary/55 text-primary mb-5"
-        >
-           {badge}
-        </Badge>
+    <!-- <div class="mx-auto flex flex-col items-center gap-7 bg-gradient-to-b py-6 [background-image:var(--hero-image)] [background-size:cover,cover] [background-position:center_-666px] [background-repeat:no-repeat,no-repeat]" style={`--hero-image: url('${backgroundImage.src}');`}>
+      <div>
         <h1
-          id="llc-b-title"
-          class="font-display text-4xl leading-[1.04] font-bold tracking-[-.04em] sm:text-6xl lg:text-7xl"
+          class="font-display max-w-3xl text-center text-3xl leading-tight font-bold tracking-[-.035em] sm:text-3xl"
         >
-          {title}
-          <span class="text-primary mt-2 block">{titleSpan}</span>
+          Este Black Friday, la Planificación y Diseño de tu LLC tiene hasta 50%
+          de descuento.
         </h1>
-        <p
-          class="mt-7 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg"
-        >
-         {description}
-        </p>
-        <Button
-          variant="primary"
-          class="mt-4 inline-flex md:hidden"
-          href={buttonLink}
-        >
-          {button}
-        </Button>
-        <p class="mt-5 max-w-2xl text-xs leading-relaxed text-white/55">
-          {advice}
-        </p>
       </div>
-
-      <dl class="grid gap-5 border-t border-white/10 pt-7 md:grid-cols-3">
-        {
-          benefits.map(([title, description]) => (
-            <div class="border-primary/55 border-l-2 pl-4">
-              <dt class="text-sm font-semibold text-white">{title}</dt>
-              <dd class="mt-1 text-xs text-white/55">{description}</dd>
-            </div>
-          ))
-        }
-      </dl>
-    </section>
+      <div class="flex max-w-sm flex-col gap-3 md:items-end">
+        <Button
+          as="a"
+          href="#agendar"
+          variant="outline"
+          size="lg"
+          class="bg-primary/90 text-foreground hover:bg-primary border-0 transition-all delay-110 hover:-translate-y-0.5 hover:text-[#0d2537] md:min-w-52"
+        >
+          Agenda tu reunión
+        </Button>
+      </div>
+    </div> -->
+  </div>
+</section>
