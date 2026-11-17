@@ -40,17 +40,17 @@ const { activityGroups, eventTypeSlug } = Astro.props as Props;
 
 
 <section class="relative px-4 py-8 sm:px-8 sm:py-12 lg:py-16">
-    <div
-      class="pointer-events-none absolute top-1/2 left-1/2 -z-0 size-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff2525]/10 blur-3xl"
+    <!-- <div
+      class="pointer-events-none absolute top-1/2 left-1/2 -z-0 size-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff2525]/10 blur-3xl ring-0"
     >
-    </div>
+    </div> -->
     <Card
       id="agendar"
       size="md"
-      class="relative z-10 mx-auto max-w-5xl scroll-mt-24 rounded-[1.75rem] border-white/10 bg-black/90 text-white shadow-2xl shadow-black/35 backdrop-blur-xl sm:rounded-[2rem]"
+      class="relative z-10 mx-auto max-w-5xl scroll-mt-24 rounded-[1.75rem] bg-black/90 text-white shadow-2xl shadow-black/35 sm:rounded-[2rem]"
     >
       <Form id="onboarding-form" novalidate class="gap-0">
-        <CardHeader class="border-b border-white/10 px-5 py-5 sm:px-10 sm:py-6">
+        <CardHeader class="px-5 py-5 sm:px-10 sm:py-6">
           <ol class="flex items-center" aria-label="Progreso de la reserva">
             {
               ["Tu caso", "Tus datos", "Tu horario"].map((label, index) => (
