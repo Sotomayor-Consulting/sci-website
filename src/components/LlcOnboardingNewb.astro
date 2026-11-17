@@ -834,20 +834,37 @@ const faqs = [
 </script>
 
 <style>
+  .noise-surface::after {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    content: "";
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 624.8 624.8' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='noiseFilterExport' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='.36' numOctaves='1' seed='35' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='saturate' values='0' in='noise' result='gray'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .333 .333 .333 0 0' in='gray'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='624.8' height='624.8' filter='url(%23noiseFilterExport)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 624.8px 624.8px;
+    mix-blend-mode: multiply;
+    opacity: 0.80;
+  }
+
+  .noise-surface > :global(*) {
+    position: relative;
+    z-index: 1;
+  }
   .onboarding-step-b:not(.hidden) {
     animation: step-enter-b 220ms ease-out both;
   }
 
   :global(.step-active-b) {
-    border-color: var(--primary);
-    background: var(--primary);
-    color: var(--primary-foreground);
+    border-color: #ff2525;
+    background-color: #ff2525;
+    color: #ffffff;
   }
 
   :global(.step-done-b) {
-    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
-    background: color-mix(in srgb, var(--primary) 20%, transparent);
-    color: var(--primary);
+    border-color: #ff2525;
+    background-color: #ff2525;
+    color: #ffffff;
   }
 
   :global(.step-label-active-b) {
@@ -856,13 +873,13 @@ const faqs = [
   }
 
   :global(.step-line-active-b) {
-    background: color-mix(in srgb, var(--primary) 55%, transparent);
+    background-color: #ff2525;
   }
 
   :global(.activity-check-selected-b) {
-    border-color: var(--primary);
-    background: var(--primary);
-    color: var(--primary-foreground);
+    border-color: #ff2525;
+    background-color: #ff2525;
+    color: #ffffff;
   }
 
   @keyframes step-enter-b {

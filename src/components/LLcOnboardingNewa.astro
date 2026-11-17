@@ -276,7 +276,7 @@ const faqs = [
     class="relative z-10 px-4 py-16 sm:px-8 sm:py-20 lg:py-24"
   >
     <Card
-      class="overflow-hidden border-white/10 bg-white/5 text-white ring-white/10 w-full h-100"
+      class="overflow-hidden bg-[#191919] text-white w-full h-100 border-none ring-0"
     >
       <div class="grid lg:grid-cols-[0.85fr_1.15fr] h-full">
         <CardHeader
@@ -829,15 +829,15 @@ const faqs = [
   }
 
   :global(.step-active) {
-    border-color: var(--primary);
-    background: var(--primary);
-    color: var(--primary-foreground);
+    border-color: #ff2525;
+    background-color: #ff2525;
+    color: #ffffff;
   }
 
   :global(.step-done) {
-    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
-    background: color-mix(in srgb, var(--primary) 20%, transparent);
-    color: var(--primary);
+    border-color: #ff2525;
+    background-color: #ff2525;
+    color: #ffffff;
   }
 
   :global(.step-label-active) {
@@ -846,7 +846,7 @@ const faqs = [
   }
 
   :global(.step-line-active) {
-    background: color-mix(in srgb, var(--primary) 55%, transparent);
+    background-color: #ff2525;
   }
 
   @keyframes step-enter {

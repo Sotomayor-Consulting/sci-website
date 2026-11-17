@@ -20,6 +20,7 @@ export const button = tv({
       success: "bg-success text-success-foreground hover:bg-success/90 focus-visible:ring-success/50",
       warning: "bg-warning text-warning-foreground hover:bg-warning/90 focus-visible:ring-warning/50",
       error: "bg-error text-error-foreground hover:bg-error/90 focus-visible:ring-error/50",
+      new: "bg-[#ff2525] hover:bg-[#ff2525]/80 text-white"
     },
     size: {
       sm: "h-9 px-4 text-sm has-[>svg]:px-3 [&_svg:not([class*='size-'])]:size-3.5",

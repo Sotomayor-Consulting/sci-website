@@ -107,7 +107,7 @@ const { activityGroups, eventTypeSlug } = Astro.props;
           {
             activityGroups.map((group) => (
               <fieldset class="space-y-2.5">
-                <legend class="text-primary text-xs font-bold tracking-[.1em] uppercase">
+                <legend class="text-[#ff2525] text-xs font-bold tracking-[.1em] uppercase">
                   {group.label}
                 </legend>
                 <div class="grid gap-2 sm:grid-cols-2">
@@ -115,7 +115,7 @@ const { activityGroups, eventTypeSlug } = Astro.props;
                     <Button
                       type="button"
                       variant="outline"
-                      class="activity-button-b aria-pressed:border-primary aria-pressed:bg-primary/15 h-auto min-h-13 justify-between rounded-xl border-white/15 bg-white/5 px-4 py-3 text-left text-sm whitespace-normal text-white hover:border-white/35 hover:bg-white/10 hover:text-white"
+                      class="activity-button-b aria-pressed:border-[#ff2525] aria-pressed:bg-[#ff2525]/15 h-auto min-h-13 justify-between rounded-xl border-white/15 bg-white/5 px-4 py-3 text-left text-sm whitespace-normal text-white hover:border-white/35 hover:bg-white/10 hover:text-white"
                       data-value={activity}
                       aria-pressed="false"
                     >
@@ -147,7 +147,7 @@ const { activityGroups, eventTypeSlug } = Astro.props;
             type="button"
             variant="primary"
             size="lg"
-            class="w-full rounded-xl font-semibold"
+            class="w-full rounded-xl font-semibold bg-[#ff2525] hover:bg-[#ff2525]/80 text-white"
           >
             Continuar
           </Button>
@@ -285,7 +285,7 @@ const { activityGroups, eventTypeSlug } = Astro.props;
             id="continue-to-schedule-b"
             type="button"
             variant="primary"
-            class="rounded-xl font-semibold"
+            class="rounded-xl font-semibold bg-[#ff2525] hover:bg-[#ff2525]/80 text-white"
           >
             Elegir horario
           </Button>

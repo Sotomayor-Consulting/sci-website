@@ -41,7 +41,7 @@ const { activityGroups, eventTypeSlug } = Astro.props as Props;
 
 <section class="relative px-4 py-8 sm:px-8 sm:py-12 lg:py-16">
     <div
-      class="bg-primary/10 pointer-events-none absolute top-1/2 left-1/2 -z-0 size-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+      class="pointer-events-none absolute top-1/2 left-1/2 -z-0 size-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff2525]/10 blur-3xl"
     >
     </div>
     <Card
@@ -109,7 +109,7 @@ const { activityGroups, eventTypeSlug } = Astro.props as Props;
             {
               activityGroups.map((group) => (
                 <fieldset class="space-y-3">
-                  <legend class="text-primary text-xs font-bold tracking-[.12em] uppercase">
+                  <legend class="text-xs font-bold tracking-[.12em] text-[#ff2525] uppercase">
                     {group.label}
                   </legend>
                   <div class="flex flex-wrap gap-2">
@@ -118,7 +118,7 @@ const { activityGroups, eventTypeSlug } = Astro.props as Props;
                         type="button"
                         variant="outline"
                         size="sm"
-                        class="activity-button aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground h-auto rounded-full border-white/20 bg-white/7 px-4 py-2.5 text-left whitespace-normal text-white hover:border-white/40 hover:bg-white/15 hover:text-white"
+                        class="activity-button h-auto rounded-full border-white/20 bg-white/7 px-4 py-2.5 text-left whitespace-normal text-white hover:border-[#ff2525] hover:bg-[#ff2525]/10 hover:text-white aria-pressed:border-[#ff2525] aria-pressed:bg-[#ff2525] aria-pressed:text-white"
                         data-value={activity}
                         aria-pressed="false"
                       >
@@ -147,7 +147,7 @@ const { activityGroups, eventTypeSlug } = Astro.props as Props;
             <Button
               id="continue-to-contact"
               type="button"
-              variant="primary"
+              variant="new"
               size="md"
               class="ml-auto rounded-xl font-semibold"
             >
@@ -281,7 +281,7 @@ const { activityGroups, eventTypeSlug } = Astro.props as Props;
             <Button
               type="button"
               variant="outline"
-              class="back-button border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
+              class="back-button border-[#ff2525] bg-transparent text-[#ff2525] hover:bg-[#ff2525]/10 hover:text-[#ff2525]"
               data-target="1"
             >
               Volver
@@ -289,7 +289,7 @@ const { activityGroups, eventTypeSlug } = Astro.props as Props;
             <Button
               id="continue-to-schedule"
               type="button"
-              variant="primary"
+              variant="new"
               class="ml-auto rounded-xl"
             >
               Elegir horario
